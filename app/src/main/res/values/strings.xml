@@ -48,14 +48,37 @@
     <string name="error_fav_topic">收藏话题错误</string>
     <string name="error_get_profile">无法获取用户个人资料</string>
     <string name="error_unknown">未知错误</string>
+    <string name="load">正在加载</string>
+    <string name="load1">暂无数据</string>
 
 
     <!--界面Activity-->
     <string name="title_activity_load">loading界面</string>
     <string name="title_activity_login">登录界面</string>
     <string name="title_activity_main">主界面</string>
+    <string name="work_list_title">工单列表</string>
+
+    <string name="item_num_title">编号:</string>
+    <string name="item_desc_title">描述:</string>
+    <!-- hint -->
+    <string name="hint_item_num_title">暂无编号</string>
+    <string name="hint_item_desc_title">暂无描述</string>
 
     <!--登录信息提示-->
     <string name="login_successful_hint">登陆成功</string>
+
+
+    <!--工单-->
+    <string name="work_aa">终验收工单</string>
+    <string name="work_dc">调试工单</string>
+    <string name="work_fr">故障工单</string>
+    <string name="work_sp">排查工单</string>
+    <string name="work_tp">技改工单</string>
+    <string name="work_ws">定检工单</string>
+    <string name="work_num">工单号</string>
+    <string name="work_description">工单描述</string>
+    <string name="work_list_search">搜索</string>
+    <string name="work_describe">描述</string>
+
 
 </resources>

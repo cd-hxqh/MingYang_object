@@ -17,6 +17,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.ui.fragment.NavigationDrawerFragment;
 import com.example.admin.mingyang_object.ui.fragment.WfassigFragment;
+import com.example.admin.mingyang_object.ui.fragment.WorkFragment;
 
 
 public class MainActivity extends BaseActivity
@@ -32,7 +33,10 @@ public class MainActivity extends BaseActivity
      */
     private TextView title;
 
-
+    /**
+     * 工单管理*
+     */
+    private WorkFragment mNewWorkFragment;
     /**
      * 待办事项*
      */
@@ -98,7 +102,12 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, mNewWfassigFragment).commit();
                 break;
             case 1: //工单管理
-
+                if (mNewWorkFragment == null) {
+                    mNewWorkFragment = new WorkFragment();
+                    Bundle bundle = new Bundle();
+                    mNewWorkFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewWorkFragment).commit();
                 break;
             case 2://库存查询
 

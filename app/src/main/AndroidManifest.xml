@@ -44,6 +44,10 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.Work_ListActivity"
+            android:label="@string/work_list_title"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,8 @@
     <color name="press_button_color">#0399F0</color>
     <color name="check_button_color2">#0E9F68</color><!--青色-->
 
+    <color name="font_color">#ffffff</color>
+
     <color name="color1">#ff00ddff</color>
     <color name="color2">#ff99cc00</color>
     <color name="color3">#ffffbb33</color>

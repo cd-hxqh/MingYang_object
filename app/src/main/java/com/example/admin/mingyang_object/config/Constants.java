@@ -170,13 +170,12 @@ public class Constants {
     /**
      * 工单跳转类型标识
      */
-    public static final String FAULT = "CM";//故障工单
-    public static final String PREVENT = "PM";//预防性维护工单
-    public static final String STATUS = "SR";//状态维修工单
-    public static final String PROJECT = "PJ";//项目工单
-    public static final String SERVICE = "RS";//可维护备件工单
-    public static final String ACCIDENT = "EV";//事故工单
-    public static final String REPAIR = "EM";//抢修工单
+    public static final String FR = "FR";//故障工单
+    public static final String AA = "AA";//终验收工单
+    public static final String DC = "DC";//调试工单
+    public static final String SP = "SP";//排查工单
+    public static final String TP = "TP";//技改工单
+    public static final String WS = "WS =";//定检工单
 
     //工单状态
     public static final String STATUS1 = "已批准";
