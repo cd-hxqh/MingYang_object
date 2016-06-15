@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.ui.adapter.DrawerAdapter;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 
 
 /**
@@ -123,7 +124,7 @@ public class NavigationDrawerFragment extends BaseFragment {
         });
         mDrawerListView.setAdapter(new DrawerAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-//        mUserTextView.setText(AccountUtils.getUserName(getActivity()));
+        mUserTextView.setText(AccountUtils.getUserName(getActivity()));
 //        exitImageView.setOnClickListener(exitOnClickListener);
         return rootView;
     }
