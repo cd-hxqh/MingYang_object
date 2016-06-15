@@ -9,7 +9,7 @@ public class Constants {
      * 基础接口*
      */
     /**默认**/
-    public static final String HTTP_API_IP = "http://121.35.242.172:7001";
+    public static final String HTTP_API_IP = "http://deveam.mywind.com.cn:7001";
 //    public static final String HTTP_API_URL = "http://121.35.242.172:7001/maximo/mobile/";
 //
 //    public static final String HTTPS_API_URL = "http://121.35.242.172:7001/meaweb/services";

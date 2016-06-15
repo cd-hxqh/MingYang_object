@@ -8,7 +8,7 @@
         android:id="@+id/profile_layout"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/blue_color"
+        android:background="@mipmap/drawer_bj"
         android:orientation="vertical"
         android:padding="8dp">
 

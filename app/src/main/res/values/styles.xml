@@ -11,4 +11,23 @@
         <item name="colorPrimaryDark">@color/nomal_button_color</item>
     </style>
 
+    <style name="mingyang.ActivityTheme" parent="mingyang.AppTheme.Base">
+        <item name="windowActionBar">false</item>
+        <item name="drawerArrowStyle">@style/mingyang.DrawerArrowStyle</item>
+    </style>
+
+    <style name="mingyang.AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/light_gray_1</item>
+        <item name="colorPrimaryDark">@color/nomal_button_color</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="drawerArrowStyle">@style/mingyang.DrawerArrowStyle</item>
+    </style>
+
+    <style name="mingyang.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
 </resources>

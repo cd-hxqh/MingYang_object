@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
@@ -26,6 +27,11 @@ public class MainActivity extends BaseActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private ViewGroup mDrawerLayout;
     private View mActionbarCustom;
+    /**
+     * 标题*
+     */
+    private TextView title;
+
 
     /**
      * 待办事项*
@@ -54,7 +60,7 @@ public class MainActivity extends BaseActivity
     protected void findViewById() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        title = (TextView) findViewById(R.id.title_id);
         mDrawerLayout = (ViewGroup) findViewById(R.id.drawer_layout);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.left_drawer);
@@ -115,7 +121,8 @@ public class MainActivity extends BaseActivity
         mTitle = mMainTitles[mSelectPos];
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        actionBar.setTitle("");
+        title.setText(mTitle);
     }
 
     @Override
