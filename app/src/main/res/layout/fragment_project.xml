@@ -1,0 +1,147 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+
+        <TableRow android:layout_marginTop="@dimen/dimens_10">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/udrro_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:drawableTop="@mipmap/ic_udrro"
+                    android:gravity="center"
+                    android:text="@string/udrro_text"></TextView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/work_linear_prevent_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/udprorunlog_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:drawableTop="@mipmap/ic_udrro_log"
+                    android:gravity="center"
+
+                    android:text="@string/udprorunlog_text"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/work_linear_status_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/udfeedback_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:drawableTop="@mipmap/ic_udfeedback"
+                    android:gravity="center"
+                    android:text="@string/udfeedback_text" />
+
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow android:layout_marginTop="@dimen/dimens_10">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/udacceptance_text_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@mipmap/ic_udacceptance"
+                    android:gravity="center"
+                    android:text="@string/udacceptance_text"></TextView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/work_linear_service_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@mipmap/ic_udacceptance"
+                    android:text="@string/udacceptance_text"></TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/work_linear_accident_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:drawablePadding="5dp"
+                    android:drawableTop="@mipmap/ic_udacceptance"
+                    android:text="@string/udacceptance_text"></TextView>
+
+            </LinearLayout>
+        </TableRow>
+
+
+    </TableLayout>
+
+</LinearLayout>

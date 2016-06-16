@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.admin.mingyang_object.bean.LoginResults;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Udpro;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,104 @@ public class JsonUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    /**
+     * 不分页解析返回的结果*
+     */
+    public static Results parsingResults1(Context ctx, String data) {
+
+        String result = null;
+        Results results = null;
+        try {
+            JSONObject json = new JSONObject(data);
+            String jsonString = json.getString("errcode");
+            if (jsonString.equals(Constants.GETDATASUCCESS)) {
+                result = json.getString("result");
+                results = new Results();
+                results.setResultlist(result);
+            }
+
+            return results;
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return results;
+        }
+
+    }
+
+
+    /**
+     * 分页解析返回的结果*
+     */
+    public static Results parsingResults(Context ctx, String data) {
+        Log.i(TAG, "data=" + data);
+        String result = null;
+        Results results = null;
+        try {
+            JSONObject json = new JSONObject(data);
+            String jsonString = json.getString("errcode");
+            if (jsonString.equals(Constants.GETDATASUCCESS)) {
+                result = json.getString("result");
+                JSONObject rJson = new JSONObject(result);
+                String curpage = rJson.getString("curpage");
+                String totalresult = rJson.getString("totalresult");
+                String resultlist = rJson.getString("resultlist");
+                String totalpage = rJson.getString("totalpage");
+                String showcount = rJson.getString("showcount");
+                results = new Results();
+                results.setCurpage(Integer.valueOf(curpage));
+                results.setTotalresult(totalresult);
+                results.setResultlist(resultlist);
+                results.setTotalpage(totalpage);
+                results.setShowcount(Integer.valueOf(showcount));
+            }
+
+            return results;
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return results;
+        }
+
+    }
+
+
+    /**解析项目台账信息**/
+
+    public static ArrayList<Udpro> parsingUdpro(Context ctx, String data) {
+        Log.i(TAG, "udpro data=" + data);
+        ArrayList<Udpro> list = null;
+        Udpro udpro = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udpro>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udpro = new Udpro();
+                jsonObject = jsonArray.getJSONObject(i);
+                udpro.pronum = jsonObject.getString("PRONUM");//项目编号
+                udpro.description = jsonObject.getString("DESCRIPTION"); //项目描述
+                udpro.branch = jsonObject.getString("BRANCH");//所属中心
+                udpro.capacity = jsonObject.getString("CAPACITY");//总厂容量（MW）
+                udpro.contractstatus = jsonObject.getString("CONTRACTSTATUS");//合同状态
+                udpro.owner = jsonObject.getString("OWNER");//业务单位
+                udpro.period = jsonObject.getString("PERIOD");//质保期（年）
+                udpro.prostage = jsonObject.getString("PROSTAGE");//项目当前阶段
+                udpro.respons = jsonObject.getString("RESPONS");//责任人编号
+                udpro.signdate = jsonObject.getString("SIGNDATE");//签订时间
+                list.add(udpro);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 

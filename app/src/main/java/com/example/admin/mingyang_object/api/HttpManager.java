@@ -4,8 +4,10 @@ package com.example.admin.mingyang_object.api;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.application.BaseApplication;
 import com.example.admin.mingyang_object.bean.LoginResults;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -103,7 +105,7 @@ public class HttpManager {
      * 设置实际物料接口
      */
     public static String getmatusetransUrl(String type, int curpage, int showcount, String wonum) {
-        return "{'appid':'" + Constants.MATUSETRANS_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
     /**
@@ -124,178 +126,18 @@ public class HttpManager {
     }
 
 
+
     /**
-     * 设置库存成本的接口
-     * 根据Itemnum
+     * 设置工程台账的接口
      */
-    public static String getInvcosturl(String value, int curpage, int showcount, String itemnum) {
+    public static String getUdprourl(String value, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.INVCOST_APPID + "','objectname':'" + Constants.INVCOST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-        } else {
-            return "{'appid':'" + Constants.INVCOST_APPID + "','objectname':'" + Constants.INVCOST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','ITEMNUM':'" + value + "'}}";
-
+            return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-    }
-
-    /**
-     * 设置库存余量的接口
-     * 根据Itemnum
-     */
-    public static String getInvbalancesurl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVBALANCES_APPID + "','objectname':'" + Constants.INVBALANCES_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-
-        } else {
-            return "{'appid':'" + Constants.INVBALANCES_APPID + "','objectname':'" + Constants.INVBALANCES_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','BINNUM':'" + value + "'}}";
-
-        }
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "'}}";
     }
 
 
-    /**
-     * 设置入库的接口
-     * 根据Itemnum
-     */
-    public static String getMatrectransurl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.MATRECTRANS_APPID + "','objectname':'" + Constants.MATRECTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-
-        } else {
-            return "{'appid':'" + Constants.MATRECTRANS_APPID + "','objectname':'" + Constants.MATRECTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','ISSUETYPE':'" + value + "'}}";
-        }
-    }
-
-    /**
-     * 设置出库的接口
-     * 根据Itemnum
-     */
-    public static String getMatusetransurl(String value, int curpage, int showcount, String itemnum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.MATUSETRANS_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "'}}";
-
-        } else {
-            return "{'appid':'" + Constants.MATUSETRANS_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + itemnum + "','ISSUETYPE':'" + value + "'}}";
-
-        }
-    }
-
-    /**
-     * 设置领料单的接口
-     */
-    public static String getInvuseurl(String value, String udapptype, int curpage, int showcount) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVUSE_APPID + "','objectname':'" + Constants.INVUSE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INVUSENUM DESC','condition':{'UDAPPTYPE':'=" + udapptype + "'}}";
-        }
-        return "{'appid':'" + Constants.INVUSE_APPID + "','objectname':'" + Constants.INVUSE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INVUSENUM DESC','condition':{'INVUSENUM':'" + value + "','UDAPPTYPE':'=" + udapptype + "'}}";
-    }
-
-    /**
-     * 设置领料单行的接口
-     */
-    public static String getInvuselineurl(String value, int curpage, int showcount, String invusenum) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVUSELINE_APPID + "','objectname':'" + Constants.INVUSELINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVUSENUM':'" + invusenum + "'}}";
-        } else {
-            return "{'appid':'" + Constants.INVUSELINE_APPID + "','objectname':'" + Constants.INVUSELINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INVUSENUM':'" + invusenum + "','ITEMNUM':'" + value + "'}}";
-        }
-    }
-
-    /**
-     * 设置设备下载数据接口
-     */
-    public static String getAssetUrl(String siteid) {
-        return "{'appid':'" + Constants.ASSET_APPID + "','objectname':'" + Constants.ASSET_NAME + "','option':'read','condition':{'SITEID':'" + siteid + "','UDLEVEL':'单体设备','STATUS':'操作中,活动,有限制的使用'}}";
-    }
-
-    /**
-     * 设置作业计划下载数据接口
-     */
-    public static String getJpNumUrl(String siteid) {
-        return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','option':'read','condition':{'SITEID':'" + siteid + "','UDISOS':'0'}}";
-    }
-
-    /**
-     * 设置人员下载数据接口
-     */
-    public static String getPersonUrl(String siteid) {
-        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','option':'read','condition':{'LOCATIONSITE':'" + siteid + "'}}";
-    }
-
-    /**
-     * 设置根据人员id查询人员信息
-     */
-    public static String getPersonUrl1(String persionid) {
-        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','option':'read','condition':{'PERSONID':'" + persionid + "'}}";
-    }
-
-    /**
-     * 设置员工下载数据接口
-     */
-    public static String getLaborUrl(String siteid) {
-        return "{'appid':'" + Constants.LABOR_APPID + "','objectname':'" + Constants.LABOR_NAME + "','option':'read','condition':{'WORKSITE':'" + siteid + "'}}";
-    }
-
-    /**
-     * 设置抢修班组下载数据接口
-     */
-    public static String getAlndomainUrl(String siteid) {
-        if (siteid.equals("CCT")) {
-            return "{'appid':'" + Constants.ALNDOMAIN_APPID + "','objectname':'" + Constants.ALNDOMAIN_NAME + "','option':'read','condition':{'domainid':'UDEQ3','description':'ST-1,ST-2,ST-3,ST-4'}}";
-        } else if (siteid.equals("SCT")) {
-            return "{'appid':'" + Constants.ALNDOMAIN_APPID + "','objectname':'" + Constants.ALNDOMAIN_NAME + "','option':'read','condition':{'domainid':'UDEQ3','value':'030401,030402,03040',030404'}}";
-        }
-        return null;
-    }
-
-    /**
-     * 设置故障类别下载数据接口
-     */
-    public static String getAlndomain2Url() {
-        return "{'appid':'" + Constants.ALNDOMAIN_APPID + "','objectname':'" + Constants.ALNDOMAIN_NAME + "','option':'read','condition':{'DOMAINID':'UDGZLBDM'}}";
-    }
-
-    /**
-     * 设置事故下载数据接口
-     */
-    public static String getUdevUrl(String siteid) {
-        return "{'appid':'" + Constants.UDEV_APPID + "','objectname':'" + Constants.UDEV_NAME + "','option':'read','condition':{'status':'1','siteid':'" + siteid + "'}}";
-    }
-
-    /**
-     * 设置立项申报下载数据接口
-     */
-    public static String getProjapprUrl(String siteid) {
-        return "{'appid':'" + Constants.PROJAPPR_APPUD + "','objectname':'" + Constants.PROJAPPR_NAME + "','option':'read','condition':{'status':'APPR','FZDEPARTMENT':'90','siteid':'" + siteid + "'}}";
-    }
-
-    /**
-     * 设置立项申报下载数据接口
-     */
-    public static String getPmUrl(String siteid) {
-        return "{'appid':'" + Constants.PM_APPID + "','objectname':'" + Constants.PM_NAME + "','option':'read','condition':{'siteid':'" + siteid + "'}}";
-    }
-
-    /**
-     * 设置员工工种下载数据接口
-     */
-    public static String getLaborcraftrateUrl(String siteid) {
-        return "{'appid':'" + Constants.LABORCRAFTRATE_APPID + "','objectname':'" + Constants.LABORCRAFTRATE_NAME + "','option':'read','condition':{'defaultcraft':'1'}}";
-    }
-
-    /**
-     * 设置故障下载数据接口
-     */
-    public static String getFailurelistUrl() {
-        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','option':'read'}";
-    }
-
-
-    /**
-     * 设置库房下载数据接口
-     */
-    public static String getLocationUrl() {
-        return "{'appid':'" + Constants.UDSTORELOC_APPID + "','objectname':'" + Constants.LOCATIONS_NAME + "','option':'read','condition':{'TYPE':'=库房'}}";
-    }
 
 
     /**
@@ -347,59 +189,59 @@ public class HttpManager {
     }
 
 
-//    /**
-//     * 不分页获取信息方法*
-//     */
-//    public static void getData(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
-//        String url=AccountUtils.getIpAddress(cxt)+Constants.BASE_URL;
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams params = new RequestParams();
-//        params.put("data", data);
-//        client.setTimeout(20000);
-//        client.get(url, params, new TextHttpResponseHandler() {
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//
-//                Results result = JsonUtils.parsingResults1(cxt, responseString);
-//
-//                SafeHandler.onSuccess(handler, result);
-//
-//            }
-//        });
-//    }
-//
-//
-//    /**
-//     * 解析返回的结果--分页*
-//     */
-//    public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
-//        Log.i(TAG, "data=" + data);
-//        String url=AccountUtils.getIpAddress(cxt)+Constants.BASE_URL;
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        RequestParams params = new RequestParams();
-//        params.put("data", data);
-//        client.setTimeout(20000);
-//        client.get(url, params, new TextHttpResponseHandler() {
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-//                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
-//            }
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                Log.i(TAG, "statusCode" + "responseString=" + responseString);
-//                Results result = JsonUtils.parsingResults(cxt, responseString);
-//
-//                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
-//            }
-//        });
-//    }
+    /**
+     * 不分页获取信息方法*
+     */
+    public static void getData(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
+        String url=AccountUtils.getIpAddress(cxt)+Constants.BASE_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("data", data);
+        client.setTimeout(20000);
+        client.get(url, params, new TextHttpResponseHandler() {
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                Results result = JsonUtils.parsingResults1(cxt, responseString);
+
+                SafeHandler.onSuccess(handler, result);
+
+            }
+        });
+    }
+
+
+    /**
+     * 解析返回的结果--分页*
+     */
+    public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
+        Log.i(TAG, "data=" + data);
+        String url=AccountUtils.getIpAddress(cxt)+Constants.BASE_URL;
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("data", data);
+        client.setTimeout(20000);
+        client.get(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.i(TAG, "statusCode" + "responseString=" + responseString);
+                Results result = JsonUtils.parsingResults(cxt, responseString);
+
+                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
+            }
+        });
+    }
 
 
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.ui.fragment.NavigationDrawerFragment;
+import com.example.admin.mingyang_object.ui.fragment.ProjectFragment;
 import com.example.admin.mingyang_object.ui.fragment.WfassigFragment;
 import com.example.admin.mingyang_object.ui.fragment.WorkFragment;
 
@@ -41,6 +42,11 @@ public class MainActivity extends BaseActivity
      * 待办事项*
      */
     private WfassigFragment mNewWfassigFragment;
+
+    /**
+     * 项目管理*
+     */
+    private ProjectFragment projectFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -109,11 +115,16 @@ public class MainActivity extends BaseActivity
                 }
                 fragmentTransaction.replace(R.id.container, mNewWorkFragment).commit();
                 break;
-            case 2://库存查询
+            case 2://库存盘点
 
                 break;
-            case 3://领料管理
-
+            case 3://项目管理
+                if (projectFragment == null) {
+                    projectFragment = new ProjectFragment();
+                    Bundle bundle = new Bundle();
+                    projectFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, projectFragment).commit();
 
                 break;
             case 4://设置

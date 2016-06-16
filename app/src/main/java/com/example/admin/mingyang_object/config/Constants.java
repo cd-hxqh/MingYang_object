@@ -57,6 +57,18 @@ public class Constants {
     //故障汇报表名
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
 
+
+    /**工程台账**/
+    //工程台账appid
+    public static final String UDPRO_APPID="UDPROJECT";
+    //工程台账表名**/
+    public static final String UDPRO_NAME="UDPRO";
+
+
+
+
+
+
     /**库存查询**/
     //库存的appid
     public static final String INVENTOR_APPID="UDINVENTOR";
