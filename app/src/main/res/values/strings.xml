@@ -50,7 +50,7 @@
     <string name="error_unknown">未知错误</string>
     <string name="load">正在加载</string>
     <string name="load1">暂无数据</string>
-
+    <!--<string name="get_data_info_fail">获取信息失败</string>-->
 
     <!--界面Activity-->
     <string name="title_activity_load">loading界面</string>

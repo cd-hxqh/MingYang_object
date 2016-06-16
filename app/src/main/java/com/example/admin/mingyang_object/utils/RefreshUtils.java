@@ -2,6 +2,7 @@ package com.example.admin.mingyang_object.utils;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AbsListView;
+import android.widget.Adapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -28,7 +30,7 @@ public class RefreshUtils extends SwipeRefreshLayout implements AbsListView.OnSc
     /**
      * listview实例
      */
-    private ListView mListView;
+    private RecyclerView mListView;
 
     /**
      * 上拉监听器, 到了最底部的上拉加载操作
@@ -104,10 +106,10 @@ public class RefreshUtils extends SwipeRefreshLayout implements AbsListView.OnSc
         if (childs > 0) {
             for(int i=0; i<childs; i++){
                 View childView = getChildAt(i);
-                if (childView instanceof ListView) {
-                    mListView = (ListView) childView;
+                if (childView instanceof RecyclerView) {
+                    mListView = (RecyclerView) childView;
                     // 设置滚动监听器给ListView, 使得滚动的情况下也可以自动加载
-                    mListView.setOnScrollListener(this);
+//                    mListView.setOnScrollListener(this);
                     Log.d(VIEW_LOG_TAG, "### 找到listview");
                 }
             }
@@ -164,7 +166,7 @@ public class RefreshUtils extends SwipeRefreshLayout implements AbsListView.OnSc
     private boolean isBottom() {
 
         if (mListView != null && mListView.getAdapter() != null) {
-            return mListView.getLastVisiblePosition() == (mListView.getAdapter().getCount() - 1);
+            return mListView.getBottom() == (mListView.getAdapter().getItemCount() - 1);
         }
         return false;
     }
@@ -204,9 +206,9 @@ public class RefreshUtils extends SwipeRefreshLayout implements AbsListView.OnSc
     public void setLoading(boolean loading) {
         isLoading = loading;
         if (isLoading) {
-            mListView.addFooterView(mListViewFooter);
+            mListView.addView(mListViewFooter);
         } else {
-            mListView.removeFooterView(mListViewFooter);
+            mListView.removeView(mListViewFooter);
             mYDown = 0;
             mLastY = 0;
         }
@@ -218,9 +220,9 @@ public class RefreshUtils extends SwipeRefreshLayout implements AbsListView.OnSc
     public void setLoading1(boolean loading) {
         isLoading = loading;
         if (isLoading) {
-            mListView.addFooterView(mListViewFooter1);
+            mListView.addView(mListViewFooter,mListView.getAdapter().getItemCount());
         } else {
-            mListView.removeFooterView(mListViewFooter1);
+            mListView.removeView(mListViewFooter1);
             mYDown = 0;
             mLastY = 0;
         }
@@ -255,11 +257,11 @@ public class RefreshUtils extends SwipeRefreshLayout implements AbsListView.OnSc
         public void onLoad();
     }
 
-    public void setListViewAdapter(ListAdapter adapter){
+    public void setListViewAdapter(RecyclerView.Adapter adapter){
         if(mListView!=null){
-            mListView.addFooterView(mListViewFooter);
+            mListView.addView(mListViewFooter,mListView.getAdapter().getItemCount());
             mListView.setAdapter(adapter);  // 在setAdapter之前后调用addFooterView和removeFooterView防止出现类型转换异常
-            mListView.removeFooterView(mListViewFooter);
+            mListView.removeView(mListViewFooter);
         }
     }
 

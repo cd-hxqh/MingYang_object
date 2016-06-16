@@ -24,8 +24,13 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.RefreshUtils;
 
 import java.util.ArrayList;
@@ -83,6 +88,7 @@ public class Work_ListActivity extends BaseActivity{
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                refreshUtils.setLoading(true);
 //                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
 //                intent.putExtra("worktype",worktype);
 //                startActivity(intent);
@@ -131,36 +137,36 @@ public class Work_ListActivity extends BaseActivity{
     }
 
     private void getData(String search){
-//        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search, AccountUtils.getinsertSite(Work_ListActivity.this), page, 20), new HttpRequestHandler<Results>() {
-//            @Override
-//            public void onSuccess(Results results) {
-//                Log.i(TAG, "data=" + results);
-//            }
-//
-//            @Override
-//            public void onSuccess(Results results, int totalPages, int currentPage) {
-//                ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
-//                refresh_layout.setRefreshing(false);
-//                refresh_layout.setLoading(false);
-//                if (items == null || items.isEmpty()) {
-//                    nodatalayout.setVisibility(View.VISIBLE);
-//                } else {
-//                    if (page == 1) {
-//                        workListAdapter = new WorkListAdapter(Work_ListActivity.this);
-//                        recyclerView.setAdapter(workListAdapter);
-//                    }
-//                    if (totalPages == page) {
-//                        workListAdapter.adddate(items);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                refresh_layout.setRefreshing(false);
-//                nodatalayout.setVisibility(View.VISIBLE);
-//            }
-//        });
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search, page, 20), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
+                refreshUtils.setRefreshing(false);
+//                refreshUtils.setLoading(false);
+                if (items == null || items.isEmpty()) {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                } else {
+                    if (page == 1) {
+                        workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                        recyclerView.setAdapter(workListAdapter);
+                    }
+                    if (totalPages == page) {
+                        workListAdapter.adddate(items);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                refreshUtils.setRefreshing(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void setSearchEdit(){

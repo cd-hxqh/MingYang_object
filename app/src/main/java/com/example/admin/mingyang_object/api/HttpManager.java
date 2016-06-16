@@ -25,6 +25,8 @@ public class HttpManager {
     private static BaseApplication mApp = BaseApplication.getInstance();
     private static AsyncHttpClient sClient = null;
     private static final String TAG = "HttpManager";
+    private static String appid = null;
+    private static String objectname = null;
 
     /**
      * 设置待办事项接口*
@@ -41,13 +43,39 @@ public class HttpManager {
     /**
      * 设置工单接口*
      */
-    public static String getworkorderUrl(String type, String search, String siteid, int curpage, int showcount) {
+    public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
+        switch (type){
+            case Constants.FR://故障工单
+                appid = "UDREPORTWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.AA://终验收工单
+                appid = "UDZYSWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.DC://调试工单
+                appid = "DEBUGORDER";
+                objectname = "DEBUGWORKORDER";
+                break;
+            case Constants.SP://排查工单
+                appid = "UDPCWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.TP://技改工单
+                appid = "UDJGWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.WS://定检工单
+                appid = "UDDJWO";
+                objectname = "WORKORDER";
+                break;
+        }
         if (search.equals("")) {
-            return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WORKTYPE':'" + type + "','SITEID':'" + siteid + "'}}";
+            return "{'appid':'" + appid + "','objectname':'" +objectname + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         } else {
-            return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.WORKORDER_NAME + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'%" + search + "%','WORKTYPE':'" + type + "','SITEID':'" + siteid + "'}}";
+            return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'%" + search + "%','WORKTYPE':'" + type + "'}}";
         }
     }
 
