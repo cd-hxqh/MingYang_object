@@ -102,7 +102,7 @@ public class Udpro_ListActivity extends BaseActivity {
         // 注册上拉监听事件
         refreshUtils.setOnLoadListener(new RefreshUtils.OnLoadListener() {
             public void onLoad() {
-                Log.i(TAG,"this is onLoad");
+                Log.i(TAG, "this is onLoad");
                 page++;
                 getData(searchText);
             }
@@ -112,7 +112,7 @@ public class Udpro_ListActivity extends BaseActivity {
         refreshUtils.setOnRefreshListener(new RefreshUtils.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i(TAG,"this is refresh");
+                Log.i(TAG, "this is refresh");
                 page = 1;
                 udproAdapter.removeAll(items);
                 items = new ArrayList<Udpro>();
@@ -154,6 +154,7 @@ public class Udpro_ListActivity extends BaseActivity {
                             items.add(item.get(i));
                         }
                     }
+                    nodatalayout.setVisibility(View.GONE);
                     refreshUtils.setRefreshing(false);
                     initAdapter(items);
                 }
@@ -204,11 +205,11 @@ public class Udpro_ListActivity extends BaseActivity {
         udproAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Intent intent = new Intent(Udpro_ListActivity.this, InventoryActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("inventory", list.get(position));
-//                intent.putExtras(bundle);
-//                getActivity().startActivity(intent);
+                Intent intent = new Intent(Udpro_ListActivity.this, Udpro_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("udpro", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
             }
         });
     }

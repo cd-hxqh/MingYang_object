@@ -52,6 +52,10 @@
             android:name=".ui.activity.Udpro_ListActivity"
             android:label="@string/udrro_text"
             ></activity>
+        <activity
+            android:name=".ui.activity.Udpro_DetailActivity"
+            android:label="@string/udpro_detail_text"
+            ></activity>
     </application>
 
 </manifest>
