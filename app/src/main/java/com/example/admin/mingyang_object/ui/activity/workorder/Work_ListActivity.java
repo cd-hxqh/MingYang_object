@@ -110,7 +110,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        workListAdapter = new WorkListAdapter(this);
+        workListAdapter = new WorkListAdapter(this,worktype);
         recyclerView.setAdapter(workListAdapter);
         refresh_layout.setColor(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -140,7 +140,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
                     if (page == 1) {
-                        workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                        workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
                         recyclerView.setAdapter(workListAdapter);
                     }
                     if (totalPages == page) {
@@ -175,7 +175,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString().trim();
-                    workListAdapter = new WorkListAdapter(Work_ListActivity.this);
+                    workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
                     recyclerView.setAdapter(workListAdapter);
                     getData(searchText);
                     return true;

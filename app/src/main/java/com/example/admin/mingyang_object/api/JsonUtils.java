@@ -55,54 +55,6 @@ public class JsonUtils {
     }
 
 
-    /**
-     * 解析工单信息
-     */
-    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data, String type) {
-        Log.i(TAG, "WorkOrder data=" + data);
-        ArrayList<WorkOrder> list = null;
-        WorkOrder workOrder = null;
-        try {
-            JSONArray jsonArray = new JSONArray(data);
-            JSONObject jsonObject;
-            list = new ArrayList<WorkOrder>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                workOrder = new WorkOrder();
-                jsonObject = jsonArray.getJSONObject(i);
-                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
-                for (int j = 0; j < field.length; j++) {     //遍历所有属性
-                    field[j].setAccessible(true);
-                    String name = field[j].getName();    //获取属性的名字
-                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals(null)) {
-                        try {
-                            // 调用getter方法获取属性值
-                            Method getOrSet = workOrder.getClass().getMethod("get" + name);
-                            Object value = getOrSet.invoke(workOrder);
-                            if (value == null) {
-                                //调用setter方法设属性值
-                                Class[] parameterTypes = new Class[1];
-                                parameterTypes[0] = field[j].getType();
-                                getOrSet = workOrder.getClass().getDeclaredMethod("set" + name, parameterTypes);
-                                getOrSet.invoke(workOrder, jsonObject.getString(name));
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                list.add(workOrder);
-            }
-            return list;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * 解析项目台账信息*
-     */
-
     public static ArrayList<Udpro> parsingUdpro(Context ctx, String data) {
         Log.i(TAG, "udpro data=" + data);
         ArrayList<Udpro> list = null;
@@ -402,5 +354,48 @@ public class JsonUtils {
 
     }
 
+    /**
+     * 解析工单信息
+     */
+    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data, String type) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<WorkOrder> list = null;
+        WorkOrder workOrder = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<WorkOrder>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                workOrder = new WorkOrder();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = workOrder.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(workOrder);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = workOrder.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(workOrder,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(workOrder);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

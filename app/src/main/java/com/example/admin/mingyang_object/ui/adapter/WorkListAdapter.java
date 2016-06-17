@@ -12,7 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.WorkOrder;
+import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +26,11 @@ import java.util.List;
  */
 public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHolder> {
     Context mContext;
+    String worktype;
     List<WorkOrder>workOrderList = new ArrayList<>();
-    public WorkListAdapter(Context context) {
+    public WorkListAdapter(Context context,String worktype) {
         this.mContext = context;
+        this.worktype = worktype;
     }
 
 
@@ -39,18 +43,20 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final WorkOrder workOrder = workOrderList.get(position);
-        holder.itemNumTitle.setText(mContext.getString(R.string.work_num));
+        holder.itemNumTitle.setText(mContext.getString(R.string.work_wonum));
         holder.itemDescTitle.setText(mContext.getString(R.string.work_describe));
         holder.itemNum.setText(workOrder.WONUM);
         holder.itemDesc.setText(workOrder.DESCRIPTION);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(mContext, Work_detailsActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("workOrder", workOrder);
-////                intent.putExtras(bundle);
-//                mContext.startActivity(intent);
+                if (!worktype.equals(Constants.DC)) {
+                    Intent intent = new Intent(mContext, Work_DetailsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("workOrder", workOrder);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
             }
         });
     }

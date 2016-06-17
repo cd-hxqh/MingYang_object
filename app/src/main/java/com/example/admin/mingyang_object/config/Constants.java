@@ -200,7 +200,7 @@ public class Constants {
     public static final String DC = "DC";//调试工单
     public static final String SP = "SP";//排查工单
     public static final String TP = "TP";//技改工单
-    public static final String WS = "WS =";//定检工单
+    public static final String WS = "WS";//定检工单
 
     //工单状态
     public static final String STATUS1 = "已批准";
