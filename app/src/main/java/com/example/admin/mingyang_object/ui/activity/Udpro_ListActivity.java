@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +30,7 @@ import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdproAdapter;
 import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
+import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.example.admin.mingyang_object.utils.RefreshUtils;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import java.util.List;
  * Created by think on 2015/10/27.
  * 工单详情界面
  */
-public class Udpro_ListActivity extends BaseActivity {
+public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
     private static String TAG = "Udpro_ListActivity";
     /**
      * 编号*
@@ -57,8 +57,7 @@ public class Udpro_ListActivity extends BaseActivity {
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
     private UdproAdapter udproAdapter;
-    // 下拉加载，  下拉刷新控件
-    protected RefreshUtils refreshUtils;
+    private SwipeRefreshLayout refresh_layout = null;
     private EditText search;
     private String searchText = "";
     private int page = 1;
@@ -81,7 +80,7 @@ public class Udpro_ListActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refreshUtils = (RefreshUtils) findViewById(R.id.swipe_container);
+        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         search = (EditText) findViewById(R.id.search_edit);
     }
@@ -96,29 +95,16 @@ public class Udpro_ListActivity extends BaseActivity {
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        refresh_layout.setColor(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        refresh_layout.setRefreshing(true);
 
         getData(searchText);
 
-        // 注册上拉监听事件
-        refreshUtils.setOnLoadListener(new RefreshUtils.OnLoadListener() {
-            public void onLoad() {
-                Log.i(TAG, "this is onLoad");
-                page++;
-                getData(searchText);
-            }
-        });
-
-        // 注册下拉监听事件
-        refreshUtils.setOnRefreshListener(new RefreshUtils.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Log.i(TAG, "this is refresh");
-                page = 1;
-                udproAdapter.removeAll(items);
-                items = new ArrayList<Udpro>();
-                getData(searchText);
-            }
-        });
+        refresh_layout.setOnRefreshListener(this);
+        refresh_layout.setOnLoadListener(this);
 
     }
 
@@ -145,6 +131,8 @@ public class Udpro_ListActivity extends BaseActivity {
                 Log.i(TAG, "results=" + results.getResultlist());
 
                 ArrayList<Udpro> item = JsonUtils.parsingUdpro(Udpro_ListActivity.this, results.getResultlist());
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
@@ -155,13 +143,14 @@ public class Udpro_ListActivity extends BaseActivity {
                         }
                     }
                     nodatalayout.setVisibility(View.GONE);
-                    refreshUtils.setRefreshing(false);
+
                     initAdapter(items);
                 }
             }
 
             @Override
             public void onFailure(String error) {
+                refresh_layout.setRefreshing(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });
@@ -214,4 +203,16 @@ public class Udpro_ListActivity extends BaseActivity {
         });
     }
 
+    //下拉刷新触发事件
+    @Override
+    public void onRefresh() {
+        page = 1;
+        getData(search.getText().toString());
+    }
+
+    @Override
+    public void onLoad(){
+        page++;
+        getData(searchText);
+    }
 }

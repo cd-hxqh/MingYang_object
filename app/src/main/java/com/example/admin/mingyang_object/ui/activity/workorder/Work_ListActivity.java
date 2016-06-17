@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +29,7 @@ import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
+import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.RefreshUtils;
 
@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * Created by think on 2015/10/27.
  * 工单详情界面
  */
-public class Work_ListActivity extends BaseActivity{
+public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
     private static String TAG = "Work_ListActivity";
 
     private TextView titlename;
@@ -51,8 +51,7 @@ public class Work_ListActivity extends BaseActivity{
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
     private WorkListAdapter workListAdapter;
-    // 下拉加载，  下拉刷新控件
-    protected RefreshUtils refreshUtils;
+    private SwipeRefreshLayout refresh_layout = null;
     private EditText search;
     private String searchText = "";
     private int page = 1;
@@ -75,7 +74,7 @@ public class Work_ListActivity extends BaseActivity{
         addimg = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refreshUtils = (RefreshUtils) findViewById(R.id.swipe_container);
+        refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         search = (EditText) findViewById(R.id.search_edit);
     }
@@ -88,7 +87,6 @@ public class Work_ListActivity extends BaseActivity{
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                refreshUtils.setLoading(true);
 //                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
 //                intent.putExtra("worktype",worktype);
 //                startActivity(intent);
@@ -114,26 +112,16 @@ public class Work_ListActivity extends BaseActivity{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         workListAdapter = new WorkListAdapter(this);
         recyclerView.setAdapter(workListAdapter);
+        refresh_layout.setColor(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        refresh_layout.setRefreshing(true);
 
         getData(searchText);
 
-        // 注册上拉监听事件
-        refreshUtils.setOnLoadListener(new RefreshUtils.OnLoadListener() {
-            public void onLoad() {
-                page++;
-                getData(searchText);
-            }
-        });
-
-        // 注册下拉监听事件
-        refreshUtils.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                page = 1;
-                getData(search.getText().toString());
-            }
-        });
-
+        refresh_layout.setOnRefreshListener(this);
+        refresh_layout.setOnLoadListener(this);
     }
 
     private void getData(String search){
@@ -146,8 +134,8 @@ public class Work_ListActivity extends BaseActivity{
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
-                refreshUtils.setRefreshing(false);
-//                refreshUtils.setLoading(false);
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 if (items == null || items.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
@@ -163,7 +151,7 @@ public class Work_ListActivity extends BaseActivity{
 
             @Override
             public void onFailure(String error) {
-                refreshUtils.setRefreshing(false);
+                refresh_layout.setRefreshing(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });
@@ -197,16 +185,16 @@ public class Work_ListActivity extends BaseActivity{
         });
     }
 
-//    //下拉刷新触发事件
-//    @Override
-//    public void onRefresh() {
-//        page = 1;
-//        getData(search.getText().toString());
-//    }
-//
-//    @Override
-//    public void onLoad(){
-//        page++;
-//        getData(searchText);
-//    }
+    //下拉刷新触发事件
+    @Override
+    public void onRefresh() {
+        page = 1;
+        getData(search.getText().toString());
+    }
+
+    @Override
+    public void onLoad(){
+        page++;
+        getData(searchText);
+    }
 }
