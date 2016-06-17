@@ -44,7 +44,7 @@ public class HttpManager {
      * 设置工单接口*
      */
     public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
-        switch (type){
+        switch (type) {
             case Constants.FR://故障工单
                 appid = "UDREPORTWO";
                 objectname = "WORKORDER";
@@ -71,7 +71,7 @@ public class HttpManager {
                 break;
         }
         if (search.equals("")) {
-            return "{'appid':'" + appid + "','objectname':'" +objectname + "'," +
+            return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         } else {
             return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
@@ -154,7 +154,6 @@ public class HttpManager {
     }
 
 
-
     /**
      * 设置工程台账的接口
      */
@@ -165,7 +164,35 @@ public class HttpManager {
         return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "'}}";
     }
 
+    /**
+     * 设置风机型号的接口
+     */
+    public static String getUdfandetailsurl(String value, String pronum, String siteid, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
+        }
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
+    }
 
+    /**
+     * 设置项目人员的接口
+     */
+    public static String getUdpersonurl(String value, String pronum, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDPERSON_APPID + "','objectname':'" + Constants.UDPERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'=" + pronum + "'}}";
+        }
+        return "{'appid':'" + Constants.UDPERSON_APPID + "','objectname':'" + Constants.UDPERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DISPLAYNAME':'" + value + "','UDPRONUM':'=" + pronum + "'}}";
+    }
+
+    /**
+     * 设置项目车辆的接口
+     */
+    public static String getudvehicleurl(String value, String pronum, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDVEHICLE_APPID + "','objectname':'" + Constants.UDVEHICLE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
+        }
+        return "{'appid':'" + Constants.UDVEHICLE_APPID + "','objectname':'" + Constants.UDVEHICLE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LICENSENUM':'" + value + "','PRONUM':'=" + pronum + "'}}";
+    }
 
 
     /**
@@ -180,7 +207,7 @@ public class HttpManager {
     public static void loginWithUsername(final Context cxt, final String username, final String password, String imei,
                                          final HttpRequestHandler<String> handler) {
 
-        String ip_adress = AccountUtils.getIpAddress(cxt)+Constants.SIGN_IN_URL;
+        String ip_adress = AccountUtils.getIpAddress(cxt) + Constants.SIGN_IN_URL;
         Log.i(TAG, "ip_adress=" + ip_adress);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -221,7 +248,7 @@ public class HttpManager {
      * 不分页获取信息方法*
      */
     public static void getData(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
-        String url=AccountUtils.getIpAddress(cxt)+Constants.BASE_URL;
+        String url = AccountUtils.getIpAddress(cxt) + Constants.BASE_URL;
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);
@@ -250,7 +277,7 @@ public class HttpManager {
      */
     public static void getDataPagingInfo(final Context cxt, String data, final HttpRequestHandler<Results> handler) {
         Log.i(TAG, "data=" + data);
-        String url=AccountUtils.getIpAddress(cxt)+Constants.BASE_URL;
+        String url = AccountUtils.getIpAddress(cxt) + Constants.BASE_URL;
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("data", data);

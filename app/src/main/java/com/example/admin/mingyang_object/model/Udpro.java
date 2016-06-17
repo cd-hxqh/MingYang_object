@@ -6,88 +6,120 @@ import android.os.Parcelable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by apple on 15/10/26.
  * 库存余量
  */
-public class Udpro extends Entity implements Parcelable {
-    private static final String TAG = "Udpro";
-    private static final long serialVersionUID = 2015050105L;
+public class Udpro extends Entity implements Serializable {
 
-    public String pronum; //项目编号
-    public String description; //项目描述
-    public String branch; //所属中心
-    public String capacity; //总厂容量（MW）
-    public String contractstatus; //合同状态
-    public String owner; //业务单位
-    public String period; //质保期（年）
-    public String prostage; //项目当前阶段
-    public String respons; //责任人编号
-    public String signdate; //签订时间
+    private String PRONUM; //项目编号
+    private String DESCRIPTION; //项目描述
+    private String BRANCH; //所属中心
+    private String CAPACITY; //总厂容量（MW）
+    private String CONTRACTSTATUS; //合同状态
+    private String OWNER; //业务单位
+    private String PERIOD; //质保期（年）
+    private String PROSTAGE; //项目当前阶段
+    private String RESPONS; //责任人编号
+    private String SIGNDATE; //签订时间
+    private String SITEID; //站点
+    private String TESTPRO; //试点项目
 
-
-    @Override
-    public void parse(JSONObject jsonObject) throws JSONException {
-        pronum = jsonObject.getString("pronum");
-        description = jsonObject.getString("description");
-        branch = jsonObject.getString("branch");
-        capacity = jsonObject.getString("capacity");
-        contractstatus = jsonObject.getString("contractstatus");
-        owner = jsonObject.getString("owner");
-        period = jsonObject.getString("period");
-        prostage = jsonObject.getString("prostage");
-        respons = jsonObject.getString("respons");
-        signdate = jsonObject.getString("signdate");
+    public String getPRONUM() {
+        return PRONUM;
     }
 
-    public Udpro() {
+    public void setPRONUM(String PRONUM) {
+        this.PRONUM = PRONUM;
     }
 
-
-    private Udpro(Parcel in) {
-        pronum = in.readString();
-        description = in.readString();
-        branch = in.readString();
-        capacity = in.readString();
-        contractstatus = in.readString();
-        owner = in.readString();
-        period = in.readString();
-        prostage = in.readString();
-        respons = in.readString();
-        signdate = in.readString();
+    public String getDESCRIPTION() {
+        return DESCRIPTION;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setDESCRIPTION(String DESCRIPTION) {
+        this.DESCRIPTION = DESCRIPTION;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(pronum);
-        dest.writeString(description);
-        dest.writeString(branch);
-        dest.writeString(capacity);
-        dest.writeString(contractstatus);
-        dest.writeString(owner);
-        dest.writeString(period);
-        dest.writeString(prostage);
-        dest.writeString(respons);
-        dest.writeString(signdate);
-
+    public String getBRANCH() {
+        return BRANCH;
     }
 
+    public void setBRANCH(String BRANCH) {
+        this.BRANCH = BRANCH;
+    }
 
-    public static final Creator<Udpro> CREATOR = new Creator<Udpro>() {
-        @Override
-        public Udpro createFromParcel(Parcel source) {
-            return new Udpro(source);
-        }
+    public String getCAPACITY() {
+        return CAPACITY;
+    }
 
-        @Override
-        public Udpro[] newArray(int size) {
-            return new Udpro[size];
-        }
-    };
+    public void setCAPACITY(String CAPACITY) {
+        this.CAPACITY = CAPACITY;
+    }
 
+    public String getCONTRACTSTATUS() {
+        return CONTRACTSTATUS;
+    }
+
+    public void setCONTRACTSTATUS(String CONTRACTSTATUS) {
+        this.CONTRACTSTATUS = CONTRACTSTATUS;
+    }
+
+    public String getOWNER() {
+        return OWNER;
+    }
+
+    public void setOWNER(String OWNER) {
+        this.OWNER = OWNER;
+    }
+
+    public String getPERIOD() {
+        return PERIOD;
+    }
+
+    public void setPERIOD(String PERIOD) {
+        this.PERIOD = PERIOD;
+    }
+
+    public String getPROSTAGE() {
+        return PROSTAGE;
+    }
+
+    public void setPROSTAGE(String PROSTAGE) {
+        this.PROSTAGE = PROSTAGE;
+    }
+
+    public String getRESPONS() {
+        return RESPONS;
+    }
+
+    public void setRESPONS(String RESPONS) {
+        this.RESPONS = RESPONS;
+    }
+
+    public String getSIGNDATE() {
+        return SIGNDATE;
+    }
+
+    public void setSIGNDATE(String SIGNDATE) {
+        this.SIGNDATE = SIGNDATE;
+    }
+
+    public String getSITEID() {
+        return SITEID;
+    }
+
+    public void setSITEID(String SITEID) {
+        this.SITEID = SITEID;
+    }
+
+    public String getTESTPRO() {
+        return TESTPRO;
+    }
+
+    public void setTESTPRO(String TESTPRO) {
+        this.TESTPRO = TESTPRO;
+    }
 }

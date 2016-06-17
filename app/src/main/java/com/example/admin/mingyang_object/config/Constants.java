@@ -63,10 +63,23 @@ public class Constants {
     public static final String UDPRO_APPID="UDPROJECT";
     //工程台账表名**/
     public static final String UDPRO_NAME="UDPRO";
+    /**风机型号appid**/
+    public static final String UDFANDETAILS_APPID="UDFANDETAILS";
+    /**风机型号表名**/
+    public static final String UDFANDETAILS_NAME="UDFANDETAILS";
+
+    /**项目人员appid**/
+    public static final String UDPERSON_APPID="UDPERSON";
+    /**项目人员表名**/
+    public static final String UDPERSON_NAME="PERSON";
+
+    /**项目车辆appid**/
+    public static final String UDVEHICLE_APPID="UDVEHICLE";
+    /**项目车辆表名**/
+    public static final String UDVEHICLE_NAME="UDVEHICLE";
 
 
-
-
+    /**项目日报**/
 
 
     /**库存查询**/

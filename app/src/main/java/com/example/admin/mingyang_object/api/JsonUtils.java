@@ -6,6 +6,10 @@ import android.util.Log;
 import com.example.admin.mingyang_object.bean.LoginResults;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Entity;
+import com.example.admin.mingyang_object.model.UdPerson;
+import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Udpro;
 
@@ -50,7 +54,54 @@ public class JsonUtils {
         }
     }
 
-    /**解析项目台账信息**/
+
+    /**
+     * 解析工单信息
+     */
+    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data, String type) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<WorkOrder> list = null;
+        WorkOrder workOrder = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<WorkOrder>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                workOrder = new WorkOrder();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals(null)) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = workOrder.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(workOrder);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = workOrder.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(workOrder, jsonObject.getString(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(workOrder);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析项目台账信息*
+     */
 
     public static ArrayList<Udpro> parsingUdpro(Context ctx, String data) {
         Log.i(TAG, "udpro data=" + data);
@@ -60,19 +111,34 @@ public class JsonUtils {
             JSONArray jsonArray = new JSONArray(data);
             JSONObject jsonObject;
             list = new ArrayList<Udpro>();
+            Log.i(TAG, "jsonArray length=" + jsonArray.length());
             for (int i = 0; i < jsonArray.length(); i++) {
                 udpro = new Udpro();
                 jsonObject = jsonArray.getJSONObject(i);
-                udpro.pronum = jsonObject.getString("PRONUM");//项目编号
-                udpro.description = jsonObject.getString("DESCRIPTION"); //项目描述
-                udpro.branch = jsonObject.getString("BRANCH");//所属中心
-                udpro.capacity = jsonObject.getString("CAPACITY");//总厂容量（MW）
-                udpro.contractstatus = jsonObject.getString("CONTRACTSTATUS");//合同状态
-                udpro.owner = jsonObject.getString("OWNER");//业务单位
-                udpro.period = jsonObject.getString("PERIOD");//质保期（年）
-                udpro.prostage = jsonObject.getString("PROSTAGE");//项目当前阶段
-                udpro.respons = jsonObject.getString("RESPONS");//责任人编号
-                udpro.signdate = jsonObject.getString("SIGNDATE");//签订时间
+                Field[] field = udpro.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udpro.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udpro);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udpro.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udpro, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
                 list.add(udpro);
             }
             return list;
@@ -82,6 +148,196 @@ public class JsonUtils {
         }
 
     }
+
+    /**
+     * 解析风机型号信息*
+     */
+
+    public static ArrayList<Udfandetails> parsingUdfandetails(Context ctx, String data) {
+        ArrayList<Udfandetails> list = null;
+        Udfandetails udfandetails = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udfandetails>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udfandetails = new Udfandetails();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udfandetails.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udfandetails.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udfandetails);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udfandetails.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udfandetails, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udfandetails);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /**
+     * 解析风机型号信息*
+     */
+
+    public static ArrayList<UdPerson> parsingUdPerson(Context ctx, String data) {
+        ArrayList<UdPerson> list = null;
+        UdPerson udPerson = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<UdPerson>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udPerson = new UdPerson();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udPerson.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udPerson.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udPerson);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udPerson.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udPerson, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udPerson);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /**
+     * 解析项目车辆信息*
+     */
+
+    public static ArrayList<Udvehicle> parsingUdvehicle(Context ctx, String data) {
+        ArrayList<Udvehicle> list = null;
+        Udvehicle udvehicle = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udvehicle>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udvehicle = new Udvehicle();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udvehicle.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udvehicle.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udvehicle);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udvehicle.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udvehicle, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udvehicle);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+//    /**
+//     * 解析Json信息*
+//     */
+//
+//    public static ArrayList<Entity> parsing(Class<Udpro> tclass, Context ctx, String data) {
+//        ArrayList<Entity> list = null;
+//        Entity entity = null;
+//        try {
+//            JSONArray jsonArray = new JSONArray(data);
+//            JSONObject jsonObject;
+//            list = new ArrayList<Entity>();
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                entity = new Entity(tclass);
+//                jsonObject = jsonArray.getJSONObject(i);
+//                Field[] field = entity.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+//                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+//                    field[j].setAccessible(true);
+//                    String name = field[j].getName();    //获取属性的名字
+//                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+//                        try {
+//                            // 调用getter方法获取属性值
+//                            Method getOrSet = entity.getClass().getMethod("get" + name);
+//                            Object value = getOrSet.invoke(entity);
+//                            if (value == null) {
+//                                //调用setter方法设属性值
+//                                Class[] parameterTypes = new Class[1];
+//                                parameterTypes[0] = field[j].getType();
+//                                getOrSet = entity.getClass().getDeclaredMethod("set" + name, parameterTypes);
+//                                getOrSet.invoke(entity, jsonObject.getString(name));
+//                            }
+//
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                }
+//                list.add(entity);
+//            }
+//            return list;
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//
+//    }
 
     /**
      * 分页解析返回的结果*
@@ -146,47 +402,5 @@ public class JsonUtils {
 
     }
 
-    /**
-     * 解析工单信息
-     */
-    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data, String type) {
-        Log.i(TAG, "WorkOrder data=" + data);
-        ArrayList<WorkOrder> list = null;
-        WorkOrder workOrder = null;
-        try {
-            JSONArray jsonArray = new JSONArray(data);
-            JSONObject jsonObject;
-            list = new ArrayList<WorkOrder>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                workOrder = new WorkOrder();
-                jsonObject = jsonArray.getJSONObject(i);
-                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
-                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
-                    field[i].setAccessible(true);
-                    String name = field[j].getName();    //获取属性的名字
-                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals(null)){
-                        try{
-                            // 调用getter方法获取属性值
-                            Method getOrSet = workOrder.getClass().getMethod("get" + name);
-                            Object value = getOrSet.invoke(workOrder);
-                            if(value == null){
-                                //调用setter方法设属性值
-                                Class[] parameterTypes = new Class[1];
-                                parameterTypes[0] = field[i].getType();
-                                getOrSet = workOrder.getClass().getDeclaredMethod("set" + name,parameterTypes);
-                                getOrSet.invoke(workOrder,jsonObject.getString(name));
-                            }
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                list.add(workOrder);
-            }
-            return list;
-        }catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 }

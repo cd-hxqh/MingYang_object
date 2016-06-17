@@ -50,12 +50,19 @@
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.Udpro_ListActivity"
-            android:label="@string/udrro_text"
-            ></activity>
+            android:label="@string/udrro_text"></activity>
         <activity
             android:name=".ui.activity.Udpro_DetailActivity"
-            android:label="@string/udpro_detail_text"
-            ></activity>
+            android:label="@string/udpro_detail_text"></activity>
+        <activity
+            android:name=".ui.activity.Udfandetails_ListActivity"
+            android:label="@string/udfandetails_text"></activity>
+        <activity
+            android:name=".ui.activity.UdPerson_ListActivity"
+            android:label="@string/person_text"></activity>
+        <activity
+            android:name=".ui.activity.Ududvehicle_ListActivity"
+            android:label="@string/udvehicle_text"></activity>
     </application>
 
 </manifest>

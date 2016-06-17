@@ -110,6 +110,18 @@
     <string name="prostage_text">项目当前阶段:</string>
     <string name="capacity_text">总厂容量(MW):</string>
     <string name="period_text">保质期(年):</string>
+    <!--popup-->
+    <string name="udfandetails_text">风机型号</string>
+    <string name="person_text">项目人员</string>
+    <string name="udvehicle_text">项目车辆</string>
 
+    <!--风机型号-->
+    <string name="locnum_text">机位号:</string>
+    <string name="modeltype_text">型号:</string>
+    <!--项目人员-->
+    <string name="displayname_text">姓名:</string>
+    <string name="personid_text">工号:</string>
+    <string name="primaryphone_text">手机:</string>
+    <string name="udjbdescription_text">职务:</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.widget.BaseViewHolder;
 
@@ -14,8 +15,8 @@ import java.util.List;
 /**
  * Created by apple on 15/10/26
  */
-public class UdproAdapter extends BaseQuickAdapter<Udpro> {
-    public UdproAdapter(Context context, int layoutResId, List data) {
+public class UdfandetailsAdapter extends BaseQuickAdapter<Udfandetails> {
+    public UdfandetailsAdapter(Context context, int layoutResId, List data) {
         super(context, layoutResId, data);
     }
 
@@ -27,12 +28,12 @@ public class UdproAdapter extends BaseQuickAdapter<Udpro> {
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, Udpro item) {
+    protected void convert(BaseViewHolder helper, Udfandetails item) {
         CardView cardView = helper.getView(R.id.card_container);
-        helper.setText(R.id.item_num_title, mContext.getString(R.string.pronum_text));
-        helper.setText(R.id.item_desc_title, mContext.getString(R.string.prdesc_text));
-        helper.setText(R.id.item_num_text, item.getPRONUM());
-        helper.setText(R.id.item_desc_text, item.getDESCRIPTION());
+        helper.setText(R.id.item_num_title, mContext.getString(R.string.locnum_text));
+        helper.setText(R.id.item_desc_title, mContext.getString(R.string.modeltype_text));
+        helper.setText(R.id.item_num_text, item.getLOCNUM());
+        helper.setText(R.id.item_desc_text, item.getMODELTYPE());
     }
 
 

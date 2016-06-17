@@ -63,6 +63,21 @@ public class Udpro_DetailActivity extends BaseActivity {
 
     private Udpro udpro;
 
+    private PopupWindow popupWindow;
+
+    /**
+     * 风机型号*
+     */
+    private LinearLayout udfandetailsLinear;
+    /**
+     * 项目人员*
+     */
+    private LinearLayout personLinear;
+    /**
+     * 项目车辆*
+     */
+    private LinearLayout udvehicleLinear;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +89,15 @@ public class Udpro_DetailActivity extends BaseActivity {
     }
 
     private void geiIntentData() {
-        udpro = (Udpro) getIntent().getParcelableExtra("udpro");
+        udpro = (Udpro) getIntent().getSerializableExtra("udpro");
     }
 
     @Override
     protected void findViewById() {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
+        menuImageView = (ImageView) findViewById(R.id.title_add);
+
 
         pronumText = (TextView) findViewById(R.id.pronum_text_id);
         prDescText = (TextView) findViewById(R.id.prdesc_text_id);
@@ -95,17 +112,17 @@ public class Udpro_DetailActivity extends BaseActivity {
         periodText = (TextView) findViewById(R.id.period_text_id);
 
         if (udpro != null) {
-            pronumText.setText(udpro.pronum);
-            prDescText.setText(udpro.description);
-            branchText.setText(udpro.branch);
-            responsText.setText(udpro.respons);
-            ownerText.setText(udpro.owner);
-            signdateText.setText(udpro.signdate);
-            contractstatusText.setText(udpro.contractstatus);
+            pronumText.setText(udpro.getPRONUM());
+            prDescText.setText(udpro.getDESCRIPTION());
+            branchText.setText(udpro.getBRANCH());
+            responsText.setText(udpro.getRESPONS());
+            ownerText.setText(udpro.getOWNER());
+            signdateText.setText(udpro.getSIGNDATE());
+            contractstatusText.setText(udpro.getCONTRACTSTATUS());
 //            testproText.setText(udpro.t);
-            prostageText.setText(udpro.prostage);
-            capacityText.setText(udpro.capacity);
-            periodText.setText(udpro.period);
+            prostageText.setText(udpro.getPROSTAGE());
+            capacityText.setText(udpro.getCAPACITY());
+            periodText.setText(udpro.getPERIOD());
         }
     }
 
@@ -113,6 +130,9 @@ public class Udpro_DetailActivity extends BaseActivity {
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.udpro_detail_text));
+        menuImageView.setVisibility(View.VISIBLE);
+        menuImageView.setImageResource(R.mipmap.ic_more);
+        menuImageView.setOnClickListener(menuImageViewOnClickListener);
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -121,6 +141,77 @@ public class Udpro_DetailActivity extends BaseActivity {
             finish();
         }
     };
+    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(menuImageView);
+        }
+    };
+
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(Udpro_DetailActivity.this).inflate(
+                R.layout.popup_window, null);
 
 
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        popupWindow.showAsDropDown(view);
+        udfandetailsLinear = (LinearLayout) contentView.findViewById(R.id.udfandetails_id);
+        personLinear = (LinearLayout) contentView.findViewById(R.id.person_id);
+        udvehicleLinear = (LinearLayout) contentView.findViewById(R.id.udvehicle_id);
+
+        udfandetailsLinear.setOnClickListener(udfandetailsLinearOnClickListener);
+        personLinear.setOnClickListener(personLinearOnClickListener);
+        udvehicleLinear.setOnClickListener(udvehicleLinearOnClickListener);
+
+    }
+
+
+    private View.OnClickListener udfandetailsLinearOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udpro_DetailActivity.this, Udfandetails_ListActivity.class);
+            intent.putExtra("pronum", udpro.getPRONUM());
+            intent.putExtra("siteid", udpro.getSITEID());
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+
+        }
+    };
+    private View.OnClickListener personLinearOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udpro_DetailActivity.this, UdPerson_ListActivity.class);
+            intent.putExtra("pronum", udpro.getPRONUM());
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+
+        }
+    };
+    private View.OnClickListener udvehicleLinearOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udpro_DetailActivity.this, Ududvehicle_ListActivity.class);
+            intent.putExtra("pronum", udpro.getPRONUM());
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+
+        }
+    };
 }

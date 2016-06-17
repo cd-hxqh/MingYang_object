@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -27,13 +25,10 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdproAdapter;
-import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.RefreshUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +36,10 @@ import java.util.List;
 
 /**
  * Created by think on 2015/10/27.
- * 工单详情界面
+ * 项目日报
  */
-public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
-    private static String TAG = "Udpro_ListActivity";
+public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+    private static String TAG = "Udprorunlog_listactivity";
     /**
      * 编号*
      */
@@ -90,7 +85,7 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(R.string.udrro_text);
+        titlename.setText(R.string.udprorunlog_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -131,7 +126,7 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                ArrayList<Udpro> item = JsonUtils.parsingUdpro(Udpro_ListActivity.this, results.getResultlist());
+                ArrayList<Udpro> item = JsonUtils.parsingUdpro(Udprorunlog_listactivity.this, results.getResultlist());
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
                 if (item == null || item.isEmpty()) {
@@ -171,7 +166,7 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Udpro_ListActivity.this.getCurrentFocus()
+                                    Udprorunlog_listactivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString().trim();
@@ -190,12 +185,12 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
      * 获取数据*
      */
     private void initAdapter(final List<Udpro> list) {
-        udproAdapter = new UdproAdapter(Udpro_ListActivity.this, R.layout.list_item, list);
+        udproAdapter = new UdproAdapter(Udprorunlog_listactivity.this, R.layout.list_item, list);
         recyclerView.setAdapter(udproAdapter);
         udproAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(Udpro_ListActivity.this, Udpro_DetailActivity.class);
+                Intent intent = new Intent(Udprorunlog_listactivity.this, Udpro_DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("udpro", list.get(position));
                 intent.putExtras(bundle);
