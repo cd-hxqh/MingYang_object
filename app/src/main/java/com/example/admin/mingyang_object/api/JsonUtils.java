@@ -13,6 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -157,8 +160,27 @@ public class JsonUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 workOrder = new WorkOrder();
                 jsonObject = jsonArray.getJSONObject(i);
-                workOrder.WONUM = jsonObject.getString("WONUM");
-                workOrder.DESCRIPTION = jsonObject.getString("DESCRIPTION");
+                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[i].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals(null)){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = workOrder.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(workOrder);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[i].getType();
+                                getOrSet = workOrder.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(workOrder,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 list.add(workOrder);
             }
             return list;

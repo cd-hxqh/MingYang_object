@@ -5,7 +5,6 @@
     android:background="@color/white">
 
     <TableLayout
-        android:id="@+id/tablelayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -22,19 +21,14 @@
 
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/work_image_fault_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_fr"></ImageView>
 
                 <TextView
                     android:id="@+id/work_text_fault_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5dp"
-
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:drawableTop="@mipmap/ic_fr"
                     android:text="@string/work_fr"></TextView>
 
             </LinearLayout>
@@ -48,21 +42,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/work_image_prevent_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@mipmap/ic_aa"></ImageView>
-
                 <TextView
                     android:id="@+id/work_text_prevent_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="5dp"
-
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:drawableTop="@mipmap/ic_aa"
                     android:text="@string/work_aa"></TextView>
 
             </LinearLayout>
@@ -75,12 +62,6 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/work_image_status_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@mipmap/ic_dc"></ImageView>
 
                 <TextView
                     android:id="@+id/work_text_status_id"
@@ -88,7 +69,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:padding="5dp"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:drawableTop="@mipmap/ic_dc"
                     android:text="@string/work_dc"></TextView>
 
             </LinearLayout>
@@ -104,11 +86,6 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/work_image_project_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_sp"></ImageView>
 
                 <TextView
                     android:id="@+id/work_text_project_id"
@@ -116,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-
+                    android:drawableTop="@mipmap/ic_sp"
                     android:text="@string/work_sp"></TextView>
 
             </LinearLayout>
@@ -130,12 +107,6 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/work_image_service_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@mipmap/ic_tp"></ImageView>
 
                 <TextView
                     android:id="@+id/work_text_service_id"
@@ -144,7 +115,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="5dp"
-
+                    android:drawableTop="@mipmap/ic_tp"
                     android:text="@string/work_tp"></TextView>
 
             </LinearLayout>
@@ -157,13 +128,6 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/work_image_accident_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@mipmap/ic_ws"></ImageView>
-
                 <TextView
                     android:id="@+id/work_text_accident_id"
                     android:layout_width="wrap_content"
@@ -171,7 +135,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="5dp"
-
+                    android:drawableTop="@mipmap/ic_ws"
                     android:text="@string/work_ws"></TextView>
 
             </LinearLayout>
