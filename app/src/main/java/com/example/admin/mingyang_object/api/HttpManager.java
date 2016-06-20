@@ -72,7 +72,7 @@ public class HttpManager {
         }
         if (search.equals("")) {
             return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WORKTYPE':'" + type + "'}}";
         } else {
             return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'%" + search + "%','WORKTYPE':'" + type + "'}}";

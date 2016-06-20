@@ -135,20 +135,29 @@
     <string name="work_wtcode">风机型号</string>
     <string name="work_assettype">设备类别</string>
     <string name="work_perinspr">定检结果(Y\N)</string>//<!--排查结果/PERINSPR-->
+    <string name="work_perinspr2">排查结果(Y\N)</string>
+    <string name="work_perinspr3">技改结果(Y\N)</string>
     <string name="work_udremark">备注</string>
     <string name="work_isbigpar">大部件发放(Y/N)</string>
     <string name="work_udzgmeasure">故障处理方案</string>
     <string name="work_plannum">排查计划编号</string>
     <string name="work_pccompnum">排查完成台数</string><!--风机台数-->
+    <string name="work_pccompnum2">风机台数</string>
     <string name="work_pctype">排查类型</string>
     <string name="work_udfjfol">风机跟踪</string>
     <string name="work_pcreson">排查原因</string><!--技改原因-->
+    <string name="work_pcreson2">技改原因</string>
     <string name="work_udjgresult1">排查结果</string>
     <string name="work_jgplannum">技改计划编号</string>
     <string name="work_udjgtype">技改类型</string>
     <string name="work_udfjappnum">主控程序版本号</string>
     <string name="work_udrprrsb1">负责人</string>
 
+    <string name="work_woactivity">工作计划</string>
+    <string name="work_realinfo">实际情况</string>
+    <string name="work_failreport">故障汇报</string>
+    <string name="work_flower">发送工作流</string>
+    <string name="work_update">上传附件</string>
 
     <!--项目台账-->
     <string name="udpro_detail_text">台账详情</string>

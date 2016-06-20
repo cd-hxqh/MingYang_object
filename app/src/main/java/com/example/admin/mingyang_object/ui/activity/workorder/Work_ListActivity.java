@@ -32,6 +32,7 @@ import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.RefreshUtils;
+import com.example.admin.mingyang_object.utils.WorkTitle;
 
 import java.util.ArrayList;
 
@@ -82,7 +83,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(R.string.work_list_title);
+        titlename.setText(WorkTitle.getTitle(worktype));
         addimg.setVisibility(View.VISIBLE);
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,19 +134,24 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
-                refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
-                if (items == null || items.isEmpty()) {
+                if (results.getResultlist()!=null) {
+                    ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist(), worktype);
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                    if (items == null || items.isEmpty()) {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    } else {
+                        if (page == 1) {
+                            workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
+                            recyclerView.setAdapter(workListAdapter);
+                        }
+                        if (totalPages == page) {
+                            workListAdapter.adddate(items);
+                        }
+                    }
+                }else {
+                    refresh_layout.setRefreshing(false);
                     nodatalayout.setVisibility(View.VISIBLE);
-                } else {
-                    if (page == 1) {
-                        workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
-                        recyclerView.setAdapter(workListAdapter);
-                    }
-                    if (totalPages == page) {
-                        workListAdapter.adddate(items);
-                    }
                 }
             }
 

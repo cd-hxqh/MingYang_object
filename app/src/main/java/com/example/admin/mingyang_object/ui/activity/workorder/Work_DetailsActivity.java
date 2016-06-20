@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
@@ -72,6 +73,76 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView wonum;//工单号
     private EditText description;//工单描述
     private LinearLayout description_layout;
+    private TextView branch;//中心
+    private TextView udprojectnum;//项目
+    private TextView udlocnum;//机位号
+    private TextView udlocation;//位置
+    private TextView lead;//运行组/维护组工程师
+    private TextView status;//状态
+    private TextView createby;//创建人
+    private TextView createdate;//创建时间
+    private LinearLayout defultlayout;
+    private TextView failurecode;//故障类
+    private TextView problemcode;//问题原因
+    private TextView culevel;//故障等级
+    private TextView udrprrsb;//提报人
+    private TextView udzglimit;//提报时间
+    private LinearLayout udplannumlayout;
+    private TextView udplannum;//终验收计划号
+    private TextView schedstart;//故障开始时间
+    private TextView schedfinish;//故障结束时间
+    private TextView actstart;//实际开始时间
+    private TextView actfinish;//实际结束时间
+    private TextView isstoped;//是否停机
+    private TextView pmchgevalstart;//故障开始时间
+    private TextView pmchgevalend;//故障恢复时间
+    private TextView udjgresult;//累计时间
+    private TextView udprobdesc;//故障隐患描述
+    private LinearLayout timelayout;
+    private TextView udjpnum;//定检标准编号/排查标准/技改标准
+    private TextView udplstartdate;//计划开始时间
+    private TextView udplstopdate;//计划完成时间
+    private TextView udrlstartdate;//实际开始时间
+    private TextView udrlstopdate;//实际完成时间
+    private LinearLayout inspolayout;
+    private TextView udinspoby;//定检人员1
+    private TextView udinspoby2;//定检人员2
+    private TextView udinspoby3;//定检人员3
+    private TextView djplannum;//定检计划编号
+    private TextView djtype;//定检类型
+    private TextView pccompnum1;//计划定检风机台数
+    private LinearLayout lastlayout;
+    private TextView wtcode;//风机型号
+    private LinearLayout assettypelayout;
+    private TextView assettype;//设备类别
+    private LinearLayout perinsprlayout;
+    private TextView perinsprtext;
+    private TextView perinspr;//定检结果
+    private LinearLayout udremarklayout;
+    private TextView udremark;//备注
+    private LinearLayout isbigparlayout;
+    private TextView isbigpar;//大部件发放
+    private LinearLayout udzgmeasurelayout;
+    private TextView udzgmeasure;//故障处理方案
+    private LinearLayout plannumlayout;
+    private TextView plannum;//排查计划编号
+    private LinearLayout pccompnumlayout;
+    private TextView pccompnumtext;
+    private TextView pccompnum;//排查完成台数/风机台数
+    private LinearLayout pctypelayout;
+    private TextView pctype;//排查类型
+    private LinearLayout udfjfollayout;
+    private TextView udfjfol;//风机跟踪
+    private LinearLayout pcresonlayout;
+    private TextView pcresontext;
+    private TextView pcreson;//排查原因/技改原因
+    private LinearLayout udjgresult1layout;
+    private TextView udjgresult1;//排查结果
+    private LinearLayout udjgwolayout;
+    private TextView jgplannum;//技改计划编号
+    private TextView udjgtype;//技改类型
+    private TextView udfjappnum;//主控程序版本号
+    private TextView udrprrsb1;//负责人
 
 
     private Button delete;
@@ -117,27 +188,155 @@ public class Work_DetailsActivity extends BaseActivity {
         wonum = (TextView) findViewById(R.id.work_wonum);
         description = (EditText) findViewById(R.id.work_describe);
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
+        branch = (TextView) findViewById(R.id.work_branch);
+        udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
+        udlocnum = (TextView) findViewById(R.id.work_udlocnum);
+        udlocation = (TextView) findViewById(R.id.work_udlocation);
+        lead = (TextView) findViewById(R.id.work_lead);
+        status = (TextView) findViewById(R.id.work_status);
+        createby = (TextView) findViewById(R.id.work_createby);
+        createdate = (TextView) findViewById(R.id.work_createdate);
+        defultlayout = (LinearLayout) findViewById(R.id.work_defultlayout);
+        failurecode = (TextView) findViewById(R.id.work_failurecode);
+        problemcode = (TextView) findViewById(R.id.work_problemcode);
+        culevel = (TextView) findViewById(R.id.work_culevel);
+        udrprrsb = (TextView) findViewById(R.id.work_udrprrsb);
+        udzglimit = (TextView) findViewById(R.id.work_udzglimit);
+        udplannumlayout = (LinearLayout) findViewById(R.id.work_udplannum_layout);
+        udplannum = (TextView) findViewById(R.id.work_udplannum);
+        schedstart = (TextView) findViewById(R.id.work_schedstart);
+        schedfinish = (TextView) findViewById(R.id.work_schedfinish);
+        actstart = (TextView) findViewById(R.id.work_actstart);
+        actfinish = (TextView) findViewById(R.id.work_actfinish);
+        isstoped = (TextView) findViewById(R.id.work_isstoped);
+        pmchgevalstart = (TextView) findViewById(R.id.work_pmchgevalstart);
+        pmchgevalend = (TextView) findViewById(R.id.work_pmchgevalend);
+        udjgresult = (TextView) findViewById(R.id.work_udjgresult);
+        udprobdesc = (TextView) findViewById(R.id.work_udprobdesc);
+        timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
+        udjpnum = (TextView) findViewById(R.id.work_udjpnum);
+        udplstartdate = (TextView) findViewById(R.id.work_udplstartdate);
+        udplstopdate = (TextView) findViewById(R.id.work_udplstopdate);
+        udrlstartdate = (TextView) findViewById(R.id.work_udrlstartdate);
+        udrlstopdate = (TextView) findViewById(R.id.work_udrlstopdate);
+        inspolayout = (LinearLayout) findViewById(R.id.work_inspolayout);
+        udinspoby = (TextView) findViewById(R.id.work_udinspoby);
+        udinspoby2 = (TextView) findViewById(R.id.work_udinspoby2);
+        udinspoby3 = (TextView) findViewById(R.id.work_udinspoby3);
+        djplannum = (TextView) findViewById(R.id.work_djplannum);
+        djtype = (TextView) findViewById(R.id.work_djtype);
+        pccompnum1 = (TextView) findViewById(R.id.work_pccompnum1);
+        lastlayout = (LinearLayout) findViewById(R.id.work_lastlayout);
+        wtcode = (TextView) findViewById(R.id.work_wtcode);
+        assettypelayout = (LinearLayout) findViewById(R.id.work_assettype_layout);
+        assettype = (TextView) findViewById(R.id.work_assettype);
+        perinsprlayout = (LinearLayout) findViewById(R.id.work_perinspr_layout);
+        perinsprtext = (TextView) findViewById(R.id.work_perinspr_text);
+        perinspr = (TextView) findViewById(R.id.work_perinspr);
+        udremarklayout = (LinearLayout) findViewById(R.id.work_udremark_layout);
+        udremark = (TextView) findViewById(R.id.work_udremark);
+        isbigparlayout = (LinearLayout) findViewById(R.id.work_isbigpar_layout);
+        isbigpar = (TextView) findViewById(R.id.work_isbigpar);
+        udzgmeasurelayout = (LinearLayout) findViewById(R.id.work_udzgmeasure_layout);
+        udzgmeasure = (TextView) findViewById(R.id.work_udzgmeasure);
+        plannumlayout = (LinearLayout) findViewById(R.id.work_plannum_layout);
+        plannum = (TextView) findViewById(R.id.work_plannum);
+        pccompnumlayout = (LinearLayout) findViewById(R.id.work_pccompnum_layout);
+        pccompnumtext = (TextView) findViewById(R.id.work_pccompnum_text);
+        pccompnum = (TextView) findViewById(R.id.work_pccompnum);
+        pctypelayout = (LinearLayout) findViewById(R.id.work_pctype_layout);
+        pctype = (TextView) findViewById(R.id.work_pctype);
+        udfjfollayout = (LinearLayout) findViewById(R.id.work_udfjfol_layout);
+        udfjfol = (TextView) findViewById(R.id.work_udfjfol);
+        pcresonlayout = (LinearLayout) findViewById(R.id.work_pcreson_layout);
+        pcresontext = (TextView) findViewById(R.id.work_pcreson_text);
+        pcreson = (TextView) findViewById(R.id.work_pcreson);
+        udjgresult1layout = (LinearLayout) findViewById(R.id.work_udjgresult1e_layout);
+        udjgresult1 = (TextView) findViewById(R.id.work_udjgresult1);
+        udjgwolayout = (LinearLayout) findViewById(R.id.work_udjgwo_layout);
+        jgplannum = (TextView) findViewById(R.id.work_jgplannum);
+        udjgtype = (TextView) findViewById(R.id.work_udjgtype);
+        udfjappnum = (TextView) findViewById(R.id.work_udfjappnum);
+        udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
     }
 
     @Override
     protected void initView() {
-        titlename.setText(WorkTitle.getTitle(workOrder.WORKTYPE));
+        titlename.setText(WorkTitle.getTitle(workOrder.WORKTYPE)+"详情");
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-//        menuImageView.setImageResource(R.drawable.ic_drawer);
+        menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
-        workOrder.isnew = false;
+        if (!workOrder.isnew) {
+            workOrder.isnew = false;
+        }
 
         wonum.setText(workOrder.WONUM);
         description.setText(workOrder.DESCRIPTION);
+        branch.setText(workOrder.BRANCH);
+        udprojectnum.setText(workOrder.UDPROJECTNUM);
+        udlocnum.setText(workOrder.UDLOCNUM);
+        udlocation.setText(workOrder.UDLOCATION);
+        lead.setText(workOrder.LEAD);
+        status.setText(workOrder.STATUS);
+        createby.setText(workOrder.CREATEBY);
+        createdate.setText(workOrder.CREATEDATE);
+        failurecode.setText(workOrder.FAILURECODE);
+        problemcode.setText(workOrder.PROBLEMCODE);
+        culevel.setText(workOrder.CULEVEL);
 
+        udzglimit.setText(workOrder.UDZGLIMIT);
+        udplannum.setText(workOrder.UDPLANNUM);
+        schedstart.setText(workOrder.SCHEDSTART);
+        schedfinish.setText(workOrder.SCHEDFINISH);
+        actstart.setText(workOrder.ACTSTART);
+        actfinish.setText(workOrder.ACTFINISH);
+        isstoped.setText(workOrder.ISSTOPED);
+        pmchgevalstart.setText(workOrder.PMCHGEVALSTART);
+        pmchgevalend.setText(workOrder.PMCHGEVALEND);
+        if (workOrder.WORKTYPE.equals(Constants.FR)) {
+            udrprrsb.setText(workOrder.UDRPRRSB);
+            udjgresult.setText(workOrder.UDJGRESULT);
+        }else {
+            udrprrsb1.setText(workOrder.UDRPRRSB);
+            udjgresult1.setText(workOrder.UDJGRESULT);
+        }
+        udprobdesc.setText(workOrder.UDPROBDESC);
+        udjpnum.setText(workOrder.UDJPNUM);
+        udplstartdate.setText(workOrder.UDPLSTARTDATE);
+        udplstopdate.setText(workOrder.UDPLSTOPDATE);
+        udrlstartdate.setText(workOrder.UDRLSTARTDATE);
+        udrlstopdate.setText(workOrder.UDRLSTOPDATE);
+        udinspoby.setText(workOrder.UDINSPOBY);
+        udinspoby2.setText(workOrder.UDINSPOBY2);
+        udinspoby3.setText(workOrder.UDINSPOBY3);
+        djplannum.setText(workOrder.DJPLANNUM);
+        djtype.setText(workOrder.DJTYPE);
+        if (workOrder.WORKTYPE.equals(Constants.WS)) {
+            pccompnum1.setText(workOrder.PCCOMPNUM);
+        }else {
+            pccompnum.setText(workOrder.PCCOMPNUM);
+        }
+        wtcode.setText(workOrder.WTCODE);
+        assettype.setText(workOrder.ASSETTYPE);
+        perinspr.setText(workOrder.PERINSPR);
+        udremark.setText(workOrder.UDREMARK);
+        isbigpar.setText(workOrder.ISBIGPAR);
+        udzgmeasure.setText(workOrder.UDZGMEASURE);
+        plannum.setText(workOrder.PLANNUM);
+        pctype.setText(workOrder.PCTYPE);
+        udfjfol.setText(workOrder.UDFJFOL);
+        pcreson.setText(workOrder.PCRESON);
 
+        jgplannum.setText(workOrder.JGPLANNUM);
+        udjgtype.setText(workOrder.UDJGTYPE);
+        udfjappnum.setText(workOrder.UDFJAPPNUM);
 
 
 //        delete.setOnClickListener(deleteOnClickListener);
@@ -199,20 +398,63 @@ public class Work_DetailsActivity extends BaseActivity {
     private void setLayout() {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
+                timelayout.setVisibility(View.GONE);
+                inspolayout.setVisibility(View.GONE);
+                lastlayout.setVisibility(View.GONE);
                 break;
             case "AA"://终验收工单
-
+                defultlayout.setVisibility(View.GONE);
+                inspolayout.setVisibility(View.GONE);
+                assettypelayout.setVisibility(View.GONE);
+                perinsprlayout.setVisibility(View.GONE);
+                udremarklayout.setVisibility(View.GONE);
+                isbigparlayout.setVisibility(View.GONE);
+                udzgmeasurelayout.setVisibility(View.GONE);
+                plannumlayout.setVisibility(View.GONE);
+                pccompnumlayout.setVisibility(View.GONE);
+                pctypelayout.setVisibility(View.GONE);
+                udfjfollayout.setVisibility(View.GONE);
+                pcresonlayout.setVisibility(View.GONE);
+                udjgresult1layout.setVisibility(View.GONE);
+                udjgwolayout.setVisibility(View.GONE);
                 break;
             case "DC"://调试工单
 
                 break;
             case "SP"://排查工单
-
+                udplannumlayout.setVisibility(View.GONE);
+                defultlayout.setVisibility(View.GONE);
+                inspolayout.setVisibility(View.GONE);
+                assettypelayout.setVisibility(View.GONE);
+                perinsprtext.setText(R.string.work_perinspr2);
+                isbigparlayout.setVisibility(View.GONE);
+                udjgwolayout.setVisibility(View.GONE);
                 break;
             case "TP"://技改工单
-
+                udplannumlayout.setVisibility(View.GONE);
+                defultlayout.setVisibility(View.GONE);
+                inspolayout.setVisibility(View.GONE);
+                perinsprtext.setText(R.string.work_perinspr3);
+                udremarklayout.setVisibility(View.GONE);
+                isbigparlayout.setVisibility(View.GONE);
+                udzgmeasurelayout.setVisibility(View.GONE);
+                plannumlayout.setVisibility(View.GONE);
+                pccompnumtext.setText(R.string.work_pccompnum2);
+                pctypelayout.setVisibility(View.GONE);
+                pcresontext.setText(R.string.work_pcreson2);
+                udjgresult1layout.setVisibility(View.GONE);
                 break;
             case "WS"://定检工单
+                udplannumlayout.setVisibility(View.GONE);
+                defultlayout.setVisibility(View.GONE);
+                udzgmeasurelayout.setVisibility(View.GONE);
+                plannumlayout.setVisibility(View.GONE);
+                pccompnumlayout.setVisibility(View.GONE);
+                pctypelayout.setVisibility(View.GONE);
+                udfjfollayout.setVisibility(View.GONE);
+                pcresonlayout.setVisibility(View.GONE);
+                udjgresult1layout.setVisibility(View.GONE);
+                udjgwolayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -247,55 +489,55 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            showPopupWindow(menuImageView);
+            showPopupWindow(menuImageView);
         }
     };
 
     /**
      * 初始化showPopupWindow*
      */
-//    private void showPopupWindow(View view) {
-//
-//        // 一个自定义的布局，作为显示的内容
-//        View contentView = LayoutInflater.from(Work_DetailsActivity.this).inflate(
-//                R.layout.work_popup_window, null);
-//
-//
-//        popupWindow = new PopupWindow(contentView,
-//                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//        popupWindow.setTouchable(true);
-//        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-//        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//
-//                return false;
-//                // 这里如果返回true的话，touch事件将被拦截
-//                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-//            }
-//        });
-//
-//        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-//        // 我觉得这里是API的一个bug
-//        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-//                R.drawable.popup_background_mtrl_mult));
-//
-//        // 设置好参数之后再show
-//        popupWindow.showAsDropDown(view);
-//
-//        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
-////        taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
-//        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
-//        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
+    private void showPopupWindow(View view) {
+
+        // 一个自定义的布局，作为显示的内容
+        View contentView = LayoutInflater.from(Work_DetailsActivity.this).inflate(
+                R.layout.work_popup_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        // 我觉得这里是API的一个bug
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        // 设置好参数之后再show
+        popupWindow.showAsDropDown(view);
+
+        planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
+//        taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
+        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
+        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
 //        planLinearlayout.setOnClickListener(planOnClickListener);
-////        taskLinearLayout.setOnClickListener(taskOnClickListener);
+//        taskLinearLayout.setOnClickListener(taskOnClickListener);
 //        realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 //        reportLinearLayout.setOnClickListener(reportOnClickListener);
-//        decisionLayout();
-//
-//    }
+        decisionLayout();
+
+    }
 //
 //    private View.OnClickListener planOnClickListener = new View.OnClickListener() {
 //        @Override
