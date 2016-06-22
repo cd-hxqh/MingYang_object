@@ -196,6 +196,17 @@ public class HttpManager {
 
 
     /**
+     * 设置项目日报的接口
+     */
+    public static String getudprorunlogurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRORUNLOGNUM':'" + value + "'}}";
+    }
+
+
+    /**
      * 使用用户名密码登录
      *
      * @param cxt
@@ -290,8 +301,10 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.i(TAG, "statusCode" + "responseString=" + responseString);
                 Results result = JsonUtils.parsingResults(cxt, responseString);
+                if (null == result) {
+                    SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
+                }
 
                 SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
             }

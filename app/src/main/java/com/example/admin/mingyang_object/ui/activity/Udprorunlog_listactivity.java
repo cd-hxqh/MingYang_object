@@ -26,8 +26,10 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdproAdapter;
+import com.example.admin.mingyang_object.ui.adapter.UdprorunlogAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
@@ -53,13 +55,13 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private UdproAdapter udproAdapter;
+    private UdprorunlogAdapter udprorunlogAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private EditText search;
     private String searchText = "";
     private int page = 1;
 
-    ArrayList<Udpro> items = new ArrayList<Udpro>();
+    ArrayList<Udprorunlog> items = new ArrayList<Udprorunlog>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +119,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
 
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdprourl(search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getudprorunlogurl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -126,7 +128,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                ArrayList<Udpro> item = JsonUtils.parsingUdpro(Udprorunlog_listactivity.this, results.getResultlist());
+                ArrayList<Udprorunlog> item = JsonUtils.parsingUdprorunlog(Udprorunlog_listactivity.this, results.getResultlist());
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
                 if (item == null || item.isEmpty()) {
@@ -170,8 +172,8 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString().trim();
-                    udproAdapter.removeAll(items);
-                    items = new ArrayList<Udpro>();
+                    udprorunlogAdapter.removeAll(items);
+                    items = new ArrayList<Udprorunlog>();
                     getData(searchText);
                     return true;
                 }
@@ -184,15 +186,15 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
     /**
      * 获取数据*
      */
-    private void initAdapter(final List<Udpro> list) {
-        udproAdapter = new UdproAdapter(Udprorunlog_listactivity.this, R.layout.list_item, list);
-        recyclerView.setAdapter(udproAdapter);
-        udproAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+    private void initAdapter(final List<Udprorunlog> list) {
+        udprorunlogAdapter = new UdprorunlogAdapter(Udprorunlog_listactivity.this, R.layout.list_item, list);
+        recyclerView.setAdapter(udprorunlogAdapter);
+        udprorunlogAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(Udprorunlog_listactivity.this, Udpro_DetailActivity.class);
+                Intent intent = new Intent(Udprorunlog_listactivity.this, Udprorunlog_DetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("udpro", list.get(position));
+                bundle.putSerializable("udprorunlog", list.get(position));
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
             }
@@ -203,6 +205,8 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
     @Override
     public void onRefresh() {
         page = 1;
+        udprorunlogAdapter.removeAll(items);
+        items = new ArrayList<Udprorunlog>();
         getData(search.getText().toString());
     }
 

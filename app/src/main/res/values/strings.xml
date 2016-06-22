@@ -141,11 +141,13 @@
     <string name="work_isbigpar">大部件发放(Y/N)</string>
     <string name="work_udzgmeasure">故障处理方案</string>
     <string name="work_plannum">排查计划编号</string>
-    <string name="work_pccompnum">排查完成台数</string><!--风机台数-->
+    <string name="work_pccompnum">排查完成台数</string>
+    <!--风机台数-->
     <string name="work_pccompnum2">风机台数</string>
     <string name="work_pctype">排查类型</string>
     <string name="work_udfjfol">风机跟踪</string>
-    <string name="work_pcreson">排查原因</string><!--技改原因-->
+    <string name="work_pcreson">排查原因</string>
+    <!--技改原因-->
     <string name="work_pcreson2">技改原因</string>
     <string name="work_udjgresult1">排查结果</string>
     <string name="work_jgplannum">技改计划编号</string>
@@ -185,5 +187,16 @@
     <string name="personid_text">工号:</string>
     <string name="primaryphone_text">手机:</string>
     <string name="udjbdescription_text">职务:</string>
+
+    <!--项目日报-->
+    <string name="prorunlognum_text">日志编号:</string>
+    <string name="desction_text">描述:</string>
+    <string name="udproresc_text">现场负责人:</string>
+    <string name="contdesc_text">现场联系人:</string>
+    <string name="year_text">年/月:</string>
+    <string name="prostage_1_text">项目阶段:</string>
+    <string name="status_text">状态:</string>
+
+    <string name="udprorunlog_detail_title">日报详情</string>
 
 </resources>

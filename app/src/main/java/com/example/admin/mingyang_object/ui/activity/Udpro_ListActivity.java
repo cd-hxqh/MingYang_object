@@ -41,7 +41,7 @@ import java.util.List;
 
 /**
  * Created by think on 2015/10/27.
- * 工单详情界面
+ *项目台账界面
  */
 public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private static String TAG = "Udpro_ListActivity";

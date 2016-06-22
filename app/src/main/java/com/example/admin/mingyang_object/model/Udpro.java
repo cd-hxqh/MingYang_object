@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * Created by apple on 15/10/26.
- * 库存余量
+ * 项目台账
  */
 public class Udpro extends Entity implements Serializable {
 

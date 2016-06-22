@@ -67,6 +67,12 @@
         <activity
             android:name=".ui.activity.Ududvehicle_ListActivity"
             android:label="@string/udvehicle_text"></activity>
+        <activity
+            android:name=".ui.activity.Udprorunlog_listactivity"
+            android:label="@string/udprorunlog_text"></activity>
+        <activity
+            android:name=".ui.activity.Udprorunlog_DetailActivity"
+            android:label="@string/udprorunlog_detail_title"></activity>
     </application>
 
 </manifest>

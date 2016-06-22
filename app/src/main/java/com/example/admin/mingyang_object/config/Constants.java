@@ -79,7 +79,10 @@ public class Constants {
     public static final String UDVEHICLE_NAME="UDVEHICLE";
 
 
-    /**项目日报**/
+    /**项目日报appid**/
+    public static final String UDPRORUNLOG_APPID="UDPRORUN";
+    /**项目日报表名**/
+    public static final String UDPRORUNLOG_NAME="UDPRORUNLOG";
 
 
     /**库存查询**/

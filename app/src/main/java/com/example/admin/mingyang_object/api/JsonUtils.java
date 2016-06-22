@@ -9,6 +9,7 @@ import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Udpro;
@@ -54,7 +55,7 @@ public class JsonUtils {
         }
     }
 
-
+    /**项目台账**/
     public static ArrayList<Udpro> parsingUdpro(Context ctx, String data) {
         Log.i(TAG, "udpro data=" + data);
         ArrayList<Udpro> list = null;
@@ -242,6 +243,54 @@ public class JsonUtils {
         }
 
     }
+
+
+    /**项目日报**/
+    public static ArrayList<Udprorunlog> parsingUdprorunlog(Context ctx, String data) {
+        Log.i(TAG, "Udprorunlog data=" + data);
+        ArrayList<Udprorunlog> list = null;
+        Udprorunlog udprorunlog = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udprorunlog>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udprorunlog = new Udprorunlog();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udprorunlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udprorunlog.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udprorunlog);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udprorunlog.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udprorunlog, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udprorunlog);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 
 
 //    /**

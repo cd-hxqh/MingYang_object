@@ -99,7 +99,7 @@ public class Ududvehicle_ListActivity extends BaseActivity implements SwipeRefre
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(R.string.person_text);
+        titlename.setText(R.string.udvehicle_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -139,7 +139,6 @@ public class Ududvehicle_ListActivity extends BaseActivity implements SwipeRefre
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.i(TAG, "results=" + results.getResultlist());
 
                 ArrayList<Udvehicle> item = JsonUtils.parsingUdvehicle(Ududvehicle_ListActivity.this, results.getResultlist());
                 refresh_layout.setRefreshing(false);
