@@ -95,9 +95,9 @@ public class HttpManager {
     /**
      * 设置计划任务接口*
      */
-    public static String getwoactivityUrl(String type, String wonum, String sitesite, int curpage, int showcount) {
-        return "{'appid':'" + "UDWOALL','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
-                ",'condition':{'parent':'" + wonum + "','siteid':'" + sitesite + "'}" +
+    public static String getwoactivityUrl(String wonum,int curpage,int showcount) {
+        return "{'appid':'" + "WOACTIVITY','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'parent':'" + wonum + "'}" +
                 "}";
     }
 

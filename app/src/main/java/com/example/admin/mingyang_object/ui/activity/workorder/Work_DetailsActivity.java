@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
@@ -56,10 +57,6 @@ public class Work_DetailsActivity extends BaseActivity {
      * 工作计划*
      */
     private LinearLayout planLinearlayout;
-//    /**
-//     * 任务分配*
-//     */
-//    private LinearLayout taskLinearLayout;
     /**
      * 实际情况
      */
@@ -68,6 +65,14 @@ public class Work_DetailsActivity extends BaseActivity {
      * 故障汇报*
      */
     private LinearLayout reportLinearLayout;
+    /**
+     * 发送工作流*
+     */
+    private LinearLayout flowerLinearLayout;
+    /**
+     * 上传附件*
+     */
+    private LinearLayout commitLinearLayout;
     private WorkOrder workOrder;
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
@@ -149,7 +154,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private Button revise;
     private Button work_flow;
 
-//    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
 //    private ArrayList<Labtrans> labtransList = new ArrayList<>();
 //    private ArrayList<Failurereport> failurereportList = new ArrayList<>();
 
@@ -418,9 +423,9 @@ public class Work_DetailsActivity extends BaseActivity {
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
                 break;
-            case "DC"://调试工单
-
-                break;
+//            case "DC"://调试工单
+//
+//                break;
             case "SP"://排查工单
                 udplannumlayout.setVisibility(View.GONE);
                 defultlayout.setVisibility(View.GONE);
@@ -465,13 +470,14 @@ public class Work_DetailsActivity extends BaseActivity {
     private void decisionLayout() {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
+                planLinearlayout.setVisibility(View.GONE);
                 break;
             case "AA"://终验收工单
 
                 break;
-            case "DC"://调试工单
-
-                break;
+//            case "DC"://调试工单
+//
+//                break;
             case "SP"://排查工单
 
                 break;
@@ -479,6 +485,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
                 break;
             case "WS"://定检工单
+
                 break;
             default:
                 break;
@@ -528,29 +535,30 @@ public class Work_DetailsActivity extends BaseActivity {
         popupWindow.showAsDropDown(view);
 
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
-//        taskLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_task_id);
         realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
         reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
-//        planLinearlayout.setOnClickListener(planOnClickListener);
+        flowerLinearLayout = (LinearLayout) findViewById(R.id.work_flower_id);
+        commitLinearLayout = (LinearLayout) findViewById(R.id.work_commit_id);
+        planLinearlayout.setOnClickListener(planOnClickListener);
 //        taskLinearLayout.setOnClickListener(taskOnClickListener);
 //        realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
 //        reportLinearLayout.setOnClickListener(reportOnClickListener);
         decisionLayout();
 
     }
-//
-//    private View.OnClickListener planOnClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            Intent intent = new Intent(Work_detailsActivity.this, Woactivity_Activity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("workOrder", workOrder);
-//            bundle.putSerializable("woactivityList", woactivityList);
-//            intent.putExtras(bundle);
-//            startActivityForResult(intent,1000);
-//            popupWindow.dismiss();
-//        }
-//    };
+
+    private View.OnClickListener planOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("woactivityList", woactivityList);
+            intent.putExtras(bundle);
+            startActivityForResult(intent,1000);
+            popupWindow.dismiss();
+        }
+    };
 //
 ////    private View.OnClickListener taskOnClickListener = new View.OnClickListener() {
 ////        @Override
@@ -855,7 +863,7 @@ public class Work_DetailsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        Option option;
-//        switch (resultCode) {
+        switch (resultCode) {
 //            case Constants.ASSETCODE:
 //                option = (Option) data.getSerializableExtra("option");
 //                assetnum.setText(option.getName());
@@ -910,9 +918,9 @@ public class Work_DetailsActivity extends BaseActivity {
 //                option = (Option) data.getSerializableExtra("option");
 //                udgzlbdm.setText(option.getName());
 //                break;
-//            case 1000:
-//                woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
-//                break;
+            case 1000:
+                woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
+                break;
 //            case 2000:
 //                labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");
 //                break;
@@ -921,6 +929,6 @@ public class Work_DetailsActivity extends BaseActivity {
 //                break;
 //            default:
 //                break;
-//        }
+        }
     }
 }

@@ -58,6 +58,9 @@
     <string name="title_activity_main">主界面</string>
     <string name="work_list_title">工单列表</string>
     <string name="work_detail_title">工单详情</string>
+    <string name="work_plan_title">工单计划</string>
+    <string name="title_activity_workwoactivity">工单任务</string>
+    <string name="title_activity_woactivitydetails">任务详情</string>
 
     <string name="item_num_title">编号:</string>
     <string name="item_desc_title">描述:</string>
@@ -155,11 +158,53 @@
     <string name="work_udfjappnum">主控程序版本号</string>
     <string name="work_udrprrsb1">负责人</string>
 
-    <string name="work_woactivity">工作计划</string>
+    <string name="work_plan">工作计划</string>
+    <string name="work_woactivity">任务</string>
+    <string name="work_taskid">任务号:</string>
+    <string name="woactivity_description">描述:</string>
+    <string name="woactivity_wojo1">系统/项目:</string>
+    <string name="woactivity_wojo2">子系统/子项目:</string>
+    <string name="woactivity_wojo3">检查/检修方法:</string>
+    <string name="woactivity_wojo4">kks编码:</string>
+    <string name="woactivity_udsaftydesc">安全缺失(隐患)描述:</string>
+    <string name="woactivity_udzgstu">整改情况回复:</string>
+    <string name="woactivity_udzgstu1">检修情况:</string>
+    <string name="woactivity_udinsunit">排查部位:</string>
+    <string name="woactivity_udrprrsb">整改责任人:</string>
+    <string name="woactivity_allpower">人员数量:</string>
+    <string name="woactivity_alloptime">耗时(小时):</string>
+    <string name="woactivity_invcontent">定检规格:</string>
+    <string name="woactivity_invcontent1">技改完成情况:</string>
+    <string name="woactivity_udrlstopdate">完成时间:</string>
+    <string name="woactivity_schedstart">计划开始时间:</string>
+    <string name="woactivity_schedfinish">计划完成时间:</string>
+    <string name="woactivity_estdur">估计持续时间:</string>
+    <string name="woactivity_owner">负责人:</string>
+    <string name="woactivity_actstart">实际开始时间:</string>
+    <string name="woactivity_actfinish">实际完成时间:</string>
+    <string name="woactivity_udstarttime">开始时间:</string>
+    <string name="woactivity_udendtime">结束时间:</string>
+    <string name="woactivity_udzyscorn">工作任务:</string>
+    <string name="woactivity_udzysbasic">执行标准:</string>
+    <string name="woactivity_perinspr1">终验收结果:</string>
+    <string name="woactivity_perinspr2">排查结果:</string>
+    <string name="woactivity_perinspr3">定检结果:</string>
+    <string name="woactivity_udprobdesc">问题描述:</string>
+    <string name="woactivity_udremark">备注:</string>
+    <string name="woactivity_lead">整改责任人:</string>
+    <string name="woactivity_udzgmeasure1">整改方案:</string>
+    <string name="woactivity_udzgmeasure2">整改措施及建议:</string>
+    <string name="woactivity_udzgmeasure3">不合格修正措施:</string>
+    <string name="woactivity_udzglimit">整改期限:</string>
+    <string name="woactivity_udzgresult1">整改完成情况:</string>
+    <string name="woactivity_udzgresult2">整改结果验证:</string>
+    
+    <string name="work_labtrans">员工</string>
+    <string name="work_matusetrans">物料</string>
     <string name="work_realinfo">实际情况</string>
     <string name="work_failreport">故障汇报</string>
     <string name="work_flower">发送工作流</string>
-    <string name="work_update">上传附件</string>
+    <string name="work_commit">上传附件</string>
 
     <!--项目台账-->
     <string name="udpro_detail_text">台账详情</string>

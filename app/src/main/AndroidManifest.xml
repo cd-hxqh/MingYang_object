@@ -53,6 +53,30 @@
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
+            android:name=".ui.activity.workorder.Work_PlanActivity"
+            android:label="@string/work_plan_title"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.Work_WoactivityActivity"
+            android:label="@string/title_activity_workwoactivity"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityDetailsActivity_AA"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityDetailsActivity_SP"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityDetailsActivity_TP"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityDetailsActivity_WS"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
             android:name=".ui.activity.Udpro_ListActivity"
             android:label="@string/udrro_text"></activity>
         <activity

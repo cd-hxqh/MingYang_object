@@ -11,6 +11,7 @@ import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udvehicle;
+import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Udpro;
 
@@ -447,4 +448,48 @@ public class JsonUtils {
         }
     }
 
+    /**
+     * 解析工单信息
+     */
+    public static ArrayList<Woactivity> parsingWoactivity(Context ctx, String data, String wonum) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<Woactivity> list = null;
+        Woactivity woactivity = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Woactivity>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                woactivity = new Woactivity();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = woactivity.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = woactivity.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(woactivity);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = woactivity.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(woactivity,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                woactivity.WONUM = wonum;
+                list.add(woactivity);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
