@@ -12,6 +12,7 @@ import com.example.admin.mingyang_object.R;
 
 public class LoadActivity extends BaseActivity {
 
+
     private static final int ANIMATION_DURATION = 2000;
     private static final float SCALE_END = 1.13F;
 
