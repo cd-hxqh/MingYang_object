@@ -35,7 +35,7 @@ public class Constants {
 
     /**------------------数据库表名配置－－开始**/
     //待办事项的appid
-    public static final String WFASSIGNMENT_APPID="INBOX";
+    public static final String WFASSIGNMENT_APPID="WFDESIGN";
 
     //待办事项的表名
     public static final String WFASSIGNMENT_NAME="WFASSIGNMENT";

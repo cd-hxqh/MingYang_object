@@ -65,17 +65,19 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     /**
-     * 风机型号*
+     * 土建*
      */
-    private LinearLayout udfandetailsLinear;
+    private LinearLayout tujianLinearLayout;
     /**
-     * 项目人员*
+     * 吊装*
      */
-    private LinearLayout personLinear;
+    private LinearLayout diaozhuangLinearLayout;
     /**
-     * 项目车辆*
+     * 工作日志*
      */
-    private LinearLayout udvehicleLinear;
+    private LinearLayout gzrzLinearLayout;
+    /**工装管理**/
+    private LinearLayout gzglLinearLayout;
 
 
     @Override
@@ -146,7 +148,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
     private void showPopupWindow(View view) {
 
         View contentView = LayoutInflater.from(Udprorunlog_DetailActivity.this).inflate(
-                R.layout.popup_window, null);
+                R.layout.logpopup_window, null);
 
 
         popupWindow = new PopupWindow(contentView,
@@ -167,18 +169,20 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
                 R.mipmap.popup_background_mtrl_mult));
 
         popupWindow.showAsDropDown(view);
-        udfandetailsLinear = (LinearLayout) contentView.findViewById(R.id.udfandetails_id);
-        personLinear = (LinearLayout) contentView.findViewById(R.id.person_id);
-        udvehicleLinear = (LinearLayout) contentView.findViewById(R.id.udvehicle_id);
+        tujianLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline1_text_id);
+        diaozhuangLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline2_text_id);
+        gzrzLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline_text_id);
+        gzglLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline4_text_id);
 
-        udfandetailsLinear.setOnClickListener(udfandetailsLinearOnClickListener);
-        personLinear.setOnClickListener(personLinearOnClickListener);
-        udvehicleLinear.setOnClickListener(udvehicleLinearOnClickListener);
+        tujianLinearLayout.setOnClickListener(tujianLinearOnClickListener);
+        diaozhuangLinearLayout.setOnClickListener(personLinearOnClickListener);
+        gzrzLinearLayout.setOnClickListener(udvehicleLinearOnClickListener);
+        gzglLinearLayout.setOnClickListener(udvehicleLinearOnClickListener);
 
     }
 
 
-    private View.OnClickListener udfandetailsLinearOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener tujianLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 //            Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udfandetails_ListActivity.class);

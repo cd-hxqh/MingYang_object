@@ -18,6 +18,7 @@ import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.ui.fragment.NavigationDrawerFragment;
 import com.example.admin.mingyang_object.ui.fragment.ProjectFragment;
 import com.example.admin.mingyang_object.ui.fragment.WfassigFragment;
+import com.example.admin.mingyang_object.ui.fragment.Wfment_fragment;
 import com.example.admin.mingyang_object.ui.fragment.WorkFragment;
 
 
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity
     /**
      * 待办事项*
      */
-    private WfassigFragment mNewWfassigFragment;
+    private Wfment_fragment mNewWfassigFragment;
 
     /**
      * 项目管理*
@@ -101,7 +102,7 @@ public class MainActivity extends BaseActivity
         switch (position) {
             case 0: //待办任务
                 if (mNewWfassigFragment == null) {
-                    mNewWfassigFragment = new WfassigFragment();
+                    mNewWfassigFragment = new Wfment_fragment();
                     Bundle bundle = new Bundle();
                     mNewWfassigFragment.setArguments(bundle);
                 }
