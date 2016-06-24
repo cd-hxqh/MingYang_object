@@ -3,23 +3,22 @@ package com.example.admin.mingyang_object.ui.activity.workorder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.model.Woactivity;
-import com.example.admin.mingyang_object.model.WorkOrder;
+import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 
 
 /**
  * Created by think on 2016/6/21.
- * 定检工单任务详情页面
+ * 调试工单子表新增页面
  */
-public class WoactivityDetailsActivity_WS extends BaseActivity {
+public class UddebugWorkOrderLineAddNewActivity extends BaseActivity {
     /**
      * 返回按钮
      */
@@ -29,24 +28,25 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
      */
     private TextView titleTextView;
 
-    private Woactivity woactivity = new Woactivity();
-    private WorkOrder workOrder;
+    private UddebugWorkOrderLine uddebugWorkOrderLine = new UddebugWorkOrderLine();
+    private DebugWorkOrder workOrder = new DebugWorkOrder();
     private int position;
 
-    private TextView taskid;//任务
-    private EditText description;//描述
-    private EditText wojo1;//系统/项目
-    private EditText wojo2;//子系统/子项目
-    private EditText wojo3;//检查/检修方法
-    private TextView wojo4;//kks编码
-    private EditText allpower;//人员数量
-    private EditText alloptime;//耗时(小时)
-    private EditText invcontent;//定检规格
-    private EditText udzgstu;//检修情况
-    private EditText udzgmeasure;//不合格修正措施
-    private CheckBox perinspr;//定检结果
-    private TextView udrlstopdate;//完成时间
-    private EditText udremark;//备注
+    private TextView winddrivengeneratornum;//风机编码
+    private EditText fjlocation;//机台号
+    private TextView dynamicdebugdate;//调试日期
+    private TextView synchronizationdebugdate;//并网运行日期
+    private TextView time1;//静态调试日期
+    private TextView time2;//动态调试日期
+    private EditText vesion;//程序版本号
+    private TextView responsibleperson;//调试责任人
+    private TextView debugleader;//调试组长
+    private TextView crew;//调试工程师1
+    private TextView crew2;//调试工程师2
+    private TextView crew3;//调试工程师3
+    private EditText question;//问题记录
+    private EditText dispose;//处理过程
+    private EditText remark;//备注
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button delete;//删除
@@ -55,7 +55,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_woactivity_details_ws);
+        setContentView(R.layout.activity_uddebugworkorderline_details);
 
         geiIntentData();
         findViewById();
@@ -63,9 +63,9 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
     }
 
     private void geiIntentData() {
-        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
-        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        position = getIntent().getIntExtra("position",0);
+//        uddebugWorkOrderLine = (UddebugWorkOrderLine) getIntent().getSerializableExtra("uddebugWorkOrderLine");
+//        workOrder = (DebugWorkOrder) getIntent().getSerializableExtra("workOrder");
+//        position = getIntent().getIntExtra("position", 0);
     }
 
     @Override
@@ -73,20 +73,21 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
 
-        taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
-        description = (EditText) findViewById(R.id.woactivity_description);
-        wojo1 = (EditText) findViewById(R.id.woactivity_wojo1);
-        wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
-        wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
-        wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
-        allpower = (EditText) findViewById(R.id.woactivity_allpower);
-        alloptime = (EditText) findViewById(R.id.woactivity_alloptime);
-        invcontent = (EditText) findViewById(R.id.woactivity_invcontent);
-        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
-        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
-        perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
-        udrlstopdate = (TextView) findViewById(R.id.woactivity_udrlstopdate);
-        udremark = (EditText) findViewById(R.id.woactivity_udremark);
+        winddrivengeneratornum = (TextView) findViewById(R.id.debug_winddrivengeneratornum);
+        fjlocation = (EditText) findViewById(R.id.debug_fjlocation);
+        dynamicdebugdate = (TextView) findViewById(R.id.debug_dynamicdebugdate);
+        synchronizationdebugdate = (TextView) findViewById(R.id.debug_synchronizationdebugdate);
+        time1 = (TextView) findViewById(R.id.debug_time1);
+        time2 = (TextView) findViewById(R.id.debug_time2);
+        vesion = (EditText) findViewById(R.id.debug_vesion);
+        responsibleperson = (TextView) findViewById(R.id.debug_responsibleperson);
+        debugleader = (TextView) findViewById(R.id.debug_debugleader);
+        crew = (TextView) findViewById(R.id.debug_crew);
+        crew2 = (TextView) findViewById(R.id.debug_crew2);
+        crew3 = (TextView) findViewById(R.id.debug_crew3);
+        question = (EditText) findViewById(R.id.debug_question);
+        dispose = (EditText) findViewById(R.id.debug_dispose);
+        remark = (EditText) findViewById(R.id.debug_remark);
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
 //        confirm = (Button) findViewById(R.id.confirm);
 //        delete = (Button) findViewById(R.id.work_delete);
@@ -100,30 +101,16 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
                 finish();
             }
         });
-        titleTextView.setText(getResources().getString(R.string.title_activity_woactivitydetails));
+        titleTextView.setText("新增" + getResources().getString(R.string.title_activity_uddebugworkorderlinedetails));
 
-        taskid.setText(woactivity.TASKID);
-        description.setText(woactivity.DESCRIPTION);
-        wojo1.setText(woactivity.WOJO1);
-        wojo2.setText(woactivity.WOJO2);
-        wojo3.setText(woactivity.WOJO3);
-        wojo4.setText(woactivity.WOJO4);
-        allpower.setText(woactivity.ALLPOWER);
-        alloptime.setText(woactivity.ALLOPTIME);
-        invcontent.setText(woactivity.INVCONTENT);
-        udzgstu.setText(woactivity.UDZGSTU);
-        udzgmeasure.setText(woactivity.UDZGMEASURE);
-        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
-        udrlstopdate.setText(woactivity.UDRLSTOPDATE);
-        udremark.setText(woactivity.UDREMARK);
 //        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
     }
 
-    private Woactivity getWoactivity() {
-        Woactivity woactivity = this.woactivity;
+    private UddebugWorkOrderLine getWoactivity() {
+        UddebugWorkOrderLine uddebugWorkOrderLine = this.uddebugWorkOrderLine;
 
-        return woactivity;
+        return uddebugWorkOrderLine;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {

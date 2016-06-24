@@ -2,9 +2,7 @@ package com.example.admin.mingyang_object.ui.activity.workorder;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,10 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
@@ -46,7 +42,7 @@ import java.util.ArrayList;
 /**
  * Created by think on 2015/10/29.
  */
-public class Work_DetailsActivity extends BaseActivity {
+public class Work_AddNewActivity extends BaseActivity {
 
     private TextView titlename;
     private ImageView menuImageView;
@@ -73,7 +69,7 @@ public class Work_DetailsActivity extends BaseActivity {
      * 上传附件*
      */
     private LinearLayout commitLinearLayout;
-    private WorkOrder workOrder;
+    private WorkOrder workOrder = new WorkOrder();
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
     private EditText description;//工单描述
@@ -180,7 +176,7 @@ public class Work_DetailsActivity extends BaseActivity {
      * 获取数据*
      */
     private void geiIntentData() {
-        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        workOrder.WORKTYPE = getIntent().getStringExtra("worktype");
     }
 
     @Override
@@ -267,7 +263,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titlename.setText(WorkTitle.getTitle(workOrder.WORKTYPE) + "详情");
+        titlename.setText(WorkTitle.getTitle("新建" + workOrder.WORKTYPE));
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -278,71 +274,8 @@ public class Work_DetailsActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
-        if (!workOrder.isnew) {
-            workOrder.isnew = false;
-        }
-
-        wonum.setText(workOrder.WONUM);
-        description.setText(workOrder.DESCRIPTION);
-        branch.setText(workOrder.BRANCH);
-        udprojectnum.setText(workOrder.UDPROJECTNUM);
-        udlocnum.setText(workOrder.UDLOCNUM);
-        udlocation.setText(workOrder.UDLOCATION);
-        lead.setText(workOrder.LEAD);
-        status.setText(workOrder.STATUS);
-        createby.setText(workOrder.CREATEBY);
-        createdate.setText(workOrder.CREATEDATE);
-        failurecode.setText(workOrder.FAILURECODE);
-        problemcode.setText(workOrder.PROBLEMCODE);
-        culevel.setText(workOrder.CULEVEL);
-
-        udzglimit.setText(workOrder.UDZGLIMIT);
-        udplannum.setText(workOrder.UDPLANNUM);
-        schedstart.setText(workOrder.SCHEDSTART);
-        schedfinish.setText(workOrder.SCHEDFINISH);
-        actstart.setText(workOrder.ACTSTART);
-        actfinish.setText(workOrder.ACTFINISH);
-        isstoped.setText(workOrder.ISSTOPED);
-        pmchgevalstart.setText(workOrder.PMCHGEVALSTART);
-        pmchgevalend.setText(workOrder.PMCHGEVALEND);
-        if (workOrder.WORKTYPE.equals(Constants.FR)) {
-            udrprrsb.setText(workOrder.UDRPRRSB);
-            udjgresult.setText(workOrder.UDJGRESULT);
-        }else {
-            udrprrsb1.setText(workOrder.UDRPRRSB);
-            udjgresult1.setChecked(workOrder.UDJGRESULT!=null&&workOrder.UDJGRESULT.equals("Y"));
-        }
-        udprobdesc.setText(workOrder.UDPROBDESC);
-        udjpnum.setText(workOrder.UDJPNUM);
-        udplstartdate.setText(workOrder.UDPLSTARTDATE);
-        udplstopdate.setText(workOrder.UDPLSTOPDATE);
-        udrlstartdate.setText(workOrder.UDRLSTARTDATE);
-        udrlstopdate.setText(workOrder.UDRLSTOPDATE);
-        udinspoby.setText(workOrder.UDINSPOBY);
-        udinspoby2.setText(workOrder.UDINSPOBY2);
-        udinspoby3.setText(workOrder.UDINSPOBY3);
-        djplannum.setText(workOrder.DJPLANNUM);
-        djtype.setText(workOrder.DJTYPE);
-        if (workOrder.WORKTYPE.equals(Constants.WS)) {
-            pccompnum1.setText(workOrder.PCCOMPNUM);
-        }else {
-            pccompnum.setText(workOrder.PCCOMPNUM);
-        }
-        wtcode.setText(workOrder.WTCODE);
-        assettype.setText(workOrder.ASSETTYPE);
-        perinspr.setChecked(workOrder.PERINSPR!=null&&workOrder.PERINSPR.equals("Y"));
-        udremark.setText(workOrder.UDREMARK);
-        isbigpar.setChecked(workOrder.ISBIGPAR!=null&&workOrder.ISBIGPAR.equals("Y"));
-        udzgmeasure.setText(workOrder.UDZGMEASURE);
-        plannum.setText(workOrder.PLANNUM);
-        pctype.setText(workOrder.PCTYPE);
-        udfjfol.setText(workOrder.UDFJFOL);
-        pcreson.setText(workOrder.PCRESON);
-
-        jgplannum.setText(workOrder.JGPLANNUM);
-        udjgtype.setText(workOrder.UDJGTYPE);
-        udfjappnum.setText(workOrder.UDFJAPPNUM);
-
+        workOrder.isnew = true;
+        work_numlayout.setVisibility(View.GONE);
 
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
@@ -359,7 +292,7 @@ public class Work_DetailsActivity extends BaseActivity {
     };
 
     private void NormalListDialog() {
-        final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, mMenuItems);
+        final NormalListDialog dialog = new NormalListDialog(Work_AddNewActivity.this, mMenuItems);
         dialog.title("请选择")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -388,14 +321,16 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     //时间选择监听
-    private class TimeOnClickListener implements View.OnClickListener{
+    private class TimeOnClickListener implements View.OnClickListener {
         TextView textView;
-        private TimeOnClickListener(TextView textView){
+
+        private TimeOnClickListener(TextView textView) {
             this.textView = textView;
         }
+
         @Override
         public void onClick(View view) {
-            new DateTimeSelect(Work_DetailsActivity.this, textView).showDialog();
+            new DateTimeSelect(Work_AddNewActivity.this, textView).showDialog();
         }
     }
 
@@ -506,7 +441,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private void showPopupWindow(View view) {
 
         // 一个自定义的布局，作为显示的内容
-        View contentView = LayoutInflater.from(Work_DetailsActivity.this).inflate(
+        View contentView = LayoutInflater.from(Work_AddNewActivity.this).inflate(
                 R.layout.work_popup_window, null);
 
 
@@ -550,12 +485,12 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
+            Intent intent = new Intent(Work_AddNewActivity.this, Work_WoactivityActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
             bundle.putSerializable("woactivityList", woactivityList);
             intent.putExtras(bundle);
-            startActivityForResult(intent,1000);
+            startActivityForResult(intent, 1000);
             popupWindow.dismiss();
         }
     };
@@ -605,12 +540,11 @@ public class Work_DetailsActivity extends BaseActivity {
 //    };
 
 
-
     /**
      * 提交数据*
      */
     private void submitDataInfo() {
-        final NormalDialog dialog = new NormalDialog(Work_DetailsActivity.this);
+        final NormalDialog dialog = new NormalDialog(Work_AddNewActivity.this);
         dialog.content("确定修改工单吗?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -698,7 +632,7 @@ public class Work_DetailsActivity extends BaseActivity {
      * 提交数据*
      */
     private void deleteDataInfo() {
-        final NormalDialog dialog = new NormalDialog(Work_DetailsActivity.this);
+        final NormalDialog dialog = new NormalDialog(Work_AddNewActivity.this);
         dialog.content("确定删除工单吗?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -759,7 +693,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
 
     private void MaterialDialogOneBtn1() {//审批工作流
-        final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
+        final MaterialDialog dialog = new MaterialDialog(Work_AddNewActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
@@ -790,7 +724,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
 
     private void EditDialog(final boolean isok) {//输入审核意见
-        final NormalEditTextDialog dialog = new NormalEditTextDialog(Work_DetailsActivity.this);
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Work_AddNewActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//

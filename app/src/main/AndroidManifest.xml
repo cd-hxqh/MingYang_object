@@ -57,7 +57,15 @@
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
+            android:name=".ui.activity.workorder.Work_AddNewActivity"
+            android:label="@string/work_detail_title"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
             android:name=".ui.activity.workorder.DebugWork_DetailsActivity"
+            android:label="@string/work_detail_title"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.DebugWork_AddNewActivity"
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
@@ -89,7 +97,27 @@
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
+            android:name=".ui.activity.workorder.WoactivityAddNewActivity_AA"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityAddNewActivity_SP"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityAddNewActivity_TP"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityAddNewActivity_WS"
+            android:label="@string/title_activity_woactivitydetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
             android:name=".ui.activity.workorder.UddebugWorkOrderLineDetailsActivity"
+            android:label="@string/title_activity_uddebugworkorderlinedetails"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.UddebugWorkOrderLineAddNewActivity"
             android:label="@string/title_activity_uddebugworkorderlinedetails"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity

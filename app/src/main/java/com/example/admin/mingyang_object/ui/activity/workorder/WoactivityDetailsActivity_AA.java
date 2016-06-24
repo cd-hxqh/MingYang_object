@@ -40,7 +40,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
     private TextView udstarttime;//开始时间
     private TextView udendtime;//结束时间
     private EditText udzysbasic;//执行标准
-    private EditText perinspr;//终验收结果
+    private CheckBox perinspr;//终验收结果
     private EditText udprobdesc;//问题描述
     private TextView udzglimit;//整改期限
     private TextView lead;//整改责任人
@@ -78,7 +78,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udstarttime = (TextView) findViewById(R.id.woactivity_udstarttime);
         udendtime = (TextView) findViewById(R.id.woactivity_udendtime);
         udzysbasic = (EditText) findViewById(R.id.woactivity_udzysbasic);
-        perinspr = (EditText) findViewById(R.id.woactivity_perinspr);
+        perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
         udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
         lead = (TextView) findViewById(R.id.woactivity_lead);
@@ -105,7 +105,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udstarttime.setText(woactivity.UDSTARTTIME);
         udendtime.setText(woactivity.UDENDTIME);
         udzysbasic.setText(woactivity.UDZYSBASIC);
-        perinspr.setText(woactivity.PERINSPR);
+        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
         udprobdesc.setText(woactivity.UDPROBDESC);
         udzglimit.setText(woactivity.UDZGLIMIT);
         lead.setText(woactivity.LEAD);

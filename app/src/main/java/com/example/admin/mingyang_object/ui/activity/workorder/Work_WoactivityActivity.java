@@ -224,40 +224,49 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (confirmlayout.getVisibility() == View.VISIBLE) {
-                final NormalDialog dialog = new NormalDialog(Work_WoactivityActivity.this);
-                dialog.content("确定放弃修改吗?")//
-                        .showAnim(mBasIn)//
-                        .dismissAnim(mBasOut)//
-                        .show();
-
-                dialog.setOnBtnClickL(
-                        new OnBtnClickL() {
-                            @Override
-                            public void onBtnClick() {
-                                dialog.dismiss();
-                            }
-                        },
-                        new OnBtnClickL() {
-                            @Override
-                            public void onBtnClick() {
-                                Work_WoactivityActivity.this.finish();
-//                            dialog.dismiss();
-                            }
-                        });
-            } else {
+//            if (confirmlayout.getVisibility() == View.VISIBLE) {
+//                final NormalDialog dialog = new NormalDialog(Work_WoactivityActivity.this);
+//                dialog.content("确定放弃修改吗?")//
+//                        .showAnim(mBasIn)//
+//                        .dismissAnim(mBasOut)//
+//                        .show();
+//
+//                dialog.setOnBtnClickL(
+//                        new OnBtnClickL() {
+//                            @Override
+//                            public void onBtnClick() {
+//                                dialog.dismiss();
+//                            }
+//                        },
+//                        new OnBtnClickL() {
+//                            @Override
+//                            public void onBtnClick() {
+//                                Work_WoactivityActivity.this.finish();
+////                            dialog.dismiss();
+//                            }
+//                        });
+//            } else {
                 Work_WoactivityActivity.this.finish();
-            }
+//            }
         }
     };
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent;
-//            intent = new Intent(Work_WoactivityActivity.this, AddWoactivityActivity.class);
+            Intent intent;
+            intent = new Intent();
+            if (workOrder.WORKTYPE.equals(Constants.AA)){
+                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_AA.class);
+            }else if (workOrder.WORKTYPE.equals(Constants.SP)){
+                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_SP.class);
+            }else if (workOrder.WORKTYPE.equals(Constants.TP)){
+                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_TP.class);
+            }else if (workOrder.WORKTYPE.equals(Constants.WS)){
+                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_WS.class);
+            }
 //            intent.putExtra("taskid", (woactivityAdapter.woactivityList.size() + 1) * 10);
-//            startActivityForResult(intent, 1);
+            startActivityForResult(intent, 1);
         }
     };
 

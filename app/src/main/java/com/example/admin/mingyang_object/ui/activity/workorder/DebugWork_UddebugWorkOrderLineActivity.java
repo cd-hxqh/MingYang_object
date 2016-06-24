@@ -216,40 +216,40 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (confirmlayout.getVisibility() == View.VISIBLE) {
-                final NormalDialog dialog = new NormalDialog(DebugWork_UddebugWorkOrderLineActivity.this);
-                dialog.content("确定放弃修改吗?")//
-                        .showAnim(mBasIn)//
-                        .dismissAnim(mBasOut)//
-                        .show();
-
-                dialog.setOnBtnClickL(
-                        new OnBtnClickL() {
-                            @Override
-                            public void onBtnClick() {
-                                dialog.dismiss();
-                            }
-                        },
-                        new OnBtnClickL() {
-                            @Override
-                            public void onBtnClick() {
-                                DebugWork_UddebugWorkOrderLineActivity.this.finish();
-//                            dialog.dismiss();
-                            }
-                        });
-            } else {
+//            if (confirmlayout.getVisibility() == View.VISIBLE) {
+//                final NormalDialog dialog = new NormalDialog(DebugWork_UddebugWorkOrderLineActivity.this);
+//                dialog.content("确定放弃修改吗?")//
+//                        .showAnim(mBasIn)//
+//                        .dismissAnim(mBasOut)//
+//                        .show();
+//
+//                dialog.setOnBtnClickL(
+//                        new OnBtnClickL() {
+//                            @Override
+//                            public void onBtnClick() {
+//                                dialog.dismiss();
+//                            }
+//                        },
+//                        new OnBtnClickL() {
+//                            @Override
+//                            public void onBtnClick() {
+//                                DebugWork_UddebugWorkOrderLineActivity.this.finish();
+////                            dialog.dismiss();
+//                            }
+//                        });
+//            } else {
                 DebugWork_UddebugWorkOrderLineActivity.this.finish();
-            }
+//            }
         }
     };
 
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent;
-//            intent = new Intent(Work_WoactivityActivity.this, AddWoactivityActivity.class);
+            Intent intent;
+            intent = new Intent(DebugWork_UddebugWorkOrderLineActivity.this, UddebugWorkOrderLineAddNewActivity.class);
 //            intent.putExtra("taskid", (woactivityAdapter.woactivityList.size() + 1) * 10);
-//            startActivityForResult(intent, 1);
+            startActivityForResult(intent, 1);
         }
     };
 

@@ -17,9 +17,9 @@ import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 
 /**
  * Created by think on 2016/6/21.
- * 定检工单任务详情页面
+ * 定检工单任务新增页面
  */
-public class WoactivityDetailsActivity_WS extends BaseActivity {
+public class WoactivityAddNewActivity_WS extends BaseActivity {
     /**
      * 返回按钮
      */
@@ -63,9 +63,9 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
     }
 
     private void geiIntentData() {
-        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
-        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        position = getIntent().getIntExtra("position",0);
+//        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
+//        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+//        position = getIntent().getIntExtra("position", 0);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
                 finish();
             }
         });
-        titleTextView.setText(getResources().getString(R.string.title_activity_woactivitydetails));
+        titleTextView.setText("新增" + getResources().getString(R.string.title_activity_woactivitydetails));
 
         taskid.setText(woactivity.TASKID);
         description.setText(woactivity.DESCRIPTION);
@@ -113,7 +113,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         invcontent.setText(woactivity.INVCONTENT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgmeasure.setText(woactivity.UDZGMEASURE);
-        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR != null && woactivity.PERINSPR.equals("Y"));
         udrlstopdate.setText(woactivity.UDRLSTOPDATE);
         udremark.setText(woactivity.UDREMARK);
 //        confirm.setOnClickListener(confirmOnClickListener);

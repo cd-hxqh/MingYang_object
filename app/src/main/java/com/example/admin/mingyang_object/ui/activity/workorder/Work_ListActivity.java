@@ -88,16 +88,9 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
-//                intent.putExtra("worktype",worktype);
-//                startActivity(intent);
-//                new AsyncTask<String,String,String>(){
-//                    @Override
-//                    protected String doInBackground(String... strings) {
-//                        new AndroidClientService().InsertWO("");
-//                        return null;
-//                    }
-//                }.execute();
+                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
+                intent.putExtra("worktype",worktype);
+                startActivity(intent);
             }
         });
         backlayout.setOnClickListener(new View.OnClickListener() {

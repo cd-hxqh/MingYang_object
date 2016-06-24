@@ -1,6 +1,7 @@
 package com.example.admin.mingyang_object.ui.activity.workorder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -85,16 +86,9 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Work_ListActivity.this,Work_AddNewActivity.class);
-//                intent.putExtra("worktype",worktype);
-//                startActivity(intent);
-//                new AsyncTask<String,String,String>(){
-//                    @Override
-//                    protected String doInBackground(String... strings) {
-//                        new AndroidClientService().InsertWO("");
-//                        return null;
-//                    }
-//                }.execute();
+                Intent intent = new Intent(DebugWork_ListActivity.this,DebugWork_AddNewActivity.class);
+                intent.putExtra("worktype",worktype);
+                startActivity(intent);
             }
         });
         backlayout.setOnClickListener(new View.OnClickListener() {

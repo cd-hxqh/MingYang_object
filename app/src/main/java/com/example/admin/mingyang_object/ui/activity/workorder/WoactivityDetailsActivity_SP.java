@@ -3,6 +3,7 @@ package com.example.admin.mingyang_object.ui.activity.workorder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,7 +39,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
     private EditText wojo2;//子系统/子项目
     private EditText wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
-    private EditText perinspr;//排查结果
+    private CheckBox perinspr;//排查结果
     private EditText udinsunit;//排查部位
     private TextView udrprrsb;//整改责任人
     private EditText udprobdesc;//问题描述
@@ -78,7 +79,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
         wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
-        perinspr = (EditText) findViewById(R.id.woactivity_perinspr);
+        perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udinsunit = (EditText) findViewById(R.id.woactivity_udinsunit);
         udrprrsb = (TextView) findViewById(R.id.woactivity_udrprrsb);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
@@ -108,7 +109,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo2.setText(woactivity.WOJO2);
         wojo3.setText(woactivity.WOJO3);
         wojo4.setText(woactivity.WOJO4);
-        perinspr.setText(woactivity.PERINSPR);
+        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
         udinsunit.setText(woactivity.UDINSUNIT);
         udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);

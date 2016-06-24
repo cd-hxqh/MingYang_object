@@ -17,9 +17,9 @@ import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 
 /**
  * Created by think on 2016/6/21.
- * 定检工单任务详情页面
+ * 终验收工单任务新增页面
  */
-public class WoactivityDetailsActivity_WS extends BaseActivity {
+public class WoactivityAddNewActivity_AA extends BaseActivity {
     /**
      * 返回按钮
      */
@@ -34,18 +34,16 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
     private int position;
 
     private TextView taskid;//任务
-    private EditText description;//描述
-    private EditText wojo1;//系统/项目
-    private EditText wojo2;//子系统/子项目
-    private EditText wojo3;//检查/检修方法
-    private TextView wojo4;//kks编码
-    private EditText allpower;//人员数量
-    private EditText alloptime;//耗时(小时)
-    private EditText invcontent;//定检规格
-    private EditText udzgstu;//检修情况
-    private EditText udzgmeasure;//不合格修正措施
-    private CheckBox perinspr;//定检结果
-    private TextView udrlstopdate;//完成时间
+    private EditText wojo1;//工作任务
+    private TextView udstarttime;//开始时间
+    private TextView udendtime;//结束时间
+    private EditText udzysbasic;//执行标准
+    private CheckBox perinspr;//终验收结果
+    private EditText udprobdesc;//问题描述
+    private TextView udzglimit;//整改期限
+    private TextView lead;//整改责任人
+    private EditText udzgmeasure;//整改方案
+    private EditText udzgresult;//整改完成情况
     private EditText udremark;//备注
     private LinearLayout buttonlayout;
     private Button confirm;//确定
@@ -55,7 +53,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_woactivity_details_ws);
+        setContentView(R.layout.activity_woactivity_details_aa);
 
         geiIntentData();
         findViewById();
@@ -63,9 +61,9 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
     }
 
     private void geiIntentData() {
-        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
-        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        position = getIntent().getIntExtra("position",0);
+//        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
+//        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+//        position = getIntent().getIntExtra("position",0);
     }
 
     @Override
@@ -74,18 +72,16 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
 
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
-        description = (EditText) findViewById(R.id.woactivity_description);
-        wojo1 = (EditText) findViewById(R.id.woactivity_wojo1);
-        wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
-        wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
-        wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
-        allpower = (EditText) findViewById(R.id.woactivity_allpower);
-        alloptime = (EditText) findViewById(R.id.woactivity_alloptime);
-        invcontent = (EditText) findViewById(R.id.woactivity_invcontent);
-        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
-        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
+        wojo1 = (EditText) findViewById(R.id.work_woactivity_wojo1);
+        udstarttime = (TextView) findViewById(R.id.woactivity_udstarttime);
+        udendtime = (TextView) findViewById(R.id.woactivity_udendtime);
+        udzysbasic = (EditText) findViewById(R.id.woactivity_udzysbasic);
         perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
-        udrlstopdate = (TextView) findViewById(R.id.woactivity_udrlstopdate);
+        udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
+        udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
+        lead = (TextView) findViewById(R.id.woactivity_lead);
+        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
+        udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
         udremark = (EditText) findViewById(R.id.woactivity_udremark);
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
 //        confirm = (Button) findViewById(R.id.confirm);
@@ -100,22 +96,21 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
                 finish();
             }
         });
-        titleTextView.setText(getResources().getString(R.string.title_activity_woactivitydetails));
+        titleTextView.setText("新增" + getResources().getString(R.string.title_activity_woactivitydetails));
 
         taskid.setText(woactivity.TASKID);
-        description.setText(woactivity.DESCRIPTION);
         wojo1.setText(woactivity.WOJO1);
-        wojo2.setText(woactivity.WOJO2);
-        wojo3.setText(woactivity.WOJO3);
-        wojo4.setText(woactivity.WOJO4);
-        allpower.setText(woactivity.ALLPOWER);
-        alloptime.setText(woactivity.ALLOPTIME);
-        invcontent.setText(woactivity.INVCONTENT);
-        udzgstu.setText(woactivity.UDZGSTU);
-        udzgmeasure.setText(woactivity.UDZGMEASURE);
+        udstarttime.setText(woactivity.UDSTARTTIME);
+        udendtime.setText(woactivity.UDENDTIME);
+        udzysbasic.setText(woactivity.UDZYSBASIC);
         perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
-        udrlstopdate.setText(woactivity.UDRLSTOPDATE);
+        udprobdesc.setText(woactivity.UDPROBDESC);
+        udzglimit.setText(woactivity.UDZGLIMIT);
+        lead.setText(woactivity.LEAD);
+        udzgmeasure.setText(woactivity.UDZGMEASURE);
+        udzgresult.setText(woactivity.UDZGRESULT);
         udremark.setText(woactivity.UDREMARK);
+
 //        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
     }

@@ -219,15 +219,11 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <EditText
+            <CheckBox
                 android:id="@+id/woactivity_perinspr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:inputType="textMultiLine"
-                android:gravity="center_vertical"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+                android:layout_marginLeft="@dimen/dimen_5" />
 
 
         </LinearLayout>
