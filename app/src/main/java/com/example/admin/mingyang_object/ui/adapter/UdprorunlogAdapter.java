@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by apple on 15/10/26
- * 项目日报
+ * 椤圭洰鏃ユ姤
  */
 public class UdprorunlogAdapter extends BaseQuickAdapter<Udprorunlog> {
     public UdprorunlogAdapter(Context context, int layoutResId, List data) {

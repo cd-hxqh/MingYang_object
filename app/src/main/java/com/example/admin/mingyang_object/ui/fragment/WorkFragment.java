@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.ui.activity.workorder.DebugWork_ListActivity;
 import com.example.admin.mingyang_object.ui.activity.workorder.Work_ListActivity;
 
 
@@ -70,9 +71,15 @@ public class WorkFragment extends Fragment {
         }
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(getActivity(), Work_ListActivity.class);
-            intent.putExtra("worktype",type);
-            startActivity(intent);
+            if (!type.equals(Constants.DC)) {
+                Intent intent = new Intent(getActivity(), Work_ListActivity.class);
+                intent.putExtra("worktype", type);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(getActivity(), DebugWork_ListActivity.class);
+                intent.putExtra("worktype", type);
+                startActivity(intent);
+            }
         }
     }
 }

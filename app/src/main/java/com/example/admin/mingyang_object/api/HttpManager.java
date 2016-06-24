@@ -71,8 +71,13 @@ public class HttpManager {
                 break;
         }
         if (search.equals("")) {
-            return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WORKTYPE':'" + type + "'}}";
+            if (!type.equals(Constants.DC)) {
+                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WORKTYPE':'" + type + "'}}";
+            }else {
+                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            }
         } else {
             return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'%" + search + "%','WORKTYPE':'" + type + "'}}";
@@ -98,6 +103,15 @@ public class HttpManager {
     public static String getwoactivityUrl(String wonum,int curpage,int showcount) {
         return "{'appid':'" + "WOACTIVITY','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
                 ",'condition':{'parent':'" + wonum + "'}" +
+                "}";
+    }
+
+    /**
+     * 设置调试工单子表接口*
+     */
+    public static String getuddebugworkorderlineUrl(String wonum,int curpage,int showcount) {
+        return "{'appid':'" + Constants.UDDEBUGWORKORDERLINE_APPID +"','objectname':'" + Constants.UDDEBUGWORKORDERLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'DEBUGWORKORDERNUM':'" + wonum + "'}" +
                 "}";
     }
 
@@ -306,6 +320,7 @@ public class HttpManager {
                     SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
                 }
 
+                assert result != null;
                 SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
             }
         });

@@ -46,6 +46,10 @@ public class Constants {
     public static final String WORKORDER_NAME = "WORKORDER";
     //工单计划任务表名
     public static final String WOACTIVITY_NAME = "WOACTIVITY";
+    //调试工单子表appid
+    public static final String UDDEBUGWORKORDERLINE_APPID = "UDDEBUGWORKORDERLINE";
+    //调试工单子表表名
+    public static final String UDDEBUGWORKORDERLINE_NAME = "UDDEBUGWORKORDERLINE";
     //工单计划员工表名
     public static final String WPLABOR_NAME = "WPLABOR";
     //工单计划物料表名

@@ -1,7 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity.workorder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,12 +25,10 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.WorkOrder;
+import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
-import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
+import com.example.admin.mingyang_object.ui.adapter.DebugWorkListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.AccountUtils;
-import com.example.admin.mingyang_object.utils.RefreshUtils;
 import com.example.admin.mingyang_object.utils.WorkTitle;
 
 import java.util.ArrayList;
@@ -39,9 +36,9 @@ import java.util.ArrayList;
 
 /**
  * Created by think on 2015/10/27.
- * 工单详情界面
+ * 调试工单列表界面
  */
-public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
+public class DebugWork_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
     private static String TAG = "Work_ListActivity";
 
     private TextView titlename;
@@ -51,7 +48,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private WorkListAdapter workListAdapter;
+    private DebugWorkListAdapter workListAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private EditText search;
     private String searchText = "";
@@ -111,7 +108,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        workListAdapter = new WorkListAdapter(this,worktype);
+        workListAdapter = new DebugWorkListAdapter(this);
         recyclerView.setAdapter(workListAdapter);
         refresh_layout.setColor(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -135,14 +132,14 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 if (results.getResultlist()!=null) {
-                    ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist());
+                    ArrayList<DebugWorkOrder> items = JsonUtils.parsingDebugWorkOrder(DebugWork_ListActivity.this, results.getResultlist());
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if (items == null || items.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
                         if (page == 1) {
-                            workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
+                            workListAdapter = new DebugWorkListAdapter(DebugWork_ListActivity.this);
                             recyclerView.setAdapter(workListAdapter);
                         }
                         if (totalPages == page) {
@@ -177,11 +174,11 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Work_ListActivity.this.getCurrentFocus()
+                                    DebugWork_ListActivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString().trim();
-                    workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
+                    workListAdapter = new DebugWorkListAdapter(DebugWork_ListActivity.this);
                     recyclerView.setAdapter(workListAdapter);
                     getData(searchText);
                     return true;

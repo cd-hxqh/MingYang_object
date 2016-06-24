@@ -6,8 +6,10 @@ import android.util.Log;
 import com.example.admin.mingyang_object.bean.LoginResults;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.UdPerson;
+import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udvehicle;
@@ -407,7 +409,7 @@ public class JsonUtils {
     /**
      * 解析工单信息
      */
-    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data, String type) {
+    public static ArrayList<WorkOrder> parsingWorkOrder(Context ctx, String data) {
         Log.i(TAG, "WorkOrder data=" + data);
         ArrayList<WorkOrder> list = null;
         WorkOrder workOrder = null;
@@ -449,7 +451,96 @@ public class JsonUtils {
     }
 
     /**
-     * 解析工单信息
+     * 解析调试工单信息
+     */
+    public static ArrayList<DebugWorkOrder> parsingDebugWorkOrder(Context ctx, String data) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<DebugWorkOrder> list = null;
+        DebugWorkOrder workOrder = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<DebugWorkOrder>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                workOrder = new DebugWorkOrder();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = workOrder.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(workOrder);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = workOrder.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(workOrder,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(workOrder);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析调试工单子表信息
+     */
+    public static ArrayList<UddebugWorkOrderLine> parsingUddebugWorkOrderLine(Context ctx, String data, String wonum) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<UddebugWorkOrderLine> list = null;
+        UddebugWorkOrderLine uddebugWorkOrderLine = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<UddebugWorkOrderLine>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                uddebugWorkOrderLine = new UddebugWorkOrderLine();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = uddebugWorkOrderLine.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = uddebugWorkOrderLine.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(uddebugWorkOrderLine);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = uddebugWorkOrderLine.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(uddebugWorkOrderLine,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                uddebugWorkOrderLine.DEBUGWORKORDERNUM = wonum;
+                list.add(uddebugWorkOrderLine);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析任务信息
      */
     public static ArrayList<Woactivity> parsingWoactivity(Context ctx, String data, String wonum) {
         Log.i(TAG, "WorkOrder data=" + data);
