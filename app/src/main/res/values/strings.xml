@@ -290,5 +290,35 @@
     <string name="udprorunlogline2_text">吊装调试日报</string>
     <string name="udprorunlogline_text">工作日报</string>
     <string name="udprorunlogline4_text">工装管理</string>
+    <!--问题联络单-->
+    <string name="problemtype_text">问题类型:</string>
+    <string name="emergency_text">紧急程度:</string>
+    <string name="workordernum_text">相关故障工单:</string>
+    <string name="problemsituation_text">现场问题及进展情况描述:</string>
+    <string name="prodesc_text">项目描述:</string>
+    <string name="prores_text">项目负责人:</string>
+    <string name="phone1_text">负责人电话:</string>
+    <string name="wjtc_text">问题提出</string>
+    <string name="createname_text">需求提出人:</string>
+    <string name="phone2_text">提出人电话:</string>
+    <string name="dept1_text">提出人部门:</string>
+    <string name="createdate_text">提出时间:</string>
+    <string name="zcbm_text">支持部门</string>
+    <string name="dept2_text">支持部门:</string>
+    <string name="leader_text">支持部门领导:</string>
+    <string name="responsetime_text">需求完成时间:</string>
+    <string name="wtcl_text">问题处理</string>
+    <string name="solvename_text">问题处理人:</string>
+    <string name="phone3_text">联系电话:</string>
+    <string name="dept3_text">解决人所属部门:</string>
+    <string name="wtjj_text">问题解决:</string>
+    <string name="foundtime_text">抵达时间:</string>
+    <string name="comptime_text">完成时间:</string>
+    <string name="progress_text">解决问题及反馈:</string>
+    <string name="wtqr_text">问题确认</string>
+    <string name="isstop_text">是否解决:</string>
+    <string name="remark_text">说明:</string>
+    <string name="xmxx_text">项目信息</string>
+    <string name="wtlldxj_text">联络单详情</string>
 
 </resources>

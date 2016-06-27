@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_main"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/activity_udfeedback1_details"></include>
+
+            <include layout="@layout/activity_udfeedback2_details"></include>
+
+            <include layout="@layout/activity_udfeedback3_details"></include>
+
+            <include layout="@layout/activity_udfeedback4_details"></include>
+
+            <include layout="@layout/activity_udfeedback5_details"></include>
+
+            <include layout="@layout/activity_udfeedback6_details"></include>
+
+            <include layout="@layout/activity_udfeedback7_details"></include>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udfeedback;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.Woactivity;
@@ -198,7 +199,7 @@ public class JsonUtils {
     }
 
     /**
-     * 解析风机型号信息*
+     * 解析项目人员信息*
      */
 
     public static ArrayList<UdPerson> parsingUdPerson(Context ctx, String data) {
@@ -329,6 +330,49 @@ public class JsonUtils {
 
                 }
                 list.add(udprorunlog);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    /**问题联络单**/
+    public static ArrayList<Udfeedback> parsingUdfeedback(Context ctx, String data) {
+        ArrayList<Udfeedback> list = null;
+        Udfeedback udfeedback = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udfeedback>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udfeedback = new Udfeedback();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udfeedback.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udfeedback.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udfeedback);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udfeedback.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udfeedback, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udfeedback);
             }
             return list;
         } catch (JSONException e) {

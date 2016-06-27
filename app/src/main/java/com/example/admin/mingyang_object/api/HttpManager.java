@@ -74,7 +74,7 @@ public class HttpManager {
             if (!type.equals(Constants.DC)) {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                         "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WORKTYPE':'" + type + "'}}";
-            }else {
+            } else {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                         "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
             }
@@ -100,7 +100,7 @@ public class HttpManager {
     /**
      * 设置计划任务接口*
      */
-    public static String getwoactivityUrl(String wonum,int curpage,int showcount) {
+    public static String getwoactivityUrl(String wonum, int curpage, int showcount) {
         return "{'appid':'" + "WOACTIVITY','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
                 ",'condition':{'parent':'" + wonum + "'}" +
                 "}";
@@ -109,8 +109,8 @@ public class HttpManager {
     /**
      * 设置调试工单子表接口*
      */
-    public static String getuddebugworkorderlineUrl(String wonum,int curpage,int showcount) {
-        return "{'appid':'" + Constants.UDDEBUGWORKORDERLINE_APPID +"','objectname':'" + Constants.UDDEBUGWORKORDERLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+    public static String getuddebugworkorderlineUrl(String wonum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDDEBUGWORKORDERLINE_APPID + "','objectname':'" + Constants.UDDEBUGWORKORDERLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
                 ",'condition':{'DEBUGWORKORDERNUM':'" + wonum + "'}" +
                 "}";
     }
@@ -187,6 +187,17 @@ public class HttpManager {
         }
         return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
     }
+
+    /**
+     * 设置问题联络单的接口
+     */
+    public static String getUdfeedbacksurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'FEEDBACKNUM':'" + value + "'}}";
+    }
+
 
     /**
      * 设置项目人员的接口

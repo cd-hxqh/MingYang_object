@@ -88,6 +88,11 @@ public class Constants {
     /**项目日报表名**/
     public static final String UDPRORUNLOG_NAME="UDPRORUNLOG";
 
+    /**问题联络单appid**/
+    public static final String UDFEEDBACK_APPID="UDFEDBKCON";
+    /**问题联络单表名**/
+    public static final String UDFEEDBACK_NAME="UDFEEDBACK";
+
 
     /**库存查询**/
     //库存的appid
