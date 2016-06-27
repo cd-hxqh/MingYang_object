@@ -10,33 +10,22 @@ import java.io.Serializable;
 public class Udstock implements Serializable {
 
 
-    private String APP;//应用程序的名称
-    private String ASSIGNCODE;//任务分配人
+    private String STOCKNUM;//盘点单号
     private String DESCRIPTION;//描述
-    private String DUEDATE;//到期日期
-    private String ORIGPERSON;//进行委派之前的任务分配的原始人员
-    private String OWNERID;//受控制记录的唯一标识
-    private String OWNERTABLE;//表名
-    private String PROCESSNAME;//过程名称
-    private String ROLEID;//任务角色
-    private String STARTDATE;//当前日期
-    private String WFASSIGNMENTID;//编号
+    private String LOCATION;//仓库编号
+    private String LOCDESC;//仓库名称
+    private String STATUS;//状态
+    private String CREATEDBY;//创建人
+    private String CREATEDATE;//创建时间
+    private String ZPDNUM;//过账时间
 
 
-    public String getAPP() {
-        return APP;
+    public String getSTOCKNUM() {
+        return STOCKNUM;
     }
 
-    public void setAPP(String APP) {
-        this.APP = APP;
-    }
-
-    public String getASSIGNCODE() {
-        return ASSIGNCODE;
-    }
-
-    public void setASSIGNCODE(String ASSIGNCODE) {
-        this.ASSIGNCODE = ASSIGNCODE;
+    public void setSTOCKNUM(String STOCKNUM) {
+        this.STOCKNUM = STOCKNUM;
     }
 
     public String getDESCRIPTION() {
@@ -47,67 +36,51 @@ public class Udstock implements Serializable {
         this.DESCRIPTION = DESCRIPTION;
     }
 
-    public String getDUEDATE() {
-        return DUEDATE;
+    public String getLOCATION() {
+        return LOCATION;
     }
 
-    public void setDUEDATE(String DUEDATE) {
-        this.DUEDATE = DUEDATE;
+    public void setLOCATION(String LOCATION) {
+        this.LOCATION = LOCATION;
     }
 
-    public String getORIGPERSON() {
-        return ORIGPERSON;
+    public String getLOCDESC() {
+        return LOCDESC;
     }
 
-    public void setORIGPERSON(String ORIGPERSON) {
-        this.ORIGPERSON = ORIGPERSON;
+    public void setLOCDESC(String LOCDESC) {
+        this.LOCDESC = LOCDESC;
     }
 
-    public String getOWNERID() {
-        return OWNERID;
+    public String getSTATUS() {
+        return STATUS;
     }
 
-    public void setOWNERID(String OWNERID) {
-        this.OWNERID = OWNERID;
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS;
     }
 
-    public String getOWNERTABLE() {
-        return OWNERTABLE;
+    public String getCREATEDBY() {
+        return CREATEDBY;
     }
 
-    public void setOWNERTABLE(String OWNERTABLE) {
-        this.OWNERTABLE = OWNERTABLE;
+    public void setCREATEDBY(String CREATEDBY) {
+        this.CREATEDBY = CREATEDBY;
     }
 
-    public String getPROCESSNAME() {
-        return PROCESSNAME;
+    public String getCREATEDATE() {
+        return CREATEDATE;
     }
 
-    public void setPROCESSNAME(String PROCESSNAME) {
-        this.PROCESSNAME = PROCESSNAME;
+    public void setCREATEDATE(String CREATEDATE) {
+        this.CREATEDATE = CREATEDATE;
     }
 
-    public String getROLEID() {
-        return ROLEID;
+    public String getZPDNUM() {
+        return ZPDNUM;
     }
 
-    public void setROLEID(String ROLEID) {
-        this.ROLEID = ROLEID;
-    }
-
-    public String getSTARTDATE() {
-        return STARTDATE;
-    }
-
-    public void setSTARTDATE(String STARTDATE) {
-        this.STARTDATE = STARTDATE;
-    }
-
-    public String getWFASSIGNMENTID() {
-        return WFASSIGNMENTID;
-    }
-
-    public void setWFASSIGNMENTID(String WFASSIGNMENTID) {
-        this.WFASSIGNMENTID = WFASSIGNMENTID;
+    public void setZPDNUM(String ZPDNUM) {
+        this.ZPDNUM = ZPDNUM;
     }
 }

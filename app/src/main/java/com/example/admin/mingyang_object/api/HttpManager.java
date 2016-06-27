@@ -143,12 +143,7 @@ public class HttpManager {
         return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.LABTRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'REFWO':'" + wonum + "'}}";
     }
 
-    /**
-     * 设置实际物料接口
-     */
-    public static String getmatusetransUrl(String type, int curpage, int showcount, String wonum) {
-        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.MATUSETRANS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-    }
+
 
     /**
      * 设置故障汇报接口
@@ -157,15 +152,7 @@ public class HttpManager {
         return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.FAILUREREPORT_NAME + "','option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
-    /**
-     * 设置库存查询的接口
-     */
-    public static String getInventorurl(String value, int curpage, int showcount) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.INVENTOR_APPID + "','objectname':'" + Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
-        }
-        return "{'appid':'" + Constants.INVENTOR_APPID + "','objectname':'" + Constants.INVENTORY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'ITEMNUM':'" + value + "'}}";
-    }
+
 
 
     /**
@@ -228,6 +215,18 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
         return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRORUNLOGNUM':'" + value + "'}}";
+    }
+
+
+
+    /**
+     * 设置库存盘点的接口
+     */
+    public static String getudstockurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'STOCKNUM':'" + value + "'}}";
     }
 
 

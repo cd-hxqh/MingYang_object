@@ -1,12 +1,10 @@
 package com.example.admin.mingyang_object.ui.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -32,10 +30,6 @@ public class ProjectFragment extends BaseFragment {
      * 问题联络单*
      */
     private TextView udfeedbackText;
-    /**
-     * 阶段验收单*
-     */
-    private TextView udacceptanceText;
 
 
     @Override
@@ -61,7 +55,6 @@ public class ProjectFragment extends BaseFragment {
         udrroText = (TextView) view.findViewById(R.id.udrro_text_id);
         udprorunlogText = (TextView) view.findViewById(R.id.udprorunlog_text_id);
         udfeedbackText = (TextView) view.findViewById(R.id.udfeedback_text_id);
-        udacceptanceText = (TextView) view.findViewById(R.id.udacceptance_text_id);
     }
 
     /**

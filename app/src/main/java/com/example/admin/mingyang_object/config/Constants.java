@@ -8,7 +8,9 @@ public class Constants {
     /**
      * 基础接口*
      */
-    /**默认**/
+    /**
+     * 默认*
+     */
     public static final String HTTP_API_IP = "http://deveam.mywind.com.cn:7001";
 //    public static final String HTTP_API_URL = "http://121.35.242.172:7001/maximo/mobile/";
 //
@@ -19,29 +21,41 @@ public class Constants {
      * 登陆URL*
      */
 
-    public static final String SIGN_IN_URL =  "/maximo/mobile/system/login";
+    public static final String SIGN_IN_URL = "/maximo/mobile/system/login";
 
 
-    /**通用接口查询**/
-    public static final String BASE_URL ="/maximo/mobile/common/api";
+    /**
+     * 通用接口查询*
+     */
+    public static final String BASE_URL = "/maximo/mobile/common/api";
 
-    /**工单接口**/
+    /**
+     * 工单接口*
+     */
     public static final String WORK_URL = "/meaweb/services/WORKORDERSERVICE";
 
-    /**领料单接口**/
-    public static final String INVUSE_URL ="/meaweb/services/INVUSESERVICE";
-    /**工作流**/
+    /**
+     * 领料单接口*
+     */
+    public static final String INVUSE_URL = "/meaweb/services/INVUSESERVICE";
+    /**
+     * 工作流*
+     */
     public static final String WORK_FLOW_URL = "/meaweb/services/WFMENAGEMENTSERVIC";
 
-    /**------------------数据库表名配置－－开始**/
+    /**
+     * ------------------数据库表名配置－－开始*
+     */
     //待办事项的appid
-    public static final String WFASSIGNMENT_APPID="WFDESIGN";
+    public static final String WFASSIGNMENT_APPID = "WFDESIGN";
 
     //待办事项的表名
-    public static final String WFASSIGNMENT_NAME="WFASSIGNMENT";
-    /**工单管理**/
+    public static final String WFASSIGNMENT_NAME = "WFASSIGNMENT";
+    /**
+     * 工单管理*
+     */
     //故障工单查询的appid
-    public static final String UDWOCM_APPID="UDWOCM";
+    public static final String UDWOCM_APPID = "UDWOCM";
     //故障工单表名
     public static final String WORKORDER_NAME = "WORKORDER";
     //工单计划任务表名
@@ -62,77 +76,74 @@ public class Constants {
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
 
 
-    /**工程台账**/
+    /**
+     * 工程台账*
+     */
     //工程台账appid
-    public static final String UDPRO_APPID="UDPROJECT";
+    public static final String UDPRO_APPID = "UDPROJECT";
     //工程台账表名**/
-    public static final String UDPRO_NAME="UDPRO";
-    /**风机型号appid**/
-    public static final String UDFANDETAILS_APPID="UDFANDETAILS";
-    /**风机型号表名**/
-    public static final String UDFANDETAILS_NAME="UDFANDETAILS";
+    public static final String UDPRO_NAME = "UDPRO";
+    /**
+     * 风机型号appid*
+     */
+    public static final String UDFANDETAILS_APPID = "UDFANDETAILS";
+    /**
+     * 风机型号表名*
+     */
+    public static final String UDFANDETAILS_NAME = "UDFANDETAILS";
 
-    /**项目人员appid**/
-    public static final String UDPERSON_APPID="UDPERSON";
-    /**项目人员表名**/
-    public static final String UDPERSON_NAME="PERSON";
+    /**
+     * 项目人员appid*
+     */
+    public static final String UDPERSON_APPID = "UDPERSON";
+    /**
+     * 项目人员表名*
+     */
+    public static final String UDPERSON_NAME = "PERSON";
 
-    /**项目车辆appid**/
-    public static final String UDVEHICLE_APPID="UDVEHICLE";
-    /**项目车辆表名**/
-    public static final String UDVEHICLE_NAME="UDVEHICLE";
-
-
-    /**项目日报appid**/
-    public static final String UDPRORUNLOG_APPID="UDPRORUN";
-    /**项目日报表名**/
-    public static final String UDPRORUNLOG_NAME="UDPRORUNLOG";
-
-    /**问题联络单appid**/
-    public static final String UDFEEDBACK_APPID="UDFEDBKCON";
-    /**问题联络单表名**/
-    public static final String UDFEEDBACK_NAME="UDFEEDBACK";
-
-
-    /**库存查询**/
-    //库存的appid
-    public static final String INVENTOR_APPID="UDINVENTOR";
-    //库存的表名
-    public static final String INVENTORY_NAME="INVENTORY";
-
-    //库存成本appid
-    public static final String INVCOST_APPID="UDINVENTOR";
-    //库存成本表名
-    public static final String INVCOST_NAME="INVCOST";
+    /**
+     * 项目车辆appid*
+     */
+    public static final String UDVEHICLE_APPID = "UDVEHICLE";
+    /**
+     * 项目车辆表名*
+     */
+    public static final String UDVEHICLE_NAME = "UDVEHICLE";
 
 
-    //库存余量appid
-    public static final String INVBALANCES_APPID="UDINVENTOR";
-    //库存余量表名
-    public static final String INVBALANCES_NAME="INVBALANCES";
+    /**
+     * 项目日报appid*
+     */
+    public static final String UDPRORUNLOG_APPID = "UDPRORUN";
+    /**
+     * 项目日报表名*
+     */
+    public static final String UDPRORUNLOG_NAME = "UDPRORUNLOG";
+
+    /**
+     * 问题联络单appid*
+     */
+    public static final String UDFEEDBACK_APPID = "UDFEDBKCON";
+    /**
+     * 问题联络单表名*
+     */
+    public static final String UDFEEDBACK_NAME = "UDFEEDBACK";
 
 
-    //入库appid
-    public static final String MATRECTRANS_APPID="UDINVENTOR";
-    //入库表名
-    public static final String MATRECTRANS_NAME="MATRECTRANS";
-
-    //出库appid
-    public static final String MATUSETRANS_APPID="UDINVENTOR";
-    //出库表名
-    public static final String MATUSETRANS_NAME="MATUSETRANS";
-
-
-    //领料单appid
-    public static final String INVUSE_APPID="UDUSE";
-    //领料单表名
-    public static final String INVUSE_NAME="INVUSE";
+    /**
+     * 库存盘点appid*
+     */
+    public static final String UDSTOCK_APPID = "UDSTOCK";
+    /**
+     * 问题联络单表名*
+     */
+    public static final String UDSTOCK_NAME = "UDSTOCK";
 
 
-    //领料单行appid
-    public static final String INVUSELINE_APPID="UDUSE";
-    //领料单行表名
-    public static final String INVUSELINE_NAME="INVUSELINE";
+
+
+
+
 
     //设备appid
     public static final String ASSET_APPID = "UDASSET";
@@ -176,15 +187,22 @@ public class Constants {
     public static final String FAILURELIST_NAME = "FAILURELIST";
 
 
-
-    /**位置表**/
+    /**
+     * 位置表*
+     */
     public static final String UDSTORELOC_APPID = "UDSTORELOC";
-    /**位置表名**/
+    /**
+     * 位置表名*
+     */
     public static final String LOCATIONS_NAME = "LOCATIONS";
 
-    /**选择工单**/
+    /**
+     * 选择工单*
+     */
     public static final String WOTRACK_APPID = "WOTRACK";
-    /**选择工单表名**/
+    /**
+     * 选择工单表名*
+     */
     public static final String WORKORDER_APPID = "WORKORDER";
 
     public static final String USER_INFO = "userinfo";
@@ -242,8 +260,6 @@ public class Constants {
     public static final String STATUS25 = "工单建立";
 
 
-
-
     /**设置数据库参数-开始**/
     /**
      * 数据库路径
@@ -255,7 +271,9 @@ public class Constants {
      * 无SD卡的数据库路径
      */
     public static final String NOT_SDCARD_PATH_DB = "/data/data/";
-    /** 数据库名称 **/
+    /**
+     * 数据库名称 *
+     */
     public static final String TB_NAME = "sqlite-eam.db";
 
     /**

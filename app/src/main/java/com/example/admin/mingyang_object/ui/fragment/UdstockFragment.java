@@ -1,6 +1,5 @@
 package com.example.admin.mingyang_object.ui.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -27,13 +26,12 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Wfassignment;
+import com.example.admin.mingyang_object.model.Udstock;
+import com.example.admin.mingyang_object.ui.activity.Udstock_DetailActivity;
 import com.example.admin.mingyang_object.ui.activity.Wfm_Details_Activity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.WfmListAdapter;
+import com.example.admin.mingyang_object.ui.adapter.UdstockAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.AccountUtils;
-import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 
@@ -42,12 +40,12 @@ import java.util.List;
 
 
 /**
- * 流程审批的fragment
+ * 库存盘点的fragment
  */
-public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
 
-    private static final String TAG = "Wfment_fragment";
+    private static final String TAG = "Udstock_fragment";
 
 
     LinearLayoutManager layoutManager;
@@ -68,7 +66,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
     /**
      * 适配器*
      */
-    private WfmListAdapter wfmListAdapter;
+    private UdstockAdapter udstockAdapter;
     /**
      * 编辑框*
      */
@@ -80,12 +78,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
     private int page = 1;
 
 
-    private BaseAnimatorSet mBasIn;
-    private BaseAnimatorSet mBasOut;
-
-    private ProgressDialog mProgressDialog;
-
-    ArrayList<Wfassignment> items = new ArrayList<Wfassignment>();
+    ArrayList<Udstock> items = new ArrayList<Udstock>();
 
 
     @Override
@@ -126,6 +119,11 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
+
+        udstockAdapter = new UdstockAdapter(getActivity(), R.layout.list_item, items);
+        recyclerView.setAdapter(udstockAdapter);
+
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -139,8 +137,6 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
 
         getData(searchText);
 
-        mBasIn = new BounceTopEnter();
-        mBasOut = new SlideBottomExit();
     }
 
     @Override
@@ -176,8 +172,8 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString();
-                    wfmListAdapter.removeAll(items);
-                    items = new ArrayList<Wfassignment>();
+                    udstockAdapter.removeAll(items);
+                    items = new ArrayList<Udstock>();
                     nodatalayout.setVisibility(View.GONE);
                     refresh_layout.setRefreshing(true);
                     page = 1;
@@ -194,7 +190,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwfassignmentUrl(AccountUtils.getpersonId(getActivity()), search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getudstockurl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -203,7 +199,7 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                ArrayList<Wfassignment> item = JsonUtils.parsingWfassignment(getActivity(), results.getResultlist());
+                ArrayList<Udstock> item = JsonUtils.parsingUdstock(getActivity(), results.getResultlist());
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
                 if (item == null || item.isEmpty()) {
@@ -214,10 +210,12 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }
-                    }
-                    nodatalayout.setVisibility(View.GONE);
 
-                    initAdapter(items);
+                        nodatalayout.setVisibility(View.GONE);
+
+                        initAdapter(item);
+                    }
+
                 }
             }
 
@@ -233,120 +231,19 @@ public class Wfment_fragment extends BaseFragment implements SwipeRefreshLayout.
     /**
      * 获取数据*
      */
-    private void initAdapter(final List<Wfassignment> list) {
-        wfmListAdapter = new WfmListAdapter(getActivity(), R.layout.list_item, list);
-        recyclerView.setAdapter(wfmListAdapter);
-        wfmListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+    private void initAdapter(final List<Udstock> list) {
+        udstockAdapter.addData(list);
+        udstockAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), Wfm_Details_Activity.class);
+                Intent intent = new Intent(getActivity(), Udstock_DetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("wfassignment", list.get(position));
+                bundle.putSerializable("udstock", items.get(position));
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
             }
         });
     }
 
-
-//    private void MaterialDialogOneBtn(final Wfassignment wfassignment) {//审批工作流
-//        final MaterialDialog dialog = new MaterialDialog(getActivity());
-//        dialog.setCancelable(false);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.isTitleShow(false)//
-//                .btnNum(2)
-//                .content("是否填写输入意见")//
-//                .btnText("是", "否，直接提交")//
-//                .showAnim(mBasIn)//
-//                .dismissAnim(mBasOut)
-//                .show();
-//
-//        dialog.setOnBtnClickL(
-//                new OnBtnClickL() {//是
-//                    @Override
-//                    public void onBtnClick() {
-//                        EditDialog(wfassignment, true);
-//                        dialog.dismiss();
-//                    }
-//                },
-//                new OnBtnClickL() {//否
-//                    @Override
-//                    public void onBtnClick() {
-//                        wfgoon(wfassignment, wfassignment.getOwnerid(), "1", "");
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//    }
-//
-//    private void EditDialog(final Wfassignment wfassignment, final boolean isok) {//输入审核意见
-//        final NormalEditTextDialog dialog = new NormalEditTextDialog(getActivity());
-//        dialog.setCancelable(false);
-//        dialog.setCanceledOnTouchOutside(false);
-//        dialog.isTitleShow(false)//
-//                .btnNum(2)
-//                .content(isok ? "通过" : "不通过")//
-//                .btnText("提交", "取消")//
-//                .showAnim(mBasIn)//
-//                .dismissAnim(mBasOut)
-//                .show();
-//
-//        dialog.setOnBtnClickL(
-//                new OnBtnEditClickL() {
-//                    @Override
-//                    public void onBtnClick(String text) {
-//                        wfgoon(wfassignment, wfassignment.getOwnerid(), "1", text);
-//
-//                        dialog.dismiss();
-//                    }
-//                },
-//                new OnBtnEditClickL() {
-//                    @Override
-//                    public void onBtnClick(String text) {
-//
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//    }
-//
-//
-//    /**
-//     * 审批工作流
-//     *
-//     * @param id
-//     * @param zx
-//     */
-//    private void wfgoon(final Wfassignment wfassignment, final String id, final String zx, final String desc) {
-//        mProgressDialog = ProgressDialog.show(getActivity(), null,
-//                getString(R.string.inputing), true, true);
-//        mProgressDialog.setCanceledOnTouchOutside(false);
-//        mProgressDialog.setCancelable(false);
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                String result = null;
-//                if (wfassignment.app.equals("UDUPRAPP") && wfassignment.ownertable.equals("UDREPORT") && wfassignment.processname.equals("UDQXTB1")) { //跳转至缺陷提报单界面
-//                    Log.i(TAG, "缺陷单");
-//                    result = AndroidClientService.wfGoOn1(getActivity(), "UDQXTB", "UDREPORT", wfassignment.ownerid, "UDREPORTID", zx, desc);
-//                } else {
-//                    result = AndroidClientService.wfGoOn1(getActivity(), wfassignment.getProcessname(), wfassignment.getOwnertable(), id, wfassignment.getOwnertable() + "ID", zx, desc);
-//                }
-//                return result;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                if (s == null || s.equals("")) {
-//                    Toast.makeText(getActivity(), "审批失败", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(getActivity(), "审批成功", Toast.LENGTH_SHORT).show();
-//                }
-//                mProgressDialog.dismiss();
-//            }
-//        }.execute();
-//    }
-//
 
 }

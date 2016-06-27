@@ -13,6 +13,7 @@ import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udfeedback;
 import com.example.admin.mingyang_object.model.Udprorunlog;
+import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.Wfassignment;
@@ -382,54 +383,52 @@ public class JsonUtils {
 
     }
 
+    /**库存盘点**/
+    public static ArrayList<Udstock> parsingUdstock(Context ctx, String data) {
+        ArrayList<Udstock> list = null;
+        Udstock udstock = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udstock>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udstock = new Udstock();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udstock.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udstock.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udstock);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udstock.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udstock, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udstock);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
 
-//    /**
-//     * 解析Json信息*
-//     */
-//
-//    public static ArrayList<Entity> parsing(Class<Udpro> tclass, Context ctx, String data) {
-//        ArrayList<Entity> list = null;
-//        Entity entity = null;
-//        try {
-//            JSONArray jsonArray = new JSONArray(data);
-//            JSONObject jsonObject;
-//            list = new ArrayList<Entity>();
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                entity = new Entity(tclass);
-//                jsonObject = jsonArray.getJSONObject(i);
-//                Field[] field = entity.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
-//                for (int j = 0; j < field.length; j++) {     //遍历所有属性
-//                    field[j].setAccessible(true);
-//                    String name = field[j].getName();    //获取属性的名字
-//                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
-//                        try {
-//                            // 调用getter方法获取属性值
-//                            Method getOrSet = entity.getClass().getMethod("get" + name);
-//                            Object value = getOrSet.invoke(entity);
-//                            if (value == null) {
-//                                //调用setter方法设属性值
-//                                Class[] parameterTypes = new Class[1];
-//                                parameterTypes[0] = field[j].getType();
-//                                getOrSet = entity.getClass().getDeclaredMethod("set" + name, parameterTypes);
-//                                getOrSet.invoke(entity, jsonObject.getString(name));
-//                            }
-//
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//
-//                }
-//                list.add(entity);
-//            }
-//            return list;
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
+
 
     /**
      * 分页解析返回的结果*

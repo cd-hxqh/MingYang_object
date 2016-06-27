@@ -42,12 +42,12 @@ import java.util.List;
 
 
 /**
- * 库存盘点
+ * 流程审批的fragment
  */
-public class Udstock_fragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
 
 
-    private static final String TAG = "Udstock_fragment";
+    private static final String TAG = "Wfment_fragment";
 
 
     LinearLayoutManager layoutManager;

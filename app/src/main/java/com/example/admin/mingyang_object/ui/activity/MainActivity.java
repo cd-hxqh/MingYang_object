@@ -1,7 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,8 +16,8 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.ui.fragment.NavigationDrawerFragment;
 import com.example.admin.mingyang_object.ui.fragment.ProjectFragment;
-import com.example.admin.mingyang_object.ui.fragment.WfassigFragment;
-import com.example.admin.mingyang_object.ui.fragment.Wfment_fragment;
+import com.example.admin.mingyang_object.ui.fragment.UdstockFragment;
+import com.example.admin.mingyang_object.ui.fragment.WfmentFragment;
 import com.example.admin.mingyang_object.ui.fragment.WorkFragment;
 
 
@@ -36,13 +35,20 @@ public class MainActivity extends BaseActivity
     private TextView title;
 
     /**
+     * 待办事项*
+     */
+    private WfmentFragment mNewWfassigFragment;
+
+    /**
      * 工单管理*
      */
     private WorkFragment mNewWorkFragment;
+
     /**
-     * 待办事项*
+     * 库存管理*
      */
-    private Wfment_fragment mNewWfassigFragment;
+    private UdstockFragment mNewUdstockFragment;
+
 
     /**
      * 项目管理*
@@ -102,7 +108,7 @@ public class MainActivity extends BaseActivity
         switch (position) {
             case 0: //待办任务
                 if (mNewWfassigFragment == null) {
-                    mNewWfassigFragment = new Wfment_fragment();
+                    mNewWfassigFragment = new WfmentFragment();
                     Bundle bundle = new Bundle();
                     mNewWfassigFragment.setArguments(bundle);
                 }
@@ -117,7 +123,12 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction.replace(R.id.container, mNewWorkFragment).commit();
                 break;
             case 2://库存盘点
-
+                if (mNewUdstockFragment == null) {
+                    mNewUdstockFragment = new UdstockFragment();
+                    Bundle bundle = new Bundle();
+                    mNewUdstockFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewUdstockFragment).commit();
                 break;
             case 3://项目管理
                 if (projectFragment == null) {

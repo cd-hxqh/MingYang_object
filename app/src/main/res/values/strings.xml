@@ -321,4 +321,13 @@
     <string name="xmxx_text">项目信息</string>
     <string name="wtlldxj_text">联络单详情</string>
 
+    <!-- 库存盘点-->
+    <string name="udstick_text">盘点单号:</string>
+    <string name="zpdnum_text">盘点单号凭证:</string>
+    <string name="location_text">仓库:</string>
+    <string name="locdesc_text">仓库名称:</string>
+    <string name="createdby_text">创建人:</string>
+    <string name="createdate_1_text">创建时间:</string>
+    <string name="udstock_detail_text">盘点详情</string>
+
 </resources>
