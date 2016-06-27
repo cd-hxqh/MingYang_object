@@ -8,6 +8,8 @@ import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.Entity;
+import com.example.admin.mingyang_object.model.JobPlan;
+import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Udfandetails;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 /**
  * Json数据解析类
  */
-public class JsonUtils {
+public class JsonUtils<E> {
     private static final String TAG = "JsonUtils";
 
 
@@ -663,6 +665,96 @@ public class JsonUtils {
                 }
                 woactivity.WONUM = wonum;
                 list.add(woactivity);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析人员信息
+     */
+    public static ArrayList<Person> parsingPerson(String data) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<Person> list;
+        list = null;
+        Person person = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Person>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                person = new Person();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = person.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = person.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(person);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = person.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(person,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(person);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析人员信息
+     */
+    public static ArrayList<JobPlan> parsingJobPlan(String data) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<JobPlan> list;
+        list = null;
+        JobPlan jobPlan = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<JobPlan>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jobPlan = new JobPlan();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = jobPlan.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = jobPlan.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(jobPlan);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = jobPlan.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(jobPlan,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(jobPlan);
             }
             return list;
         }catch (JSONException e) {

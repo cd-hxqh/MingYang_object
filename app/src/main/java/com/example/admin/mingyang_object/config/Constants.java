@@ -150,41 +150,14 @@ public class Constants {
     //设备表名
     public static final String ASSET_NAME = "ASSET";
     //作业计划appid
-    public static final String JOBPLAN_APPID = "UDJOBPLAN";
+    public static final String JOBPLAN_APPID = "UDPLANSTND";
     //作业计划表名
     public static final String JOBPLAN_NAME = "JOBPLAN";
     //人员appid
-    public static final String PERSON_APPID = "PERSON";
+    public static final String PERSON_APPID = "UDPERSON";
     //人员表名
     public static final String PERSON_NAME = "PERSON";
-    //员工的appid
-    public static final String LABOR_APPID = "LABOR";
-    //员工表名
-    public static final String LABOR_NAME = "LABOR";
-    //抢修班组的appid
-    public static final String ALNDOMAIN_APPID = "DOMAINADM";
-    //抢修班组的表名
-    public static final String ALNDOMAIN_NAME = "ALNDOMAIN";
-    //事故appid
-    public static final String UDEV_APPID = "UDEV";
-    //事故表名
-    public static final String UDEV_NAME = "UDEV";
-    //立项申报appid
-    public static final String PROJAPPR_APPUD = "PROJAPPR";
-    //立项申报表名
-    public static final String PROJAPPR_NAME = "PROJAPPR";
-    //预防性维护appid
-    public static final String PM_APPID = "UDPM";
-    //预防性维护表名
-    public static final String PM_NAME = "PM";
-    //员工工种appid
-    public static final String LABORCRAFTRATE_APPID = "LABOR";
-    //员工工种表名
-    public static final String LABORCRAFTRATE_NAME = "LABORCRAFTRATE";
-    //故障appid
-    public static final String FAILURELIST_APPID = "UDFAILURE";
-    //故障表名
-    public static final String FAILURELIST_NAME = "FAILURELIST";
+
 
 
     /**
@@ -279,43 +252,10 @@ public class Constants {
     /**
      * 选项跳转请求值
      */
-    public static final int ASSETCODE = 100; //设备
+    public static final int PERSONCODE = 100; //人员
 
-    public static final int JOBPLANCODE = 110; //作业计划
+    public static final int REGULARINSCODE = 110;//定检计划编号
 
-    public static final int PERSONCODE = 120;//人员
+    public static final int WS_JOBPLANCODE = 120;//定检作业计划
 
-    public static final int PERSONCODE1 = 121;//物管员经办人
-
-    public static final int LABORCODE = 130;//员工
-
-    public static final int LABORCODE1 = 140;//抢修负责人
-
-    public static final int LABORCODE2 = 150;//抢修执行人
-
-    public static final int LABORCODE3 = 160;//抢修执行人2
-
-    public static final int ALNDOMAINCODE = 170;//抢修班组
-
-    public static final int UDEVCODE = 180;//事故
-
-    public static final int PROJAPPR = 190;//立项申报
-
-    public static final int PMCODE = 200;//预防性维护
-
-    public static final int LABORCRAFTRATECODE = 210;//员工工种
-
-    public static final int FAILURE_TYPE = 220;//故障原因
-
-    public static final int FAILURE_QUESTION = 230;//故障问题
-
-    public static final int FAILURE_CAUSE = 240;//故障原因
-
-    public static final int FAILURE_REMEMDY = 250;//故障措施
-
-    public static final int ALNDOMAIN2CODE = 260;//故障类别
-
-    public static final int LOCATIONCODE = 270;//库房
-
-    public static final int WORKORDERCODE = 280;//工单
 }

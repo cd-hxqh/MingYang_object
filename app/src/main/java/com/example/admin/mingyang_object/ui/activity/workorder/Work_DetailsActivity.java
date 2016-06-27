@@ -23,9 +23,13 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
+import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.WorkTitle;
 import com.flyco.animation.BaseAnimatorSet;
@@ -81,9 +85,11 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView branch;//中心
     private TextView udprojectnum;//项目
     private TextView udlocnum;//机位号
+    private LinearLayout udlocationlayout;
     private TextView udlocation;//位置
+    private TextView leadText;
     private TextView lead;//运行组/维护组工程师
-    private TextView status;//状态
+    private TextView udstatus;//状态
     private TextView createby;//创建人
     private TextView createdate;//创建时间
     private LinearLayout defultlayout;
@@ -105,7 +111,9 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
     private TextView udjpnum;//定检标准编号/排查标准/技改标准
+    private LinearLayout udplstartdatelayout;
     private TextView udplstartdate;//计划开始时间
+    private LinearLayout udplstopdatelayout;
     private TextView udplstopdate;//计划完成时间
     private TextView udrlstartdate;//实际开始时间
     private TextView udrlstopdate;//实际完成时间
@@ -173,7 +181,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
-        addudyxjData();
+        djtypeData();
     }
 
     /**
@@ -189,16 +197,18 @@ public class Work_DetailsActivity extends BaseActivity {
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
 
-        work_numlayout = (LinearLayout) findViewById(R.id.work_numlayout);
+        work_numlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         wonum = (TextView) findViewById(R.id.work_wonum);
         description = (EditText) findViewById(R.id.work_describe);
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
         branch = (TextView) findViewById(R.id.work_branch);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
         udlocnum = (TextView) findViewById(R.id.work_udlocnum);
+        udlocationlayout = (LinearLayout) findViewById(R.id.work_udlocation_layout);
         udlocation = (TextView) findViewById(R.id.work_udlocation);
+        leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
-        status = (TextView) findViewById(R.id.work_status);
+        udstatus = (TextView) findViewById(R.id.work_status);
         createby = (TextView) findViewById(R.id.work_createby);
         createdate = (TextView) findViewById(R.id.work_createdate);
         defultlayout = (LinearLayout) findViewById(R.id.work_defultlayout);
@@ -220,7 +230,9 @@ public class Work_DetailsActivity extends BaseActivity {
         udprobdesc = (TextView) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
         udjpnum = (TextView) findViewById(R.id.work_udjpnum);
+        udplstartdatelayout = (LinearLayout) findViewById(R.id.work_udplstartdate_layout);
         udplstartdate = (TextView) findViewById(R.id.work_udplstartdate);
+        udplstopdatelayout = (LinearLayout) findViewById(R.id.work_udplstopdate_layout);
         udplstopdate = (TextView) findViewById(R.id.work_udplstopdate);
         udrlstartdate = (TextView) findViewById(R.id.work_udrlstartdate);
         udrlstopdate = (TextView) findViewById(R.id.work_udrlstopdate);
@@ -289,7 +301,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udlocnum.setText(workOrder.UDLOCNUM);
         udlocation.setText(workOrder.UDLOCATION);
         lead.setText(workOrder.LEAD);
-        status.setText(workOrder.STATUS);
+        udstatus.setText(workOrder.UDSTATUS);
         createby.setText(workOrder.CREATEBY);
         createdate.setText(workOrder.CREATEDATE);
         failurecode.setText(workOrder.FAILURECODE);
@@ -330,9 +342,9 @@ public class Work_DetailsActivity extends BaseActivity {
         }
         wtcode.setText(workOrder.WTCODE);
         assettype.setText(workOrder.ASSETTYPE);
-        perinspr.setChecked(workOrder.PERINSPR!=null&&workOrder.PERINSPR.equals("Y"));
+        perinspr.setChecked(workOrder.PERINSPR != null && workOrder.PERINSPR.equals("Y"));
         udremark.setText(workOrder.UDREMARK);
-        isbigpar.setChecked(workOrder.ISBIGPAR!=null&&workOrder.ISBIGPAR.equals("Y"));
+        isbigpar.setChecked(workOrder.ISBIGPAR != null && workOrder.ISBIGPAR.equals("Y"));
         udzgmeasure.setText(workOrder.UDZGMEASURE);
         plannum.setText(workOrder.PLANNUM);
         pctype.setText(workOrder.PCTYPE);
@@ -343,7 +355,18 @@ public class Work_DetailsActivity extends BaseActivity {
         udjgtype.setText(workOrder.UDJGTYPE);
         udfjappnum.setText(workOrder.UDFJAPPNUM);
 
-
+        djtype.setOnClickListener(djtypeOnClickListener);
+        lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
+        udinspoby2.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
+        udinspoby3.setOnClickListener(new LayoutOnClickListener(4,Constants.PERSONCODE));
+        if (workOrder.WORKTYPE.equals(Constants.WS)){
+            udjpnum.setOnClickListener(new LayoutOnClickListener(5,Constants.WS_JOBPLANCODE));
+        }
+        udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
+        udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
+        udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
+        udrlstopdate.setOnClickListener(new DateChecked(udrlstopdate));
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
 //        work_flow.setOnClickListener(approvalBtnOnClickListener);
@@ -351,7 +374,7 @@ public class Work_DetailsActivity extends BaseActivity {
         setLayout();
     }
 
-    private View.OnClickListener udyxjOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener djtypeOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             NormalListDialog();
@@ -368,7 +391,7 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                udyxj.setText(mMenuItems.get(position).mOperName);
+                djtype.setText(mMenuItems.get(position).mOperName);
 
                 dialog.dismiss();
             }
@@ -378,11 +401,11 @@ public class Work_DetailsActivity extends BaseActivity {
     /**
      * 添加数据*
      */
-    private void addudyxjData() {
-//        String[] lctypes = getResources().getStringArray(R.array.udyxj_tab_titles);
+    private void djtypeData() {
+        String[] lctypes = getResources().getStringArray(R.array.djtype_array);
 
-//        for (int i = 0; i < lctypes.length; i++)
-//            mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
+        for (int i = 0; i < lctypes.length; i++)
+            mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
 
 
     }
@@ -422,10 +445,11 @@ public class Work_DetailsActivity extends BaseActivity {
                 pcresonlayout.setVisibility(View.GONE);
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
+                udlocationlayout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead3);
+                udplstartdatelayout.setVisibility(View.GONE);
+                udplstopdatelayout.setVisibility(View.GONE);
                 break;
-//            case "DC"://调试工单
-//
-//                break;
             case "SP"://排查工单
                 udplannumlayout.setVisibility(View.GONE);
                 defultlayout.setVisibility(View.GONE);
@@ -434,6 +458,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 perinsprtext.setText(R.string.work_perinspr2);
                 isbigparlayout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead2);
                 break;
             case "TP"://技改工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -448,10 +473,12 @@ public class Work_DetailsActivity extends BaseActivity {
                 pctypelayout.setVisibility(View.GONE);
                 pcresontext.setText(R.string.work_pcreson2);
                 udjgresult1layout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead3);
                 break;
             case "WS"://定检工单
                 udplannumlayout.setVisibility(View.GONE);
                 defultlayout.setVisibility(View.GONE);
+                assettypelayout.setVisibility(View.GONE);
                 udzgmeasurelayout.setVisibility(View.GONE);
                 plannumlayout.setVisibility(View.GONE);
                 pccompnumlayout.setVisibility(View.GONE);
@@ -460,6 +487,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 pcresonlayout.setVisibility(View.GONE);
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead1);
                 break;
             default:
                 break;
@@ -604,7 +632,16 @@ public class Work_DetailsActivity extends BaseActivity {
 //        }
 //    };
 
-
+    class DateChecked implements View.OnClickListener{
+        TextView textView;
+        public DateChecked(TextView textView){
+            this.textView = textView;
+        }
+        @Override
+        public void onClick(View v) {
+            new DateSelect(Work_DetailsActivity.this, textView).showDialog();
+        }
+    }
 
     /**
      * 提交数据*
@@ -675,22 +712,18 @@ public class Work_DetailsActivity extends BaseActivity {
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
+        int optiontype;
 
-        private LayoutOnClickListener(int requestCode) {
+        private LayoutOnClickListener(int requestCode,int optiontype) {
             this.requestCode = requestCode;
+            this.optiontype = optiontype;
         }
 
         @Override
         public void onClick(View view) {
-//            Intent intent = new Intent(Work_detailsActivity.this, OptionActivity.class);
-//            intent.putExtra("requestCode", requestCode);
-//            if (requestCode == Constants.JOBPLANCODE) {
-//                intent.putExtra("AssetIsChoose", assetnum.getText().toString().equals(""));
-//            } else if ((requestCode == Constants.LABORCODE1 || requestCode == Constants.LABORCODE2
-//                    || requestCode == Constants.LABORCODE3) && !udqxbz.getText().toString().equals("")) {
-//                intent.putExtra("udqxbz", udqxbz.getText().toString());
-//            }
-//            startActivityForResult(intent, requestCode);
+            Intent intent = new Intent(Work_DetailsActivity.this, OptionActivity.class);
+            intent.putExtra("optiontype", optiontype);
+            startActivityForResult(intent, requestCode);
         }
     }
 
@@ -862,29 +895,28 @@ public class Work_DetailsActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Option option;
-        switch (resultCode) {
-//            case Constants.ASSETCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                assetnum.setText(option.getName());
-//                workOrder.udassetbz = option.getValue();
-//                break;
-//            case Constants.JOBPLANCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                jpnum.setText(option.getName());
-//                break;
-//            case Constants.PERSONCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                reportedby.setText(option.getName());
-//                break;
-//            case Constants.LABORCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                lead.setText(option.getName());
-//                break;
-//            case Constants.LABORCODE1:
-//                option = (Option) data.getSerializableExtra("option");
-//                lead1.setText(option.getName());
-//                break;
+        Option option;
+        switch (requestCode) {
+            case 1:
+                option = (Option) data.getSerializableExtra("option");
+                lead.setText(option.getName());
+                break;
+            case 2:
+                option = (Option) data.getSerializableExtra("option");
+                udinspoby.setText(option.getName());
+                break;
+            case 3:
+                option = (Option) data.getSerializableExtra("option");
+                udinspoby2.setText(option.getName());
+                break;
+            case 4:
+                option = (Option) data.getSerializableExtra("option");
+                udinspoby3.setText(option.getName());
+                break;
+            case 5:
+                option = (Option) data.getSerializableExtra("option");
+                udjpnum.setText(option.getName());
+                break;
 //            case Constants.LABORCODE2:
 //                option = (Option) data.getSerializableExtra("option");
 //                supervisor.setText(option.getName());

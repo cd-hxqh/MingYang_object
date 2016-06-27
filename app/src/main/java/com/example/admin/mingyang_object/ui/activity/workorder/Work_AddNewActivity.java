@@ -22,7 +22,10 @@ import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.GetDateAndTime;
 import com.example.admin.mingyang_object.utils.WorkTitle;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -77,9 +80,11 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView branch;//中心
     private TextView udprojectnum;//项目
     private TextView udlocnum;//机位号
+    private LinearLayout udlocationlayout;
     private TextView udlocation;//位置
+    private TextView leadText;
     private TextView lead;//运行组/维护组工程师
-    private TextView status;//状态
+    private TextView udstatus;//状态
     private TextView createby;//创建人
     private TextView createdate;//创建时间
     private LinearLayout defultlayout;
@@ -101,7 +106,9 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
     private TextView udjpnum;//定检标准编号/排查标准/技改标准
+    private LinearLayout udplstartdatelayout;
     private TextView udplstartdate;//计划开始时间
+    private LinearLayout udplstopdatelayout;
     private TextView udplstopdate;//计划完成时间
     private TextView udrlstartdate;//实际开始时间
     private TextView udrlstopdate;//实际完成时间
@@ -185,16 +192,18 @@ public class Work_AddNewActivity extends BaseActivity {
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
 
-        work_numlayout = (LinearLayout) findViewById(R.id.work_numlayout);
+        work_numlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         wonum = (TextView) findViewById(R.id.work_wonum);
         description = (EditText) findViewById(R.id.work_describe);
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
         branch = (TextView) findViewById(R.id.work_branch);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
         udlocnum = (TextView) findViewById(R.id.work_udlocnum);
+        udlocationlayout = (LinearLayout) findViewById(R.id.work_udlocation_layout);
         udlocation = (TextView) findViewById(R.id.work_udlocation);
+        leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
-        status = (TextView) findViewById(R.id.work_status);
+        udstatus = (TextView) findViewById(R.id.work_status);
         createby = (TextView) findViewById(R.id.work_createby);
         createdate = (TextView) findViewById(R.id.work_createdate);
         defultlayout = (LinearLayout) findViewById(R.id.work_defultlayout);
@@ -216,7 +225,9 @@ public class Work_AddNewActivity extends BaseActivity {
         udprobdesc = (TextView) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
         udjpnum = (TextView) findViewById(R.id.work_udjpnum);
+        udplstartdatelayout = (LinearLayout) findViewById(R.id.work_udplstartdate_layout);
         udplstartdate = (TextView) findViewById(R.id.work_udplstartdate);
+        udplstopdatelayout = (LinearLayout) findViewById(R.id.work_udplstopdate_layout);
         udplstopdate = (TextView) findViewById(R.id.work_udplstopdate);
         udrlstartdate = (TextView) findViewById(R.id.work_udrlstartdate);
         udrlstopdate = (TextView) findViewById(R.id.work_udrlstopdate);
@@ -263,7 +274,7 @@ public class Work_AddNewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titlename.setText(WorkTitle.getTitle("新建" + workOrder.WORKTYPE));
+        titlename.setText("新建" + WorkTitle.getTitle(workOrder.WORKTYPE));
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -276,7 +287,13 @@ public class Work_AddNewActivity extends BaseActivity {
 
         workOrder.isnew = true;
         work_numlayout.setVisibility(View.GONE);
-
+        createby.setText(AccountUtils.getpersonId(Work_AddNewActivity.this));
+        createdate.setText(GetDateAndTime.GetDateTime());
+        udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
+        udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
+        udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
+        udrlstopdate.setOnClickListener(new DateChecked(udrlstopdate));
+        udstatus.setText("新建");
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
 //        work_flow.setOnClickListener(approvalBtnOnClickListener);
@@ -357,6 +374,10 @@ public class Work_AddNewActivity extends BaseActivity {
                 pcresonlayout.setVisibility(View.GONE);
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
+                udlocationlayout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead3);
+                udplstartdatelayout.setVisibility(View.GONE);
+                udplstopdatelayout.setVisibility(View.GONE);
                 break;
 //            case "DC"://调试工单
 //
@@ -369,6 +390,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 perinsprtext.setText(R.string.work_perinspr2);
                 isbigparlayout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead2);
                 break;
             case "TP"://技改工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -383,10 +405,12 @@ public class Work_AddNewActivity extends BaseActivity {
                 pctypelayout.setVisibility(View.GONE);
                 pcresontext.setText(R.string.work_pcreson2);
                 udjgresult1layout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead3);
                 break;
             case "WS"://定检工单
                 udplannumlayout.setVisibility(View.GONE);
                 defultlayout.setVisibility(View.GONE);
+                assettypelayout.setVisibility(View.GONE);
                 udzgmeasurelayout.setVisibility(View.GONE);
                 plannumlayout.setVisibility(View.GONE);
                 pccompnumlayout.setVisibility(View.GONE);
@@ -395,6 +419,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 pcresonlayout.setVisibility(View.GONE);
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
+                leadText.setText(R.string.work_lead1);
                 break;
             default:
                 break;
@@ -539,6 +564,16 @@ public class Work_AddNewActivity extends BaseActivity {
 //        }
 //    };
 
+    class DateChecked implements View.OnClickListener{
+        TextView textView;
+        public DateChecked(TextView textView){
+            this.textView = textView;
+        }
+        @Override
+        public void onClick(View v) {
+            new DateSelect(Work_AddNewActivity.this, textView).showDialog();
+        }
+    }
 
     /**
      * 提交数据*

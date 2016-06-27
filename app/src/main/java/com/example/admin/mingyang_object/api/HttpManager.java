@@ -231,6 +231,27 @@ public class HttpManager {
 
 
     /**
+     * 设置person人员表的接口
+     */
+    public static String getPersonUrl(String serch, int curpage, int showcount) {
+        if (serch.equals("")) {
+            return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DISPLAYNAME':'" + serch + "'}}";
+    }
+
+    /**
+     * 设置person人员表的接口
+     */
+    public static String getJobplanUrl(String serch, int curpage, int showcount,String type) {
+        if (serch.equals("")) {
+            return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动'}}";
+        }
+        return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动','DESCRIPTION':'" + serch + "'}}";
+    }
+
+
+    /**
      * 使用用户名密码登录
      *
      * @param cxt

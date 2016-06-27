@@ -38,6 +38,7 @@ public class WorkOrder implements Serializable {
     public String UDPROBDESC;//故障隐患描述
     public String WORKTYPE;//工单类型
     public String STATUS;//状态
+    public String UDSTATUS;//状态
     public String CREATEDATE;//创建时间
     public String CREATEBY;//创建人
     public String UDJPNUM;//定检标准编号/排查标准/技改标准
@@ -243,6 +244,14 @@ public class WorkOrder implements Serializable {
 
     public void setSTATUS(String STATUS) {
         this.STATUS = STATUS;
+    }
+
+    public String getUDSTATUS() {
+        return UDSTATUS;
+    }
+
+    public void setUDSTATUS(String UDSTATUS) {
+        this.UDSTATUS = UDSTATUS;
     }
 
     public String getCREATEDATE() {
