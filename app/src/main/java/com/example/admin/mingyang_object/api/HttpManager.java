@@ -35,7 +35,7 @@ public class HttpManager {
         if (vlaue.equals("")) {
             return "{'appid':'" + Constants.WFASSIGNMENT_APPID + "','objectname':'" + Constants.WFASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'=活动'}}";
         } else {
-            return "{'appid':'" + Constants.WFASSIGNMENT_APPID + "','objectname':'" + Constants.WFASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'DESCRIPTION':'" + vlaue + "','ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'＝活动'}}";
+            return "{'appid':'" + Constants.WFASSIGNMENT_APPID + "','objectname':'" + Constants.WFASSIGNMENT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'=活动'}" + ",'sinorsearch':{'WFASSIGNMENTID':'" + vlaue + "','DESCRIPTION':'" + vlaue + "'}}";
         }
     }
 
@@ -162,7 +162,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'PRONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
     /**
@@ -182,7 +182,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'FEEDBACKNUM':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'FEEDBACKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 
@@ -214,7 +214,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRORUNLOGNUM':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'PRORUNLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 
@@ -226,7 +226,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'STOCKNUM':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'STOCKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 
