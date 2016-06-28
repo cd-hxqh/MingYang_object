@@ -144,15 +144,12 @@ public class HttpManager {
     }
 
 
-
     /**
      * 设置故障汇报接口
      */
     public static String getfailurereportUrl(String type, String wonum) {
         return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.FAILUREREPORT_NAME + "','option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
-
-
 
 
     /**
@@ -162,7 +159,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'PRONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'PRONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
     /**
@@ -182,7 +179,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'FEEDBACKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'FEEDBACKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 
@@ -214,9 +211,8 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'PRORUNLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'PRORUNLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
-
 
 
     /**
@@ -226,7 +222,14 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+ ",'sinorsearch':{'STOCKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'STOCKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+
+    /**
+     * 设置库存盘点行的接口
+     */
+    public static String getudstocklineurl(String lgort, String stocknum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LGORT':'" + lgort  + "','STOCKNUM':'" + stocknum + "'}}";
     }
 
 
@@ -243,7 +246,7 @@ public class HttpManager {
     /**
      * 设置person人员表的接口
      */
-    public static String getJobplanUrl(String serch, int curpage, int showcount,String type) {
+    public static String getJobplanUrl(String serch, int curpage, int showcount, String type) {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动'}}";
         }

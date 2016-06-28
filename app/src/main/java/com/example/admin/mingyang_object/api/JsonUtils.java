@@ -16,6 +16,7 @@ import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udfeedback;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udstock;
+import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.Wfassignment;
@@ -420,6 +421,49 @@ public class JsonUtils<E> {
 
                 }
                 list.add(udstock);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    /**库存盘点行**/
+    public static ArrayList<Udstockline> parsingUdstockline(Context ctx, String data) {
+        ArrayList<Udstockline> list = null;
+        Udstockline udstockline = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udstockline>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udstockline = new Udstockline();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udstockline.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udstockline.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udstockline);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udstockline.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udstockline, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udstockline);
             }
             return list;
         } catch (JSONException e) {

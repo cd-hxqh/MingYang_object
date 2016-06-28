@@ -151,6 +151,9 @@
             android:name=".ui.activity.Udstock_DetailActivity"
             android:label="@string/udstock_detail_text"></activity>
         <activity
+            android:name=".ui.activity.Udstockline_DetailActivity"
+            android:label="@string/udstockline_text"></activity>
+        <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/wfm_detail_title"></activity>
         <activity

@@ -135,9 +135,17 @@ public class Constants {
      */
     public static final String UDSTOCK_APPID = "UDSTOCK";
     /**
-     * 问题联络单表名*
+     * 库存盘点表名*
      */
     public static final String UDSTOCK_NAME = "UDSTOCK";
+    /**
+     * 库存盘点行appid*
+     */
+    public static final String UDSTOCKLINE_APPID = "UDSTOCKLINE";
+    /**
+     * 库存盘点行表名*
+     */
+    public static final String UDSTOCKLINE_NAME = "UDSTOCKLINE";
 
 
 

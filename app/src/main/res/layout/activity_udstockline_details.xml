@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/dimens_10">
 
@@ -23,12 +23,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/udstick_text"
+                android:text="@string/zpdrow_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/stocknum_text_id"
+                android:id="@+id/zpdrow_text_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -54,12 +54,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/item_desc_title"
+                android:text="@string/matnr_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/description_text_id"
+                android:id="@+id/matnr_text_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -83,12 +83,12 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/zpdnum_text"
+                android:text="@string/maktx_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/zpdnum_text_id"
+                android:id="@+id/maktx_text_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -114,12 +114,12 @@
                 android:id="@+id/inventory_location_name_title"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/location_text"
+                android:text="@string/msehl_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
             <TextView
-                android:id="@+id/location_text_id"
+                android:id="@+id/msehl_text_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -143,13 +143,13 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/locdesc_text"
+                android:text="@string/actualqty_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
-                android:id="@+id/locdesc_text_id"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/actualqty_text_id"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -173,13 +173,13 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/createdby_text"
+                android:text="@string/diffqty_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
-                android:id="@+id/createdby_text_id"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/diffqty_text_id"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -201,16 +201,15 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/inventory_curbaltotal_title"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/createdate_1_text"
+                android:text="@string/diffreason_text"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
-                android:id="@+id/createdate_text_id"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/diffreason_text_id"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -226,51 +225,5 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40dp"
-        android:background="@color/light_gray2"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="行项目号"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="物料编码"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="盘点数量"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="详情"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
-    </LinearLayout>
-
-    <include layout="@layout/work_list"></include>
 
 </LinearLayout>

@@ -2,6 +2,10 @@ package com.example.admin.mingyang_object.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,8 +16,22 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udstock;
+import com.example.admin.mingyang_object.model.Udstockline;
+import com.example.admin.mingyang_object.model.Wfassignment;
+import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
+import com.example.admin.mingyang_object.ui.adapter.UdstocklineAdapter;
+import com.example.admin.mingyang_object.ui.adapter.WfmListAdapter;
+import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
+import com.example.admin.mingyang_object.utils.AccountUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -65,6 +83,29 @@ public class Udstock_DetailActivity extends BaseActivity {
     private LinearLayout uploadfile;
 
 
+    LinearLayoutManager layoutManager;
+
+
+    /**
+     * RecyclerView*
+     */
+    public RecyclerView recyclerView;
+    /**
+     * 暂无数据*
+     */
+    private LinearLayout nodatalayout;
+    /**
+     * 界面刷新*
+     */
+    private SwipeRefreshLayout refresh_layout = null;
+
+    UdstocklineAdapter udstocklineAdapter;
+
+    private int page = 1;
+
+    ArrayList<Udstockline> items = new ArrayList<Udstockline>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +143,11 @@ public class Udstock_DetailActivity extends BaseActivity {
             createdbyText.setText(udstock.getCREATEDBY());
             createdateText.setText(udstock.getCREATEDATE());
         }
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
+        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
     }
 
     @Override
@@ -111,6 +157,22 @@ public class Udstock_DetailActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+
+        layoutManager = new LinearLayoutManager(Udstock_DetailActivity.this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        refresh_layout.setColor(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        refresh_layout.setRefreshing(true);
+
+        refresh_layout.setOnRefreshListener(onRefreshListener);
+        refresh_layout.setOnLoadListener(onLoadListener);
+        getData();
+
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -153,6 +215,84 @@ public class Udstock_DetailActivity extends BaseActivity {
         uploadfile = (LinearLayout) contentView.findViewById(R.id.upload_file_id);
 
 
+    }
+
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            page = 1;
+
+            getData();
+        }
+    };
+
+    private SwipeRefreshLayout.OnLoadListener onLoadListener = new SwipeRefreshLayout.OnLoadListener() {
+        @Override
+        public void onLoad() {
+            page++;
+
+            getData();
+        }
+    };
+
+
+    /**
+     * 获取数据*
+     */
+    private void getData() {
+        HttpManager.getDataPagingInfo(Udstock_DetailActivity.this, HttpManager.getudstocklineurl(udstock.getLOCATION(), udstock.getSTOCKNUM(), page, 20), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+
+                ArrayList<Udstockline> item = JsonUtils.parsingUdstockline(Udstock_DetailActivity.this, results.getResultlist());
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
+                if (item == null || item.isEmpty()) {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                } else {
+
+                    if (item != null || item.size() != 0) {
+                        for (int i = 0; i < item.size(); i++) {
+                            items.add(item.get(i));
+                        }
+                    }
+                    nodatalayout.setVisibility(View.GONE);
+
+                    initAdapter(item);
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                refresh_layout.setRefreshing(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+
+    /**
+     * 获取数据*
+     */
+    private void initAdapter(final List<Udstockline> list) {
+        udstocklineAdapter = new UdstocklineAdapter(Udstock_DetailActivity.this, R.layout.udstocklinelist_item, list);
+        recyclerView.setAdapter(udstocklineAdapter);
+        udstocklineAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udstock_DetailActivity.this, Udstockline_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udstockline", items.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
     }
 
 

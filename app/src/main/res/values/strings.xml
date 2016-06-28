@@ -337,5 +337,14 @@
     <string name="createdby_text">创建人:</string>
     <string name="createdate_1_text">创建时间:</string>
     <string name="udstock_detail_text">盘点详情</string>
+    <!--盘点明细行-->
+    <string name="zpdrow_text">行项目:</string>
+    <string name="matnr_text">物料编码:</string>
+    <string name="maktx_text">物料描述:</string>
+    <string name="msehl_text">单位:</string>
+    <string name="actualqty_text">实盘数量:</string>
+    <string name="diffqty_text">差异数量:</string>
+    <string name="diffreason_text">差异原因:</string>
+    <string name="udstockline_text">盘点明细行</string>
 
 </resources>
