@@ -15,6 +15,8 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 
 import java.lang.reflect.Field;
@@ -139,6 +141,33 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option = new Option();
                 option.setName(data.get(i).getJPNUM());
                 option.setDesc(data.get(i).getDESCRIPTION());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addUdproDate(ArrayList<Udpro> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getPRONUM());
+                option.setDesc(data.get(i).getDESCRIPTION());
+                option.setValue1(data.get(i).getBRANCH());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addUdfandetailsDate(ArrayList<Udfandetails> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getLOCNUM());
+                option.setDesc(data.get(i).getMODELTYPE());
                 optionList.add(option);
             }
         }

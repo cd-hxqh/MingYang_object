@@ -297,15 +297,15 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 ////                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 ////            }
 //            final String finalUpdataInfo = updataInfo;
-//            new AsyncTask<String, String, WorkResult>() {
+//            new AsyncTask<String, String, WebResult>() {
 //                @Override
-//                protected WorkResult doInBackground(String... strings) {
-//                    WorkResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo, AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
+//                protected WebResult doInBackground(String... strings) {
+//                    WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo, AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
 //                    return reviseresult;
 //                }
 //
 //                @Override
-//                protected void onPostExecute(WorkResult workResult) {
+//                protected void onPostExecute(WebResult workResult) {
 //                    super.onPostExecute(workResult);
 //                    if (workResult==null) {
 //                        Toast.makeText(Work_detailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
@@ -373,15 +373,15 @@ public class DebugWork_AddNewActivity extends BaseActivity {
      * 提交数据*
      */
     private void deleteAsyncTask() {
-//        new AsyncTask<String, String, WorkResult>() {
+//        new AsyncTask<String, String, WebResult>() {
 //            @Override
-//            protected WorkResult doInBackground(String... strings) {
-//                WorkResult reviseresult = AndroidClientService.DeleteWO(wonum.getText().toString(), AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
+//            protected WebResult doInBackground(String... strings) {
+//                WebResult reviseresult = AndroidClientService.DeleteWO(wonum.getText().toString(), AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
 //                return reviseresult;
 //            }
 //
 //            @Override
-//            protected void onPostExecute(WorkResult workResult) {
+//            protected void onPostExecute(WebResult workResult) {
 //                super.onPostExecute(workResult);
 //                if (workResult==null) {
 //                    Toast.makeText(Work_detailsActivity.this, "删除失败", Toast.LENGTH_SHORT).show();

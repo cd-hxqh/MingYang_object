@@ -391,6 +391,6 @@
             android:background="@mipmap/line" />
 
     </LinearLayout>
-    <!--<include layout="@layout/work_buttom3"></include>-->
+    <include layout="@layout/work_buttom"></include>
 
 </RelativeLayout>

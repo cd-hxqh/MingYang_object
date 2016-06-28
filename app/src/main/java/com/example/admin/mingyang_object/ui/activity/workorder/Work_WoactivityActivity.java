@@ -80,8 +80,8 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-//        confirmlayout = (LinearLayout) findViewById(R.id.confirm_layout);
-//        confirmBtn = (Button) findViewById(R.id.ok);
+        confirmlayout = (LinearLayout) findViewById(R.id.button_layout);
+        confirmBtn = (Button) findViewById(R.id.confirm);
     }
 
     @Override
@@ -91,15 +91,15 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         menuImageView.setImageResource(R.mipmap.add);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-//        confirmlayout.setVisibility(View.GONE);
-//        confirmBtn.setOnClickListener(confirmBtnOnClickListener);
+        confirmlayout.setVisibility(View.GONE);
+        confirmBtn.setOnClickListener(confirmBtnOnClickListener);
         layoutManager = new LinearLayoutManager(Work_WoactivityActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 //        woactivityAdapter = new WoactivityAdapter(Work_WoactivityActivity.this);
-        recyclerView.setAdapter(woactivityAdapter);
+//        recyclerView.setAdapter(woactivityAdapter);
 
         refresh_layout.setColor(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -118,17 +118,33 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
+        if (workOrder.WORKTYPE.equals(Constants.WS)){
+            menuImageView.setVisibility(View.GONE);
+        }
+
         if (!workOrder.isnew && (woactivityList == null || woactivityList.size() == 0)) {
             refresh_layout.setRefreshing(true);
             getdata();
         } else {
             if (woactivityList != null && woactivityList.size() != 0) {
-                initAdapter(woactivityList);
+                initList(woactivityList);
 //                woactivityAdapter.addData(woactivityList);
             }else {
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         }
+    }
+
+    private void initList(ArrayList<Woactivity> list ){
+        ArrayList<Woactivity> woactivities = new ArrayList<>();
+        for (int i = 0;i< list.size();i++){
+            if (list.get(i).optiontype!=null&&list.get(i).optiontype.equals("delete")){
+                deleteList.add(list.get(i));
+            }else {
+                woactivities.add(list.get(i));
+            }
+        }
+        initAdapter(woactivities);
     }
 
     private void getdata() {
@@ -224,30 +240,30 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            if (confirmlayout.getVisibility() == View.VISIBLE) {
-//                final NormalDialog dialog = new NormalDialog(Work_WoactivityActivity.this);
-//                dialog.content("确定放弃修改吗?")//
-//                        .showAnim(mBasIn)//
-//                        .dismissAnim(mBasOut)//
-//                        .show();
-//
-//                dialog.setOnBtnClickL(
-//                        new OnBtnClickL() {
-//                            @Override
-//                            public void onBtnClick() {
+            if (confirmlayout.getVisibility() == View.VISIBLE) {
+                final NormalDialog dialog = new NormalDialog(Work_WoactivityActivity.this);
+                dialog.content("确定放弃修改吗?")//
+                        .showAnim(mBasIn)//
+                        .dismissAnim(mBasOut)//
+                        .show();
+
+                dialog.setOnBtnClickL(
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                dialog.dismiss();
+                            }
+                        },
+                        new OnBtnClickL() {
+                            @Override
+                            public void onBtnClick() {
+                                Work_WoactivityActivity.this.finish();
 //                                dialog.dismiss();
-//                            }
-//                        },
-//                        new OnBtnClickL() {
-//                            @Override
-//                            public void onBtnClick() {
-//                                Work_WoactivityActivity.this.finish();
-////                            dialog.dismiss();
-//                            }
-//                        });
-//            } else {
+                            }
+                        });
+            } else {
                 Work_WoactivityActivity.this.finish();
-//            }
+            }
         }
     };
 
@@ -265,7 +281,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
             }else if (workOrder.WORKTYPE.equals(Constants.WS)){
                 intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_WS.class);
             }
-//            intent.putExtra("taskid", (woactivityAdapter.woactivityList.size() + 1) * 10);
+            intent.putExtra("taskid", (woactivityAdapter.getItemCount() + 1) * 10);
             startActivityForResult(intent, 1);
         }
     };
@@ -290,8 +306,8 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 
     private ArrayList<Woactivity> getList(){
         ArrayList<Woactivity> list = new ArrayList<>();
-        if(woactivityList.size()!=0) {
-            list.addAll(woactivityList);
+        if(woactivityAdapter.getData().size()!=0) {
+            list.addAll(woactivityAdapter.getData());
         }
         if(deleteList.size()!=0) {
             list.addAll(deleteList);
@@ -316,6 +332,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
                     int position = data.getIntExtra("position", 0);
                     woactivityAdapter.set(position, woactivity);
+                    initAdapter(woactivityAdapter.getData());
                     woactivityAdapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
@@ -325,6 +342,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                 if (data != null) {
                     int position = data.getIntExtra("position", 0);
                     woactivityAdapter.remove(position);
+                    initAdapter(woactivityAdapter.getData());
                     woactivityAdapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
@@ -336,6 +354,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                     int position = data.getIntExtra("position", 0);
                     deleteList.add(woactivity);
                     woactivityAdapter.remove(position);
+                    initAdapter(woactivityAdapter.getData());
                     woactivityAdapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);

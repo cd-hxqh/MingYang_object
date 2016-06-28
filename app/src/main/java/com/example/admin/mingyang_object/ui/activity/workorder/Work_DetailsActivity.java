@@ -25,13 +25,16 @@ import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.WorkTitle;
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -110,6 +113,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udjgresult;//累计时间
     private TextView udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
+    private LinearLayout udjpnumlayout;
     private TextView udjpnum;//定检标准编号/排查标准/技改标准
     private LinearLayout udplstartdatelayout;
     private TextView udplstartdate;//计划开始时间
@@ -158,9 +162,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udrprrsb1;//负责人
 
 
-    private Button delete;
-    private Button revise;
-    private Button work_flow;
+    private Button cancel;
+    private Button save;
 
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
 //    private ArrayList<Labtrans> labtransList = new ArrayList<>();
@@ -229,6 +232,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udjgresult = (TextView) findViewById(R.id.work_udjgresult);
         udprobdesc = (TextView) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
+        udjpnumlayout = (LinearLayout) findViewById(R.id.work_udjpnum_layout);
         udjpnum = (TextView) findViewById(R.id.work_udjpnum);
         udplstartdatelayout = (LinearLayout) findViewById(R.id.work_udplstartdate_layout);
         udplstartdate = (TextView) findViewById(R.id.work_udplstartdate);
@@ -275,6 +279,9 @@ public class Work_DetailsActivity extends BaseActivity {
         udjgtype = (TextView) findViewById(R.id.work_udjgtype);
         udfjappnum = (TextView) findViewById(R.id.work_udfjappnum);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
+
+        cancel = (Button) findViewById(R.id.work_cancel);
+        save = (Button) findViewById(R.id.work_save);
     }
 
     @Override
@@ -320,9 +327,9 @@ public class Work_DetailsActivity extends BaseActivity {
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             udrprrsb.setText(workOrder.UDRPRRSB);
             udjgresult.setText(workOrder.UDJGRESULT);
-        }else {
+        } else {
             udrprrsb1.setText(workOrder.UDRPRRSB);
-            udjgresult1.setChecked(workOrder.UDJGRESULT!=null&&workOrder.UDJGRESULT.equals("Y"));
+            udjgresult1.setChecked(workOrder.UDJGRESULT != null && workOrder.UDJGRESULT.equals("Y"));
         }
         udprobdesc.setText(workOrder.UDPROBDESC);
         udjpnum.setText(workOrder.UDJPNUM);
@@ -337,7 +344,7 @@ public class Work_DetailsActivity extends BaseActivity {
         djtype.setText(workOrder.DJTYPE);
         if (workOrder.WORKTYPE.equals(Constants.WS)) {
             pccompnum1.setText(workOrder.PCCOMPNUM);
-        }else {
+        } else {
             pccompnum.setText(workOrder.PCCOMPNUM);
         }
         wtcode.setText(workOrder.WTCODE);
@@ -359,18 +366,29 @@ public class Work_DetailsActivity extends BaseActivity {
         lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         udinspoby2.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
-        udinspoby3.setOnClickListener(new LayoutOnClickListener(4,Constants.PERSONCODE));
-        if (workOrder.WORKTYPE.equals(Constants.WS)){
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5,Constants.WS_JOBPLANCODE));
+        udinspoby3.setOnClickListener(new LayoutOnClickListener(4, Constants.PERSONCODE));
+        udprojectnum.setOnClickListener(new LayoutOnClickListener(6, Constants.UDPROCODE));
+        udlocnum.setOnClickListener(new LayoutOnClickListener(7, Constants.UDLOCNUMCODE));
+        if (workOrder.WORKTYPE.equals(Constants.WS)) {
+            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
         }
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
         udrlstopdate.setOnClickListener(new DateChecked(udrlstopdate));
-//        delete.setOnClickListener(deleteOnClickListener);
-//        revise.setOnClickListener(reviseOnClickListener);
-//        work_flow.setOnClickListener(approvalBtnOnClickListener);
 
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitDataInfo();
+            }
+        });
         setLayout();
     }
 
@@ -411,11 +429,13 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     //时间选择监听
-    private class TimeOnClickListener implements View.OnClickListener{
+    private class TimeOnClickListener implements View.OnClickListener {
         TextView textView;
-        private TimeOnClickListener(TextView textView){
+
+        private TimeOnClickListener(TextView textView) {
             this.textView = textView;
         }
+
         @Override
         public void onClick(View view) {
             new DateTimeSelect(Work_DetailsActivity.this, textView).showDialog();
@@ -446,9 +466,10 @@ public class Work_DetailsActivity extends BaseActivity {
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
                 udlocationlayout.setVisibility(View.GONE);
-                leadText.setText(R.string.work_lead3);
+                leadText.setText(R.string.work_lead2);
                 udplstartdatelayout.setVisibility(View.GONE);
                 udplstopdatelayout.setVisibility(View.GONE);
+                udjpnumlayout.setVisibility(View.GONE);
                 break;
             case "SP"://排查工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -583,7 +604,7 @@ public class Work_DetailsActivity extends BaseActivity {
             bundle.putSerializable("workOrder", workOrder);
             bundle.putSerializable("woactivityList", woactivityList);
             intent.putExtras(bundle);
-            startActivityForResult(intent,1000);
+            startActivityForResult(intent, 1000);
             popupWindow.dismiss();
         }
     };
@@ -632,11 +653,13 @@ public class Work_DetailsActivity extends BaseActivity {
 //        }
 //    };
 
-    class DateChecked implements View.OnClickListener{
+    class DateChecked implements View.OnClickListener {
         TextView textView;
-        public DateChecked(TextView textView){
+
+        public DateChecked(TextView textView) {
             this.textView = textView;
         }
+
         @Override
         public void onClick(View v) {
             new DateSelect(Work_DetailsActivity.this, textView).showDialog();
@@ -678,33 +701,34 @@ public class Work_DetailsActivity extends BaseActivity {
 //            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
 //            saveWorkOrder();
 //        } else {
-//            String updataInfo = null;
-////            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, labtransList, failurereportList);
-////            } else if (workOrder.status.equals(Constants.APPROVALED)) {
-////                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-////            }
-//            final String finalUpdataInfo = updataInfo;
-//            new AsyncTask<String, String, WorkResult>() {
-//                @Override
-//                protected WorkResult doInBackground(String... strings) {
-//                    WorkResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo, AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
-//                    return reviseresult;
-//                }
-//
-//                @Override
-//                protected void onPostExecute(WorkResult workResult) {
-//                    super.onPostExecute(workResult);
-//                    if (workResult==null) {
-//                        Toast.makeText(Work_detailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-//                    }else if (workResult.errorMsg.equals("成功!")) {
-//                        Toast.makeText(Work_detailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(Work_detailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
-//                    }
-//                    closeProgressDialog();
-//                }
-//            }.execute();
+        String updataInfo = null;
+//            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList());
+//            } else if (workOrder.status.equals(Constants.APPROVALED)) {
+//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
+//            }
+        final String finalUpdataInfo = updataInfo;
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                        "WORKORDER","WONUM",workOrder.WONUM,"http://192.168.100.17:7001/meaweb/services/MOBILESERVICE");
+                return reviseresult;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult workResult) {
+                super.onPostExecute(workResult);
+                if (workResult.errorMsg == null) {
+                    Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("成功!")) {
+                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Work_DetailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                }
+                closeProgressDialog();
+            }
+        }.execute();
 ////        }
 
     }
@@ -714,7 +738,7 @@ public class Work_DetailsActivity extends BaseActivity {
         int requestCode;
         int optiontype;
 
-        private LayoutOnClickListener(int requestCode,int optiontype) {
+        private LayoutOnClickListener(int requestCode, int optiontype) {
             this.requestCode = requestCode;
             this.optiontype = optiontype;
         }
@@ -723,6 +747,13 @@ public class Work_DetailsActivity extends BaseActivity {
         public void onClick(View view) {
             Intent intent = new Intent(Work_DetailsActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
+            if (requestCode == 7) {
+                if (udprojectnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_DetailsActivity.this, "请先选择项目遍号", Toast.LENGTH_SHORT).show();
+                } else {
+                    intent.putExtra("udprojectnum", udprojectnum.getText().toString());
+                }
+            }
             startActivityForResult(intent, requestCode);
         }
     }
@@ -757,15 +788,15 @@ public class Work_DetailsActivity extends BaseActivity {
      * 提交数据*
      */
     private void deleteAsyncTask() {
-//        new AsyncTask<String, String, WorkResult>() {
+//        new AsyncTask<String, String, WebResult>() {
 //            @Override
-//            protected WorkResult doInBackground(String... strings) {
-//                WorkResult reviseresult = AndroidClientService.DeleteWO(wonum.getText().toString(), AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
+//            protected WebResult doInBackground(String... strings) {
+//                WebResult reviseresult = AndroidClientService.DeleteWO(wonum.getText().toString(), AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
 //                return reviseresult;
 //            }
 //
 //            @Override
-//            protected void onPostExecute(WorkResult workResult) {
+//            protected void onPostExecute(WebResult workResult) {
 //                super.onPostExecute(workResult);
 //                if (workResult==null) {
 //                    Toast.makeText(Work_detailsActivity.this, "删除失败", Toast.LENGTH_SHORT).show();
@@ -889,9 +920,76 @@ public class Work_DetailsActivity extends BaseActivity {
 
     private WorkOrder getWorkOrder() {
         WorkOrder workOrder = this.workOrder;
+        workOrder.WONUM = wonum.getText().toString();
+        workOrder.DESCRIPTION = description.getText().toString();
+        workOrder.BRANCH = branch.getText().toString();
+        workOrder.UDPROJECTNUM = udprojectnum.getText().toString();
+        workOrder.UDLOCNUM = udlocnum.getText().toString();
+        workOrder.UDLOCATION = udlocation.getText().toString();
+        workOrder.LEAD = lead.getText().toString();
+        workOrder.UDSTATUS = udstatus.getText().toString();
+        workOrder.CREATEBY = createby.getText().toString();
+        workOrder.CREATEDATE = createdate.getText().toString();
+        workOrder.FAILURECODE = failurecode.getText().toString();
+        workOrder.PROBLEMCODE = problemcode.getText().toString();
+        workOrder.CULEVEL = culevel.getText().toString();
+        workOrder.UDZGLIMIT = udzglimit.getText().toString();
+        workOrder.UDPLANNUM = udplannum.getText().toString();
+        workOrder.SCHEDSTART = schedstart.getText().toString();
+        workOrder.SCHEDFINISH = schedfinish.getText().toString();
+        workOrder.ACTSTART = actstart.getText().toString();
+        workOrder.ACTFINISH = actfinish.getText().toString();
+        workOrder.ISSTOPED = isstoped.getText().toString();
+        workOrder.PMCHGEVALSTART = pmchgevalstart.getText().toString();
+        workOrder.PMCHGEVALEND = pmchgevalend.getText().toString();
+        if (workOrder.WORKTYPE.equals(Constants.FR)) {
+            workOrder.UDRPRRSB = udrprrsb.getText().toString();
+            workOrder.UDJGRESULT = udjgresult.getText().toString();
+        } else {
+            workOrder.UDRPRRSB = udrprrsb1.getText().toString();
+            workOrder.UDJGRESULT = udjgresult1.isChecked() ? "Y" : "N";
+        }
+        workOrder.UDPROBDESC = udprobdesc.getText().toString();
+        workOrder.UDJPNUM = udjpnum.getText().toString();
+        workOrder.UDPLSTARTDATE = udplstartdate.getText().toString();
+        workOrder.UDPLSTOPDATE = udplstopdate.getText().toString();
+        workOrder.UDRLSTARTDATE = udrlstartdate.getText().toString();
+        workOrder.UDRLSTOPDATE = udrlstopdate.getText().toString();
+        workOrder.UDINSPOBY = udinspoby.getText().toString();
+        workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
+        workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
+        workOrder.DJPLANNUM = djplannum.getText().toString();
+        workOrder.DJTYPE = djtype.getText().toString();
+        if (workOrder.WORKTYPE.equals(Constants.WS)) {
+            workOrder.PCCOMPNUM = pccompnum1.getText().toString();
+        } else {
+            workOrder.PCCOMPNUM = pccompnum.getText().toString();
+        }
+        workOrder.WTCODE = wtcode.getText().toString();
+        workOrder.ASSETTYPE = assettype.getText().toString();
+        workOrder.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        workOrder.UDREMARK = udremark.getText().toString();
+        workOrder.ISBIGPAR = isbigpar.isChecked() ? "Y" : "N";
+        workOrder.UDZGMEASURE = udzgmeasure.getText().toString();
+        workOrder.PLANNUM = plannum.getText().toString();
+        workOrder.PCTYPE = pctype.getText().toString();
+        workOrder.UDFJFOL = udfjfol.getText().toString();
+        workOrder.PCRESON = pcreson.getText().toString();
+        workOrder.JGPLANNUM = jgplannum.getText().toString();
+        workOrder.UDJGTYPE = udjgtype.getText().toString();
+        workOrder.UDFJAPPNUM = udfjappnum.getText().toString();
         return workOrder;
     }
 
+    private ArrayList<Woactivity> getWoactivityList() {
+        ArrayList<Woactivity> woactivities = new ArrayList<>();
+        for (int i = 0; i < woactivityList.size(); i++) {
+            if (woactivityList.get(i).optiontype!=null){
+                woactivities.add(woactivityList.get(i));
+            }
+        }
+        return woactivities;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -917,14 +1015,16 @@ public class Work_DetailsActivity extends BaseActivity {
                 option = (Option) data.getSerializableExtra("option");
                 udjpnum.setText(option.getName());
                 break;
-//            case Constants.LABORCODE2:
-//                option = (Option) data.getSerializableExtra("option");
-//                supervisor.setText(option.getName());
-//                break;
-//            case Constants.LABORCODE3:
-//                option = (Option) data.getSerializableExtra("option");
-//                udsupervisor2.setText(option.getName());
-//                break;
+            case 6:
+                option = (Option) data.getSerializableExtra("option");
+                udprojectnum.setText(option.getName());
+                branch.setText(option.getValue1());
+                udlocnum.setText("");
+                break;
+            case 7:
+                option = (Option) data.getSerializableExtra("option");
+                udlocnum.setText(option.getName());
+                break;
 //            case Constants.ALNDOMAINCODE:
 //                option = (Option) data.getSerializableExtra("option");
 //                udqxbz.setText(option.getName());
@@ -951,7 +1051,9 @@ public class Work_DetailsActivity extends BaseActivity {
 //                udgzlbdm.setText(option.getName());
 //                break;
             case 1000:
-                woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
+                if (data != null && data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {
+                    woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
+                }
                 break;
 //            case 2000:
 //                labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");

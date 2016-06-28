@@ -30,9 +30,9 @@ public class Constants {
     public static final String BASE_URL = "/maximo/mobile/common/api";
 
     /**
-     * 工单接口*
+     * 通用修改接口*
      */
-    public static final String WORK_URL = "/meaweb/services/WORKORDERSERVICE";
+    public static final String WORK_URL = "/meaweb/services/MOBILESERVICE";
 
     /**
      * 领料单接口*
@@ -58,6 +58,8 @@ public class Constants {
     public static final String UDWOCM_APPID = "UDWOCM";
     //故障工单表名
     public static final String WORKORDER_NAME = "WORKORDER";
+    //工单计划任务appid
+    public static final String WOACTIVITY_APPID = "WOACTIVITY";
     //工单计划任务表名
     public static final String WOACTIVITY_NAME = "WOACTIVITY";
     //调试工单子表appid
@@ -214,31 +216,9 @@ public class Constants {
     public static final String WS = "WS";//定检工单
 
     //工单状态
-    public static final String STATUS1 = "已批准";
-    public static final String STATUS2 = "取消";
-    public static final String STATUS3 = "关闭";
-    public static final String STATUS4 = "完成";
-    public static final String STATUS5 = "等待厂家处理";
-    public static final String STATUS6 = "已验收";
-    public static final String STATUS7 = "工单执行";
-    public static final String STATUS8 = "已完成/关闭";
-    public static final String STATUS9 = "提交监督审核";
-    public static final String STATUS10 = "提交主任审核";
-    public static final String STATUS11 = "工作计划";
-    public static final String STATUS12 = "未通过实现后复审";
-    public static final String STATUS13 = "调度";
-    public static final String STATUS14 = "调度";
-    public static final String STATUS15 = "复审";
-    public static final String STATUS16 = "已拒绝";
-    public static final String STATUS17 = "已拒绝";
-    public static final String STATUS18 = "提交主任分配";
-    public static final String STATUS19 = "工单修正";
-    public static final String STATUS20 = "询比价处理";
-    public static final String STATUS21 = "审核完成";
-    public static final String STATUS22 = "外协执行";
-    public static final String STATUS23 = "外协执行完成";
-    public static final String STATUS24 = "服务验收";
-    public static final String STATUS25 = "工单建立";
+    public static final String STATUS1 = "等待批准";
+    public static final String STATUS2 = "进行中";
+
 
 
     /**设置数据库参数-开始**/
@@ -265,5 +245,9 @@ public class Constants {
     public static final int REGULARINSCODE = 110;//定检计划编号
 
     public static final int WS_JOBPLANCODE = 120;//定检作业计划
+
+    public static final int UDPROCODE = 130;//项目编号
+
+    public static final int UDLOCNUMCODE = 140;//风机号
 
 }

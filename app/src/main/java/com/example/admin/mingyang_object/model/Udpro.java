@@ -17,6 +17,7 @@ public class Udpro extends Entity implements Serializable {
     private String PRONUM; //项目编号
     private String DESCRIPTION; //项目描述
     private String BRANCH; //所属中心
+    private String BRANCHDESC;//中心描述
     private String CAPACITY; //总厂容量（MW）
     private String CONTRACTSTATUS; //合同状态
     private String OWNER; //业务单位
@@ -49,6 +50,14 @@ public class Udpro extends Entity implements Serializable {
 
     public void setBRANCH(String BRANCH) {
         this.BRANCH = BRANCH;
+    }
+
+    public String getBRANCHDESC() {
+        return BRANCHDESC;
+    }
+
+    public void setBRANCHDESC(String BRANCHDESC) {
+        this.BRANCHDESC = BRANCHDESC;
     }
 
     public String getCAPACITY() {

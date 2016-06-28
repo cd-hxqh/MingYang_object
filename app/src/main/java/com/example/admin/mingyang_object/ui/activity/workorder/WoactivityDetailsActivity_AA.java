@@ -12,9 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.DateSelect;
+import com.example.admin.mingyang_object.utils.DateTimeSelect;
 
 
 /**
@@ -86,8 +91,8 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
         udremark = (EditText) findViewById(R.id.woactivity_udremark);
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
-//        confirm = (Button) findViewById(R.id.confirm);
-//        delete = (Button) findViewById(R.id.work_delete);
+        confirm = (Button) findViewById(R.id.work_save);
+        delete = (Button) findViewById(R.id.work_cancel);
     }
 
     @Override
@@ -99,13 +104,14 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
             }
         });
         titleTextView.setText(getResources().getString(R.string.title_activity_woactivitydetails));
+        delete.setText(R.string.work_delete);
 
         taskid.setText(woactivity.TASKID);
         wojo1.setText(woactivity.WOJO1);
         udstarttime.setText(woactivity.UDSTARTTIME);
         udendtime.setText(woactivity.UDENDTIME);
         udzysbasic.setText(woactivity.UDZYSBASIC);
-        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR != null && woactivity.PERINSPR.equals("Y"));
         udprobdesc.setText(woactivity.UDPROBDESC);
         udzglimit.setText(woactivity.UDZGLIMIT);
         lead.setText(woactivity.LEAD);
@@ -113,57 +119,129 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udzgresult.setText(woactivity.UDZGRESULT);
         udremark.setText(woactivity.UDREMARK);
 
-//        confirm.setOnClickListener(confirmOnClickListener);
-//        delete.setOnClickListener(deleteOnClickListener);
+        udstarttime.setOnClickListener(new DateChecked(udstarttime));
+        udendtime.setOnClickListener(new DateChecked(udendtime));
+        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
+        lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        confirm.setOnClickListener(confirmOnClickListener);
+        delete.setOnClickListener(deleteOnClickListener);
     }
 
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
-
+        woactivity.TASKID = taskid.getText().toString();
+        woactivity.WOJO1 = wojo1.getText().toString();
+        woactivity.UDSTARTTIME = udstarttime.getText().toString();
+        woactivity.UDENDTIME = udendtime.getText().toString();
+        woactivity.UDZYSBASIC = udzysbasic.getText().toString();
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        woactivity.UDPROBDESC = udprobdesc.getText().toString();
+        woactivity.UDZGLIMIT = udzglimit.getText().toString();
+        woactivity.LEAD = lead.getText().toString();
+        woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
+        woactivity.UDZGRESULT = udzgresult.getText().toString();
+        woactivity.UDREMARK = udremark.getText().toString();
         return woactivity;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent = getIntent();
-//            if(woactivity.taskid.equals(taskid.getText().toString())
-//                    &&woactivity.wojo1.equals(wojo1.getText().toString())
-//                    &&woactivity.description.equals(description.getText().toString())
-//                    &&woactivity.wojo2.equals(wojo2.getText().toString())
-//                    &&woactivity.udisdo.equals(udisdo.getText().toString())
-//                    &&woactivity.udisyq.equals(udisyq.getText().toString())
-//                    &&woactivity.udyqyy.equals(udyqyy.getText().toString())
-//                    &&woactivity.udremark.equals(udremark.getText().toString())) {//如果内容没有修改
-//                intent.putExtra("woactivity",woactivity);
-//            }else {
-//                Woactivity woactivity = getWoactivity();
-//                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-//                    woactivity.optiontype = "update";
-//                }
-//                intent.putExtra("woactivity", woactivity);
-//                Toast.makeText(WoactivityDetailsActivity.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
-//            }
-//            intent.putExtra("position", position);
-//            WoactivityDetailsActivity.this.setResult(2, intent);
-//            finish();
+            Intent intent = getIntent();
+            if(woactivity.WOJO1.equals(wojo1.getText().toString())
+                    &&woactivity.UDSTARTTIME.equals(udstarttime.getText().toString())
+                    &&woactivity.UDENDTIME.equals(udendtime.getText().toString())
+                    &&woactivity.UDZYSBASIC.equals(udzysbasic.getText().toString())
+                    &&(woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N")||(woactivity.PERINSPR.equals("")&&!perinspr.isChecked()))
+                    &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
+                    &&woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())
+                    &&woactivity.LEAD.equals(lead.getText().toString())
+                    &&woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
+                    &&woactivity.UDZGRESULT.equals(udzgresult.getText().toString())
+                    &&woactivity.UDREMARK.equals(udremark.getText().toString())) {//如果内容没有修改
+                intent.putExtra("woactivity",woactivity);
+            }else {
+                Woactivity woactivity = getWoactivity();
+                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
+                    woactivity.optiontype = "update";
+                }
+                intent.putExtra("woactivity", woactivity);
+                Toast.makeText(WoactivityDetailsActivity_AA.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+            }
+            intent.putExtra("position", position);
+            WoactivityDetailsActivity_AA.this.setResult(2, intent);
+            finish();
         }
     };
 
     private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Intent intent = getIntent();
-//            intent.putExtra("position", position);
-//            if (woactivity.workorderid == null||woactivity.workorderid.equals("")){
-//                WoactivityDetailsActivity.this.setResult(3, intent);
-//            }else {
-//                Woactivity woactivity = getWoactivity();
-//                woactivity.optiontype = "delete";
-//                intent.putExtra("woactivity", woactivity);
-//                WoactivityDetailsActivity.this.setResult(4, intent);
-//            }
-//            finish();
+            Intent intent = getIntent();
+            intent.putExtra("position", position);
+            if (!woactivity.isUpload){
+                WoactivityDetailsActivity_AA.this.setResult(3, intent);
+            }else {
+                Woactivity woactivity = getWoactivity();
+                woactivity.optiontype = "delete";
+                intent.putExtra("woactivity", woactivity);
+                WoactivityDetailsActivity_AA.this.setResult(4, intent);
+            }
+            finish();
         }
     };
+
+    class DateChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateSelect(WoactivityDetailsActivity_AA.this, textView).showDialog();
+        }
+    }
+
+    class DateTimeChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateTimeChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateTimeSelect(WoactivityDetailsActivity_AA.this, textView).showDialog();
+        }
+    }
+
+    private class LayoutOnClickListener implements View.OnClickListener {
+        int requestCode;
+        int optiontype;
+
+        private LayoutOnClickListener(int requestCode, int optiontype) {
+            this.requestCode = requestCode;
+            this.optiontype = optiontype;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(WoactivityDetailsActivity_AA.this, OptionActivity.class);
+            intent.putExtra("optiontype", optiontype);
+            startActivityForResult(intent, requestCode);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
+        switch (requestCode) {
+            case 1:
+                option = (Option) data.getSerializableExtra("option");
+                lead.setText(option.getName());
+                break;
+        }
+    }
 }

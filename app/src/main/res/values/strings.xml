@@ -87,7 +87,9 @@
 
     <!--界面控件文本-->
     <string name="work_delete">删除</string>
+    <string name="work_cancel">取消</string>
     <string name="work_save">保存</string>
+    <string name="work_confirm">确定</string>
     <string name="fresh">刷新</string>
 
     <!--流程审批-->

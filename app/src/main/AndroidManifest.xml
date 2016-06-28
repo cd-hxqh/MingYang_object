@@ -55,18 +55,22 @@
         <activity
             android:name=".ui.activity.workorder.Work_DetailsActivity"
             android:label="@string/work_detail_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.Work_AddNewActivity"
             android:label="@string/work_detail_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.DebugWork_DetailsActivity"
             android:label="@string/work_detail_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.DebugWork_AddNewActivity"
             android:label="@string/work_detail_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.DebugWork_UddebugWorkOrderLineActivity"
@@ -83,34 +87,42 @@
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_AA"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_SP"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_TP"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_WS"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_AA"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_SP"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_TP"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_WS"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
             android:name=".ui.activity.workorder.UddebugWorkOrderLineDetailsActivity"

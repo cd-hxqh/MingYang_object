@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/button_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,6 +16,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/work_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
@@ -22,8 +24,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/semi_round_backgroud"
-            android:text="@string/work_delete"/>
+            android:text="@string/work_cancel"/>
         <Button
+            android:id="@+id/work_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"

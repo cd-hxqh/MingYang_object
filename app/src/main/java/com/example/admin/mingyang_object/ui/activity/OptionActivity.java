@@ -32,6 +32,8 @@ import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.adapter.OptionAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 
@@ -188,6 +190,10 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             return HttpManager.getPersonUrl(searchText, page, 20);
         }else if (optiontype == Constants.WS_JOBPLANCODE){
             return HttpManager.getJobplanUrl(searchText, page, 20, "定检标准");
+        }else if (optiontype == Constants.UDPROCODE){
+            return HttpManager.getUdprourl2(searchText, page, 20);
+        }else if (optiontype == Constants.UDLOCNUMCODE){
+            return HttpManager.getUdfandetailsurl(searchText, getIntent().getStringExtra("udprojectnum"),page, 20);
         }
         return "";
     }
@@ -208,15 +214,25 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                         optionAdapter = new OptionAdapter(OptionActivity.this);
                         recyclerView.setAdapter(optionAdapter);
                     }
-                    if (optiontype == Constants.PERSONCODE) {
+                    if (optiontype == Constants.PERSONCODE) {//
                         ArrayList<Person> items = JsonUtils.parsingPerson(results.getResultlist());
                         if (totalPages == page) {
                             optionAdapter.addPersonDate(items);
                         }
-                    }else if (optiontype == Constants.WS_JOBPLANCODE){
+                    }else if (optiontype == Constants.WS_JOBPLANCODE){//
                         ArrayList<JobPlan> items = JsonUtils.parsingJobPlan(results.getResultlist());
                         if (totalPages == page) {
                             optionAdapter.addJobPlanDate(items);
+                        }
+                    }else if (optiontype == Constants.UDPROCODE){//
+                        ArrayList<Udpro> items = JsonUtils.parsingUdpro(OptionActivity.this, results.getResultlist());
+                        if (totalPages == page) {
+                            optionAdapter.addUdproDate(items);
+                        }
+                    }else if (optiontype == Constants.UDLOCNUMCODE){//
+                        ArrayList<Udfandetails> items = JsonUtils.parsingUdfandetails(OptionActivity.this, results.getResultlist());
+                        if (totalPages == page) {
+                            optionAdapter.addUdfandetailsDate(items);
                         }
                     }
                     if (optionAdapter.getItemCount() == 0) {

@@ -101,7 +101,7 @@ public class HttpManager {
      * 设置计划任务接口*
      */
     public static String getwoactivityUrl(String wonum, int curpage, int showcount) {
-        return "{'appid':'" + "WOACTIVITY','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+        return "{'appid':'" + Constants.WOACTIVITY_APPID + "','objectname':'" + Constants.WOACTIVITY_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
                 ",'condition':{'parent':'" + wonum + "'}" +
                 "}";
     }
@@ -163,6 +163,16 @@ public class HttpManager {
     }
 
     /**
+     * 设置工程台账的试点项目接口
+     */
+    public static String getUdprourl2(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TESTPRO':'Y'}}";
+        }
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TESTPRO':'Y','PRONUM':'" + value + "'}}";
+    }
+
+    /**
      * 设置风机型号的接口
      */
     public static String getUdfandetailsurl(String value, String pronum, String siteid, int curpage, int showcount) {
@@ -170,6 +180,16 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
         }
         return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
+    }
+
+    /**
+     * 设置风机型号的接口
+     */
+    public static String getUdfandetailsurl(String value, String pronum, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
+        }
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "'}}";
     }
 
     /**

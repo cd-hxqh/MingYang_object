@@ -7,7 +7,6 @@ import com.example.admin.mingyang_object.bean.LoginResults;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
-import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.UdPerson;
@@ -18,6 +17,7 @@ import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.Udvehicle;
+import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.Wfassignment;
 import com.example.admin.mingyang_object.model.WorkOrder;
@@ -28,8 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 
@@ -107,6 +107,34 @@ public class JsonUtils<E> {
         }
 
     }
+
+    /**
+     * 解析新增工单返回信息
+     *
+     * @param data
+     * @return
+     */
+    public static WebResult parsingInsertWO(String data,String num) {
+        Log.i(TAG, "data=" + data);
+        String woNum = null;
+        WebResult webResult = new WebResult();
+        try {
+            JSONObject object = new JSONObject(data);
+            if (object.has("errorMsg")&&!object.getString("errorMsg").equals("")) {
+                webResult.errorMsg = object.getString("errorMsg");
+            }
+            if (object.has(num)&&!object.getString(num).equals("")) {
+                webResult.wonum = object.getString(num);
+            }
+            if (object.has("errorNo")) {
+                webResult.errorNo = object.getInt("errorNo");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return webResult;
+    }
+
     /**项目台账**/
     public static ArrayList<Udpro> parsingUdpro(Context ctx, String data) {
         Log.i(TAG, "udpro data=" + data);
@@ -557,7 +585,7 @@ public class JsonUtils<E> {
                 for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
-                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null){
                         try{
                             // 调用getter方法获取属性值
                             Method getOrSet = workOrder.getClass().getMethod("get" + name);
@@ -690,7 +718,7 @@ public class JsonUtils<E> {
                 for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
-                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null&&!jsonObject.getString(name).equals("")){
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null){
                         try{
                             // 调用getter方法获取属性值
                             Method getOrSet = woactivity.getClass().getMethod("get" + name);
@@ -708,6 +736,7 @@ public class JsonUtils<E> {
                     }
                 }
                 woactivity.WONUM = wonum;
+                woactivity.isUpload = true;
                 list.add(woactivity);
             }
             return list;
@@ -805,5 +834,77 @@ public class JsonUtils<E> {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 封装工单数据
+     *
+     * @param workOrder
+     * @param woactivities
+     * @return
+     */
+    public static String WorkToJson(WorkOrder workOrder, ArrayList<Woactivity> woactivities) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array=new JSONArray();
+        try {
+            Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for(int j=0 ; j<field.length ; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = workOrder.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(workOrder);
+                    if(value != null){
+                        jsonObject.put(name,value);
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject json=new JSONObject();
+            json.put("","");
+            array.put(json);
+            jsonObject.put("relationShip", array);
+            if (woactivities != null && woactivities.size() != 0) {
+                JSONArray woactivityArray = new JSONArray();
+                JSONObject woactivityObj;
+                for (int i = 0; i < woactivities.size(); i++) {
+                    woactivityObj = new JSONObject();
+                    Field[] field1 = woactivities.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for(int j=0 ; j<field1.length ; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(woactivities.get(i));
+                            if(value != null){
+                                woactivityObj.put(name,value);
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    woactivityArray.put(woactivityObj);
+                }
+//                jsonObject.put("wotasks", woactivityArray);
+            } else {
+//                jsonObject.put("wotasks", new JSONArray());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
 }

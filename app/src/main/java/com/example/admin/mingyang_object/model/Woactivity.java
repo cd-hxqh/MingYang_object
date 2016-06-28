@@ -8,8 +8,6 @@ import java.io.Serializable;
  * 工单任务
  */
 public class Woactivity extends Entity implements Serializable {
-    private static final String TAG = "Woactivity";
-    private static final long serialVersionUID = 2015050105L;
 
     public String TASKID;//任务
     public String DESCRIPTION;//描述
@@ -44,7 +42,9 @@ public class Woactivity extends Entity implements Serializable {
     public String UDZGLIMIT;//整改期限
     public String UDZGRESULT;//整改完成情况/整改结果验证
 
+    public boolean isUpload;//是否是服务器数据
     public String WONUM;
+    public String optiontype;//操作类型
 
     public String getUDINSUNIT() {
         return UDINSUNIT;
@@ -52,14 +52,6 @@ public class Woactivity extends Entity implements Serializable {
 
     public void setUDINSUNIT(String UDINSUNIT) {
         this.UDINSUNIT = UDINSUNIT;
-    }
-
-    public static String getTAG() {
-        return TAG;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getTASKID() {
