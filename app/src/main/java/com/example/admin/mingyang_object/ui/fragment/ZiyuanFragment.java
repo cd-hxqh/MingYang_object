@@ -14,18 +14,22 @@ import com.example.admin.mingyang_object.ui.activity.Udprorunlog_listactivity;
 
 
 /**
- * 运维管理
+ * 资源管理
  */
-public class YunweiFragment extends BaseFragment {
+public class ZiyuanFragment extends BaseFragment {
 
     /**
-     * 故障提报*
+     * 行驶记录*
      */
-    private TextView udreportText;
+    private TextView udcardrivelogText;
     /**
-     * 巡检单*
+     * 加油记录*
      */
-    private TextView udinspoText;
+    private TextView udcarfuelchargeText;
+    /**
+     * 维修记录*
+     */
+    private TextView udcarmainlogText;
 
 
     @Override
@@ -36,7 +40,7 @@ public class YunweiFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_yunwei, container,
+        View view = inflater.inflate(R.layout.fragment_ziyuan, container,
                 false);
 
         findByIdView(view);
@@ -48,27 +52,29 @@ public class YunweiFragment extends BaseFragment {
      * 初始化界面组件*
      */
     private void findByIdView(View view) {
-        udreportText = (TextView) view.findViewById(R.id.udreport_text_id);
-        udinspoText = (TextView) view.findViewById(R.id.udinspo_text_id);
+        udcardrivelogText = (TextView) view.findViewById(R.id.udcardrivelog_text_id);
+        udcarfuelchargeText = (TextView) view.findViewById(R.id.udcarfuelcharge_text_id);
+        udcarmainlogText = (TextView) view.findViewById(R.id.udcarmainlog_text_id);
     }
 
     /**
      * 设置跳转监听
      */
     private void setlistener() {
-        udreportText.setOnClickListener(udreportTextOnClickListener);
-        udinspoText.setOnClickListener(udinspoTextOnClickListener);
+        udcardrivelogText.setOnClickListener(udcardrivelogTextOnClickListener);
+        udcarfuelchargeText.setOnClickListener(udcarfuelchargeTextOnClickListener);
+        udcarmainlogText.setOnClickListener(udcarmainlogTextOnClickListener);
     }
 
 
-    private View.OnClickListener udreportTextOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener udcardrivelogTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), Udpro_ListActivity.class);
             startActivityForResult(intent, 0);
         }
     };
-    private View.OnClickListener udinspoTextOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener udcarfuelchargeTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getActivity(), Udprorunlog_listactivity.class);
@@ -76,5 +82,12 @@ public class YunweiFragment extends BaseFragment {
         }
     };
 
+    private View.OnClickListener udcarmainlogTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), Udfeedback_listactivity.class);
+            startActivityForResult(intent, 0);
+        }
+    };
 
 }

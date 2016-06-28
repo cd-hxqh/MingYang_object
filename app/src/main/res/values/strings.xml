@@ -346,5 +346,10 @@
     <string name="diffqty_text">差异数量:</string>
     <string name="diffreason_text">差异原因:</string>
     <string name="udstockline_text">盘点明细行</string>
+    <string name="udreport_text">故障提报</string>
+    <string name="udinspo_text">巡检单</string>
+    <string name="udcardrivelog_text">行驶记录</string>
+    <string name="udcarfuelcharge_text">加油记录</string>
+    <string name="udcarmainlog_text">维修记录</string>
 
 </resources>

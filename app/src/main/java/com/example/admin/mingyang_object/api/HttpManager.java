@@ -267,7 +267,6 @@ public class HttpManager {
                                          final HttpRequestHandler<String> handler) {
 
         String ip_adress = AccountUtils.getIpAddress(cxt) + Constants.SIGN_IN_URL;
-        Log.i(TAG, "ip_adress=" + ip_adress);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("loginid", username);
