@@ -143,9 +143,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/work_udremark"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
@@ -212,9 +212,9 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/work_udzgmeasure"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
@@ -285,14 +285,15 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/work_pccompnum"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/dimens_16dp" />
+                    android:textSize="@dimen/dimens_16dp"  />
             </LinearLayout>
 
             <View
@@ -357,12 +358,13 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/work_udfjfol"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -394,12 +396,13 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/work_pcreson"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>
@@ -430,11 +433,15 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <CheckBox
+                <EditText
                     android:id="@+id/work_udjgresult1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_5"/>
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:hint="@string/have_not_data"
+                    android:inputType="number"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/dimens_16dp"/>
             </LinearLayout>
 
             <View
@@ -540,12 +547,13 @@
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/work_udfjappnum"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
                     android:hint="@string/have_not_data"
+                    android:inputType="number"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
             </LinearLayout>

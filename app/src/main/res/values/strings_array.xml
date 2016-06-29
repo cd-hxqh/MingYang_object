@@ -20,4 +20,22 @@
         <item>全年检</item>
         <item>首年检</item>
     </string-array>
+
+    <string-array name="pctype_array">
+        <item>风机安全排查</item>
+        <item>管理质量排查</item>
+    </string-array>
+
+    <string-array name="udjgtype_array">
+        <item>供应商</item>
+        <item>技术系统</item>
+        <item>运行系统</item>
+    </string-array>
+
+    <string-array name="culevel_array">
+        <item>一般</item>
+        <item>严重</item>
+        <item>非常严重</item>
+        <item>致命</item>
+    </string-array>
 </resources>

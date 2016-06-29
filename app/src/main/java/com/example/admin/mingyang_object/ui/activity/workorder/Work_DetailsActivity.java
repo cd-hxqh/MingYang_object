@@ -87,6 +87,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout description_layout;
     private TextView branch;//中心
     private TextView udprojectnum;//项目
+    private LinearLayout udlocnumlayout;
     private TextView udlocnum;//机位号
     private LinearLayout udlocationlayout;
     private TextView udlocation;//位置
@@ -114,6 +115,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
     private LinearLayout udjpnumlayout;
+    private TextView udjpnumtext;
     private TextView udjpnum;//定检标准编号/排查标准/技改标准
     private LinearLayout udplstartdatelayout;
     private TextView udplstartdate;//计划开始时间
@@ -136,29 +138,29 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView perinsprtext;
     private CheckBox perinspr;//定检结果
     private LinearLayout udremarklayout;
-    private TextView udremark;//备注
+    private EditText udremark;//备注
     private LinearLayout isbigparlayout;
     private CheckBox isbigpar;//大部件发放
     private LinearLayout udzgmeasurelayout;
-    private TextView udzgmeasure;//故障处理方案
+    private EditText udzgmeasure;//故障处理方案
     private LinearLayout plannumlayout;
     private TextView plannum;//排查计划编号
     private LinearLayout pccompnumlayout;
     private TextView pccompnumtext;
-    private TextView pccompnum;//排查完成台数/风机台数
+    private EditText pccompnum;//排查完成台数/风机台数
     private LinearLayout pctypelayout;
     private TextView pctype;//排查类型
     private LinearLayout udfjfollayout;
-    private TextView udfjfol;//风机跟踪
+    private EditText udfjfol;//风机跟踪
     private LinearLayout pcresonlayout;
     private TextView pcresontext;
-    private TextView pcreson;//排查原因/技改原因
+    private EditText pcreson;//排查原因/技改原因
     private LinearLayout udjgresult1layout;
-    private CheckBox udjgresult1;//排查结果
+    private EditText udjgresult1;//排查结果
     private LinearLayout udjgwolayout;
     private TextView jgplannum;//技改计划编号
     private TextView udjgtype;//技改类型
-    private TextView udfjappnum;//主控程序版本号
+    private EditText udfjappnum;//主控程序版本号
     private TextView udrprrsb1;//负责人
 
 
@@ -172,6 +174,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private ArrayList<DialogMenuItem> mMenuItems2 = new ArrayList<>();
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -184,7 +187,8 @@ public class Work_DetailsActivity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
-        djtypeData();
+//        djtypeData();
+//        pctypeData();
     }
 
     /**
@@ -206,6 +210,7 @@ public class Work_DetailsActivity extends BaseActivity {
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
         branch = (TextView) findViewById(R.id.work_branch);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
+        udlocnumlayout = (LinearLayout) findViewById(R.id.work_udlocnum_layout);
         udlocnum = (TextView) findViewById(R.id.work_udlocnum);
         udlocationlayout = (LinearLayout) findViewById(R.id.work_udlocation_layout);
         udlocation = (TextView) findViewById(R.id.work_udlocation);
@@ -233,6 +238,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udprobdesc = (TextView) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
         udjpnumlayout = (LinearLayout) findViewById(R.id.work_udjpnum_layout);
+        udjpnumtext = (TextView) findViewById(R.id.work_udjpnum_text);
         udjpnum = (TextView) findViewById(R.id.work_udjpnum);
         udplstartdatelayout = (LinearLayout) findViewById(R.id.work_udplstartdate_layout);
         udplstartdate = (TextView) findViewById(R.id.work_udplstartdate);
@@ -255,29 +261,29 @@ public class Work_DetailsActivity extends BaseActivity {
         perinsprtext = (TextView) findViewById(R.id.work_perinspr_text);
         perinspr = (CheckBox) findViewById(R.id.work_perinspr);
         udremarklayout = (LinearLayout) findViewById(R.id.work_udremark_layout);
-        udremark = (TextView) findViewById(R.id.work_udremark);
+        udremark = (EditText) findViewById(R.id.work_udremark);
         isbigparlayout = (LinearLayout) findViewById(R.id.work_isbigpar_layout);
         isbigpar = (CheckBox) findViewById(R.id.work_isbigpar);
         udzgmeasurelayout = (LinearLayout) findViewById(R.id.work_udzgmeasure_layout);
-        udzgmeasure = (TextView) findViewById(R.id.work_udzgmeasure);
+        udzgmeasure = (EditText) findViewById(R.id.work_udzgmeasure);
         plannumlayout = (LinearLayout) findViewById(R.id.work_plannum_layout);
         plannum = (TextView) findViewById(R.id.work_plannum);
         pccompnumlayout = (LinearLayout) findViewById(R.id.work_pccompnum_layout);
         pccompnumtext = (TextView) findViewById(R.id.work_pccompnum_text);
-        pccompnum = (TextView) findViewById(R.id.work_pccompnum);
+        pccompnum = (EditText) findViewById(R.id.work_pccompnum);
         pctypelayout = (LinearLayout) findViewById(R.id.work_pctype_layout);
         pctype = (TextView) findViewById(R.id.work_pctype);
         udfjfollayout = (LinearLayout) findViewById(R.id.work_udfjfol_layout);
-        udfjfol = (TextView) findViewById(R.id.work_udfjfol);
+        udfjfol = (EditText) findViewById(R.id.work_udfjfol);
         pcresonlayout = (LinearLayout) findViewById(R.id.work_pcreson_layout);
         pcresontext = (TextView) findViewById(R.id.work_pcreson_text);
-        pcreson = (TextView) findViewById(R.id.work_pcreson);
+        pcreson = (EditText) findViewById(R.id.work_pcreson);
         udjgresult1layout = (LinearLayout) findViewById(R.id.work_udjgresult1e_layout);
-        udjgresult1 = (CheckBox) findViewById(R.id.work_udjgresult1);
+        udjgresult1 = (EditText) findViewById(R.id.work_udjgresult1);
         udjgwolayout = (LinearLayout) findViewById(R.id.work_udjgwo_layout);
         jgplannum = (TextView) findViewById(R.id.work_jgplannum);
         udjgtype = (TextView) findViewById(R.id.work_udjgtype);
-        udfjappnum = (TextView) findViewById(R.id.work_udfjappnum);
+        udfjappnum = (EditText) findViewById(R.id.work_udfjappnum);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
 
         cancel = (Button) findViewById(R.id.work_cancel);
@@ -329,7 +335,7 @@ public class Work_DetailsActivity extends BaseActivity {
             udjgresult.setText(workOrder.UDJGRESULT);
         } else {
             udrprrsb1.setText(workOrder.UDRPRRSB);
-            udjgresult1.setChecked(workOrder.UDJGRESULT != null && workOrder.UDJGRESULT.equals("Y"));
+            udjgresult1.setText(workOrder.UDJGRESULT);
         }
         udprobdesc.setText(workOrder.UDPROBDESC);
         udjpnum.setText(workOrder.UDJPNUM);
@@ -362,20 +368,35 @@ public class Work_DetailsActivity extends BaseActivity {
         udjgtype.setText(workOrder.UDJGTYPE);
         udfjappnum.setText(workOrder.UDFJAPPNUM);
 
-        djtype.setOnClickListener(djtypeOnClickListener);
+
+        if (workOrder.UDSTATUS.equals(Constants.STATUS1)){
+            pctype.setOnClickListener(new NormalListDialogOnClickListener(pctype));
+        }
+        djtype.setOnClickListener(new NormalListDialogOnClickListener(djtype));
+        udjgtype.setOnClickListener(new NormalListDialogOnClickListener(udjgtype));
+        culevel.setOnClickListener(new NormalListDialogOnClickListener(culevel));
         lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         udinspoby2.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
         udinspoby3.setOnClickListener(new LayoutOnClickListener(4, Constants.PERSONCODE));
+        udrprrsb.setOnClickListener(new LayoutOnClickListener(11,Constants.PERSONCODE));
         udprojectnum.setOnClickListener(new LayoutOnClickListener(6, Constants.UDPROCODE));
         udlocnum.setOnClickListener(new LayoutOnClickListener(7, Constants.UDLOCNUMCODE));
         if (workOrder.WORKTYPE.equals(Constants.WS)) {
             udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
+        }else if (workOrder.WORKTYPE.equals(Constants.SP)){
+            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.SP_JOBPLANCODE));
+        }else if (workOrder.WORKTYPE.equals(Constants.TP)){
+            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.TP_JOBPLANCODE));
         }
+        wtcode.setOnClickListener(new LayoutOnClickListener(8,Constants.WTCODE));
+        udlocation.setOnClickListener(new LayoutOnClickListener(9,Constants.LOCATIONCODE));
+        udplannum.setOnClickListener(new LayoutOnClickListener(10,Constants.ZYS_UDPLANNUMCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
         udrlstopdate.setOnClickListener(new DateChecked(udrlstopdate));
+        udzglimit.setOnClickListener(new DateTimeOnClickListener(udzglimit));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -392,14 +413,46 @@ public class Work_DetailsActivity extends BaseActivity {
         setLayout();
     }
 
-    private View.OnClickListener djtypeOnClickListener = new View.OnClickListener() {
+//    private View.OnClickListener djtypeOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            NormalListDialog();
+//        }
+//    };
+//
+//    private View.OnClickListener pctypeOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            NormalListDialog2();
+//        }
+//    };
+
+    private class NormalListDialogOnClickListener implements View.OnClickListener{
+        TextView textView;
+        public NormalListDialogOnClickListener(TextView textView){
+            this.textView = textView;
+        }
         @Override
         public void onClick(View v) {
-            NormalListDialog();
+            NormalListDialog(textView);
         }
-    };
+    }
 
-    private void NormalListDialog() {
+    private void NormalListDialog(final TextView textView) {
+        String[] types = new String[0];
+        mMenuItems = new ArrayList<>();
+        if (textView == djtype){
+            types = getResources().getStringArray(R.array.djtype_array);
+        }else if (textView == pctype){
+            types = getResources().getStringArray(R.array.pctype_array);
+        }else if (textView == udjgtype){
+            types = getResources().getStringArray(R.array.udjgtype_array);
+        }else if (textView == culevel){
+            types = getResources().getStringArray(R.array.culevel_array);
+        }
+        for (int i = 0; i < types.length; i++) {
+            mMenuItems.add(new DialogMenuItem(types[i], 0));
+        }
         final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, mMenuItems);
         dialog.title("请选择")//
                 .showAnim(mBasIn)//
@@ -409,30 +462,56 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                djtype.setText(mMenuItems.get(position).mOperName);
+                textView.setText(mMenuItems.get(position).mOperName);
 
                 dialog.dismiss();
             }
         });
     }
-
-    /**
-     * 添加数据*
-     */
-    private void djtypeData() {
-        String[] lctypes = getResources().getStringArray(R.array.djtype_array);
-
-        for (int i = 0; i < lctypes.length; i++)
-            mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
-
-
-    }
+//
+//    private void NormalListDialog2() {
+//        pctypeData();
+//        final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, mMenuItems2);
+//        dialog.title("请选择")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)//
+//                .show();
+//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+//            @Override
+//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                pctype.setText(mMenuItems2.get(position).mOperName);
+//
+//                dialog.dismiss();
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 添加定检类型数据*
+//     */
+//    private void djtypeData() {
+//        String[] lctypes = getResources().getStringArray(R.array.djtype_array);
+//
+//        for (int i = 0; i < lctypes.length; i++)
+//            mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
+//    }
+//
+//    /**
+//     * 添加排查类型数据*
+//     */
+//    private void pctypeData() {
+//        String[] pctypes = getResources().getStringArray(R.array.pctype_array);
+//
+//        for (int i = 0; i < pctypes.length; i++)
+//            mMenuItems2.add(new DialogMenuItem(pctypes[i], 0));
+//    }
 
     //时间选择监听
-    private class TimeOnClickListener implements View.OnClickListener {
+    private class DateTimeOnClickListener implements View.OnClickListener {
         TextView textView;
 
-        private TimeOnClickListener(TextView textView) {
+        private DateTimeOnClickListener(TextView textView) {
             this.textView = textView;
         }
 
@@ -480,6 +559,9 @@ public class Work_DetailsActivity extends BaseActivity {
                 isbigparlayout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
                 leadText.setText(R.string.work_lead2);
+                udlocnumlayout.setVisibility(View.GONE);
+                udjpnumtext.setText(R.string.work_udjpnum2);
+                udlocationlayout.setVisibility(View.GONE);
                 break;
             case "TP"://技改工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -494,7 +576,10 @@ public class Work_DetailsActivity extends BaseActivity {
                 pctypelayout.setVisibility(View.GONE);
                 pcresontext.setText(R.string.work_pcreson2);
                 udjgresult1layout.setVisibility(View.GONE);
-                leadText.setText(R.string.work_lead3);
+                leadText.setText(R.string.work_lead4);
+                udlocationlayout.setVisibility(View.GONE);
+                udlocnumlayout.setVisibility(View.GONE);
+                udjpnumtext.setText(R.string.work_udjpnum3);
                 break;
             case "WS"://定检工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -509,6 +594,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udjgresult1layout.setVisibility(View.GONE);
                 udjgwolayout.setVisibility(View.GONE);
                 leadText.setText(R.string.work_lead1);
+                udlocationlayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -584,8 +670,8 @@ public class Work_DetailsActivity extends BaseActivity {
         popupWindow.showAsDropDown(view);
 
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
-        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
-        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
+//        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
+//        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
         flowerLinearLayout = (LinearLayout) findViewById(R.id.work_flower_id);
         commitLinearLayout = (LinearLayout) findViewById(R.id.work_commit_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
@@ -599,13 +685,20 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("woactivityList", woactivityList);
-            intent.putExtras(bundle);
-            startActivityForResult(intent, 1000);
-            popupWindow.dismiss();
+            if (workOrder.WORKTYPE.equals(Constants.SP)||workOrder.WORKTYPE.equals(Constants.TP)
+                    ||workOrder.WORKTYPE.equals(Constants.WS)) {
+                if (!udjpnum.getText().toString().equals("")) {
+                    Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("workOrder", workOrder);
+                    bundle.putSerializable("woactivityList", woactivityList);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, 1000);
+                    popupWindow.dismiss();
+                }else {
+                    Toast.makeText(Work_DetailsActivity.this,"请选择计划标准",Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     };
 //
@@ -747,12 +840,25 @@ public class Work_DetailsActivity extends BaseActivity {
         public void onClick(View view) {
             Intent intent = new Intent(Work_DetailsActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
-            if (requestCode == 7) {
+            if (requestCode == 7||requestCode == 8) {
                 if (udprojectnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_DetailsActivity.this, "请先选择项目遍号", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Work_DetailsActivity.this, "请先选择项目编号", Toast.LENGTH_SHORT).show();
+                    return;
                 } else {
                     intent.putExtra("udprojectnum", udprojectnum.getText().toString());
                 }
+            }
+            if (requestCode == 9){
+                if (udprojectnum.getText().toString().equals("")){
+                    Toast.makeText(Work_DetailsActivity.this, "请先选择项目编号", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (udlocnum.getText().toString().equals("")){
+                    Toast.makeText(Work_DetailsActivity.this, "请先选择机位号", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                intent.putExtra("udprojectnum", udprojectnum.getText().toString());
+                intent.putExtra("udlocnum", udlocnum.getText().toString());
             }
             startActivityForResult(intent, requestCode);
         }
@@ -947,7 +1053,7 @@ public class Work_DetailsActivity extends BaseActivity {
             workOrder.UDJGRESULT = udjgresult.getText().toString();
         } else {
             workOrder.UDRPRRSB = udrprrsb1.getText().toString();
-            workOrder.UDJGRESULT = udjgresult1.isChecked() ? "Y" : "N";
+            workOrder.UDJGRESULT = udjgresult1.getText().toString();
         }
         workOrder.UDPROBDESC = udprobdesc.getText().toString();
         workOrder.UDJPNUM = udjpnum.getText().toString();
@@ -994,54 +1100,54 @@ public class Work_DetailsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
+        if (data != null){
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    lead.setText(option.getName());
+                    break;
+                case 2:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby.setText(option.getName());
+                    break;
+                case 3:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby2.setText(option.getName());
+                    break;
+                case 4:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby3.setText(option.getName());
+                    break;
+                case 5:
+                    option = (Option) data.getSerializableExtra("option");
+                    udjpnum.setText(option.getName());
+                    break;
+                case 6:
+                    option = (Option) data.getSerializableExtra("option");
+                    udprojectnum.setText(option.getName());
+                    branch.setText(option.getValue1());
+                    udlocnum.setText("");
+                    break;
+                case 7:
+                    option = (Option) data.getSerializableExtra("option");
+                    udlocnum.setText(option.getName());
+                    break;
+            case 8:
                 option = (Option) data.getSerializableExtra("option");
-                lead.setText(option.getName());
+                wtcode.setText(option.getName());
                 break;
-            case 2:
+            case 9:
                 option = (Option) data.getSerializableExtra("option");
-                udinspoby.setText(option.getName());
+                udlocation.setText(option.getName());
                 break;
-            case 3:
+            case 10:
                 option = (Option) data.getSerializableExtra("option");
-                udinspoby2.setText(option.getName());
+                udplannum.setText(option.getName());
                 break;
-            case 4:
+            case 11:
                 option = (Option) data.getSerializableExtra("option");
-                udinspoby3.setText(option.getName());
+                udrprrsb.setText(option.getName());
                 break;
-            case 5:
-                option = (Option) data.getSerializableExtra("option");
-                udjpnum.setText(option.getName());
-                break;
-            case 6:
-                option = (Option) data.getSerializableExtra("option");
-                udprojectnum.setText(option.getName());
-                branch.setText(option.getValue1());
-                udlocnum.setText("");
-                break;
-            case 7:
-                option = (Option) data.getSerializableExtra("option");
-                udlocnum.setText(option.getName());
-                break;
-//            case Constants.ALNDOMAINCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                udqxbz.setText(option.getName());
-//                break;
-//            case Constants.UDEVCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                udevnum.setText(option.getName());
-//                break;
-//            case Constants.PROJAPPR:
-//                option = (Option) data.getSerializableExtra("option");
-//                udprojapprnum.setText(option.getValue());
-//                udbugnum.setText(option.getValue2());
-//                break;
-//            case Constants.PMCODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                pmnum.setText(option.getName());
-//                break;
 //            case Constants.FAILURE_TYPE:
 //                option = (Option) data.getSerializableExtra("option");
 //                failurecode.setText(option.getName());
@@ -1050,11 +1156,11 @@ public class Work_DetailsActivity extends BaseActivity {
 //                option = (Option) data.getSerializableExtra("option");
 //                udgzlbdm.setText(option.getName());
 //                break;
-            case 1000:
-                if (data != null && data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {
-                    woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
-                }
-                break;
+                case 1000:
+                    if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {
+                        woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
+                    }
+                    break;
 //            case 2000:
 //                labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");
 //                break;
@@ -1063,6 +1169,7 @@ public class Work_DetailsActivity extends BaseActivity {
 //                break;
 //            default:
 //                break;
-        }
+            }
+    }
     }
 }

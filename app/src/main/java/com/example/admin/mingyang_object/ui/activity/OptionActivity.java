@@ -30,9 +30,11 @@ import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.JobPlan;
+import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.adapter.OptionAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
@@ -190,66 +192,125 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             return HttpManager.getPersonUrl(searchText, page, 20);
         }else if (optiontype == Constants.WS_JOBPLANCODE){
             return HttpManager.getJobplanUrl(searchText, page, 20, "定检标准");
+        }else if (optiontype == Constants.SP_JOBPLANCODE){
+            return HttpManager.getJobplanUrl(searchText, page, 20, "排查标准");
+        }else if (optiontype == Constants.TP_JOBPLANCODE){
+            return HttpManager.getJobplanUrl(searchText, page, 20, "技改标准");
         }else if (optiontype == Constants.UDPROCODE){
             return HttpManager.getUdprourl2(searchText, page, 20);
         }else if (optiontype == Constants.UDLOCNUMCODE){
             return HttpManager.getUdfandetailsurl(searchText, getIntent().getStringExtra("udprojectnum"),page, 20);
+        }else if (optiontype == Constants.WTCODE){//不分页查询除重复
+            return HttpManager.getUdfandetailsurl(searchText, getIntent().getStringExtra("udprojectnum"));
+        }else if (optiontype == Constants.LOCATIONCODE){
+            return HttpManager.getLoactionUrl(searchText, getIntent().getStringExtra("udprojectnum"), getIntent().getStringExtra("udlocnum"),page, 20);
+        }else if (optiontype == Constants.ZYS_UDPLANNUMCODE){
+            return HttpManager.getUdinvestpUrl(searchText, page, 20, "ZYS");
         }
         return "";
     }
 
     private void getData(String searchText) {
-        HttpManager.getDataPagingInfo(this, getUrl(searchText), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
+        if (optiontype != Constants.WTCODE) {
+            HttpManager.getDataPagingInfo(this, getUrl(searchText), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                    Log.i(TAG, "data=" + results);
+                }
 
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-                if (results.getResultlist() != null) {
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    if (page == 1) {
-                        optionAdapter = new OptionAdapter(OptionActivity.this);
-                        recyclerView.setAdapter(optionAdapter);
-                    }
-                    if (optiontype == Constants.PERSONCODE) {//
-                        ArrayList<Person> items = JsonUtils.parsingPerson(results.getResultlist());
-                        if (totalPages == page) {
-                            optionAdapter.addPersonDate(items);
+                @Override
+                public void onSuccess(Results results, int totalPages, int currentPage) {
+                    if (results.getResultlist() != null) {
+                        refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
+                        if (page == 1) {
+                            optionAdapter = new OptionAdapter(OptionActivity.this);
+                            recyclerView.setAdapter(optionAdapter);
                         }
-                    }else if (optiontype == Constants.WS_JOBPLANCODE){//
-                        ArrayList<JobPlan> items = JsonUtils.parsingJobPlan(results.getResultlist());
-                        if (totalPages == page) {
-                            optionAdapter.addJobPlanDate(items);
+                        if (optiontype == Constants.PERSONCODE) {//
+                            ArrayList<Person> items = JsonUtils.parsingPerson(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addPersonDate(items);
+                            }
+                        } else if (optiontype == Constants.WS_JOBPLANCODE || optiontype == Constants.SP_JOBPLANCODE
+                                || optiontype == Constants.TP_JOBPLANCODE) {//
+                            ArrayList<JobPlan> items = JsonUtils.parsingJobPlan(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addJobPlanDate(items);
+                            }
+                        } else if (optiontype == Constants.UDPROCODE) {//
+                            ArrayList<Udpro> items = JsonUtils.parsingUdpro(OptionActivity.this, results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addUdproDate(items);
+                            }
+                        } else if (optiontype == Constants.UDLOCNUMCODE) {//
+                            ArrayList<Udfandetails> items = JsonUtils.parsingUdfandetails(OptionActivity.this, results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addUdfandetailsDate(items);
+                            }
+                        } else if (optiontype == Constants.LOCATIONCODE) {//
+                            ArrayList<Location> items = JsonUtils.parsingLocation(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addLocationDate(items);
+                            }
+                        }else if (optiontype == Constants.ZYS_UDPLANNUMCODE) {//
+                            ArrayList<Udinvestp> items = JsonUtils.parsingUdinvestp(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addUdinvestpDate(items);
+                            }
                         }
-                    }else if (optiontype == Constants.UDPROCODE){//
-                        ArrayList<Udpro> items = JsonUtils.parsingUdpro(OptionActivity.this, results.getResultlist());
-                        if (totalPages == page) {
-                            optionAdapter.addUdproDate(items);
+                        if (optionAdapter.getItemCount() == 0) {
+                            nodatalayout.setVisibility(View.VISIBLE);
                         }
-                    }else if (optiontype == Constants.UDLOCNUMCODE){//
-                        ArrayList<Udfandetails> items = JsonUtils.parsingUdfandetails(OptionActivity.this, results.getResultlist());
-                        if (totalPages == page) {
-                            optionAdapter.addUdfandetailsDate(items);
-                        }
-                    }
-                    if (optionAdapter.getItemCount() == 0) {
+                    } else {
+                        refresh_layout.setRefreshing(false);
                         nodatalayout.setVisibility(View.VISIBLE);
                     }
-                } else {
+                }
+
+                @Override
+                public void onFailure(String error) {
                     refresh_layout.setRefreshing(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
-            }
+            });
+        }else {
+            HttpManager.getData(this, getUrl(searchText), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                    if (results.getResultlist() != null) {
+                        refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
+                        if (page == 1) {
+                            optionAdapter = new OptionAdapter(OptionActivity.this);
+                            recyclerView.setAdapter(optionAdapter);
+                        }
+                        if (optiontype == Constants.WTCODE) {//
+                            ArrayList<Udfandetails> items = JsonUtils.parsingUdfandetails(OptionActivity.this, results.getResultlist());
+                            optionAdapter.addWtcodeDate(getWtcodeList(items), true);
+                        }
+                        if (optionAdapter.getItemCount() == 0) {
+                            nodatalayout.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        refresh_layout.setRefreshing(false);
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
+                }
 
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
+                @Override
+                public void onSuccess(Results data, int totalPages, int currentPage) {
+
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    refresh_layout.setLoading(false);
+                    refresh_layout.setRefreshing(false);
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 
     public void responseData(Option option) {
@@ -257,6 +318,16 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         intent.putExtra("option", option);
         OptionActivity.this.setResult(optiontype, intent);
         finish();
+    }
+
+    private ArrayList<String> getWtcodeList(ArrayList<Udfandetails> list){
+        ArrayList<String> arrayList = new ArrayList<>();
+        for (int i = 0;i < list.size();i ++){
+            if (!arrayList.contains(list.get(i).getMODELTYPE())){
+                arrayList.add(list.get(i).getMODELTYPE());
+            }
+        }
+        return arrayList;
     }
 
     //下拉刷新触发事件
@@ -269,7 +340,11 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
     //上拉加载
     @Override
     public void onLoad() {
-        page++;
-        getData(searchText);
+        if (optiontype != Constants.WTCODE) {
+            page++;
+            getData(searchText);
+        }else {
+            refresh_layout.setLoading(false);
+        }
     }
 }

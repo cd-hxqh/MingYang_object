@@ -1,5 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity.workorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,11 +8,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.utils.DateTimeSelect;
 
 
 /**
@@ -33,18 +36,18 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
     private int position;
 
     private TextView taskid;//任务
-    private EditText description;//描述
-    private EditText wojo1;//系统/项目
-    private EditText wojo2;//子系统/子项目
-    private EditText wojo3;//检查/检修方法
+    private TextView description;//描述
+    private TextView wojo1;//系统/项目
+    private TextView wojo2;//子系统/子项目
+    private TextView wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
-    private EditText invcontent;//排查结果
-    private EditText udprobdesc;//排查部位
-    private TextView udsaftydesc;//整改责任人
+    private EditText invcontent;//
+    private EditText udprobdesc;//
+    private TextView udsaftydesc;//
     private TextView udzglimit;//整改期限
-    private EditText udzgmeasure;//整改措施及建议
-    private EditText udzgstu;//整改情况回复
-    private EditText udzgresult;//整改结果验证
+    private EditText udzgmeasure;//
+    private EditText udzgstu;//
+    private EditText udzgresult;//
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button delete;//删除
@@ -72,10 +75,10 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
 
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
-        description = (EditText) findViewById(R.id.woactivity_description);
-        wojo1 = (EditText) findViewById(R.id.woactivity_wojo1);
-        wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
-        wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
+        description = (TextView) findViewById(R.id.woactivity_description);
+        wojo1 = (TextView) findViewById(R.id.woactivity_wojo1);
+        wojo2 = (TextView) findViewById(R.id.woactivity_wojo2);
+        wojo3 = (TextView) findViewById(R.id.woactivity_wojo3);
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         invcontent = (EditText) findViewById(R.id.woactivity_invcontent);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
@@ -86,7 +89,7 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
         udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
 
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
-//        confirm = (Button) findViewById(R.id.confirm);
+        confirm = (Button) findViewById(R.id.confirm);
 //        delete = (Button) findViewById(R.id.work_delete);
     }
 
@@ -113,40 +116,47 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
         udzglimit.setText(woactivity.UDZGLIMIT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgresult.setText(woactivity.UDZGRESULT);
-//        confirm.setOnClickListener(confirmOnClickListener);
+
+        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
+        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
     }
 
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
-
+        woactivity.INVCONTENT = invcontent.getText().toString();
+        woactivity.UDPROBDESC = udprobdesc.getText().toString();
+        woactivity.UDSAFTYDESC = udsaftydesc.getText().toString();
+        woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
+        woactivity.UDZGLIMIT = udzglimit.getText().toString();
+        woactivity.UDZGSTU = udzgstu.getText().toString();
+        woactivity.UDZGRESULT = udzgresult.getText().toString();
         return woactivity;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent = getIntent();
-//            if(woactivity.taskid.equals(taskid.getText().toString())
-//                    &&woactivity.wojo1.equals(wojo1.getText().toString())
-//                    &&woactivity.description.equals(description.getText().toString())
-//                    &&woactivity.wojo2.equals(wojo2.getText().toString())
-//                    &&woactivity.udisdo.equals(udisdo.getText().toString())
-//                    &&woactivity.udisyq.equals(udisyq.getText().toString())
-//                    &&woactivity.udyqyy.equals(udyqyy.getText().toString())
-//                    &&woactivity.udremark.equals(udremark.getText().toString())) {//如果内容没有修改
-//                intent.putExtra("woactivity",woactivity);
-//            }else {
-//                Woactivity woactivity = getWoactivity();
-//                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-//                    woactivity.optiontype = "update";
-//                }
-//                intent.putExtra("woactivity", woactivity);
-//                Toast.makeText(WoactivityDetailsActivity.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
-//            }
-//            intent.putExtra("position", position);
-//            WoactivityDetailsActivity.this.setResult(2, intent);
-//            finish();
+            Intent intent = getIntent();
+            if(woactivity.INVCONTENT.equals(invcontent.getText().toString())
+                    &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
+                    &&woactivity.UDSAFTYDESC.equals(udsaftydesc.getText().toString())
+                    &&woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
+                    &&woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())
+                    &&woactivity.UDZGSTU.equals(udzgstu.getText().toString())
+                    &&woactivity.UDZGRESULT.equals(udzgresult.getText().toString())) {//如果内容没有修改
+                intent.putExtra("woactivity",woactivity);
+            }else {
+                Woactivity woactivity = getWoactivity();
+                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
+                    woactivity.optiontype = "update";
+                }
+                intent.putExtra("woactivity", woactivity);
+                Toast.makeText(WoactivityDetailsActivity_TP.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+            }
+            intent.putExtra("position", position);
+            WoactivityDetailsActivity_TP.this.setResult(2, intent);
+            finish();
         }
     };
 
@@ -166,4 +176,17 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
 //            finish();
         }
     };
+
+    class DateTimeChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateTimeChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateTimeSelect(WoactivityDetailsActivity_TP.this, textView).showDialog();
+        }
+    }
 }

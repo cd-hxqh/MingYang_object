@@ -116,6 +116,16 @@ public class HttpManager {
     }
 
     /**
+     * 设置风机型号的接口
+     */
+    public static String getLoactionUrl(String value, String pronum,String locnum, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "'}}";
+        }
+        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "',,'LOCATION':'" + value + "'}}";
+    }
+
+    /**
      * 设置计划员工接口*
      */
     public static String getwplaborUrl(String type, int curpage, int showcount) {
@@ -190,6 +200,16 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
         }
         return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "'}}";
+    }
+
+    /**
+     * 设置风机型号的接口
+     */
+    public static String getUdfandetailsurl(String value, String pronum) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
+        }
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "'}}";
     }
 
     /**
@@ -271,6 +291,16 @@ public class HttpManager {
             return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动'}}";
         }
         return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动','DESCRIPTION':'" + serch + "'}}";
+    }
+
+    /**
+     * 设置计划的接口
+     */
+    public static String getUdinvestpUrl(String serch, int curpage, int showcount, String type) {
+        if (serch.equals("")) {
+            return "{'appid':'" + Constants.UDINVESTP_APPID + "','objectname':'" + Constants.UDINVESTP_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + type + "'}}";
+        }
+        return "{'appid':'" + Constants.UDINVESTP_APPID + "','objectname':'" + Constants.UDINVESTP_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + type + "','DESCRIPTION':'" + serch + "'}}";
     }
 
 

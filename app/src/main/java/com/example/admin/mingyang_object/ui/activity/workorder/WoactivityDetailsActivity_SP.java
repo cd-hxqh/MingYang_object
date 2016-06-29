@@ -1,5 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity.workorder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,11 +9,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.DateSelect;
+import com.example.admin.mingyang_object.utils.DateTimeSelect;
 
 
 /**
@@ -34,10 +41,10 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
     private int position;
 
     private TextView taskid;//任务
-    private EditText description;//描述
-    private EditText wojo1;//系统/项目
-    private EditText wojo2;//子系统/子项目
-    private EditText wojo3;//检查/检修方法
+    private TextView description;//描述
+    private TextView wojo1;//系统/项目
+    private TextView wojo2;//子系统/子项目
+    private TextView wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
     private CheckBox perinspr;//排查结果
     private EditText udinsunit;//排查部位
@@ -49,7 +56,6 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
     private EditText udzgresult;//整改结果验证
     private LinearLayout buttonlayout;
     private Button confirm;//确定
-    private Button delete;//删除
 
 
     @Override
@@ -74,10 +80,10 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
 
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
-        description = (EditText) findViewById(R.id.woactivity_description);
-        wojo1 = (EditText) findViewById(R.id.woactivity_wojo1);
-        wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
-        wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
+        description = (TextView) findViewById(R.id.woactivity_description);
+        wojo1 = (TextView) findViewById(R.id.woactivity_wojo1);
+        wojo2 = (TextView) findViewById(R.id.woactivity_wojo2);
+        wojo3 = (TextView) findViewById(R.id.woactivity_wojo3);
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udinsunit = (EditText) findViewById(R.id.woactivity_udinsunit);
@@ -89,8 +95,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
 
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
-//        confirm = (Button) findViewById(R.id.confirm);
-//        delete = (Button) findViewById(R.id.work_delete);
+        confirm = (Button) findViewById(R.id.confirm);
     }
 
     @Override
@@ -109,7 +114,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo2.setText(woactivity.WOJO2);
         wojo3.setText(woactivity.WOJO3);
         wojo4.setText(woactivity.WOJO4);
-        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR != null && woactivity.PERINSPR.equals("Y"));
         udinsunit.setText(woactivity.UDINSUNIT);
         udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);
@@ -117,40 +122,50 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         udzglimit.setText(woactivity.UDZGLIMIT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgresult.setText(woactivity.UDZGRESULT);
-//        confirm.setOnClickListener(confirmOnClickListener);
-//        delete.setOnClickListener(deleteOnClickListener);
+
+        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
+        udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+
+        confirm.setOnClickListener(confirmOnClickListener);
     }
 
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
-
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        woactivity.UDINSUNIT = udinsunit.getText().toString();
+        woactivity.UDRPRRSB = udrprrsb.getText().toString();
+        woactivity.UDPROBDESC = udprobdesc.getText().toString();
+        woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
+        woactivity.UDZGSTU = udzgstu.getText().toString();
+        woactivity.UDZGRESULT = udzgresult.getText().toString();
+        woactivity.UDZGLIMIT = udzglimit.getText().toString();
         return woactivity;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Intent intent = getIntent();
-//            if(woactivity.taskid.equals(taskid.getText().toString())
-//                    &&woactivity.wojo1.equals(wojo1.getText().toString())
-//                    &&woactivity.description.equals(description.getText().toString())
-//                    &&woactivity.wojo2.equals(wojo2.getText().toString())
-//                    &&woactivity.udisdo.equals(udisdo.getText().toString())
-//                    &&woactivity.udisyq.equals(udisyq.getText().toString())
-//                    &&woactivity.udyqyy.equals(udyqyy.getText().toString())
-//                    &&woactivity.udremark.equals(udremark.getText().toString())) {//如果内容没有修改
-//                intent.putExtra("woactivity",woactivity);
-//            }else {
-//                Woactivity woactivity = getWoactivity();
-//                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-//                    woactivity.optiontype = "update";
-//                }
-//                intent.putExtra("woactivity", woactivity);
-//                Toast.makeText(WoactivityDetailsActivity.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
-//            }
-//            intent.putExtra("position", position);
-//            WoactivityDetailsActivity.this.setResult(2, intent);
-//            finish();
+            Intent intent = getIntent();
+            if((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N")||(woactivity.PERINSPR.equals("")&&!perinspr.isChecked()))
+                    &&woactivity.UDINSUNIT.equals(udinsunit.getText().toString())
+                    &&woactivity.UDRPRRSB.equals(udrprrsb.getText().toString())
+                    &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
+                    &&woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
+                    &&woactivity.UDZGSTU.equals(udzgstu.getText().toString())
+                    &&woactivity.UDZGRESULT.equals(udzgresult.getText().toString())
+                    &&woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())) {//如果内容没有修改
+                intent.putExtra("woactivity",woactivity);
+            }else {
+                Woactivity woactivity = getWoactivity();
+                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
+                    woactivity.optiontype = "update";
+                }
+                intent.putExtra("woactivity", woactivity);
+                Toast.makeText(WoactivityDetailsActivity_SP.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+            }
+            intent.putExtra("position", position);
+            WoactivityDetailsActivity_SP.this.setResult(2, intent);
+            finish();
         }
     };
 
@@ -170,4 +185,45 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
 //            finish();
         }
     };
+
+    class DateTimeChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateTimeChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateTimeSelect(WoactivityDetailsActivity_SP.this, textView).showDialog();
+        }
+    }
+
+    private class LayoutOnClickListener implements View.OnClickListener {
+        int requestCode;
+        int optiontype;
+
+        private LayoutOnClickListener(int requestCode, int optiontype) {
+            this.requestCode = requestCode;
+            this.optiontype = optiontype;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(WoactivityDetailsActivity_SP.this, OptionActivity.class);
+            intent.putExtra("optiontype", optiontype);
+            startActivityForResult(intent, requestCode);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
+        switch (requestCode) {
+            case 1:
+                option = (Option) data.getSerializableExtra("option");
+                udrprrsb.setText(option.getName());
+                break;
+        }
+    }
 }

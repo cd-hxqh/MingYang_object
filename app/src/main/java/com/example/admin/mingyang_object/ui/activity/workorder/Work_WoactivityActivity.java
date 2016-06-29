@@ -118,19 +118,34 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
-        if (workOrder.WORKTYPE.equals(Constants.WS)){
+        if (workOrder.WORKTYPE.equals(Constants.AA)||workOrder.WORKTYPE.equals(Constants.FR)){
+            menuImageView.setVisibility(View.VISIBLE);
+        }else {
             menuImageView.setVisibility(View.GONE);
         }
 
-        if (!workOrder.isnew && (woactivityList == null || woactivityList.size() == 0)) {
-            refresh_layout.setRefreshing(true);
-            getdata();
-        } else {
-            if (woactivityList != null && woactivityList.size() != 0) {
-                initList(woactivityList);
+        if (!workOrder.isnew){
+            if (woactivityList == null || woactivityList.size() == 0){
+                refresh_layout.setRefreshing(true);
+                getdata();
+            }else{
+                if (woactivityList != null && woactivityList.size() != 0) {
+                    initList(woactivityList);
 //                woactivityAdapter.addData(woactivityList);
+                }else {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
+            }
+        } else {//新建工单
+            if (woactivityList == null || woactivityList.size() == 0){
+
             }else {
-                nodatalayout.setVisibility(View.VISIBLE);
+                if (woactivityList != null && woactivityList.size() != 0) {
+                    initList(woactivityList);
+//                woactivityAdapter.addData(woactivityList);
+                }else {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -322,6 +337,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                 if (data != null) {
                     Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
                     woactivityAdapter.add(woactivity);
+                    initAdapter(woactivityAdapter.getData());
                     nodatalayout.setVisibility(View.GONE);
                 }
                 confirmlayout.setVisibility(View.VISIBLE);

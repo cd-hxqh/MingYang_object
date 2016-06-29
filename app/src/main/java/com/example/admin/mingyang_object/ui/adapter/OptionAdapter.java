@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.JobPlan;
+import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.Udfandetails;
+import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 
@@ -32,6 +34,7 @@ import java.util.List;
 public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder> {
     OptionActivity activity;
     List<Option> optionList = new ArrayList<>();
+    boolean isNoDesc = false;
     public OptionAdapter(OptionActivity activity) {
         this.activity = activity;
     }
@@ -49,6 +52,10 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
         holder.itemNumTitle.setText("编号:");
         holder.itemDescTitle.setText("描述:");
 
+        if (isNoDesc){
+            holder.itemDescTitle.setVisibility(View.GONE);
+            holder.itemDesc.setVisibility(View.GONE);
+        }
         holder.itemNum.setText(option.getName());
         holder.itemDesc.setText(option.getDesc());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +178,45 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 optionList.add(option);
             }
         }
+        notifyDataSetChanged();
+    }
+
+    public void addLocationDate(ArrayList<Location> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getLOCATION());
+                option.setDesc(data.get(i).getDESCRIPTION());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addUdinvestpDate(ArrayList<Udinvestp> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getPLANNUM());
+                option.setDesc(data.get(i).getPROJECTNUM());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addWtcodeDate(ArrayList<String > data,boolean isNoDesc){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i));
+                optionList.add(option);
+            }
+        }
+        this.isNoDesc = isNoDesc;
         notifyDataSetChanged();
     }
 }

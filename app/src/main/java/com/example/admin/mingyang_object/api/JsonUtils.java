@@ -8,11 +8,13 @@ import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.JobPlan;
+import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udfeedback;
+import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
@@ -227,7 +229,98 @@ public class JsonUtils<E> {
             e.printStackTrace();
             return null;
         }
+    }
 
+    /**
+     * 解析风机型号信息*
+     */
+    public static ArrayList<Location> parsingLocation(String data) {
+        ArrayList<Location> list = null;
+        Location location = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Location>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                location = new Location();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = location.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = location.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(location);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = location.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(location, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(location);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析风机型号信息*
+     */
+    public static ArrayList<Udinvestp> parsingUdinvestp(String data) {
+        ArrayList<Udinvestp> list = null;
+        Udinvestp location = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udinvestp>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                location = new Udinvestp();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = location.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = location.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(location);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = location.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(location, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(location);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

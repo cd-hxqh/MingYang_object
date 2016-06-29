@@ -130,11 +130,12 @@
     <string name="work_branch">中心:</string>
     <string name="work_udprojectnum">项目编号:</string>
     <string name="work_udlocnum">机位号:</string>
-    <string name="work_udlocation">位置:</string>
+    <string name="work_udlocation">设备位置:</string>
     <string name="work_lead">运行组/维护组工程师:</string>
     <string name="work_lead1">定检组长:</string>
     <string name="work_lead2">负责人:</string>
     <string name="work_lead3">项目负责人:</string>
+    <string name="work_lead4">技改负责人:</string>
     <string name="work_failurecode">故障类:</string>
     <string name="work_problemcode">问题原因:</string>
     <string name="work_culevel">故障等级:</string>
@@ -155,6 +156,8 @@
     <string name="work_createdate">创建时间:</string>
     <string name="work_createby">创建人:</string>
     <string name="work_udjpnum">定检标准编号:</string>
+    <string name="work_udjpnum2">排查标准:</string>
+    <string name="work_udjpnum3">技改标准:</string>
     <string name="work_udplstartdate">计划开始时间:</string>
     <string name="work_udplstopdate">计划完成时间:</string>
     <string name="work_udrlstartdate">实际开始时间:</string>

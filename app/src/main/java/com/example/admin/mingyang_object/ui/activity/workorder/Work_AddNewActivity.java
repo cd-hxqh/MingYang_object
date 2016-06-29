@@ -495,8 +495,8 @@ public class Work_AddNewActivity extends BaseActivity {
         popupWindow.showAsDropDown(view);
 
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
-        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
-        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
+//        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
+//        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
         flowerLinearLayout = (LinearLayout) findViewById(R.id.work_flower_id);
         commitLinearLayout = (LinearLayout) findViewById(R.id.work_commit_id);
         planLinearlayout.setOnClickListener(planOnClickListener);

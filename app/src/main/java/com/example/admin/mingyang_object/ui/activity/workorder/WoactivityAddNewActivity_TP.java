@@ -33,10 +33,10 @@ public class WoactivityAddNewActivity_TP extends BaseActivity {
     private int position;
 
     private TextView taskid;//任务
-    private EditText description;//描述
-    private EditText wojo1;//系统/项目
-    private EditText wojo2;//子系统/子项目
-    private EditText wojo3;//检查/检修方法
+    private TextView description;//描述
+    private TextView wojo1;//系统/项目
+    private TextView wojo2;//子系统/子项目
+    private TextView wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
     private EditText invcontent;//排查结果
     private EditText udprobdesc;//排查部位
@@ -72,10 +72,10 @@ public class WoactivityAddNewActivity_TP extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
 
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
-        description = (EditText) findViewById(R.id.woactivity_description);
-        wojo1 = (EditText) findViewById(R.id.woactivity_wojo1);
-        wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
-        wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
+        description = (TextView) findViewById(R.id.woactivity_description);
+        wojo1 = (TextView) findViewById(R.id.woactivity_wojo1);
+        wojo2 = (TextView) findViewById(R.id.woactivity_wojo2);
+        wojo3 = (TextView) findViewById(R.id.woactivity_wojo3);
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         invcontent = (EditText) findViewById(R.id.woactivity_invcontent);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);

@@ -76,6 +76,14 @@ public class Constants {
     public static final String LABTRANS_NAME = "LABTRANS";
     //故障汇报表名
     public static final String FAILUREREPORT_NAME = "FAILUREREPORT";
+    //设备位置appid
+    public static final String LOCATION_APPID = "LOCATION";
+    //设备位置表名
+    public static final String LOCATION_NAME = "LOCATIONS";
+    //计划表appid
+    public static final String UDINVESTP_APPID = "UDZYSPLAN";
+    //计划表表名
+    public static final String UDINVESTP_NAME = "UDINVESTP";
 
 
     /**
@@ -216,7 +224,7 @@ public class Constants {
     public static final String WS = "WS";//定检工单
 
     //工单状态
-    public static final String STATUS1 = "等待批准";
+    public static final String STATUS1 = "新建";
     public static final String STATUS2 = "进行中";
 
 
@@ -249,5 +257,15 @@ public class Constants {
     public static final int UDPROCODE = 130;//项目编号
 
     public static final int UDLOCNUMCODE = 140;//风机号
+
+    public static final int SP_JOBPLANCODE = 150;//排查作业计划
+
+    public static final int WTCODE = 160;//风机型号
+
+    public static final int TP_JOBPLANCODE = 170;//技改作业计划
+
+    public static final int LOCATIONCODE = 180;//设备位置
+
+    public static final int ZYS_UDPLANNUMCODE = 190;//终验收计划
 
 }
