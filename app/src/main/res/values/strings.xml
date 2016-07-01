@@ -388,4 +388,25 @@
     <string name="result_text">处理结果:</string>
     <string name="udreport_detail_text">故障提报单详情</string>
 
+    <!--巡检单-->
+    <string name="modeltype_1_text">风机型号:</string>
+    <string name="jpnum_text">巡检标准:</string>
+    <string name="udlocnum_text">机位号:</string>
+    <string name="fjdesc_text">设备位置:</string>
+    <string name="inspplannum_text">巡检计划单号:</string>
+    <string name="resby_text">巡检负责人:</string>
+    <string name="inspoby_text">巡检人员:</string>
+    <string name="inspodate_text">巡检日期:</string>
+    <string name="stoptime_text">停机时间:</string>
+    <string name="oktime_text">恢复时间:</string>
+    <string name="alltime_text">累计停机时间:</string>
+    <string name="changeby_text">修改人:</string>
+    <string name="changedate_text">修改时间:</string>
+    <string name="weather_text">天气:</string>
+    <string name="starttime_text">计划开始日期:</string>
+    <string name="comptime_1_text">计划完成时间:</string>
+    <string name="lastrundate_text">上次巡检时间:</string>
+    <string name="nextrundate_text">下次巡检时间:</string>
+    <string name="udinspo_detail_text">巡检单详情</string>
+
 </resources>

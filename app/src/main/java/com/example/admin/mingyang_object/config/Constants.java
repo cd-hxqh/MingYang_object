@@ -166,6 +166,11 @@ public class Constants {
     /**故障提报单表名**/
     public static final String UDREPORT_NAME = "UDREPORT";
 
+    /**巡检单报单appid**/
+    public static final String UDINSPOAPP_APPID = "UDINSPOAPP";
+    /**巡检单表名**/
+    public static final String UDINSPO_NAME = "UDINSPO";
+
 
 
 

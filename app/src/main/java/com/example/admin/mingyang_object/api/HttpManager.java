@@ -276,7 +276,7 @@ public class HttpManager {
 
 
     /**
-     * 设置库存盘点的接口
+     * 设置故障提报单的接口
      */
     public static String getudreporturl(String value, int curpage, int showcount) {
         if (value.equals("")) {
@@ -284,6 +284,19 @@ public class HttpManager {
         }
         return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'REPORTNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
+
+
+    /**
+     * 设置巡检单的接口
+     */
+    public static String getudinspourl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+
+
 
     /**
      * 设置person人员表的接口

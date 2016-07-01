@@ -192,6 +192,12 @@
             android:name=".ui.activity.Udreport_DetailActivity"
             android:label="@string/udreport_detail_text"></activity>
         <activity
+            android:name=".ui.activity.Udinspo_ListActivity"
+            android:label="@string/udinspo_text"></activity>
+        <activity
+            android:name=".ui.activity.Udinspo_DetailActivity"
+            android:label="@string/udinspo_detail_text"></activity>
+        <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/wfm_detail_title"></activity>
         <activity
