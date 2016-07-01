@@ -118,7 +118,7 @@ public class HttpManager {
     /**
      * 设置风机型号的接口
      */
-    public static String getLoactionUrl(String value, String pronum,String locnum, int curpage, int showcount) {
+    public static String getLoactionUrl(String value, String pronum, String locnum, int curpage, int showcount) {
         if (value.equals("")) {
             return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "'}}";
         }
@@ -271,7 +271,7 @@ public class HttpManager {
      * 设置库存盘点行的接口
      */
     public static String getudstocklineurl(String lgort, String stocknum, int curpage, int showcount) {
-        return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LGORT':'" + lgort  + "','STOCKNUM':'" + stocknum + "'}}";
+        return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LGORT':'" + lgort + "','STOCKNUM':'" + stocknum + "'}}";
     }
 
 
@@ -291,11 +291,20 @@ public class HttpManager {
      */
     public static String getudinspourl(String value, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'}";
         }
-        return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'," + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
+    /**
+     * 设置巡检项目的接口
+     */
+    public static String getudinsprojecturl(String value, String insponum, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "'}}";
+        }
+        return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'condition':{'INSPONUM':'" + insponum + "'}" + ",'sinorsearch':{'JPTASK':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
 
 
     /**
@@ -341,11 +350,11 @@ public class HttpManager {
     /**
      * 设置问题代码的接口
      */
-    public static String getFailurelist2Url(String serch, int curpage, int showcount,String parent) {
+    public static String getFailurelist2Url(String serch, int curpage, int showcount, String parent) {
         if (serch.equals("")) {
-            return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'"+ parent +"'}}";
+            return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "'}}";
         }
-        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'"+ parent +"','CODEDESC':'" + serch + "'}}";
+        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "','CODEDESC':'" + serch + "'}}";
     }
 
     /**

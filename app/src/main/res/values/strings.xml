@@ -408,5 +408,14 @@
     <string name="lastrundate_text">上次巡检时间:</string>
     <string name="nextrundate_text">下次巡检时间:</string>
     <string name="udinspo_detail_text">巡检单详情</string>
+    <string name="jptask_text">任务:</string>
+    <string name="udinsproject_text">巡检项目</string>
+    <string name="jo1_text">系统/项目:</string>
+    <string name="jo2_text">子系统/子项目:</string>
+    <string name="jo3_text">标准/检修方法:</string>
+    <string name="serialnum_text">序号:</string>
+    <string name="inspunit_text">巡检部位:</string>
+    <string name="ok_text">巡检结果:</string>
+    <string name="udinsproject_details_text">巡检项目详情</string>
 
 </resources>

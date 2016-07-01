@@ -105,9 +105,9 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     /**
-     * 风机型号*
+     * 巡检项目*
      */
-    private LinearLayout udfandetailsLinear;
+    private LinearLayout udinsprojectLinear;
 
 
     @Override
@@ -243,20 +243,19 @@ public class Udinspo_DetailActivity extends BaseActivity {
                 R.mipmap.popup_background_mtrl_mult));
 
         popupWindow.showAsDropDown(view);
-        udfandetailsLinear = (LinearLayout) contentView.findViewById(R.id.udfandetails_id);
+        udinsprojectLinear = (LinearLayout) contentView.findViewById(R.id.udinproject_id);
 
-        udfandetailsLinear.setOnClickListener(udfandetailsLinearOnClickListener);
+        udinsprojectLinear.setOnClickListener(udinsprojectLinearOnClickListener);
 
     }
 
 
-    private View.OnClickListener udfandetailsLinearOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener udinsprojectLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Intent intent = new Intent(Udinspo_DetailActivity.this, Udfandetails_ListActivity.class);
-//            intent.putExtra("pronum", udpro.getPRONUM());
-//            intent.putExtra("siteid", udpro.getSITEID());
-//            startActivityForResult(intent, 0);
+            Intent intent = new Intent(Udinspo_DetailActivity.this, Udinsproject_ListActivity.class);
+            intent.putExtra("insponum", udinspo.getINSPONUM());
+            startActivityForResult(intent, 0);
             popupWindow.dismiss();
 
         }

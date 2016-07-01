@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/udfandetails_id"
+        android:id="@+id/udinproject_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -15,13 +15,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_udfandetails" />
+            android:src="@mipmap/ic_xjxm" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_5"
-            android:text="巡检项目"
+            android:text="@string/udinsproject_text"
             android:textSize="@dimen/dimens_16dp" />
 
     </LinearLayout>
@@ -30,8 +30,6 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@mipmap/line"></View>
-
-
 
 
 </LinearLayout>
