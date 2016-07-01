@@ -29,6 +29,7 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
@@ -203,9 +204,15 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         }else if (optiontype == Constants.WTCODE){//不分页查询除重复
             return HttpManager.getUdfandetailsurl(searchText, getIntent().getStringExtra("udprojectnum"));
         }else if (optiontype == Constants.LOCATIONCODE){
-            return HttpManager.getLoactionUrl(searchText, getIntent().getStringExtra("udprojectnum"), getIntent().getStringExtra("udlocnum"),page, 20);
+            return HttpManager.getLoactionUrl(searchText,getIntent().getStringExtra("udprojectnum"), getIntent().getStringExtra("udlocnum"),page, 20);
         }else if (optiontype == Constants.ZYS_UDPLANNUMCODE){
             return HttpManager.getUdinvestpUrl(searchText, page, 20, "ZYS");
+        }else if (optiontype == Constants.FAILURECODE){
+            return HttpManager.getFailurelistUrl(searchText, page, 20);
+        }else if (optiontype == Constants.PROBLEMCODE){
+            if (!getIntent().getStringExtra("failurelist").equals("")) {
+                return HttpManager.getFailurelist2Url(searchText, page, 20, getIntent().getStringExtra("failurelist"));
+            }
         }
         return "";
     }
@@ -257,6 +264,12 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             ArrayList<Udinvestp> items = JsonUtils.parsingUdinvestp(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addUdinvestpDate(items);
+                            }
+                        }
+                        else if (optiontype == Constants.FAILURECODE||optiontype == Constants.PROBLEMCODE) {//
+                            ArrayList<Failurelist> items = JsonUtils.parsingFailurelist(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addFailurelistDate(items);
                             }
                         }
                         if (optionAdapter.getItemCount() == 0) {

@@ -105,6 +105,11 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
+            android:name=".ui.activity.workorder.WoactivityDetailsActivity_FR"
+            android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_AA"
             android:label="@string/title_activity_woactivitydetails"
             android:windowSoftInputMode="adjustPan|stateHidden"
@@ -122,6 +127,21 @@
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_WS"
             android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WoactivityAddNewActivity_FR"
+            android:label="@string/title_activity_woactivitydetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.Work_WpmaterialActivity"
+            android:label="@string/title_activity_wpmaterial"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
+            android:name=".ui.activity.workorder.WpmaterialDetailsActivity"
+            android:label="@string/title_activity_wpmaterialdetails"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity

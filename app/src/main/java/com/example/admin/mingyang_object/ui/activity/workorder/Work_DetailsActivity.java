@@ -28,6 +28,7 @@ import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
+import com.example.admin.mingyang_object.model.Wpmaterial;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
@@ -65,9 +66,9 @@ public class Work_DetailsActivity extends BaseActivity {
      */
     private LinearLayout planLinearlayout;
     /**
-     * 实际情况
+     * 物料信息
      */
-    private LinearLayout realinfoLinearLayout;
+    private LinearLayout wpmaterialLinearLayout;
     /**
      * 故障汇报*
      */
@@ -104,15 +105,15 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udzglimit;//提报时间
     private LinearLayout udplannumlayout;
     private TextView udplannum;//终验收计划号
-    private TextView schedstart;//故障开始时间
-    private TextView schedfinish;//故障结束时间
+    private TextView schedstart;//计划开始时间
+    private TextView schedfinish;//计划结束时间
     private TextView actstart;//实际开始时间
     private TextView actfinish;//实际结束时间
-    private TextView isstoped;//是否停机
+    private CheckBox isstoped;//是否停机
     private TextView pmchgevalstart;//故障开始时间
     private TextView pmchgevalend;//故障恢复时间
     private TextView udjgresult;//累计时间
-    private TextView udprobdesc;//故障隐患描述
+    private EditText udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
     private LinearLayout udjpnumlayout;
     private TextView udjpnumtext;
@@ -163,18 +164,17 @@ public class Work_DetailsActivity extends BaseActivity {
     private EditText udfjappnum;//主控程序版本号
     private TextView udrprrsb1;//负责人
 
-
+    private String failurelist = "";
     private Button cancel;
     private Button save;
 
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
-//    private ArrayList<Labtrans> labtransList = new ArrayList<>();
+    private ArrayList<Wpmaterial> wpmaterialLit = new ArrayList<>();
 //    private ArrayList<Failurereport> failurereportList = new ArrayList<>();
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-    private ArrayList<DialogMenuItem> mMenuItems2 = new ArrayList<>();
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -231,11 +231,11 @@ public class Work_DetailsActivity extends BaseActivity {
         schedfinish = (TextView) findViewById(R.id.work_schedfinish);
         actstart = (TextView) findViewById(R.id.work_actstart);
         actfinish = (TextView) findViewById(R.id.work_actfinish);
-        isstoped = (TextView) findViewById(R.id.work_isstoped);
+        isstoped = (CheckBox) findViewById(R.id.work_isstoped);
         pmchgevalstart = (TextView) findViewById(R.id.work_pmchgevalstart);
         pmchgevalend = (TextView) findViewById(R.id.work_pmchgevalend);
         udjgresult = (TextView) findViewById(R.id.work_udjgresult);
-        udprobdesc = (TextView) findViewById(R.id.work_udprobdesc);
+        udprobdesc = (EditText) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
         udjpnumlayout = (LinearLayout) findViewById(R.id.work_udjpnum_layout);
         udjpnumtext = (TextView) findViewById(R.id.work_udjpnum_text);
@@ -327,7 +327,7 @@ public class Work_DetailsActivity extends BaseActivity {
         schedfinish.setText(workOrder.SCHEDFINISH);
         actstart.setText(workOrder.ACTSTART);
         actfinish.setText(workOrder.ACTFINISH);
-        isstoped.setText(workOrder.ISSTOPED);
+        isstoped.setChecked(workOrder.ISSTOPED != null && workOrder.ISSTOPED.equals("Y"));
         pmchgevalstart.setText(workOrder.PMCHGEVALSTART);
         pmchgevalend.setText(workOrder.PMCHGEVALEND);
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
@@ -369,7 +369,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udfjappnum.setText(workOrder.UDFJAPPNUM);
 
 
-        if (workOrder.UDSTATUS.equals(Constants.STATUS1)){
+        if (workOrder.UDSTATUS.equals(Constants.STATUS1)) {
             pctype.setOnClickListener(new NormalListDialogOnClickListener(pctype));
         }
         djtype.setOnClickListener(new NormalListDialogOnClickListener(djtype));
@@ -379,24 +379,32 @@ public class Work_DetailsActivity extends BaseActivity {
         udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         udinspoby2.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
         udinspoby3.setOnClickListener(new LayoutOnClickListener(4, Constants.PERSONCODE));
-        udrprrsb.setOnClickListener(new LayoutOnClickListener(11,Constants.PERSONCODE));
+        udrprrsb.setOnClickListener(new LayoutOnClickListener(11, Constants.PERSONCODE));
         udprojectnum.setOnClickListener(new LayoutOnClickListener(6, Constants.UDPROCODE));
         udlocnum.setOnClickListener(new LayoutOnClickListener(7, Constants.UDLOCNUMCODE));
         if (workOrder.WORKTYPE.equals(Constants.WS)) {
             udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
-        }else if (workOrder.WORKTYPE.equals(Constants.SP)){
+        } else if (workOrder.WORKTYPE.equals(Constants.SP)) {
             udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.SP_JOBPLANCODE));
-        }else if (workOrder.WORKTYPE.equals(Constants.TP)){
+        } else if (workOrder.WORKTYPE.equals(Constants.TP)) {
             udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.TP_JOBPLANCODE));
         }
-        wtcode.setOnClickListener(new LayoutOnClickListener(8,Constants.WTCODE));
-        udlocation.setOnClickListener(new LayoutOnClickListener(9,Constants.LOCATIONCODE));
-        udplannum.setOnClickListener(new LayoutOnClickListener(10,Constants.ZYS_UDPLANNUMCODE));
+        wtcode.setOnClickListener(new LayoutOnClickListener(8, Constants.WTCODE));
+        udlocation.setOnClickListener(new LayoutOnClickListener(9, Constants.LOCATIONCODE));
+        udplannum.setOnClickListener(new LayoutOnClickListener(10, Constants.ZYS_UDPLANNUMCODE));
+        failurecode.setOnClickListener(new LayoutOnClickListener(12, Constants.FAILURECODE));
+        problemcode.setOnClickListener(new LayoutOnClickListener(13, Constants.PROBLEMCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
         udrlstopdate.setOnClickListener(new DateChecked(udrlstopdate));
         udzglimit.setOnClickListener(new DateTimeOnClickListener(udzglimit));
+        schedstart.setOnClickListener(new DateTimeOnClickListener(schedstart));
+        schedfinish.setOnClickListener(new DateTimeOnClickListener(schedfinish));
+        actstart.setOnClickListener(new DateTimeOnClickListener(actstart));
+        actfinish.setOnClickListener(new DateTimeOnClickListener(actfinish));
+        pmchgevalstart.setOnClickListener(new DateTimeOnClickListener(pmchgevalstart));
+        pmchgevalend.setOnClickListener(new DateTimeOnClickListener(pmchgevalend));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -427,11 +435,13 @@ public class Work_DetailsActivity extends BaseActivity {
 //        }
 //    };
 
-    private class NormalListDialogOnClickListener implements View.OnClickListener{
+    private class NormalListDialogOnClickListener implements View.OnClickListener {
         TextView textView;
-        public NormalListDialogOnClickListener(TextView textView){
+
+        public NormalListDialogOnClickListener(TextView textView) {
             this.textView = textView;
         }
+
         @Override
         public void onClick(View v) {
             NormalListDialog(textView);
@@ -441,13 +451,13 @@ public class Work_DetailsActivity extends BaseActivity {
     private void NormalListDialog(final TextView textView) {
         String[] types = new String[0];
         mMenuItems = new ArrayList<>();
-        if (textView == djtype){
+        if (textView == djtype) {
             types = getResources().getStringArray(R.array.djtype_array);
-        }else if (textView == pctype){
+        } else if (textView == pctype) {
             types = getResources().getStringArray(R.array.pctype_array);
-        }else if (textView == udjgtype){
+        } else if (textView == udjgtype) {
             types = getResources().getStringArray(R.array.udjgtype_array);
-        }else if (textView == culevel){
+        } else if (textView == culevel) {
             types = getResources().getStringArray(R.array.culevel_array);
         }
         for (int i = 0; i < types.length; i++) {
@@ -526,7 +536,7 @@ public class Work_DetailsActivity extends BaseActivity {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
                 timelayout.setVisibility(View.GONE);
-                inspolayout.setVisibility(View.GONE);
+//                inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
                 break;
             case "AA"://终验收工单
@@ -605,22 +615,22 @@ public class Work_DetailsActivity extends BaseActivity {
     private void decisionLayout() {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
-                planLinearlayout.setVisibility(View.GONE);
+//                planLinearlayout.setVisibility(View.GONE);
                 break;
             case "AA"://终验收工单
-
+                wpmaterialLinearLayout.setVisibility(View.GONE);
                 break;
 //            case "DC"://调试工单
 //
 //                break;
             case "SP"://排查工单
-
+                wpmaterialLinearLayout.setVisibility(View.GONE);
                 break;
             case "TP"://技改工单
-
+                wpmaterialLinearLayout.setVisibility(View.GONE);
                 break;
             case "WS"://定检工单
-
+                wpmaterialLinearLayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -670,13 +680,13 @@ public class Work_DetailsActivity extends BaseActivity {
         popupWindow.showAsDropDown(view);
 
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
-//        realinfoLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_realinfo_id);
+        wpmaterialLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_wpmaterial_id);
 //        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
         flowerLinearLayout = (LinearLayout) findViewById(R.id.work_flower_id);
         commitLinearLayout = (LinearLayout) findViewById(R.id.work_commit_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
 //        taskLinearLayout.setOnClickListener(taskOnClickListener);
-//        realinfoLinearLayout.setOnClickListener(realinfoOnClickListener);
+        wpmaterialLinearLayout.setOnClickListener(wpmaterialOnClickListener);
 //        reportLinearLayout.setOnClickListener(reportOnClickListener);
         decisionLayout();
 
@@ -685,48 +695,47 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (workOrder.WORKTYPE.equals(Constants.SP)||workOrder.WORKTYPE.equals(Constants.TP)
-                    ||workOrder.WORKTYPE.equals(Constants.WS)) {
-                if (!udjpnum.getText().toString().equals("")) {
-                    Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("workOrder", workOrder);
-                    bundle.putSerializable("woactivityList", woactivityList);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, 1000);
-                    popupWindow.dismiss();
-                }else {
-                    Toast.makeText(Work_DetailsActivity.this,"请选择计划标准",Toast.LENGTH_SHORT).show();
-                }
+//            if (workOrder.WORKTYPE.equals(Constants.SP)||workOrder.WORKTYPE.equals(Constants.TP)
+//                    ||workOrder.WORKTYPE.equals(Constants.WS)) {
+            if (workOrder.WORKTYPE.equals(Constants.FR) || (!workOrder.WORKTYPE.equals(Constants.FR) && !udjpnum.getText().toString().equals(""))) {
+                Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("workOrder", workOrder);
+                bundle.putSerializable("woactivityList", woactivityList);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 1000);
+                popupWindow.dismiss();
+            } else {
+                Toast.makeText(Work_DetailsActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
             }
+//            }
         }
     };
-//
-////    private View.OnClickListener taskOnClickListener = new View.OnClickListener() {
-////        @Override
-////        public void onClick(View view) {
-////            Intent intent = new Intent(Work_detailsActivity.this, AssignmentActivity.class);
-////            Bundle bundle = new Bundle();
-////            bundle.putSerializable("workOrder", workOrder);
-////            intent.putExtras(bundle);
-////            startActivity(intent);
-////            popupWindow.dismiss();
-////        }
-////    };
-//
-//    private View.OnClickListener realinfoOnClickListener = new View.OnClickListener() {
+    //
+//    private View.OnClickListener taskOnClickListener = new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
-//            Intent intent = new Intent(Work_detailsActivity.this, LabtransListActivity.class);
+//            Intent intent = new Intent(Work_detailsActivity.this, AssignmentActivity.class);
 //            Bundle bundle = new Bundle();
 //            bundle.putSerializable("workOrder", workOrder);
-//            bundle.putSerializable("woactivityList", woactivityList);
-//            bundle.putSerializable("labtransList", labtransList);
 //            intent.putExtras(bundle);
-//            startActivityForResult(intent, 2000);
+//            startActivity(intent);
 //            popupWindow.dismiss();
 //        }
 //    };
+//
+    private View.OnClickListener wpmaterialOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Work_DetailsActivity.this, Work_WpmaterialActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("wpmaterialList", wpmaterialLit);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, 2000);
+            popupWindow.dismiss();
+        }
+    };
 //
 //    private View.OnClickListener reportOnClickListener = new View.OnClickListener() {
 //        @Override
@@ -778,11 +787,89 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("数据提交中...");
-                        startAsyncTask();
+                        InspectData();
                         dialog.dismiss();
                     }
                 });
+    }
+
+    //检查字段
+    private void InspectData() {
+        switch (workOrder.WORKTYPE) {
+            case "FR"://故障工单
+//                if (udprojectnum.getText().toString().equals("")) {
+//                    udprojectnum.setError("项目编号不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (udlocnum.getText().toString().equals("")) {
+//                    udlocnum.setError("机位号不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (failurecode.getText().toString().equals("")) {
+//                    failurecode.setError("故障类不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入故障类", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (problemcode.getText().toString().equals("")) {
+//                    problemcode.setError("故障问题不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入故障问题", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (culevel.getText().toString().equals("")) {
+//                    culevel.setError("故障等级不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请选择故障等级", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (udrprrsb.getText().toString().equals("")) {
+//                    udrprrsb.setError("提报人不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入提报人", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (udzglimit.getText().toString().equals("")) {
+//                    udzglimit.setError("提报时间不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入提报时间", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (schedstart.getText().toString().equals("")) {
+//                    schedstart.setError("计划开始时间不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (schedfinish.getText().toString().equals("")) {
+//                    schedfinish.setError("计划完成时间不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入计划完成时间", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (lead.getText().toString().equals("")) {
+//                    lead.setError("维护/运行组长不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入维护/运行组长", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if (udinspoby.getText().toString().equals("")) {
+//                    udinspoby.setError("维护/运行人员不为空");
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入维护/运行人员", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+                break;
+            case "AA"://终验收工单
+
+                break;
+            case "SP"://排查工单
+
+                break;
+            case "TP"://技改工单
+
+                break;
+            case "WS"://定检工单
+
+                break;
+            default:
+                break;
+        }
+        showProgressDialog("数据提交中...");
+        startAsyncTask();
     }
 
 
@@ -805,7 +892,7 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
-                        "WORKORDER","WONUM",workOrder.WONUM,"http://192.168.100.17:7001/meaweb/services/MOBILESERVICE");
+                        "WORKORDER", "WONUM", workOrder.WONUM, Constants.WORK_URL);
                 return reviseresult;
             }
 
@@ -814,7 +901,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 super.onPostExecute(workResult);
                 if (workResult.errorMsg == null) {
                     Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("成功!")) {
+                } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Work_DetailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
@@ -840,7 +927,7 @@ public class Work_DetailsActivity extends BaseActivity {
         public void onClick(View view) {
             Intent intent = new Intent(Work_DetailsActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
-            if (requestCode == 7||requestCode == 8) {
+            if (requestCode == 7 || requestCode == 8) {
                 if (udprojectnum.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请先选择项目编号", Toast.LENGTH_SHORT).show();
                     return;
@@ -848,17 +935,27 @@ public class Work_DetailsActivity extends BaseActivity {
                     intent.putExtra("udprojectnum", udprojectnum.getText().toString());
                 }
             }
-            if (requestCode == 9){
-                if (udprojectnum.getText().toString().equals("")){
+            if (requestCode == 9) {
+                if (udprojectnum.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请先选择项目编号", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (udlocnum.getText().toString().equals("")){
+                if (udlocnum.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请先选择机位号", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 intent.putExtra("udprojectnum", udprojectnum.getText().toString());
                 intent.putExtra("udlocnum", udlocnum.getText().toString());
+            }
+            if (requestCode == 13) {
+                if (failurecode.getText().toString().equals("") && failurelist.equals("")) {
+                    Toast.makeText(Work_DetailsActivity.this, "请先选择故障类", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (!failurecode.getText().toString().equals("") && failurelist.equals("")) {
+                    Toast.makeText(Work_DetailsActivity.this, "请重新选择故障类", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                intent.putExtra("failurelist", failurelist);
             }
             startActivityForResult(intent, requestCode);
         }
@@ -1045,7 +1142,7 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.SCHEDFINISH = schedfinish.getText().toString();
         workOrder.ACTSTART = actstart.getText().toString();
         workOrder.ACTFINISH = actfinish.getText().toString();
-        workOrder.ISSTOPED = isstoped.getText().toString();
+        workOrder.ISSTOPED = isstoped.isChecked() ? "Y" : "N";
         workOrder.PMCHGEVALSTART = pmchgevalstart.getText().toString();
         workOrder.PMCHGEVALEND = pmchgevalend.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
@@ -1090,7 +1187,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private ArrayList<Woactivity> getWoactivityList() {
         ArrayList<Woactivity> woactivities = new ArrayList<>();
         for (int i = 0; i < woactivityList.size(); i++) {
-            if (woactivityList.get(i).optiontype!=null){
+            if (woactivityList.get(i).optiontype != null) {
                 woactivities.add(woactivityList.get(i));
             }
         }
@@ -1100,7 +1197,7 @@ public class Work_DetailsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        if (data != null){
+        if (data != null) {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
@@ -1132,44 +1229,46 @@ public class Work_DetailsActivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     udlocnum.setText(option.getName());
                     break;
-            case 8:
-                option = (Option) data.getSerializableExtra("option");
-                wtcode.setText(option.getName());
-                break;
-            case 9:
-                option = (Option) data.getSerializableExtra("option");
-                udlocation.setText(option.getName());
-                break;
-            case 10:
-                option = (Option) data.getSerializableExtra("option");
-                udplannum.setText(option.getName());
-                break;
-            case 11:
-                option = (Option) data.getSerializableExtra("option");
-                udrprrsb.setText(option.getName());
-                break;
-//            case Constants.FAILURE_TYPE:
-//                option = (Option) data.getSerializableExtra("option");
-//                failurecode.setText(option.getName());
-//                break;
-//            case Constants.ALNDOMAIN2CODE:
-//                option = (Option) data.getSerializableExtra("option");
-//                udgzlbdm.setText(option.getName());
-//                break;
+                case 8:
+                    option = (Option) data.getSerializableExtra("option");
+                    wtcode.setText(option.getName());
+                    break;
+                case 9:
+                    option = (Option) data.getSerializableExtra("option");
+                    udlocation.setText(option.getName());
+                    break;
+                case 10:
+                    option = (Option) data.getSerializableExtra("option");
+                    udplannum.setText(option.getName());
+                    break;
+                case 11:
+                    option = (Option) data.getSerializableExtra("option");
+                    udrprrsb.setText(option.getName());
+                    break;
+                case 12:
+                    option = (Option) data.getSerializableExtra("option");
+                    failurecode.setText(option.getName());
+                    failurelist = option.getValue1();
+                    problemcode.setText("");
+                    break;
+                case 13:
+                    option = (Option) data.getSerializableExtra("option");
+                    problemcode.setText(option.getName());
+                    break;
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {
                         woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");
                     }
                     break;
-//            case 2000:
-//                labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");
-//                break;
+                case 2000:
+                    wpmaterialLit = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
+                    break;
 //            case 3000:
 //                failurereportList = (ArrayList<Failurereport>) data.getSerializableExtra("failurereportList");
 //                break;
 //            default:
 //                break;
             }
-    }
+        }
     }
 }

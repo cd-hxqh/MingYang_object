@@ -247,13 +247,16 @@ public class AndroidClientService {
      * @param json
      * @return
      */
-    public static WebResult InsertWO(String json, String userid,String url) {
+    public static WebResult InsertWO(String json, String mboObjectName,String mboKey,String personId,String url) {
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
-        SoapObject soapReq = new SoapObject(NAMESPACE, "workorderserviceWO01ByAdd");
+        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceInsertMbo");
         soapReq.addProperty("json",json);
-        soapReq.addProperty("userid",userid);
+        soapReq.addProperty("flag",1);
+        soapReq.addProperty("mboObjectName",mboObjectName);
+        soapReq.addProperty("mboKey",mboKey);
+        soapReq.addProperty("personId",personId);
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url,timeOut);
         try {
@@ -266,7 +269,7 @@ public class AndroidClientService {
         WebResult webResult = null;
         try {
             obj = soapEnvelope.getResponse().toString();
-//            webResult = JsonUtils.parsingInsertWO(obj);
+            webResult = JsonUtils.parsingInsertWO(obj, mboKey);
         } catch (SoapFault soapFault) {
             soapFault.printStackTrace();
         }

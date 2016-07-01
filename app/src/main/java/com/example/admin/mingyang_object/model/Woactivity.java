@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 public class Woactivity extends Entity implements Serializable {
 
+    public int WORKORDERID;
     public String TASKID;//任务
     public String DESCRIPTION;//描述
     public String WOJO1;//系统/项目
@@ -41,10 +42,20 @@ public class Woactivity extends Entity implements Serializable {
     public String UDZGMEASURE;//整改方案/整改措施及建议/不合格修正措施负责人
     public String UDZGLIMIT;//整改期限
     public String UDZGRESULT;//整改完成情况/整改结果验证
+    public String UDACSTARTTIME;//计划开始时间
+    public String UDACSTOPTIME;//计划完成时间
 
     public boolean isUpload;//是否是服务器数据
     public String WONUM;
     public String optiontype;//操作类型
+
+    public int getWORKORDERID() {
+        return WORKORDERID;
+    }
+
+    public void setWORKORDERID(int WORKORDERID) {
+        this.WORKORDERID = WORKORDERID;
+    }
 
     public String getUDINSUNIT() {
         return UDINSUNIT;
@@ -292,6 +303,22 @@ public class Woactivity extends Entity implements Serializable {
 
     public void setUDZGRESULT(String UDZGRESULT) {
         this.UDZGRESULT = UDZGRESULT;
+    }
+
+    public String getUDACSTARTTIME() {
+        return UDACSTARTTIME;
+    }
+
+    public void setUDACSTARTTIME(String UDACSTARTTIME) {
+        this.UDACSTARTTIME = UDACSTARTTIME;
+    }
+
+    public String getUDACSTOPTIME() {
+        return UDACSTOPTIME;
+    }
+
+    public void setUDACSTOPTIME(String UDACSTOPTIME) {
+        this.UDACSTOPTIME = UDACSTOPTIME;
     }
 
     public String getWONUM() {

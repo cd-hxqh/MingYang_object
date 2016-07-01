@@ -32,7 +32,7 @@ public class Constants {
     /**
      * 通用修改接口*
      */
-    public static final String WORK_URL = "/meaweb/services/MOBILESERVICE";
+    public static final String WORK_URL = "http://192.168.100.17:7001/meaweb/services/MOBILESERVICE";
 
     /**
      * 领料单接口*
@@ -68,8 +68,8 @@ public class Constants {
     public static final String UDDEBUGWORKORDERLINE_NAME = "UDDEBUGWORKORDERLINE";
     //工单计划员工表名
     public static final String WPLABOR_NAME = "WPLABOR";
-    //工单计划物料表名
-    public static final String WPITEM_NAME = "WPITEM";
+    //工单物料表名
+    public static final String WPMATERIAL_NAME = "WPMATERIAL";
     //工单任务分配表名
     public static final String ASSIGNMENT_NAME = "ASSIGNMENT";
     //工单实际员工表名
@@ -84,6 +84,10 @@ public class Constants {
     public static final String UDINVESTP_APPID = "UDZYSPLAN";
     //计划表表名
     public static final String UDINVESTP_NAME = "UDINVESTP";
+    //故障代码appid
+    public static final String FAILURELIST_APPID = "FAILURELIST";
+    //故障代码表名
+    public static final String FAILURELIST_NAME = "FAILURELIST";
 
 
     /**
@@ -267,5 +271,9 @@ public class Constants {
     public static final int LOCATIONCODE = 180;//设备位置
 
     public static final int ZYS_UDPLANNUMCODE = 190;//终验收计划
+
+    public static final int FAILURECODE = 200;//故障类
+
+    public static final int PROBLEMCODE = 210;//问题原因
 
 }

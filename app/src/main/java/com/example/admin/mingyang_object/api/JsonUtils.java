@@ -7,6 +7,7 @@ import com.example.admin.mingyang_object.bean.LoginResults;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Person;
@@ -24,6 +25,7 @@ import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.Wfassignment;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.model.Wpmaterial;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,6 +126,8 @@ public class JsonUtils<E> {
             JSONObject object = new JSONObject(data);
             if (object.has("errorMsg")&&!object.getString("errorMsg").equals("")) {
                 webResult.errorMsg = object.getString("errorMsg");
+            }else if (object.has("success")&&!object.getString("success").equals("")){
+                webResult.errorMsg = object.getString("success");
             }
             if (object.has(num)&&!object.getString(num).equals("")) {
                 webResult.wonum = object.getString(num);
@@ -306,6 +310,52 @@ public class JsonUtils<E> {
                                 parameterTypes[0] = field[j].getType();
                                 getOrSet = location.getClass().getDeclaredMethod("set" + name, parameterTypes);
                                 getOrSet.invoke(location, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(location);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析风机型号信息*
+     */
+    public static ArrayList<Failurelist> parsingFailurelist(String data) {
+        ArrayList<Failurelist> list = null;
+        Failurelist location = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Failurelist>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                location = new Failurelist();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = location.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.get(name) != null && !jsonObject.get(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = location.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(location);
+                            if (value == null || value ==0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = location.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(location, jsonObject.get(name));
                             }
 
                         } catch (Exception e) {
@@ -811,7 +861,7 @@ public class JsonUtils<E> {
                 for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
-                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null){
+                    if (jsonObject.has(name)&&jsonObject.get(name)!=null){
                         try{
                             // 调用getter方法获取属性值
                             Method getOrSet = woactivity.getClass().getMethod("get" + name);
@@ -821,7 +871,7 @@ public class JsonUtils<E> {
                                 Class[] parameterTypes = new Class[1];
                                 parameterTypes[0] = field[j].getType();
                                 getOrSet = woactivity.getClass().getDeclaredMethod("set" + name,parameterTypes);
-                                getOrSet.invoke(woactivity,jsonObject.getString(name));
+                                getOrSet.invoke(woactivity,jsonObject.get(name));
                             }
                         }catch(Exception e){
                             e.printStackTrace();
@@ -831,6 +881,52 @@ public class JsonUtils<E> {
                 woactivity.WONUM = wonum;
                 woactivity.isUpload = true;
                 list.add(woactivity);
+            }
+            return list;
+        }catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析物料信息
+     */
+    public static ArrayList<Wpmaterial> parsingWpmaterial(Context ctx, String data, String wonum) {
+        Log.i(TAG, "WorkOrder data=" + data);
+        ArrayList<Wpmaterial> list = null;
+        Wpmaterial wpmaterial = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Wpmaterial>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                wpmaterial = new Wpmaterial();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = wpmaterial.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for(int j=0 ; j<field.length ; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name)&&jsonObject.getString(name)!=null){
+                        try{
+                            // 调用getter方法获取属性值
+                            Method getOrSet = wpmaterial.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(wpmaterial);
+                            if(value == null){
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = wpmaterial.getClass().getDeclaredMethod("set" + name,parameterTypes);
+                                getOrSet.invoke(wpmaterial,jsonObject.getString(name));
+                            }
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                wpmaterial.WONUM = wonum;
+                wpmaterial.isUpload = true;
+                list.add(wpmaterial);
             }
             return list;
         }catch (JSONException e) {

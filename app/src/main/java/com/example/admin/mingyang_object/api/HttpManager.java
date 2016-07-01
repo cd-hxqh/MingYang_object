@@ -133,10 +133,12 @@ public class HttpManager {
     }
 
     /**
-     * 设置计划物料接口*
+     * 设置故障工单物料接口*
      */
-    public static String getwpitemUrl(String type, int curpage, int showcount) {
-        return "{'appid':'" + "UDWO" + type + "','objectname':'" + Constants.WPITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    public static String getWpmaterialUrl(String wonum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.WPMATERIAL_NAME + "','objectname':'" + Constants.WPMATERIAL_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'WONUM':'" + wonum + "'}" +
+                "}";
     }
 
     /**
@@ -303,6 +305,25 @@ public class HttpManager {
         return "{'appid':'" + Constants.UDINVESTP_APPID + "','objectname':'" + Constants.UDINVESTP_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + type + "','DESCRIPTION':'" + serch + "'}}";
     }
 
+    /**
+     * 设置故障类的接口
+     */
+    public static String getFailurelistUrl(String serch, int curpage, int showcount) {
+        if (serch.equals("")) {
+            return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE2':'*'}}";
+        }
+        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE2':'*','CODEDESC':'" + serch + "'}}";
+    }
+
+    /**
+     * 设置问题代码的接口
+     */
+    public static String getFailurelist2Url(String serch, int curpage, int showcount,String parent) {
+        if (serch.equals("")) {
+            return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'"+ parent +"'}}";
+        }
+        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'"+ parent +"','CODEDESC':'" + serch + "'}}";
+    }
 
     /**
      * 使用用户名密码登录

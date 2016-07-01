@@ -20,9 +20,11 @@ import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
+import com.example.admin.mingyang_object.model.Wpmaterial;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.WoactivityAdapter;
+import com.example.admin.mingyang_object.ui.adapter.WpmaterialAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -37,7 +39,7 @@ import java.util.List;
 /**
  * Created by think on 2016/5/10.
  */
-public class Work_WoactivityActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private ImageView backImageView;
     private TextView titleTextView;
     private ImageView menuImageView;
@@ -45,12 +47,12 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private WoactivityAdapter woactivityAdapter;
+    private WpmaterialAdapter wpmaterialAdapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     public WorkOrder workOrder;
-    public ArrayList<Woactivity> woactivityList = new ArrayList<>();
-    public ArrayList<Woactivity> deleteList = new ArrayList<>();
+    public ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
+    public ArrayList<Wpmaterial> deleteList = new ArrayList<>();
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -69,7 +71,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 
     private void getData() {
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        woactivityList = (ArrayList<Woactivity>) getIntent().getSerializableExtra("woactivityList");
+        wpmaterialList = (ArrayList<Wpmaterial>) getIntent().getSerializableExtra("wpmaterialList");
     }
 
     @Override
@@ -87,13 +89,13 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backOnClickListener);
-        titleTextView.setText(getResources().getString(R.string.title_activity_workwoactivity));
+        titleTextView.setText(getResources().getString(R.string.title_activity_wpmaterial));
         menuImageView.setImageResource(R.mipmap.add);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         confirmlayout.setVisibility(View.GONE);
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
-        layoutManager = new LinearLayoutManager(Work_WoactivityActivity.this);
+        layoutManager = new LinearLayoutManager(Work_WpmaterialActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
@@ -118,30 +120,24 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
-        if (workOrder.WORKTYPE.equals(Constants.AA)||workOrder.WORKTYPE.equals(Constants.FR)){
-            menuImageView.setVisibility(View.VISIBLE);
-        }else {
-            menuImageView.setVisibility(View.GONE);
-        }
-
         if (!workOrder.isnew){
-            if (woactivityList == null || woactivityList.size() == 0){
+            if (wpmaterialList == null || wpmaterialList.size() == 0){
                 refresh_layout.setRefreshing(true);
                 getdata();
             }else{
-                if (woactivityList != null && woactivityList.size() != 0) {
-                    initList(woactivityList);
+                if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                    initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
                 }else {
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
         } else {//新建工单
-            if (woactivityList == null || woactivityList.size() == 0){
+            if (wpmaterialList == null || wpmaterialList.size() == 0){
 
             }else {
-                if (woactivityList != null && woactivityList.size() != 0) {
-                    initList(woactivityList);
+                if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                    initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
                 }else {
                     nodatalayout.setVisibility(View.VISIBLE);
@@ -150,8 +146,8 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         }
     }
 
-    private void initList(ArrayList<Woactivity> list ){
-        ArrayList<Woactivity> woactivities = new ArrayList<>();
+    private void initList(ArrayList<Wpmaterial> list ){
+        ArrayList<Wpmaterial> woactivities = new ArrayList<>();
         for (int i = 0;i< list.size();i++){
             if (list.get(i).optiontype!=null&&list.get(i).optiontype.equals("delete")){
                 deleteList.add(list.get(i));
@@ -164,7 +160,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 
     private void getdata() {
         if (workOrder.WONUM != null && !workOrder.WONUM.equals("")) {
-            HttpManager.getDataPagingInfo(Work_WoactivityActivity.this, HttpManager.getwoactivityUrl(workOrder.WONUM, page, 20), new HttpRequestHandler<Results>() {
+            HttpManager.getDataPagingInfo(Work_WpmaterialActivity.this, HttpManager.getWpmaterialUrl(workOrder.WONUM, page, 20), new HttpRequestHandler<Results>() {
                 @Override
                 public void onSuccess(Results results) {
                     Log.i(TAG, "data=" + results);
@@ -172,25 +168,28 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 
                 @Override
                 public void onSuccess(Results results, int currentPage, int showcount) {
-                    ArrayList<Woactivity> woactivities = null;
+                    ArrayList<Wpmaterial> wpmaterials = null;
                     if (currentPage == page) {
-                        woactivities = JsonUtils.parsingWoactivity(Work_WoactivityActivity.this, results.getResultlist(), workOrder.WONUM);
+                        wpmaterials = JsonUtils.parsingWpmaterial(Work_WpmaterialActivity.this, results.getResultlist(), workOrder.WONUM);
                     }
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
-                    if ((woactivities == null || woactivities.isEmpty())&&page==1) {
+                    if ((wpmaterials == null || wpmaterials.isEmpty())&&page==1) {
                         nodatalayout.setVisibility(View.VISIBLE);
-                        initAdapter(new ArrayList<Woactivity>());
+                        initAdapter(new ArrayList<Wpmaterial>());
                     } else {
 
-                        if (woactivities != null || woactivities.size() != 0) {
-                            for (int i = 0; i < woactivities.size(); i++) {
-                                woactivityList.add(woactivities.get(i));
+                        if (wpmaterials != null || wpmaterials.size() != 0) {
+                            if (wpmaterialList == null){
+                                wpmaterialList = new ArrayList<Wpmaterial>();
+                            }
+                            for (int i = 0; i < wpmaterials.size(); i++) {
+                                wpmaterialList.add(wpmaterials.get(i));
                             }
                         }
                         nodatalayout.setVisibility(View.GONE);
 
-                        initAdapter(woactivityList);
+                        initAdapter(wpmaterialList);
                     }
                 }
 
@@ -212,28 +211,18 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
     /**
      * 获取数据*
      */
-    private void initAdapter(final List<Woactivity> list) {
-        woactivityAdapter = new WoactivityAdapter(Work_WoactivityActivity.this, R.layout.list_item, list,workOrder.WORKTYPE);
-        recyclerView.setAdapter(woactivityAdapter);
-        woactivityAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+    private void initAdapter(final List<Wpmaterial> list) {
+        wpmaterialAdapter = new WpmaterialAdapter(Work_WpmaterialActivity.this, R.layout.list_item, list);
+        recyclerView.setAdapter(wpmaterialAdapter);
+        wpmaterialAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("woactivity", list.get(position));
+                bundle.putSerializable("wpmaterial", list.get(position));
                 bundle.putSerializable("workOrder", workOrder);
                 bundle.putSerializable("position", position);
-                if (workOrder.WORKTYPE.equals(Constants.AA)){
-                    intent.setClass(Work_WoactivityActivity.this, WoactivityDetailsActivity_AA.class);
-                }else if (workOrder.WORKTYPE.equals(Constants.SP)){
-                    intent.setClass(Work_WoactivityActivity.this, WoactivityDetailsActivity_SP.class);
-                }else if (workOrder.WORKTYPE.equals(Constants.TP)){
-                    intent.setClass(Work_WoactivityActivity.this, WoactivityDetailsActivity_TP.class);
-                }else if (workOrder.WORKTYPE.equals(Constants.WS)){
-                    intent.setClass(Work_WoactivityActivity.this, WoactivityDetailsActivity_WS.class);
-                }else if (workOrder.WORKTYPE.equals(Constants.FR)){
-                    intent.setClass(Work_WoactivityActivity.this, WoactivityDetailsActivity_FR.class);
-                }
+                intent.setClass(Work_WpmaterialActivity.this, WpmaterialDetailsActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 2);
             }
@@ -259,7 +248,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         @Override
         public void onClick(View v) {
             if (confirmlayout.getVisibility() == View.VISIBLE) {
-                final NormalDialog dialog = new NormalDialog(Work_WoactivityActivity.this);
+                final NormalDialog dialog = new NormalDialog(Work_WpmaterialActivity.this);
                 dialog.content("确定放弃修改吗?")//
                         .showAnim(mBasIn)//
                         .dismissAnim(mBasOut)//
@@ -275,12 +264,12 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                         new OnBtnClickL() {
                             @Override
                             public void onBtnClick() {
-                                Work_WoactivityActivity.this.finish();
+                                Work_WpmaterialActivity.this.finish();
 //                                dialog.dismiss();
                             }
                         });
             } else {
-                Work_WoactivityActivity.this.finish();
+                Work_WpmaterialActivity.this.finish();
             }
         }
     };
@@ -290,24 +279,13 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         public void onClick(View view) {
             Intent intent;
             intent = new Intent();
-            if (workOrder.WORKTYPE.equals(Constants.AA)){
-                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_AA.class);
-            }else if (workOrder.WORKTYPE.equals(Constants.SP)){
-                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_SP.class);
-            }else if (workOrder.WORKTYPE.equals(Constants.TP)){
-                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_TP.class);
-            }else if (workOrder.WORKTYPE.equals(Constants.WS)){
-                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_WS.class);
-            }else if (workOrder.WORKTYPE.equals(Constants.FR)){
-                intent.setClass(Work_WoactivityActivity.this, WoactivityAddNewActivity_FR.class);
-            }
-            intent.putExtra("taskid", (woactivityAdapter.getItemCount() + 1) * 10);
+            intent.setClass(Work_WpmaterialActivity.this, WoactivityAddNewActivity_AA.class);
             startActivityForResult(intent, 1);
         }
     };
 
     private void setNodataLayout() {
-        if (woactivityAdapter.getItemCount() == 0) {
+        if (wpmaterialAdapter.getItemCount() == 0) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
             nodatalayout.setVisibility(View.GONE);
@@ -319,15 +297,15 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         public void onClick(View v) {
             Intent intent = getIntent();
             intent.putExtra("woactivityList",getList());
-            Work_WoactivityActivity.this.setResult(1000, intent);
-            Work_WoactivityActivity.this.finish();
+            Work_WpmaterialActivity.this.setResult(1000, intent);
+            Work_WpmaterialActivity.this.finish();
         }
     };
 
-    private ArrayList<Woactivity> getList(){
-        ArrayList<Woactivity> list = new ArrayList<>();
-        if(woactivityAdapter.getData().size()!=0) {
-            list.addAll(woactivityAdapter.getData());
+    private ArrayList<Wpmaterial> getList(){
+        ArrayList<Wpmaterial> list = new ArrayList<>();
+        if(wpmaterialAdapter.getData().size()!=0) {
+            list.addAll(wpmaterialAdapter.getData());
         }
         if(deleteList.size()!=0) {
             list.addAll(deleteList);
@@ -340,9 +318,9 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         switch (resultCode) {
             case 1://新增
                 if (data != null) {
-                    Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
-                    woactivityAdapter.add(woactivity);
-                    initAdapter(woactivityAdapter.getData());
+                    Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
+                    wpmaterialAdapter.add(wpmaterial);
+                    initAdapter(wpmaterialAdapter.getData());
                     nodatalayout.setVisibility(View.GONE);
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
@@ -350,11 +328,11 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                 break;
             case 2://修改
                 if (data != null) {
-                    Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
+                    Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
                     int position = data.getIntExtra("position", 0);
-                    woactivityAdapter.set(position, woactivity);
-                    initAdapter(woactivityAdapter.getData());
-                    woactivityAdapter.notifyDataSetChanged();
+                    wpmaterialAdapter.set(position, wpmaterial);
+                    initAdapter(wpmaterialAdapter.getData());
+                    wpmaterialAdapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
@@ -362,21 +340,21 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
             case 3://本地任务删除
                 if (data != null) {
                     int position = data.getIntExtra("position", 0);
-                    woactivityAdapter.remove(position);
-                    initAdapter(woactivityAdapter.getData());
-                    woactivityAdapter.notifyDataSetChanged();
+                    wpmaterialAdapter.remove(position);
+                    initAdapter(wpmaterialAdapter.getData());
+                    wpmaterialAdapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
                 break;
             case 4://服务器任务删除操作
                 if (data != null) {
-                    Woactivity woactivity = (Woactivity) data.getSerializableExtra("woactivity");
+                    Wpmaterial wpmaterial = (Wpmaterial) data.getSerializableExtra("wpmaterial");
                     int position = data.getIntExtra("position", 0);
-                    deleteList.add(woactivity);
-                    woactivityAdapter.remove(position);
-                    initAdapter(woactivityAdapter.getData());
-                    woactivityAdapter.notifyDataSetChanged();
+                    deleteList.add(wpmaterial);
+                    wpmaterialAdapter.remove(position);
+                    initAdapter(wpmaterialAdapter.getData());
+                    wpmaterialAdapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
@@ -386,7 +364,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-        if (!workOrder.isnew&& (woactivityList == null || woactivityList.size() == 0)) {
+        if (!workOrder.isnew&& (wpmaterialList == null || wpmaterialList.size() == 0)) {
             page = 1;
             getdata();
         }else {

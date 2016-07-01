@@ -61,6 +61,8 @@
     <string name="work_plan_title">工单计划</string>
     <string name="title_activity_workwoactivity">工单任务</string>
     <string name="title_activity_woactivitydetails">任务详情</string>
+    <string name="title_activity_wpmaterial">工单物料</string>
+    <string name="title_activity_wpmaterialdetails">物料详情</string>
     <string name="title_activity_uddebugworkorderlinelist">调试工单子表列表</string>
     <string name="title_activity_uddebugworkorderlinedetails">调试工单子表详情</string>
     <string name="title_activity_option">选项列表</string>
@@ -142,14 +144,14 @@
     <string name="work_udrprrsb">提报人:</string>
     <string name="work_udzglimit">提报时间:</string>
     <string name="work_udplannum">终验收计划号:</string>
-    <string name="work_schedstart">故障开始时间:</string>
-    <string name="work_schedfinish">故障结束时间:</string>
+    <string name="work_schedstart">计划开始时间:</string>
+    <string name="work_schedfinish">计划完成时间:</string>
     <string name="work_actstart">实际开始时间:</string>
     <string name="work_actfinish">实际结束时间:</string>
     <string name="work_isstoped">是否停机:</string>
     <string name="work_pmchgevalstart">故障开始时间:</string>
     <string name="work_pmchgevalend">故障恢复时间:</string>
-    <string name="work_udjgresult">累计时间:</string>
+    <string name="work_udjgresult">累计停机时间:</string>
     <string name="work_udprobdesc">故障隐患描述:</string>
     <string name="work_worktype">工单类型:</string>
     <string name="work_status">状态:</string>
@@ -217,6 +219,8 @@
     <string name="woactivity_actfinish">实际完成时间:</string>
     <string name="woactivity_udstarttime">开始时间:</string>
     <string name="woactivity_udendtime">结束时间:</string>
+    <string name="woactivity_udacstarttime">计划开始时间</string>
+    <string name="woactivity_udacstoptime">计划完成时间:</string>
     <string name="woactivity_udzyscorn">工作任务:</string>
     <string name="woactivity_udzysbasic">执行标准:</string>
     <string name="woactivity_perinspr1">终验收结果:</string>
@@ -231,10 +235,18 @@
     <string name="woactivity_udzglimit">整改期限:</string>
     <string name="woactivity_udzgresult1">整改完成情况:</string>
     <string name="woactivity_udzgresult2">整改结果验证:</string>
+
+    <string name="wpmaterial_itemnum">物资编码:</string>
+    <string name="wpmaterial_itemdesc">物资描述:</string>
+    <string name="wpmaterial_itemqty">数量:</string>
+    <string name="wpmaterial_orderunit">订购单位:</string>
+    <string name="wpmaterial_location">库房:</string>
+    <string name="wpmaterial_locdesc">库房描述:</string>
     
     <string name="work_labtrans">员工</string>
     <string name="work_matusetrans">物料</string>
     <string name="work_realinfo">实际情况</string>
+    <string name="work_wpmaterial">物料信息</string>
     <string name="work_failreport">故障汇报</string>
     <string name="work_flower">发送工作流</string>
     <string name="work_commit">上传附件</string>
