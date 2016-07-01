@@ -11,6 +11,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.ui.activity.Udfeedback_listactivity;
 import com.example.admin.mingyang_object.ui.activity.Udpro_ListActivity;
 import com.example.admin.mingyang_object.ui.activity.Udprorunlog_listactivity;
+import com.example.admin.mingyang_object.ui.activity.Udreport_ListActivity;
 
 
 /**
@@ -64,7 +65,7 @@ public class YunweiFragment extends BaseFragment {
     private View.OnClickListener udreportTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), Udpro_ListActivity.class);
+            Intent intent = new Intent(getActivity(), Udreport_ListActivity.class);
             startActivityForResult(intent, 0);
         }
     };

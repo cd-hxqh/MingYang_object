@@ -2,7 +2,7 @@ package com.example.admin.mingyang_object.model;
 
 /**
  * Created by think on 2016/6/29.
- * ,¹ÊÕÏ´úÂë
+ * ,æ•…éšœä»£ç 
  */
 public class Failurelist {
     public String FAILURECODE;

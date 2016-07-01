@@ -161,7 +161,10 @@ public class Constants {
      */
     public static final String UDSTOCKLINE_NAME = "UDSTOCKLINE";
 
-
+    /**故障提报单appid**/
+    public static final String UDREPORT_APPID = "UDREPORT";
+    /**故障提报单表名**/
+    public static final String UDREPORT_NAME = "UDREPORT";
 
 
 

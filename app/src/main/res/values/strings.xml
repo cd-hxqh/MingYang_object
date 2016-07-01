@@ -363,10 +363,29 @@
     <string name="diffqty_text">差异数量:</string>
     <string name="diffreason_text">差异原因:</string>
     <string name="udstockline_text">盘点明细行</string>
-    <string name="udreport_text">故障提报</string>
+    <string name="udreport_text">故障提报单</string>
     <string name="udinspo_text">巡检单</string>
     <string name="udcardrivelog_text">行驶记录</string>
     <string name="udcarfuelcharge_text">加油记录</string>
     <string name="udcarmainlog_text">维修记录</string>
+    <!--故障提报单-->
+    <string name="reportnum_text">编号:</string>
+    <string name="branchdesc_text">中心:</string>
+    <string name="location_code_text">机位号:</string>
+    <string name="assetloc_text">设备位置:</string>
+    <string name="culevel_text">故障等级:</string>
+    <string name="faulttype_text">故障类型:</string>
+    <string name="happen_time_text">报障时间:</string>
+    <string name="is_end_text">故障是否结束:</string>
+    <string name="end_time_text">故障结束时间:</string>
+    <string name="statustype_text">状态:</string>
+    <string name="cuisplan_text">是否由集控生成:</string>
+    <string name="createby_text">提报人:</string>
+    <string name="reporttime_text">提报时间:</string>
+    <string name="fault_codedesc_text">故障类:</string>
+    <string name="fault_code1_text">故障代码:</string>
+    <string name="cudescribe_text">故障描述:</string>
+    <string name="result_text">处理结果:</string>
+    <string name="udreport_detail_text">故障提报单详情</string>
 
 </resources>

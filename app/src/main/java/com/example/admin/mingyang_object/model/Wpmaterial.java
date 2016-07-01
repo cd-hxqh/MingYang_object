@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 /**
  * Created by think on 2016/6/30.
- * 物料
+ * 鐗╂枡
  */
 public class Wpmaterial implements Serializable{
-    public String ITEMNUM;//物资编码
-    public String ITEMDESC;//物资描述
-    public String ITEMQTY;//数量
-    public String ORDERUNIT;//订购单位
-    public String LOCATION;//库房
-    public String LOCDESC;//库房描述
-//    public String
+    public String ITEMNUM;//鐗╄祫缂栫爜
+    public String ITEMDESC;//鐗╄祫鎻忚堪
+    public String ITEMQTY;//鏁伴噺
+    public String ORDERUNIT;//璁㈣喘鍗曚綅
+    public String LOCATION;//搴撴埧
+    public String LOCDESC;//搴撴埧鎻忚堪
+    //    public String
     public String optiontype;
     public String WONUM;
     public boolean isUpload;

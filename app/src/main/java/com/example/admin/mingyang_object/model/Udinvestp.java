@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 /**
  * Created by think on 2016/6/29.
- * 终验收计划表
+ * 缁堥獙鏀惰鍒掕〃
  *
  */
 public class Udinvestp implements Serializable {
     public String PLANNUM;
     public String APPTYPE;
-    public String PROJECTNUM;//项目编号
+    public String PROJECTNUM;//椤圭洰缂栧彿
 
     public String getPLANNUM() {
         return PLANNUM;

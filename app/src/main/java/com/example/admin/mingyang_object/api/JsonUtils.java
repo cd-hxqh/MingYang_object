@@ -17,6 +17,7 @@ import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udfeedback;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udprorunlog;
+import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.Udvehicle;
@@ -282,7 +283,7 @@ public class JsonUtils<E> {
     }
 
     /**
-     * 解析风机型号信息*
+     * 解析终验收计划表信息*
      */
     public static ArrayList<Udinvestp> parsingUdinvestp(String data) {
         ArrayList<Udinvestp> list = null;
@@ -298,7 +299,6 @@ public class JsonUtils<E> {
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
-                    Log.i(TAG, "name=" + name);
                     if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
                         try {
                             // 调用getter方法获取属性值
@@ -328,7 +328,7 @@ public class JsonUtils<E> {
     }
 
     /**
-     * 解析风机型号信息*
+     * 解析故障代码信息*
      */
     public static ArrayList<Failurelist> parsingFailurelist(String data) {
         ArrayList<Failurelist> list = null;
@@ -344,13 +344,12 @@ public class JsonUtils<E> {
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
-                    Log.i(TAG, "name=" + name);
                     if (jsonObject.has(name) && jsonObject.get(name) != null && !jsonObject.get(name).equals("")) {
                         try {
                             // 调用getter方法获取属性值
                             Method getOrSet = location.getClass().getMethod("get" + name);
                             Object value = getOrSet.invoke(location);
-                            if (value == null || value ==0) {
+                            if (value == null || Integer.parseInt(value+"")==0) {
                                 //调用setter方法设属性值
                                 Class[] parameterTypes = new Class[1];
                                 parameterTypes[0] = field[j].getType();
@@ -1096,4 +1095,61 @@ public class JsonUtils<E> {
         }
         return jsonObject.toString();
     }
+
+
+    /**故障提报单**/
+    public static ArrayList<Udreport> parsingUdreport(Context ctx, String data) {
+        ArrayList<Udreport> list = null;
+        Udreport udreport = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udreport>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udreport = new Udreport();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udreport.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udreport.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udreport);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udreport.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udreport, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udreport);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
