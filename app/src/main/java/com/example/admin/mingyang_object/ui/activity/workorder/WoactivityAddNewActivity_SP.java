@@ -109,7 +109,7 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
         wojo2.setText(woactivity.WOJO2);
         wojo3.setText(woactivity.WOJO3);
         wojo4.setText(woactivity.WOJO4);
-        perinspr.setChecked(woactivity.PERINSPR!=null&&woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR!=0);
         udinsunit.setText(woactivity.UDINSUNIT);
         udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);
@@ -123,7 +123,7 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
 
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
-
+        woactivity.TYPE = "add";
         return woactivity;
     }
 

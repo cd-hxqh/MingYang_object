@@ -62,6 +62,10 @@ public class Constants {
     public static final String WOACTIVITY_APPID = "WOACTIVITY";
     //工单计划任务表名
     public static final String WOACTIVITY_NAME = "WOACTIVITY";
+    //计划任务appid
+    public static final String JOBTASK_APPID = "JOBTASK";
+    //计划任务表名
+    public static final String JOBTASK_NAME = "JOBTASK";
     //调试工单子表appid
     public static final String UDDEBUGWORKORDERLINE_APPID = "UDDEBUGWORKORDERLINE";
     //调试工单子表表名
@@ -88,6 +92,10 @@ public class Constants {
     public static final String FAILURELIST_APPID = "FAILURELIST";
     //故障代码表名
     public static final String FAILURELIST_NAME = "FAILURELIST";
+    //物资编码appid
+    public static final String ITEM_APPID = "UDITEM";
+    //物资编码表名
+    public static final String ITEM_NAME = "ITEM";
 
 
     /**
@@ -287,5 +295,9 @@ public class Constants {
     public static final int FAILURECODE = 200;//故障类
 
     public static final int PROBLEMCODE = 210;//问题原因
+
+    public static final int ITEMCODE = 220;//物资编码
+
+    public static final int LOCATIONCODE2 = 230;//库房
 
 }

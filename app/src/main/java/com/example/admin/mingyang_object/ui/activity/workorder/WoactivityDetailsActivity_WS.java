@@ -115,7 +115,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         invcontent.setText(woactivity.INVCONTENT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgmeasure.setText(woactivity.UDZGMEASURE);
-        perinspr.setChecked(woactivity.PERINSPR != null && woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR != 0);
         udrlstopdate.setText(woactivity.UDRLSTOPDATE);
         udremark.setText(woactivity.UDREMARK);
 
@@ -144,7 +144,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         woactivity.INVCONTENT = invcontent.getText().toString();
         woactivity.UDZGSTU = udzgstu.getText().toString();
         woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
-        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
         woactivity.UDRLSTOPDATE = udrlstopdate.getText().toString();
         woactivity.UDREMARK = udremark.getText().toString();
         return woactivity;
@@ -159,14 +159,14 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
                     && woactivity.INVCONTENT.equals(invcontent.getText().toString())
                     && woactivity.UDZGSTU.equals(udzgstu.getText().toString())
                     && woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
-                    && (woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N")||(woactivity.PERINSPR.equals("")&&!perinspr.isChecked()))
+                    && (woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
                     && woactivity.UDRLSTOPDATE.equals(udrlstopdate.getText().toString())
                     &&woactivity.UDREMARK.equals(udremark.getText().toString())) {//如果内容没有修改
                 intent.putExtra("woactivity", woactivity);
             } else {
                 Woactivity woactivity = getWoactivity();
-                if (woactivity.optiontype == null || !woactivity.optiontype.equals("add")) {
-                    woactivity.optiontype = "update";
+                if (woactivity.TYPE == null || !woactivity.TYPE.equals("add")) {
+                    woactivity.TYPE = "update";
                 }
                 intent.putExtra("woactivity", woactivity);
                 Toast.makeText(WoactivityDetailsActivity_WS.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();

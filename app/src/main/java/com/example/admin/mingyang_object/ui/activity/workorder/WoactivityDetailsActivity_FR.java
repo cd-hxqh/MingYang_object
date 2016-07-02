@@ -123,8 +123,8 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();
-                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-                    woactivity.optiontype = "update";
+                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
+                    woactivity.TYPE = "update";
                 }
                 intent.putExtra("woactivity", woactivity);
                 Toast.makeText(WoactivityDetailsActivity_FR.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
@@ -144,7 +144,7 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
                 WoactivityDetailsActivity_FR.this.setResult(3, intent);
             }else {
                 Woactivity woactivity = getWoactivity();
-                woactivity.optiontype = "delete";
+                woactivity.TYPE = "delete";
                 intent.putExtra("woactivity", woactivity);
                 WoactivityDetailsActivity_FR.this.setResult(4, intent);
             }

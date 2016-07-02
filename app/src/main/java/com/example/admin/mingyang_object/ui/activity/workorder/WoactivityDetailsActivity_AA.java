@@ -111,7 +111,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udstarttime.setText(woactivity.UDSTARTTIME);
         udendtime.setText(woactivity.UDENDTIME);
         udzysbasic.setText(woactivity.UDZYSBASIC);
-        perinspr.setChecked(woactivity.PERINSPR != null && woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR != 0);
         udprobdesc.setText(woactivity.UDPROBDESC);
         udzglimit.setText(woactivity.UDZGLIMIT);
         lead.setText(woactivity.LEAD);
@@ -134,7 +134,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         woactivity.UDSTARTTIME = udstarttime.getText().toString();
         woactivity.UDENDTIME = udendtime.getText().toString();
         woactivity.UDZYSBASIC = udzysbasic.getText().toString();
-        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
         woactivity.UDZGLIMIT = udzglimit.getText().toString();
         woactivity.LEAD = lead.getText().toString();
@@ -152,7 +152,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
                     &&woactivity.UDSTARTTIME.equals(udstarttime.getText().toString())
                     &&woactivity.UDENDTIME.equals(udendtime.getText().toString())
                     &&woactivity.UDZYSBASIC.equals(udzysbasic.getText().toString())
-                    &&(woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N")||(woactivity.PERINSPR.equals("")&&!perinspr.isChecked()))
+                    &&(woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
                     &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
                     &&woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())
                     &&woactivity.LEAD.equals(lead.getText().toString())
@@ -162,8 +162,8 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();
-                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-                    woactivity.optiontype = "update";
+                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
+                    woactivity.TYPE = "update";
                 }
                 intent.putExtra("woactivity", woactivity);
                 Toast.makeText(WoactivityDetailsActivity_AA.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
@@ -183,7 +183,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
                 WoactivityDetailsActivity_AA.this.setResult(3, intent);
             }else {
                 Woactivity woactivity = getWoactivity();
-                woactivity.optiontype = "delete";
+                woactivity.TYPE = "delete";
                 intent.putExtra("woactivity", woactivity);
                 WoactivityDetailsActivity_AA.this.setResult(4, intent);
             }

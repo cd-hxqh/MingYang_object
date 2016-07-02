@@ -30,6 +30,7 @@ import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Failurelist;
+import com.example.admin.mingyang_object.model.Item;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
@@ -213,6 +214,10 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             if (!getIntent().getStringExtra("failurelist").equals("")) {
                 return HttpManager.getFailurelist2Url(searchText, page, 20, getIntent().getStringExtra("failurelist"));
             }
+        }else if (optiontype == Constants.ITEMCODE){
+            return HttpManager.getItemUrl(searchText, page, 20);
+        }else if (optiontype == Constants.LOCATIONCODE2){
+            return HttpManager.getLoactionUrl(searchText,page,20);
         }
         return "";
     }
@@ -255,7 +260,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             if (totalPages == page) {
                                 optionAdapter.addUdfandetailsDate(items);
                             }
-                        } else if (optiontype == Constants.LOCATIONCODE) {//
+                        } else if (optiontype == Constants.LOCATIONCODE||optiontype == Constants.LOCATIONCODE2) {//
                             ArrayList<Location> items = JsonUtils.parsingLocation(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addLocationDate(items);
@@ -270,6 +275,11 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             ArrayList<Failurelist> items = JsonUtils.parsingFailurelist(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addFailurelistDate(items);
+                            }
+                        }else if (optiontype == Constants.ITEMCODE) {//
+                            ArrayList<Item> items = JsonUtils.parsingItem(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addItemDate(items);
                             }
                         }
                         if (optionAdapter.getItemCount() == 0) {

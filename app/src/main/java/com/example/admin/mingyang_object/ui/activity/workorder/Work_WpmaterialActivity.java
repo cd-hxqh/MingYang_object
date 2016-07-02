@@ -149,7 +149,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
     private void initList(ArrayList<Wpmaterial> list ){
         ArrayList<Wpmaterial> woactivities = new ArrayList<>();
         for (int i = 0;i< list.size();i++){
-            if (list.get(i).optiontype!=null&&list.get(i).optiontype.equals("delete")){
+            if (list.get(i).TYPE!=null&&list.get(i).TYPE.equals("delete")){
                 deleteList.add(list.get(i));
             }else {
                 woactivities.add(list.get(i));
@@ -279,7 +279,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
         public void onClick(View view) {
             Intent intent;
             intent = new Intent();
-            intent.setClass(Work_WpmaterialActivity.this, WoactivityAddNewActivity_AA.class);
+            intent.setClass(Work_WpmaterialActivity.this, WpmaterialAddNewActivity.class);
             startActivityForResult(intent, 1);
         }
     };
@@ -296,7 +296,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
         @Override
         public void onClick(View v) {
             Intent intent = getIntent();
-            intent.putExtra("woactivityList",getList());
+            intent.putExtra("wpmaterialList",getList());
             Work_WpmaterialActivity.this.setResult(1000, intent);
             Work_WpmaterialActivity.this.finish();
         }

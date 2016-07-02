@@ -331,8 +331,8 @@ public class Work_AddNewActivity extends BaseActivity {
         wtcode.setOnClickListener(new LayoutOnClickListener(8, Constants.WTCODE));
         udlocation.setOnClickListener(new LayoutOnClickListener(9, Constants.LOCATIONCODE));
         udplannum.setOnClickListener(new LayoutOnClickListener(10, Constants.ZYS_UDPLANNUMCODE));
-        failurecode.setOnClickListener(new LayoutOnClickListener(12,Constants.FAILURECODE));
-        problemcode.setOnClickListener(new LayoutOnClickListener(13,Constants.PROBLEMCODE));
+        failurecode.setOnClickListener(new LayoutOnClickListener(12, Constants.FAILURECODE));
+        problemcode.setOnClickListener(new LayoutOnClickListener(13, Constants.PROBLEMCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -706,7 +706,7 @@ public class Work_AddNewActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList);
+        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList,wpmaterialLit);
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -724,8 +724,9 @@ public class Work_AddNewActivity extends BaseActivity {
                 super.onPostExecute(workResult);
                 if (workResult.errorMsg == null) {
                     Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("成功!")) {
-                    Toast.makeText(Work_AddNewActivity.this, "新增工单成功", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("成功")) {
+                    Toast.makeText(Work_AddNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
+                    workOrder.isnew = false;
                     finish();
                 } else {
                     Toast.makeText(Work_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
@@ -771,11 +772,11 @@ public class Work_AddNewActivity extends BaseActivity {
                 intent.putExtra("udprojectnum", udprojectnum.getText().toString());
                 intent.putExtra("udlocnum", udlocnum.getText().toString());
             }
-            if (requestCode == 13){
-                if (failurecode.getText().toString().equals("")&&failurelist.equals("")){
+            if (requestCode == 13) {
+                if (failurecode.getText().toString().equals("") && failurelist.equals("")) {
                     Toast.makeText(Work_AddNewActivity.this, "请先选择故障类", Toast.LENGTH_SHORT).show();
                     return;
-                }else if (!failurecode.getText().toString().equals("")&&failurelist.equals("")){
+                } else if (!failurecode.getText().toString().equals("") && failurelist.equals("")) {
                     Toast.makeText(Work_AddNewActivity.this, "请重新选择故障类", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -911,7 +912,7 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.SCHEDFINISH = schedfinish.getText().toString();
         workOrder.ACTSTART = actstart.getText().toString();
         workOrder.ACTFINISH = actfinish.getText().toString();
-        workOrder.ISSTOPED = isstoped.isChecked() ? "Y" : "N";
+        workOrder.ISSTOPED = isstoped.isChecked() ? 1 : 0;
         workOrder.PMCHGEVALSTART = pmchgevalstart.getText().toString();
         workOrder.PMCHGEVALEND = pmchgevalend.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
@@ -939,9 +940,9 @@ public class Work_AddNewActivity extends BaseActivity {
         }
         workOrder.WTCODE = wtcode.getText().toString();
         workOrder.ASSETTYPE = assettype.getText().toString();
-        workOrder.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        workOrder.PERINSPR = perinspr.isChecked() ? 1 : 0;
         workOrder.UDREMARK = udremark.getText().toString();
-        workOrder.ISBIGPAR = isbigpar.isChecked() ? "Y" : "N";
+        workOrder.ISBIGPAR = isbigpar.isChecked() ? 1 : 0;
         workOrder.UDZGMEASURE = udzgmeasure.getText().toString();
         workOrder.PLANNUM = plannum.getText().toString();
         workOrder.PCTYPE = pctype.getText().toString();
@@ -956,7 +957,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private ArrayList<Woactivity> getWoactivityList() {
         ArrayList<Woactivity> woactivities = new ArrayList<>();
         for (int i = 0; i < woactivityList.size(); i++) {
-            if (woactivityList.get(i).optiontype != null) {
+            if (woactivityList.get(i).TYPE != null) {
                 woactivities.add(woactivityList.get(i));
             }
         }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,10 +23,10 @@ import com.example.admin.mingyang_object.utils.DateTimeSelect;
 
 
 /**
- * Created by think on 2016/6/30.
- * 物料详情页面
+ * Created by think on 2016/7/1.
+ * 故障工单物料新增页面
  */
-public class WpmaterialDetailsActivity extends BaseActivity {
+public class WpmaterialAddNewActivity extends BaseActivity {
     /**
      * 返回按钮
      */
@@ -49,7 +48,7 @@ public class WpmaterialDetailsActivity extends BaseActivity {
     private TextView locdesc;//库房描述
     private LinearLayout buttonlayout;
     private Button confirm;//确定
-    private Button delete;//删除
+    private Button cancel;//取消
 
 
     @Override
@@ -63,9 +62,9 @@ public class WpmaterialDetailsActivity extends BaseActivity {
     }
 
     private void geiIntentData() {
-        wpmaterial = (Wpmaterial) getIntent().getSerializableExtra("wpmaterial");
-        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        position = getIntent().getIntExtra("position",0);
+//        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
+//        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+//        position = getIntent().getIntExtra("position",0);
     }
 
     @Override
@@ -79,9 +78,10 @@ public class WpmaterialDetailsActivity extends BaseActivity {
         orderunit = (TextView) findViewById(R.id.wpmaterial_orderunit);
         location = (TextView) findViewById(R.id.wpmaterial_location);
         locdesc = (TextView) findViewById(R.id.wpmaterial_locdesc);
+
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
         confirm = (Button) findViewById(R.id.work_save);
-        delete = (Button) findViewById(R.id.work_cancel);
+        cancel = (Button) findViewById(R.id.work_cancel);
     }
 
     @Override
@@ -92,20 +92,12 @@ public class WpmaterialDetailsActivity extends BaseActivity {
                 finish();
             }
         });
-        titleTextView.setText(getResources().getString(R.string.title_activity_wpmaterialdetails));
-        delete.setText(R.string.work_delete);
-
-        itemnum.setText(wpmaterial.ITEMNUM);
-        itemdesc.setText(wpmaterial.ITEMDESC);
-        itemqty.setText(wpmaterial.ITEMQTY);
-        orderunit.setText(wpmaterial.ORDERUNIT);
-        location.setText(wpmaterial.LOCATION);
-        locdesc.setText(wpmaterial.LOCDESC);
+        titleTextView.setText("新增" + getResources().getString(R.string.title_activity_wpmaterialdetails));
 
         itemnum.setOnClickListener(new LayoutOnClickListener(1, Constants.ITEMCODE));
         location.setOnClickListener(new LayoutOnClickListener(2,Constants.LOCATIONCODE2));
         confirm.setOnClickListener(confirmOnClickListener);
-        delete.setOnClickListener(deleteOnClickListener);
+        cancel.setOnClickListener(cancelOnClickListener);
     }
 
     private Wpmaterial getWpmaterial() {
@@ -116,6 +108,7 @@ public class WpmaterialDetailsActivity extends BaseActivity {
 //        wpmaterial.ORDERUNIT = orderunit.getText().toString();//不上传，由ITEMNUM决定
         wpmaterial.LOCATION = location.getText().toString();
 //        wpmaterial.LOCDESC = locdesc.getText().toString();
+        wpmaterial.TYPE = "add";
         return wpmaterial;
     }
 
@@ -123,43 +116,20 @@ public class WpmaterialDetailsActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if(wpmaterial.ITEMNUM.equals(itemnum.getText().toString())
-                    &&wpmaterial.ITEMDESC.equals(itemdesc.getText().toString())
-                    &&wpmaterial.ITEMQTY.equals(itemqty.getText().toString())
-                    &&wpmaterial.ORDERUNIT.equals(orderunit.getText().toString())
-                    &&wpmaterial.LOCATION.equals(location.getText().toString())
-                    &&wpmaterial.LOCDESC.equals(locdesc.getText().toString())) {//如果内容没有修改
-                intent.putExtra("wpmaterial",wpmaterial);
-            }else {
-                Wpmaterial wpmaterial = getWpmaterial();
-                if(wpmaterial.TYPE==null||!wpmaterial.TYPE.equals("add")) {
-                    wpmaterial.TYPE = "update";
-                }
-                intent.putExtra("wpmaterial", wpmaterial);
-                Toast.makeText(WpmaterialDetailsActivity.this, "物料本地修改成功", Toast.LENGTH_SHORT).show();
-            }
-            intent.putExtra("position", position);
-            WpmaterialDetailsActivity.this.setResult(2, intent);
+            intent.putExtra("wpmaterial", getWpmaterial());
+            WpmaterialAddNewActivity.this.setResult(1, intent);
+            Toast.makeText(WpmaterialAddNewActivity.this, "物料本地新增成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     };
 
-    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener cancelOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = getIntent();
-            intent.putExtra("position", position);
-            if (!wpmaterial.isUpload){
-                WpmaterialDetailsActivity.this.setResult(3, intent);
-            }else {
-                Wpmaterial wpmaterial = getWpmaterial();
-                wpmaterial.TYPE = "delete";
-                intent.putExtra("wpmaterial", wpmaterial);
-                WpmaterialDetailsActivity.this.setResult(4, intent);
-            }
             finish();
         }
     };
+
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -172,7 +142,7 @@ public class WpmaterialDetailsActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(WpmaterialDetailsActivity.this, OptionActivity.class);
+            Intent intent = new Intent(WpmaterialAddNewActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
             startActivityForResult(intent, requestCode);
         }

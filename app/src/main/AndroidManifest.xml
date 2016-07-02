@@ -145,6 +145,11 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
+            android:name=".ui.activity.workorder.WpmaterialAddNewActivity"
+            android:label="@string/title_activity_wpmaterialdetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
+        <activity
             android:name=".ui.activity.workorder.UddebugWorkOrderLineDetailsActivity"
             android:label="@string/title_activity_uddebugworkorderlinedetails"
             android:theme="@style/mingyang.ActivityTheme"></activity>

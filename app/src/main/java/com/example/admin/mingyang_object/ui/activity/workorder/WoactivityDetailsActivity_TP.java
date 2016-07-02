@@ -148,8 +148,8 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();
-                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-                    woactivity.optiontype = "update";
+                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
+                    woactivity.TYPE = "update";
                 }
                 intent.putExtra("woactivity", woactivity);
                 Toast.makeText(WoactivityDetailsActivity_TP.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();

@@ -7,16 +7,26 @@ import java.io.Serializable;
  * 物料
  */
 public class Wpmaterial implements Serializable{
+    public int WPITEMID;//唯一标识
     public String ITEMNUM;//物资编码
     public String ITEMDESC;//物资描述
     public String ITEMQTY;//数量
     public String ORDERUNIT;//订购单位
     public String LOCATION;//库房
     public String LOCDESC;//库房描述
-    //    public String
-    public String optiontype;
+//    public String
+    public String TYPE;
     public String WONUM;
     public boolean isUpload;
+
+
+    public int getWPITEMID() {
+        return WPITEMID;
+    }
+
+    public void setWPITEMID(int WPITEMID) {
+        this.WPITEMID = WPITEMID;
+    }
 
     public String getITEMNUM() {
         return ITEMNUM;
@@ -64,5 +74,21 @@ public class Wpmaterial implements Serializable{
 
     public void setLOCDESC(String LOCDESC) {
         this.LOCDESC = LOCDESC;
+    }
+
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
+    }
+
+    public String getWONUM() {
+        return WONUM;
+    }
+
+    public void setWONUM(String WONUM) {
+        this.WONUM = WONUM;
     }
 }

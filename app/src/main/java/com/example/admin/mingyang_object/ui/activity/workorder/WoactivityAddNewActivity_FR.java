@@ -108,6 +108,7 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
         woactivity.OWNER = owner.getText().toString();
         woactivity.UDACSTARTTIME = udacstarttime.getText().toString();
         woactivity.UDACSTOPTIME = udacstoptime.getText().toString();
+        woactivity.TYPE = "add";
         return woactivity;
     }
 

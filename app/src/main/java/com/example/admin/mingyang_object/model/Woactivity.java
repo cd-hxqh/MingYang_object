@@ -35,7 +35,7 @@ public class Woactivity extends Entity implements Serializable {
     public String UDENDTIME;//结束时间
     public String UDZYSCORN;//工作任务
     public String UDZYSBASIC;//执行标准
-    public String PERINSPR;//验收/排查/定检结果
+    public int PERINSPR;//验收/排查/定检结果
     public String UDPROBDESC;//问题描述
     public String UDREMARK;//备注
     public String LEAD;//整改责任人
@@ -47,7 +47,7 @@ public class Woactivity extends Entity implements Serializable {
 
     public boolean isUpload;//是否是服务器数据
     public String WONUM;
-    public String optiontype;//操作类型
+    public String TYPE;
 
     public int getWORKORDERID() {
         return WORKORDERID;
@@ -249,11 +249,11 @@ public class Woactivity extends Entity implements Serializable {
         this.UDZYSBASIC = UDZYSBASIC;
     }
 
-    public String getPERINSPR() {
+    public int getPERINSPR() {
         return PERINSPR;
     }
 
-    public void setPERINSPR(String PERINSPR) {
+    public void setPERINSPR(int PERINSPR) {
         this.PERINSPR = PERINSPR;
     }
 
@@ -327,5 +327,13 @@ public class Woactivity extends Entity implements Serializable {
 
     public void setWONUM(String WONUM) {
         this.WONUM = WONUM;
+    }
+
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
     }
 }

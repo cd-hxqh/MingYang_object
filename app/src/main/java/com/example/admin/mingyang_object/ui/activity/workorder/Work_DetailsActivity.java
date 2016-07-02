@@ -327,7 +327,7 @@ public class Work_DetailsActivity extends BaseActivity {
         schedfinish.setText(workOrder.SCHEDFINISH);
         actstart.setText(workOrder.ACTSTART);
         actfinish.setText(workOrder.ACTFINISH);
-        isstoped.setChecked(workOrder.ISSTOPED != null && workOrder.ISSTOPED.equals("Y"));
+        isstoped.setChecked(workOrder.ISSTOPED != 0);
         pmchgevalstart.setText(workOrder.PMCHGEVALSTART);
         pmchgevalend.setText(workOrder.PMCHGEVALEND);
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
@@ -355,9 +355,9 @@ public class Work_DetailsActivity extends BaseActivity {
         }
         wtcode.setText(workOrder.WTCODE);
         assettype.setText(workOrder.ASSETTYPE);
-        perinspr.setChecked(workOrder.PERINSPR != null && workOrder.PERINSPR.equals("Y"));
+        perinspr.setChecked(workOrder.PERINSPR != 0);
         udremark.setText(workOrder.UDREMARK);
-        isbigpar.setChecked(workOrder.ISBIGPAR != null && workOrder.ISBIGPAR.equals("Y"));
+        isbigpar.setChecked(workOrder.ISBIGPAR != 0);
         udzgmeasure.setText(workOrder.UDZGMEASURE);
         plannum.setText(workOrder.PLANNUM);
         pctype.setText(workOrder.PCTYPE);
@@ -382,13 +382,13 @@ public class Work_DetailsActivity extends BaseActivity {
         udrprrsb.setOnClickListener(new LayoutOnClickListener(11, Constants.PERSONCODE));
         udprojectnum.setOnClickListener(new LayoutOnClickListener(6, Constants.UDPROCODE));
         udlocnum.setOnClickListener(new LayoutOnClickListener(7, Constants.UDLOCNUMCODE));
-        if (workOrder.WORKTYPE.equals(Constants.WS)) {
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
-        } else if (workOrder.WORKTYPE.equals(Constants.SP)) {
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.SP_JOBPLANCODE));
-        } else if (workOrder.WORKTYPE.equals(Constants.TP)) {
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.TP_JOBPLANCODE));
-        }
+//        if (workOrder.WORKTYPE.equals(Constants.WS)) {
+//            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
+//        } else if (workOrder.WORKTYPE.equals(Constants.SP)) {
+//            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.SP_JOBPLANCODE));
+//        } else if (workOrder.WORKTYPE.equals(Constants.TP)) {
+//            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.TP_JOBPLANCODE));
+//        }//只有在新建工单的时候可选
         wtcode.setOnClickListener(new LayoutOnClickListener(8, Constants.WTCODE));
         udlocation.setOnClickListener(new LayoutOnClickListener(9, Constants.LOCATIONCODE));
         udplannum.setOnClickListener(new LayoutOnClickListener(10, Constants.ZYS_UDPLANNUMCODE));
@@ -536,7 +536,7 @@ public class Work_DetailsActivity extends BaseActivity {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
                 timelayout.setVisibility(View.GONE);
-//                inspolayout.setVisibility(View.GONE);
+                inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
                 break;
             case "AA"://终验收工单
@@ -883,7 +883,7 @@ public class Work_DetailsActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList());
+        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(),getWpmaterialList());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -1142,7 +1142,7 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.SCHEDFINISH = schedfinish.getText().toString();
         workOrder.ACTSTART = actstart.getText().toString();
         workOrder.ACTFINISH = actfinish.getText().toString();
-        workOrder.ISSTOPED = isstoped.isChecked() ? "Y" : "N";
+        workOrder.ISSTOPED = isstoped.isChecked() ? 1 : 0;
         workOrder.PMCHGEVALSTART = pmchgevalstart.getText().toString();
         workOrder.PMCHGEVALEND = pmchgevalend.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
@@ -1170,9 +1170,9 @@ public class Work_DetailsActivity extends BaseActivity {
         }
         workOrder.WTCODE = wtcode.getText().toString();
         workOrder.ASSETTYPE = assettype.getText().toString();
-        workOrder.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        workOrder.PERINSPR = perinspr.isChecked() ? 1 : 0;
         workOrder.UDREMARK = udremark.getText().toString();
-        workOrder.ISBIGPAR = isbigpar.isChecked() ? "Y" : "N";
+        workOrder.ISBIGPAR = isbigpar.isChecked() ? 1 : 0;
         workOrder.UDZGMEASURE = udzgmeasure.getText().toString();
         workOrder.PLANNUM = plannum.getText().toString();
         workOrder.PCTYPE = pctype.getText().toString();
@@ -1187,11 +1187,21 @@ public class Work_DetailsActivity extends BaseActivity {
     private ArrayList<Woactivity> getWoactivityList() {
         ArrayList<Woactivity> woactivities = new ArrayList<>();
         for (int i = 0; i < woactivityList.size(); i++) {
-            if (woactivityList.get(i).optiontype != null) {
+            if (woactivityList.get(i).TYPE != null) {
                 woactivities.add(woactivityList.get(i));
             }
         }
         return woactivities;
+    }
+
+    private ArrayList<Wpmaterial> getWpmaterialList() {
+        ArrayList<Wpmaterial> wpmaterials = new ArrayList<>();
+        for (int i = 0; i < wpmaterialLit.size(); i++) {
+            if (wpmaterialLit.get(i).TYPE != null) {
+                wpmaterials.add(wpmaterialLit.get(i));
+            }
+        }
+        return wpmaterials;
     }
 
     @Override

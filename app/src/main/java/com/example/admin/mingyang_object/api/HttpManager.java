@@ -107,6 +107,15 @@ public class HttpManager {
     }
 
     /**
+     * 设置jobtask计划任务接口*
+     */
+    public static String getJobtaskUrl(String jpnum) {
+        return "{'appid':'" + Constants.JOBTASK_APPID + "','objectname':'" + Constants.JOBTASK_NAME + "','option':'read'" +
+                ",'condition':{'JPNUM':'" + jpnum + "'}" +
+                "}";
+    }
+
+    /**
      * 设置调试工单子表接口*
      */
     public static String getuddebugworkorderlineUrl(String wonum, int curpage, int showcount) {
@@ -116,13 +125,23 @@ public class HttpManager {
     }
 
     /**
-     * 设置风机型号的接口
+     * 设置设备位置的接口
      */
     public static String getLoactionUrl(String value, String pronum, String locnum, int curpage, int showcount) {
         if (value.equals("")) {
             return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "'}}";
         }
-        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "',,'LOCATION':'" + value + "'}}";
+        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "','LOCATION':'" + value + "'}}";
+    }
+
+    /**
+     * 设置库房的接口
+     */
+    public static String getLoactionUrl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE':'库房','TESTSITE':'1'}}";
+        }
+        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE':'库房','TESTSITE':'1','DESCRIPTION':'" + value + "'}}";
     }
 
     /**
@@ -355,6 +374,16 @@ public class HttpManager {
             return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "'}}";
         }
         return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "','CODEDESC':'" + serch + "'}}";
+    }
+
+    /**
+     * 设置故障类的接口
+     */
+    public static String getItemUrl(String serch, int curpage, int showcount) {
+        if (serch.equals("")) {
+            return "{'appid':'" + Constants.ITEM_APPID + "','objectname':'" + Constants.ITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.ITEM_APPID + "','objectname':'" + Constants.ITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + serch + "'}}";
     }
 
     /**

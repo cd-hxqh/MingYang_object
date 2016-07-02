@@ -31,7 +31,7 @@ public class WorkOrder implements Serializable {
     public String SCHEDFINISH;//故障结束时间
     public String ACTSTART;//实际开始时间
     public String ACTFINISH;//实际结束时间
-    public String ISSTOPED;//是否停机
+    public int ISSTOPED;//是否停机
     public String PMCHGEVALSTART;//故障开始时间
     public String PMCHGEVALEND;//故障恢复时间
 //    public String UDJGRESULT;//累计时间
@@ -53,9 +53,9 @@ public class WorkOrder implements Serializable {
     public String DJTYPE;//定检类型
     public String WTCODE;//风机型号
     public String ASSETTYPE;//设备类别
-    public String PERINSPR;//定检结果（Y\N）
+    public int PERINSPR;//定检结果（Y\N）
     public String UDREMARK;//备注
-    public String ISBIGPAR;//大部件发放（Y/N）
+    public int ISBIGPAR;//大部件发放（Y/N）
     public String UDZGMEASURE;//故障处理方案
     public String PLANNUM;//排查计划编号
     public String PCCOMPNUM;//排查完成台数/计划定检风机台数
@@ -198,11 +198,11 @@ public class WorkOrder implements Serializable {
         this.ACTFINISH = ACTFINISH;
     }
 
-    public String getISSTOPED() {
+    public int getISSTOPED() {
         return ISSTOPED;
     }
 
-    public void setISSTOPED(String ISSTOPED) {
+    public void setISSTOPED(int ISSTOPED) {
         this.ISSTOPED = ISSTOPED;
     }
 
@@ -366,11 +366,11 @@ public class WorkOrder implements Serializable {
         this.ASSETTYPE = ASSETTYPE;
     }
 
-    public String getPERINSPR() {
+    public int getPERINSPR() {
         return PERINSPR;
     }
 
-    public void setPERINSPR(String PERINSPR) {
+    public void setPERINSPR(int PERINSPR) {
         this.PERINSPR = PERINSPR;
     }
 
@@ -382,11 +382,11 @@ public class WorkOrder implements Serializable {
         this.UDREMARK = UDREMARK;
     }
 
-    public String getISBIGPAR() {
+    public int getISBIGPAR() {
         return ISBIGPAR;
     }
 
-    public void setISBIGPAR(String ISBIGPAR) {
+    public void setISBIGPAR(int ISBIGPAR) {
         this.ISBIGPAR = ISBIGPAR;
     }
 

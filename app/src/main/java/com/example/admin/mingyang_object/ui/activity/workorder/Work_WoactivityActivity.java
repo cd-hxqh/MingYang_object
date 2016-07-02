@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
@@ -138,7 +139,11 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
             }
         } else {//新建工单
             if (woactivityList == null || woactivityList.size() == 0){
-
+                if (!workOrder.WORKTYPE.equals(Constants.AA)&&!workOrder.WORKTYPE.equals(Constants.FR)){
+                    getNewData();
+                }else {
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
             }else {
                 if (woactivityList != null && woactivityList.size() != 0) {
                     initList(woactivityList);
@@ -153,7 +158,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
     private void initList(ArrayList<Woactivity> list ){
         ArrayList<Woactivity> woactivities = new ArrayList<>();
         for (int i = 0;i< list.size();i++){
-            if (list.get(i).optiontype!=null&&list.get(i).optiontype.equals("delete")){
+            if (list.get(i).TYPE!=null&&list.get(i).TYPE.equals("delete")){
                 deleteList.add(list.get(i));
             }else {
                 woactivities.add(list.get(i));
@@ -206,6 +211,51 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         } else {
             refresh_layout.setRefreshing(false);
             refresh_layout.setLoading(false);
+        }
+    }
+
+    private void getNewData(){
+        if (workOrder.UDJPNUM!=null&&!workOrder.UDJPNUM.equals("")) {
+            HttpManager.getData(Work_WoactivityActivity.this, HttpManager.getJobtaskUrl(workOrder.UDJPNUM), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                    ArrayList<Woactivity> woactivities = null;
+                    woactivities = JsonUtils.parsingJobtask(results.getResultlist(), workOrder.WONUM);
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                    if ((woactivities == null || woactivities.isEmpty()) && page == 1) {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                        initAdapter(new ArrayList<Woactivity>());
+                    } else {
+                        if (woactivities != null || woactivities.size() != 0) {
+                            for (int i = 0; i < woactivities.size(); i++) {
+                                woactivityList.add(woactivities.get(i));
+                            }
+                        }
+                        nodatalayout.setVisibility(View.GONE);
+
+                        initAdapter(woactivityList);
+                    }
+                }
+
+                @Override
+                public void onSuccess(Results data, int totalPages, int currentPage) {
+
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    if (page == 1) {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                }
+            });
+        }else {
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+            Toast.makeText(Work_WoactivityActivity.this,"未选择计划标准编号",Toast.LENGTH_SHORT).show();
         }
     }
 

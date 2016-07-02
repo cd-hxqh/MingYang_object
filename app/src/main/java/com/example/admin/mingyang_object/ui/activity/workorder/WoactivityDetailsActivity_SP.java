@@ -114,7 +114,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo2.setText(woactivity.WOJO2);
         wojo3.setText(woactivity.WOJO3);
         wojo4.setText(woactivity.WOJO4);
-        perinspr.setChecked(woactivity.PERINSPR != null && woactivity.PERINSPR.equals("Y"));
+        perinspr.setChecked(woactivity.PERINSPR != 0);
         udinsunit.setText(woactivity.UDINSUNIT);
         udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);
@@ -131,7 +131,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
 
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
-        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
         woactivity.UDINSUNIT = udinsunit.getText().toString();
         woactivity.UDRPRRSB = udrprrsb.getText().toString();
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
@@ -146,7 +146,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N")||(woactivity.PERINSPR.equals("")&&!perinspr.isChecked()))
+            if((woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
                     &&woactivity.UDINSUNIT.equals(udinsunit.getText().toString())
                     &&woactivity.UDRPRRSB.equals(udrprrsb.getText().toString())
                     &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
@@ -157,8 +157,8 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();
-                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-                    woactivity.optiontype = "update";
+                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
+                    woactivity.TYPE = "update";
                 }
                 intent.putExtra("woactivity", woactivity);
                 Toast.makeText(WoactivityDetailsActivity_SP.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();

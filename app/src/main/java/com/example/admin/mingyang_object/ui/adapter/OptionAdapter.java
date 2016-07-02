@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Failurelist;
+import com.example.admin.mingyang_object.model.Item;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
@@ -215,7 +216,21 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option = new Option();
                 option.setName(data.get(i).getFAILURECODE());
                 option.setDesc(data.get(i).getCODEDESC());
-                option.setValue1(data.get(i).getFAILURELIST()+"");
+                option.setValue1(data.get(i).getFAILURELIST() + "");
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addItemDate(ArrayList<Item> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getITEMNUM());
+                option.setDesc(data.get(i).getDESCRIPTION());
+                option.setValue1(data.get(i).getORDERUNIT());
                 optionList.add(option);
             }
         }
