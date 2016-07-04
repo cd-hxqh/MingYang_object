@@ -164,6 +164,8 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option.setName(data.get(i).getPRONUM());
                 option.setDesc(data.get(i).getDESCRIPTION());
                 option.setValue1(data.get(i).getBRANCH());
+                option.setValue2(data.get(i).getRESPONS());
+                option.setValue3(data.get(i).getPROSTAGE());
                 optionList.add(option);
             }
         }

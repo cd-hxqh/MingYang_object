@@ -24,17 +24,15 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
-import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
-import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
-import com.example.admin.mingyang_object.utils.WorkTitle;
+import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -92,6 +90,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udlocnum;//机位号
     private LinearLayout udlocationlayout;
     private TextView udlocation;//位置
+    private LinearLayout leadlayout;
     private TextView leadText;
     private TextView lead;//运行组/维护组工程师
     private TextView udstatus;//状态
@@ -163,6 +162,11 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udjgtype;//技改类型
     private EditText udfjappnum;//主控程序版本号
     private TextView udrprrsb1;//负责人
+    private LinearLayout inspo2layout;//故障工单人员信息
+    private TextView lead2;//维护/运行组长
+    private TextView udinspoby_2;//维护/运行人员
+    private TextView udinspoby2_2;//维护/运行人员
+    private TextView udinspoby3_2;//维护/运行人员
 
     private String failurelist = "";
     private Button cancel;
@@ -214,6 +218,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udlocnum = (TextView) findViewById(R.id.work_udlocnum);
         udlocationlayout = (LinearLayout) findViewById(R.id.work_udlocation_layout);
         udlocation = (TextView) findViewById(R.id.work_udlocation);
+        leadlayout = (LinearLayout) findViewById(R.id.work_lead_layout);
         leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
         udstatus = (TextView) findViewById(R.id.work_status);
@@ -285,6 +290,11 @@ public class Work_DetailsActivity extends BaseActivity {
         udjgtype = (TextView) findViewById(R.id.work_udjgtype);
         udfjappnum = (EditText) findViewById(R.id.work_udfjappnum);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
+        inspo2layout = (LinearLayout) findViewById(R.id.work_inspo2layout);
+        lead2 = (TextView) findViewById(R.id.work_lead2);
+        udinspoby_2 = (TextView) findViewById(R.id.work_udinspoby_2);
+        udinspoby2_2 = (TextView) findViewById(R.id.work_udinspoby2_2);
+        udinspoby3_2 = (TextView) findViewById(R.id.work_udinspoby3_2);
 
         cancel = (Button) findViewById(R.id.work_cancel);
         save = (Button) findViewById(R.id.work_save);
@@ -292,7 +302,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titlename.setText(WorkTitle.getTitle(workOrder.WORKTYPE) + "详情");
+        titlename.setText(WorkTypeUtils.getTitle(workOrder.WORKTYPE) + "详情");
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -313,7 +323,6 @@ public class Work_DetailsActivity extends BaseActivity {
         udprojectnum.setText(workOrder.UDPROJECTNUM);
         udlocnum.setText(workOrder.UDLOCNUM);
         udlocation.setText(workOrder.UDLOCATION);
-        lead.setText(workOrder.LEAD);
         udstatus.setText(workOrder.UDSTATUS);
         createby.setText(workOrder.CREATEBY);
         createdate.setText(workOrder.CREATEDATE);
@@ -331,9 +340,17 @@ public class Work_DetailsActivity extends BaseActivity {
         pmchgevalstart.setText(workOrder.PMCHGEVALSTART);
         pmchgevalend.setText(workOrder.PMCHGEVALEND);
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
+            lead2.setText(workOrder.LEAD);
+            udinspoby_2.setText(workOrder.UDINSPOBY);
+            udinspoby2_2.setText(workOrder.UDINSPOBY2);
+            udinspoby3_2.setText(workOrder.UDINSPOBY3);
             udrprrsb.setText(workOrder.UDRPRRSB);
             udjgresult.setText(workOrder.UDJGRESULT);
         } else {
+            lead.setText(workOrder.LEAD);
+            udinspoby.setText(workOrder.UDINSPOBY);
+            udinspoby2.setText(workOrder.UDINSPOBY2);
+            udinspoby3.setText(workOrder.UDINSPOBY3);
             udrprrsb1.setText(workOrder.UDRPRRSB);
             udjgresult1.setText(workOrder.UDJGRESULT);
         }
@@ -343,9 +360,6 @@ public class Work_DetailsActivity extends BaseActivity {
         udplstopdate.setText(workOrder.UDPLSTOPDATE);
         udrlstartdate.setText(workOrder.UDRLSTARTDATE);
         udrlstopdate.setText(workOrder.UDRLSTOPDATE);
-        udinspoby.setText(workOrder.UDINSPOBY);
-        udinspoby2.setText(workOrder.UDINSPOBY2);
-        udinspoby3.setText(workOrder.UDINSPOBY3);
         djplannum.setText(workOrder.DJPLANNUM);
         djtype.setText(workOrder.DJTYPE);
         if (workOrder.WORKTYPE.equals(Constants.WS)) {
@@ -394,6 +408,10 @@ public class Work_DetailsActivity extends BaseActivity {
         udplannum.setOnClickListener(new LayoutOnClickListener(10, Constants.ZYS_UDPLANNUMCODE));
         failurecode.setOnClickListener(new LayoutOnClickListener(12, Constants.FAILURECODE));
         problemcode.setOnClickListener(new LayoutOnClickListener(13, Constants.PROBLEMCODE));
+        lead2.setOnClickListener(new LayoutOnClickListener(14,Constants.PERSONCODE));
+        udinspoby_2.setOnClickListener(new LayoutOnClickListener(15,Constants.PERSONCODE));
+        udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16,Constants.PERSONCODE));
+        udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17,Constants.PERSONCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -535,6 +553,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private void setLayout() {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
+                leadlayout.setVisibility(View.GONE);
+                inspo2layout.setVisibility(View.VISIBLE);
                 timelayout.setVisibility(View.GONE);
                 inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
@@ -682,12 +702,12 @@ public class Work_DetailsActivity extends BaseActivity {
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
         wpmaterialLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_wpmaterial_id);
 //        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
-        flowerLinearLayout = (LinearLayout) findViewById(R.id.work_flower_id);
-        commitLinearLayout = (LinearLayout) findViewById(R.id.work_commit_id);
+        flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        commitLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
-//        taskLinearLayout.setOnClickListener(taskOnClickListener);
+        flowerLinearLayout.setOnClickListener(flowerOnClickListener);
         wpmaterialLinearLayout.setOnClickListener(wpmaterialOnClickListener);
-//        reportLinearLayout.setOnClickListener(reportOnClickListener);
+        commitLinearLayout.setOnClickListener(commitOnClickListener);
         decisionLayout();
 
     }
@@ -711,19 +731,19 @@ public class Work_DetailsActivity extends BaseActivity {
 //            }
         }
     };
-    //
-//    private View.OnClickListener taskOnClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            Intent intent = new Intent(Work_detailsActivity.this, AssignmentActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("workOrder", workOrder);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//            popupWindow.dismiss();
-//        }
-//    };
-//
+
+    private View.OnClickListener flowerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (workOrder.UDSTATUS.equals("新建")){
+                MaterialDialogOneBtn();
+            }else {
+                MaterialDialogOneBtn1();
+            }
+            popupWindow.dismiss();
+        }
+    };
+
     private View.OnClickListener wpmaterialOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -736,24 +756,17 @@ public class Work_DetailsActivity extends BaseActivity {
             popupWindow.dismiss();
         }
     };
-//
-//    private View.OnClickListener reportOnClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            if (failurecode.getText().toString().equals("")) {
-//                popupWindow.dismiss();
-//                Toast.makeText(Work_detailsActivity.this, "请选选择故障子机构", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Intent intent = new Intent(Work_detailsActivity.this, Work_FailurereportActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("workOrder", getWorkOrder());
-//                bundle.putSerializable("failurereportList", failurereportList);
-//                intent.putExtras(bundle);
-//                startActivityForResult(intent, 3000);
-//                popupWindow.dismiss();
-//            }
-//        }
-//    };
+
+    private View.OnClickListener commitOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//            Intent intent = new Intent(Work_DetailsActivity.this, ImageUploadActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("workOrder", workOrder);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+        }
+    };
 
     class DateChecked implements View.OnClickListener {
         TextView textView;
@@ -1016,14 +1029,34 @@ public class Work_DetailsActivity extends BaseActivity {
 
     }
 
-    //工作流审批
-    private View.OnClickListener approvalBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            MaterialDialogOneBtn1();
-        }
-    };
+    private void MaterialDialogOneBtn() {//开始工作流
+        final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否启动工作流")//
+                .btnText("是", "否")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
 
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        startWF();
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
 
     private void MaterialDialogOneBtn1() {//审批工作流
         final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
@@ -1048,7 +1081,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {//否
                     @Override
                     public void onBtnClick() {
-                        wfgoon(workOrder.WONUM, "1", "");
+                        wfgoon("1", "");
                         dialog.dismiss();
                     }
                 }
@@ -1072,8 +1105,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-                        wfgoon(workOrder.WONUM, "1", text);
-
+                        wfgoon("1", text);
                         dialog.dismiss();
                     }
                 },
@@ -1087,38 +1119,70 @@ public class Work_DetailsActivity extends BaseActivity {
         );
     }
 
+    /**
+     * 开始工作流
+     */
+    private void startWF() {
+        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
+                getString(R.string.start), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.startwf(Work_DetailsActivity.this, WorkTypeUtils.getProcessname(workOrder.WORKTYPE), "WORKORDER", workOrder.WONUM, "WONUM");
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s != null && s.errorMsg != null && s.errorMsg.equals("工作流启动成功")) {
+                    Toast.makeText(Work_DetailsActivity.this, s.errorMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Work_DetailsActivity.this, "工作流启动失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
 
     /**
      * 审批工作流
-     *
-     * @param id
      * @param zx
      */
-    private void wfgoon(final String id, final String zx, final String desc) {
-//        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
-//                getString(R.string.inputing), true, true);
-//        mProgressDialog.setCanceledOnTouchOutside(false);
-//        mProgressDialog.setCancelable(false);
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                String result = AndroidClientService.approve(Work_detailsActivity.this, "UDFJHWO", "WORKORDER", id, "WONUM" + "ID", zx, desc);
-//
-//                Log.i(TAG, "result=" + result);
-//                return result;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                if (s == null || s.equals("")) {
-//                    Toast.makeText(Work_detailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(Work_detailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
-//                }
-//                mProgressDialog.dismiss();
-//            }
-//        }.execute();
+    private void wfgoon(final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
+                getString(R.string.approve), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.approve(Work_DetailsActivity.this,
+                        WorkTypeUtils.getProcessname(workOrder.WORKTYPE), "WORKORDER", workOrder.WONUM, "WONUM", zx, desc);
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s==null||s.wonum==null||s.errorMsg==null) {
+                    Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.wonum.equals(workOrder.WONUM)&&s.errorMsg!=null){
+                    udstatus.setText(s.errorMsg);
+                    workOrder.UDSTATUS = s.errorMsg;
+                    Toast.makeText(Work_DetailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     private WorkOrder getWorkOrder() {
@@ -1129,7 +1193,6 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.UDPROJECTNUM = udprojectnum.getText().toString();
         workOrder.UDLOCNUM = udlocnum.getText().toString();
         workOrder.UDLOCATION = udlocation.getText().toString();
-        workOrder.LEAD = lead.getText().toString();
         workOrder.UDSTATUS = udstatus.getText().toString();
         workOrder.CREATEBY = createby.getText().toString();
         workOrder.CREATEDATE = createdate.getText().toString();
@@ -1148,7 +1211,15 @@ public class Work_DetailsActivity extends BaseActivity {
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             workOrder.UDRPRRSB = udrprrsb.getText().toString();
             workOrder.UDJGRESULT = udjgresult.getText().toString();
+            workOrder.LEAD = lead2.getText().toString();
+            workOrder.UDINSPOBY = udinspoby_2.getText().toString();
+            workOrder.UDINSPOBY2 = udinspoby2_2.getText().toString();
+            workOrder.UDINSPOBY3 = udinspoby3_2.getText().toString();
         } else {
+            workOrder.LEAD = lead.getText().toString();
+            workOrder.UDINSPOBY = udinspoby.getText().toString();
+            workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
+            workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
             workOrder.UDRPRRSB = udrprrsb1.getText().toString();
             workOrder.UDJGRESULT = udjgresult1.getText().toString();
         }
@@ -1158,9 +1229,6 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.UDPLSTOPDATE = udplstopdate.getText().toString();
         workOrder.UDRLSTARTDATE = udrlstartdate.getText().toString();
         workOrder.UDRLSTOPDATE = udrlstopdate.getText().toString();
-        workOrder.UDINSPOBY = udinspoby.getText().toString();
-        workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
-        workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
         workOrder.DJPLANNUM = djplannum.getText().toString();
         workOrder.DJTYPE = djtype.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.WS)) {
@@ -1264,6 +1332,22 @@ public class Work_DetailsActivity extends BaseActivity {
                 case 13:
                     option = (Option) data.getSerializableExtra("option");
                     problemcode.setText(option.getName());
+                    break;
+                case 14:
+                    option = (Option) data.getSerializableExtra("option");
+                    lead2.setText(option.getName());
+                    break;
+                case 15:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby_2.setText(option.getName());
+                    break;
+                case 16:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby2_2.setText(option.getName());
+                    break;
+                case 17:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby3_2.setText(option.getName());
                     break;
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {

@@ -179,6 +179,16 @@
             android:name=".ui.activity.Udprorunlog_DetailActivity"
             android:label="@string/udprorunlog_detail_title"></activity>
         <activity
+            android:name=".ui.activity.Udprorunlog_AddNewActivity"
+            android:label="@string/udprorunlog_addnew_title"></activity>
+        <activity
+            android:name=".ui.activity.Udprorunlog_Line1Activity"
+            android:label="@string/udprorunlog_line1_title"></activity>
+        <activity
+            android:name=".ui.activity.Udprorunlog_Line1DetailsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:label="@string/udprorunlog_line1_title"></activity>
+        <activity
             android:name=".ui.activity.Udfeedback_listactivity"
             android:label="@string/udfeedback_text"></activity>
         <activity
@@ -232,6 +242,11 @@
         <activity
             android:name=".ui.activity.OptionActivity"
             android:label="@string/title_activity_option"></activity>
+        <activity
+            android:name=".ui.activity.ImageUpLoad.ImageUploadActivity"
+            android:label="@string/title_activity_wpmaterialdetails"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"></activity>
     </application>
 
 </manifest>

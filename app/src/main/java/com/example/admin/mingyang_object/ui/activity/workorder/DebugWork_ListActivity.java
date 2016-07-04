@@ -30,7 +30,7 @@ import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.DebugWorkListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.WorkTitle;
+import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 
 import java.util.ArrayList;
 
@@ -81,7 +81,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(WorkTitle.getTitle(worktype));
+        titlename.setText(WorkTypeUtils.getTitle(worktype));
         addimg.setVisibility(View.VISIBLE);
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override

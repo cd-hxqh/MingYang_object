@@ -50,7 +50,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
      * 返回按钮*
      */
     private ImageView backImageView;
-
+    private ImageView addimg;
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
@@ -77,6 +77,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addimg = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -89,6 +90,8 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
         setSearchEdit();
         titlename.setText(R.string.udprorunlog_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
+        addimg.setVisibility(View.VISIBLE);
+        addimg.setOnClickListener(addOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -117,6 +120,14 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
         }
     };
 
+    private View.OnClickListener addOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udprorunlog_listactivity.this,Udprorunlog_AddNewActivity.class);
+//            intent.putExtra("worktype",worktype);
+            startActivity(intent);
+        }
+    };
 
     private void getData(String search) {
         HttpManager.getDataPagingInfo(this, HttpManager.getudprorunlogurl(search, page, 20), new HttpRequestHandler<Results>() {

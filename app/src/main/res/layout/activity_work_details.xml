@@ -27,6 +27,8 @@
 
                 <include layout="@layout/work_num"></include>
 
+                <include layout="@layout/work_inspo2"></include>
+
                 <include layout="@layout/work_defult"></include>
 
                 <include layout="@layout/work_time"></include>

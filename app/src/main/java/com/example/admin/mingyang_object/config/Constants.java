@@ -41,7 +41,7 @@ public class Constants {
     /**
      * 工作流*
      */
-    public static final String WORK_FLOW_URL = "/meaweb/services/WFMENAGEMENTSERVIC";
+    public static final String WORK_FLOW_URL = "/meaweb/services/WFSERVICE";
 
     /**
      * ------------------数据库表名配置－－开始*
@@ -141,6 +141,11 @@ public class Constants {
      * 项目日报表名*
      */
     public static final String UDPRORUNLOG_NAME = "UDPRORUNLOG";
+    //土建阶段日报appid
+    public static final String UDPRORUNLOGLINE1_APPID = "UDPRORUNLOGLINE1";
+    //土建阶段日报表名
+    public static final String UDPRORUNLOGLINE1_NAME = "UDPRORUNLOGLINE1";
+
 
     /**
      * 问题联络单appid*
@@ -261,6 +266,15 @@ public class Constants {
     public static final String SP = "SP";//排查工单
     public static final String TP = "TP";//技改工单
     public static final String WS = "WS";//定检工单
+
+    /**
+     * 工作流名称
+     */
+    public static final String UDDJWO = "UDDJWO";//定检工单
+    public static final String UDGZWO = "UDGZWO";//故障工单
+    public static final String UDJGWO = "UDJGWO";//技改工单
+    public static final String UDPCWO = "UDPCWO";//排查工单
+    public static final String UDZYSWO = "UDZYSWO";//终验收工单
 
     //工单状态
     public static final String STATUS1 = "新建";

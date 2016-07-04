@@ -14,10 +14,13 @@ import android.widget.TextView;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udprorunlog;
+import com.example.admin.mingyang_object.model.UdprorunlogLine1;
+
+import java.util.ArrayList;
 
 
 /**
- * 项目台账详情
+ * 项目日报详情
  */
 public class Udprorunlog_DetailActivity extends BaseActivity {
     private static String TAG = "Udprorunlog_DetailActivity";
@@ -52,13 +55,16 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
 
     private TextView contractsText; //现场联系人
 
-    private TextView yearText; //年/月
+    private TextView yearText; //年
+
+    private TextView monthText;//月
 
 
     private TextView prostageText; //项目阶段
 
     private TextView statusText; //状态
 
+    private ArrayList<UdprorunlogLine1> UdprorunlogLine1List = new ArrayList<>();
 
     private Udprorunlog udprorunlog;
 
@@ -107,6 +113,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         udprorescText = (TextView) findViewById(R.id.udproresc_text_id);
         contractsText = (TextView) findViewById(R.id.contdesc_text_id);
         yearText = (TextView) findViewById(R.id.year_text_id);
+        monthText = (TextView) findViewById(R.id.month_text_id);
         prostageText = (TextView) findViewById(R.id.prostage_text_id);
         statusText = (TextView) findViewById(R.id.status_text_id);
 
@@ -117,7 +124,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             branchText.setText(udprorunlog.getBRANCH());
             udprorescText.setText(udprorunlog.getUDPRORESC());
             contractsText.setText(udprorunlog.getCONTDESC());
-            yearText.setText(udprorunlog.getYEAR() + "/" + udprorunlog.getMONTH());
+            yearText.setText(udprorunlog.getYEAR());
+            monthText.setText(udprorunlog.getMONTH());
             prostageText.setText(udprorunlog.getPROSTAGE());
             statusText.setText(udprorunlog.getSTATUS());
         }
@@ -185,10 +193,10 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
     private View.OnClickListener tujianLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udfandetails_ListActivity.class);
-//            intent.putExtra("pronum", udpro.getPRONUM());
-//            intent.putExtra("siteid", udpro.getSITEID());
-//            startActivityForResult(intent, 0);
+            Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udprorunlog_Line1Activity.class);
+            intent.putExtra("udprorunlog", udprorunlog);
+            intent.putExtra("UdprorunlogLine1List", UdprorunlogLine1List);
+            startActivityForResult(intent, 0);
             popupWindow.dismiss();
 
         }

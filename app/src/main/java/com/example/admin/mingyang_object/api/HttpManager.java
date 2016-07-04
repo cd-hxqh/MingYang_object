@@ -275,6 +275,14 @@ public class HttpManager {
         return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'PRORUNLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
+    /**
+     * 设置土建阶段日报接口*
+     */
+    public static String getUdprorunlogLine1Url(String prorunlognum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDPRORUNLOGLINE1_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE1_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                "}";
+    }
 
     /**
      * 设置库存盘点的接口
@@ -364,7 +372,7 @@ public class HttpManager {
      */
     public static String getPersonUrl(String serch, int curpage, int showcount) {
         if (serch.equals("")) {
-            return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'STATUS':'=活动'}}";
         }
         return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DISPLAYNAME':'" + serch + "'}}";
     }

@@ -23,6 +23,7 @@ import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udprorunlog;
+import com.example.admin.mingyang_object.model.UdprorunlogLine1;
 import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
@@ -143,6 +144,54 @@ public class JsonUtils<E> {
             }
             if (object.has("errorNo")) {
                 webResult.errorNo = object.getInt("errorNo");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return webResult;
+    }
+
+    /**
+     * 解析开始工作流返回信息
+     *
+     * @param data
+     * @return
+     */
+    public static WebResult parsingStartWF(String data, String num) {
+        Log.i(TAG, "data=" + data);
+        String woNum = null;
+        WebResult webResult = new WebResult();
+        try {
+            JSONObject object = new JSONObject(data);
+            if (object.has("msg") && !object.getString("msg").equals("")) {
+                webResult.errorMsg = object.getString("msg");
+            }
+            if (object.has(num) && !object.getString(num).equals("")) {
+                webResult.wonum = object.getString(num);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return webResult;
+    }
+
+    /**
+     * 解析审批工作流返回数据
+     *
+     * @param data
+     * @return
+     */
+    public static WebResult parsingGoOn(String data, String num) {
+        Log.i(TAG, "data=" + data);
+        String woNum = null;
+        WebResult webResult = new WebResult();
+        try {
+            JSONObject object = new JSONObject(data);
+            if (object.has("status") && !object.getString("status").equals("")) {
+                webResult.errorMsg = object.getString("status");
+            }
+            if (object.has(num) && !object.getString(num).equals("")) {
+                webResult.wonum = object.getString(num);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1031,6 +1080,53 @@ public class JsonUtils<E> {
         }
     }
 
+
+    /**
+     * 解析土建阶段子表信息
+     */
+    public static ArrayList<UdprorunlogLine1> parsingUdprorunlogLine1(Context ctx, String data, String prorunlognum) {
+        Log.i(TAG, "UdprorunlogLine1 data=" + data);
+        ArrayList<UdprorunlogLine1> list = null;
+        UdprorunlogLine1 udprorunlogLine1 = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<UdprorunlogLine1>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udprorunlogLine1 = new UdprorunlogLine1();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udprorunlogLine1.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.get(name) != null) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udprorunlogLine1.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udprorunlogLine1);
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udprorunlogLine1.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udprorunlogLine1, jsonObject.get(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                udprorunlogLine1.PRORUNLOGNUM = prorunlognum;
+                udprorunlogLine1.isUpload = true;
+                list.add(udprorunlogLine1);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * 解析人员信息
      */
@@ -1216,10 +1312,44 @@ public class JsonUtils<E> {
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
             jsonObject.put("relationShip", jsonArray);
-//            json.put("", "");
-//            array.put(json);
-//            jsonObject.put("relationShip", array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 封装项目日报数据
+     *
+     * @return
+     */
+    public static String UdprorunlogToJson(Udprorunlog udprorunlog) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udprorunlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udprorunlog.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udprorunlog);
+                    if (value != null && !name.equals("BRANCH")) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
 //            if (woactivities != null && woactivities.size() != 0) {
+//                object.put("WOACTIVITY", "");
 //                JSONArray woactivityArray = new JSONArray();
 //                JSONObject woactivityObj;
 //                for (int i = 0; i < woactivities.size(); i++) {
@@ -1234,7 +1364,7 @@ public class JsonUtils<E> {
 //                            Object value = null;
 //                            value = getOrSet.invoke(woactivities.get(i));
 //                            if (value != null) {
-//                                woactivityObj.put(name, value);
+//                                woactivityObj.put(name, value+"");
 //                            }
 //                        } catch (NoSuchMethodException e) {
 //                            e.printStackTrace();
@@ -1246,15 +1376,14 @@ public class JsonUtils<E> {
 //                    }
 //                    woactivityArray.put(woactivityObj);
 //                }
-//                jsonObject.put("wotasks", woactivityArray);
-//            } else {
-//                jsonObject.put("wotasks", new JSONArray());
+//                jsonObject.put("WOACTIVITY", woactivityArray);
 //            }
 //            if (wpmaterials != null && wpmaterials.size() != 0) {
-//                JSONArray wpmaterialArray = new JSONArray();
-//                JSONObject wpmaterialObj;
+//                object.put("WPMATERIAL", "");
+//                JSONArray wpmaterialsArray = new JSONArray();
+//                JSONObject wpmaterialsObj;
 //                for (int i = 0; i < wpmaterials.size(); i++) {
-//                    wpmaterialObj = new JSONObject();
+//                    wpmaterialsObj = new JSONObject();
 //                    Field[] field1 = wpmaterials.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
 //                    for (int j = 0; j < field1.length; j++) {
 //                        field1[j].setAccessible(true);
@@ -1265,7 +1394,7 @@ public class JsonUtils<E> {
 //                            Object value = null;
 //                            value = getOrSet.invoke(wpmaterials.get(i));
 //                            if (value != null) {
-//                                wpmaterialObj.put(name, value);
+//                                wpmaterialsObj.put(name, value+"");
 //                            }
 //                        } catch (NoSuchMethodException e) {
 //                            e.printStackTrace();
@@ -1275,18 +1404,18 @@ public class JsonUtils<E> {
 //                            e.printStackTrace();
 //                        }
 //                    }
-//                    wpmaterialArray.put(wpmaterialObj);
+//                    wpmaterialsArray.put(wpmaterialsObj);
 //                }
-//                jsonObject.put("wpmaterial", wpmaterialArray);
-//            } else {
-//                jsonObject.put("wpmaterial", new JSONArray());
+//                jsonObject.put("WPMATERIAL", wpmaterialsArray);
 //            }
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonObject.toString();
     }
-
 
     /**
      * 故障提报单*

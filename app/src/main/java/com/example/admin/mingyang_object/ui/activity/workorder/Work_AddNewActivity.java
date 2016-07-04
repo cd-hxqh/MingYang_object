@@ -33,7 +33,7 @@ import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.GetDateAndTime;
-import com.example.admin.mingyang_object.utils.WorkTitle;
+import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -91,6 +91,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView udlocnum;//机位号
     private LinearLayout udlocationlayout;
     private TextView udlocation;//位置
+    private LinearLayout leadlayout;
     private TextView leadText;
     private TextView lead;//运行组/维护组工程师
     private TextView udstatus;//状态
@@ -162,6 +163,11 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView udjgtype;//技改类型
     private EditText udfjappnum;//主控程序版本号
     private TextView udrprrsb1;//负责人
+    private LinearLayout inspo2layout;//故障工单人员信息
+    private TextView lead2;//维护/运行组长
+    private TextView udinspoby_2;//维护/运行人员
+    private TextView udinspoby2_2;//维护/运行人员
+    private TextView udinspoby3_2;//维护/运行人员
 
     private String failurelist = "";
     private Button cancel;//取消
@@ -213,6 +219,7 @@ public class Work_AddNewActivity extends BaseActivity {
         udlocnum = (TextView) findViewById(R.id.work_udlocnum);
         udlocationlayout = (LinearLayout) findViewById(R.id.work_udlocation_layout);
         udlocation = (TextView) findViewById(R.id.work_udlocation);
+        leadlayout = (LinearLayout) findViewById(R.id.work_lead_layout);
         leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
         udstatus = (TextView) findViewById(R.id.work_status);
@@ -284,6 +291,11 @@ public class Work_AddNewActivity extends BaseActivity {
         udjgtype = (TextView) findViewById(R.id.work_udjgtype);
         udfjappnum = (EditText) findViewById(R.id.work_udfjappnum);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
+        inspo2layout = (LinearLayout) findViewById(R.id.work_inspo2layout);
+        lead2 = (TextView) findViewById(R.id.work_lead2);
+        udinspoby_2 = (TextView) findViewById(R.id.work_udinspoby_2);
+        udinspoby2_2 = (TextView) findViewById(R.id.work_udinspoby2_2);
+        udinspoby3_2 = (TextView) findViewById(R.id.work_udinspoby3_2);
 
         cancel = (Button) findViewById(R.id.work_cancel);
         save = (Button) findViewById(R.id.work_save);
@@ -291,7 +303,7 @@ public class Work_AddNewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titlename.setText("新建" + WorkTitle.getTitle(workOrder.WORKTYPE));
+        titlename.setText("新建" + WorkTypeUtils.getTitle(workOrder.WORKTYPE));
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -333,6 +345,10 @@ public class Work_AddNewActivity extends BaseActivity {
         udplannum.setOnClickListener(new LayoutOnClickListener(10, Constants.ZYS_UDPLANNUMCODE));
         failurecode.setOnClickListener(new LayoutOnClickListener(12, Constants.FAILURECODE));
         problemcode.setOnClickListener(new LayoutOnClickListener(13, Constants.PROBLEMCODE));
+        lead2.setOnClickListener(new LayoutOnClickListener(14,Constants.PERSONCODE));
+        udinspoby_2.setOnClickListener(new LayoutOnClickListener(15,Constants.PERSONCODE));
+        udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16,Constants.PERSONCODE));
+        udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17,Constants.PERSONCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -439,6 +455,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private void setLayout() {
         switch (workOrder.WORKTYPE) {
             case "FR"://故障工单
+                leadlayout.setVisibility(View.GONE);
+                inspo2layout.setVisibility(View.VISIBLE);
                 timelayout.setVisibility(View.GONE);
                 inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
@@ -586,11 +604,13 @@ public class Work_AddNewActivity extends BaseActivity {
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
         wpmaterialLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_wpmaterial_id);
 //        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
-        flowerLinearLayout = (LinearLayout) findViewById(R.id.work_flower_id);
-        commitLinearLayout = (LinearLayout) findViewById(R.id.work_commit_id);
+        flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        commitLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
 //        taskLinearLayout.setOnClickListener(taskOnClickListener);
         wpmaterialLinearLayout.setOnClickListener(wpmaterialOnClickListener);
+        flowerLinearLayout.setVisibility(View.GONE);
+        commitLinearLayout.setVisibility(View.GONE);
 //        reportLinearLayout.setOnClickListener(reportOnClickListener);
         decisionLayout();
 
@@ -599,17 +619,25 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (workOrder.WORKTYPE.equals(Constants.FR) || (!workOrder.WORKTYPE.equals(Constants.FR) && !udjpnum.getText().toString().equals(""))) {
-                Intent intent = new Intent(Work_AddNewActivity.this, Work_WoactivityActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("workOrder", workOrder);
-                bundle.putSerializable("woactivityList", woactivityList);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, 1000);
-                popupWindow.dismiss();
-            } else {
-                Toast.makeText(Work_AddNewActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
+            if (!workOrder.WORKTYPE.equals(Constants.FR)&&!workOrder.WORKTYPE.equals(Constants.AA)) {
+                if (!udjpnum.getText().toString().equals("")) {
+                    if (workOrder.UDJPNUM!=null&&!workOrder.UDJPNUM.equals("")
+                            &&!workOrder.UDJPNUM.equals(udjpnum.getText().toString())){//如果计划编号变动
+                        woactivityList = new ArrayList<>();
+                    }
+                    workOrder.UDJPNUM = udjpnum.getText().toString();
+                }else {
+                    Toast.makeText(Work_AddNewActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+            Intent intent = new Intent(Work_AddNewActivity.this, Work_WoactivityActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workOrder", workOrder);
+            bundle.putSerializable("woactivityList", woactivityList);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, 1000);
+            popupWindow.dismiss();
         }
     };
     //
@@ -899,7 +927,6 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.UDPROJECTNUM = udprojectnum.getText().toString();
         workOrder.UDLOCNUM = udlocnum.getText().toString();
         workOrder.UDLOCATION = udlocation.getText().toString();
-        workOrder.LEAD = lead.getText().toString();
         workOrder.UDSTATUS = udstatus.getText().toString();
         workOrder.CREATEBY = createby.getText().toString();
         workOrder.CREATEDATE = createdate.getText().toString();
@@ -918,7 +945,15 @@ public class Work_AddNewActivity extends BaseActivity {
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             workOrder.UDRPRRSB = udrprrsb.getText().toString();
             workOrder.UDJGRESULT = udjgresult.getText().toString();
+            workOrder.LEAD = lead2.getText().toString();
+            workOrder.UDINSPOBY = udinspoby_2.getText().toString();
+            workOrder.UDINSPOBY2 = udinspoby2_2.getText().toString();
+            workOrder.UDINSPOBY3 = udinspoby3_2.getText().toString();
         } else {
+            workOrder.LEAD = lead.getText().toString();
+            workOrder.UDINSPOBY = udinspoby.getText().toString();
+            workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
+            workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
             workOrder.UDRPRRSB = udrprrsb1.getText().toString();
             workOrder.UDJGRESULT = udjgresult1.getText().toString();
         }
@@ -928,9 +963,6 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.UDPLSTOPDATE = udplstopdate.getText().toString();
         workOrder.UDRLSTARTDATE = udrlstartdate.getText().toString();
         workOrder.UDRLSTOPDATE = udrlstopdate.getText().toString();
-        workOrder.UDINSPOBY = udinspoby.getText().toString();
-        workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
-        workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
         workOrder.DJPLANNUM = djplannum.getText().toString();
         workOrder.DJTYPE = djtype.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.WS)) {
@@ -1025,6 +1057,22 @@ public class Work_AddNewActivity extends BaseActivity {
                 case 13:
                     option = (Option) data.getSerializableExtra("option");
                     problemcode.setText(option.getName());
+                    break;
+                case 14:
+                    option = (Option) data.getSerializableExtra("option");
+                    lead2.setText(option.getName());
+                    break;
+                case 15:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby_2.setText(option.getName());
+                    break;
+                case 16:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby2_2.setText(option.getName());
+                    break;
+                case 17:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby3_2.setText(option.getName());
                     break;
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {

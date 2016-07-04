@@ -140,6 +140,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         } else {//新建工单
             if (woactivityList == null || woactivityList.size() == 0){
                 if (!workOrder.WORKTYPE.equals(Constants.AA)&&!workOrder.WORKTYPE.equals(Constants.FR)){
+                    refresh_layout.setRefreshing(true);
                     getNewData();
                 }else {
                     nodatalayout.setVisibility(View.VISIBLE);
@@ -449,6 +450,8 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         if (!workOrder.isnew) {
             page++;
             getdata();
+        }else {
+            refresh_layout.setLoading(false);
         }
     }
 }

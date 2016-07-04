@@ -8,17 +8,19 @@ import java.io.Serializable;
  */
 public class Udprorunlog extends Entity implements Serializable {
 
-    private String PRORUNLOGNUM; //日报编号
-    private String DESCRIPTION; //描述
-    private String BRANCH; //所属中心
-    private String PRONUM; //项目编号
-    private String CONTRACTS; //现场联系人编号
-    private String CONTDESC; //现场联系人名称
-    private String PROSTAGE; //项目阶段
-    private String STATUS; //状态
-    private String UDPRORESC; //现场负责人
-    private String YEAR; //年
-    private String MONTH; //月
+    public String PRORUNLOGNUM; //日报编号
+    public String DESCRIPTION; //描述
+    public String BRANCH; //所属中心
+    public String PRONUM; //项目编号
+    public String CONTRACTS; //现场联系人编号
+    public String CONTDESC; //现场联系人名称
+    public String PROSTAGE; //项目阶段
+    public String STATUS; //状态
+    public String UDPRORESC; //现场负责人
+    public String YEAR; //年
+    public String MONTH; //月
+
+    public boolean isnew;//是否是新增项目日报
 
     public String getCONTDESC() {
         return CONTDESC;
