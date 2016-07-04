@@ -418,4 +418,65 @@
     <string name="ok_text">巡检结果:</string>
     <string name="udinsproject_details_text">巡检项目详情</string>
 
+    <!--行驶记录-->
+    <string name="licensenum_text">车牌号:</string>
+    <string name="cljcxx_text">车辆基础信息</string>
+    <string name="cardrivelognum_text">记录编号:</string>
+    <string name="carname_text">车辆名称:</string>
+    <string name="driverid1_text">司机:</string>
+    <string name="prodesc_1_text">所属项目:</string>
+    <string name="branchdesc_1_text">所属中心:</string>
+    <string name="lrxx_text">录入信息</string>
+    <string name="driverid_text">创建人:</string>
+    <string name="comisorno_text">是否提交:</string>
+    <string name="ccxx_text">出车信息</string>
+    <string name="startdate_text">出车日期:</string>
+    <string name="starttime_1_text">出车时间:</string>
+    <string name="departure_text">出发地:</string>
+    <string name="destination_text">目的地:</string>
+    <string name="goreason_text">出车事由:</string>
+    <string name="clxsxxxx_text">车辆行驶详细信息</string>
+    <string name="wonum_1_text">业务单号:</string>
+    <string name="wtypedesc_text">任务类型:</string>
+    <string name="startnumber_text">起始里程:</string>
+    <string name="endnumber_text">结束里程:</string>
+    <string name="lastfuelconsumption_text">上次油耗:</string>
+    <string name="standardfuelconsumption_text">标准油耗:</string>
+    <string name="fee_text">路桥费:</string>
+    <string name="udcarddrivelog_details_text">行驶记录详情</string>
+    <!--加油记录-->
+    <string name="driverid_1_text">录入人编号:</string>
+    <string name="createby_1_text">录入人:</string>
+    <string name="createdate_2_text">录入日期:</string>
+    <string name="jyjlxxxx_text">加油记录详细信息</string>
+    <string name="chargedate_text">加油日期:</string>
+    <string name="number2_text">上次加油里程表读数:</string>
+    <string name="number1_text">本次加油里程表读数:</string>
+    <string name="number3_text">里程差:</string>
+    <string name="number4_text">油品号:</string>
+    <string name="number5_text">本次加油量:</string>
+    <string name="price_text">单价:</string>
+    <string name="fuelcost_text">加油费:</string>
+    <string name="lastfuelconsumption_1_text">油耗:</string>
+    <string name="invoicenum_text">发票号:</string>
+    <string name="place_text">加油地点:</string>
+    <string name="remark_1_text">备注:</string>
+    <string name="udcarfuelcharge_detail_text">加油记录详情</string>
+
+    <!--维修详情-->
+    <string name="jbxx_text">基本信息</string>
+    <string name="wxxx_text">维修信息</string>
+    <string name="startdate_1_text">维修开始日期:</string>
+    <string name="enddate_1_text">维修结束日期:</string>
+    <string name="price_1_text">维修单价:</string>
+    <string name="mainnumber_text">维修数量:</string>
+    <string name="totalprice_text">维修总额:</string>
+    <string name="invoicenum_1_text">维修发票号:</string>
+    <string name="servicetype_text">维修类型:</string>
+    <string name="mainplace_text">维修地点:</string>
+    <string name="maincontent_text">维修.保养.更换项目:</string>
+    <string name="number2_1_text">上次维修里程表读数:</string>
+    <string name="number1_1_text">本次维修里程表读数:</string>
+    <string name="wxjlxq_text">维修记录详情</string>
+
 </resources>

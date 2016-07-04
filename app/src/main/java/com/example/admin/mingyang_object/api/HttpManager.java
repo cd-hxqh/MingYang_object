@@ -326,6 +326,39 @@ public class HttpManager {
     }
 
 
+
+
+    /**
+     * 设置车辆行驶记录的接口
+     */
+    public static String getudcardrivelogurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDCARDRIVE_APPID + "','objectname':'" + Constants.UDCARDRIVE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CARDRIVELOGNUM DESC'}";
+        }
+        return "{'appid':'" + Constants.UDCARDRIVE_APPID + "','objectname':'" + Constants.UDCARDRIVE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CARDRIVELOGNUM DESC'," + ",'sinorsearch':{'CARDRIVELOGNUM':'" + value + "','GOREASON':'" + value + "'}}";
+    }
+    /**
+     * 设置车辆加油记录的接口
+     */
+    public static String getudcarfuelchargeurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDCARFUELCHARGE_APPID + "','objectname':'" + Constants.UDCARFUELCHARGE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CARFUELCHARGENUM DESC'}";
+        }
+        return "{'appid':'" + Constants.UDCARFUELCHARGE_APPID + "','objectname':'" + Constants.UDCARFUELCHARGE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CARFUELCHARGENUM DESC'," + ",'sinorsearch':{'CARFUELCHARGENUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+    /**
+     * 设置车辆维修记录的接口
+     */
+    public static String getudcarmainlogurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDCARMAINLOG_APPID + "','objectname':'" + Constants.UDCARMAINLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'MAINLOGNUM DESC'}";
+        }
+        return "{'appid':'" + Constants.UDCARMAINLOG_APPID + "','objectname':'" + Constants.UDCARMAINLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'MAINLOGNUM DESC'," + ",'sinorsearch':{'MAINLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+
+
+
+
     /**
      * 设置person人员表的接口
      */

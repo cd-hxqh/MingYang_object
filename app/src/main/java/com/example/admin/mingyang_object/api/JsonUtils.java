@@ -13,6 +13,9 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.UdPerson;
+import com.example.admin.mingyang_object.model.Udcardrivelog;
+import com.example.admin.mingyang_object.model.Udcarfuelcharge;
+import com.example.admin.mingyang_object.model.Udcarmainlog;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udfeedback;
@@ -1125,7 +1128,7 @@ public class JsonUtils<E> {
      * @param woactivities
      * @return
      */
-    public static String WorkToJson(WorkOrder workOrder, ArrayList<Woactivity> woactivities,ArrayList<Wpmaterial> wpmaterials) {
+    public static String WorkToJson(WorkOrder workOrder, ArrayList<Woactivity> woactivities, ArrayList<Wpmaterial> wpmaterials) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
@@ -1139,7 +1142,7 @@ public class JsonUtils<E> {
                     Object value = null;
                     value = getOrSet.invoke(workOrder);
                     if (value != null) {
-                        jsonObject.put(name, value+"");
+                        jsonObject.put(name, value + "");
                     }
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
@@ -1166,7 +1169,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(woactivities.get(i));
                             if (value != null) {
-                                woactivityObj.put(name, value+"");
+                                woactivityObj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1196,7 +1199,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(wpmaterials.get(i));
                             if (value != null) {
-                                wpmaterialsObj.put(name, value+"");
+                                wpmaterialsObj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1415,6 +1418,144 @@ public class JsonUtils<E> {
 
                 }
                 list.add(udinsproject);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    /**
+     * 行驶记录*
+     */
+    public static ArrayList<Udcardrivelog> parsingUdcardrivelog(Context ctx, String data) {
+        ArrayList<Udcardrivelog> list = null;
+        Udcardrivelog udcardrivelog = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udcardrivelog>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udcardrivelog = new Udcardrivelog();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udcardrivelog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udcardrivelog.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udcardrivelog);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udcardrivelog.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udcardrivelog, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udcardrivelog);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    /**
+     * 加油记录*
+     */
+    public static ArrayList<Udcarfuelcharge> parsingUdcarfuelcharge(Context ctx, String data) {
+        ArrayList<Udcarfuelcharge> list = null;
+        Udcarfuelcharge udcarfuelcharge = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udcarfuelcharge>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udcarfuelcharge = new Udcarfuelcharge();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udcarfuelcharge.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udcarfuelcharge.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udcarfuelcharge);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udcarfuelcharge.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udcarfuelcharge, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udcarfuelcharge);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    /**
+     * 维修记录*
+     */
+    public static ArrayList<Udcarmainlog> parsingUdcarmainlog(Context ctx, String data) {
+        ArrayList<Udcarmainlog> list = null;
+        Udcarmainlog udcarmainlog = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udcarmainlog>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udcarmainlog = new Udcarmainlog();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udcarmainlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udcarmainlog.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udcarmainlog);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udcarmainlog.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udcarmainlog, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(udcarmainlog);
             }
             return list;
         } catch (JSONException e) {

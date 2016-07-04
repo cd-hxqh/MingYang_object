@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.ui.activity.Udcardrivelog_Listactivity;
+import com.example.admin.mingyang_object.ui.activity.Udcarfuelcharge_Listactivity;
+import com.example.admin.mingyang_object.ui.activity.Udcarmainlog_Listactivity;
 import com.example.admin.mingyang_object.ui.activity.Udfeedback_listactivity;
 import com.example.admin.mingyang_object.ui.activity.Udpro_ListActivity;
 import com.example.admin.mingyang_object.ui.activity.Udprorunlog_listactivity;
@@ -70,14 +73,14 @@ public class ZiyuanFragment extends BaseFragment {
     private View.OnClickListener udcardrivelogTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), Udpro_ListActivity.class);
+            Intent intent = new Intent(getActivity(), Udcardrivelog_Listactivity.class);
             startActivityForResult(intent, 0);
         }
     };
     private View.OnClickListener udcarfuelchargeTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), Udprorunlog_listactivity.class);
+            Intent intent = new Intent(getActivity(), Udcarfuelcharge_Listactivity.class);
             startActivityForResult(intent, 0);
         }
     };
@@ -85,7 +88,7 @@ public class ZiyuanFragment extends BaseFragment {
     private View.OnClickListener udcarmainlogTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), Udfeedback_listactivity.class);
+            Intent intent = new Intent(getActivity(), Udcarmainlog_Listactivity.class);
             startActivityForResult(intent, 0);
         }
     };
