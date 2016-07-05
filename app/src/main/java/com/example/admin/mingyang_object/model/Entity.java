@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by apple on 15/10/.
  */
-public class Entity<T>  {
+public class Entity<T> {
     private T t;
 
     public Entity(T oT) {

@@ -12,4 +12,8 @@ public class GetDateAndTime {
         dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateformat.format(new Date());
     }
+    public static String GetDate(){
+        dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateformat.format(new Date());
+    }
 }

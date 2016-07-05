@@ -7,6 +7,7 @@ import com.example.admin.mingyang_object.bean.LoginResults;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.Item;
 import com.example.admin.mingyang_object.model.JobPlan;
@@ -43,6 +44,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 /**
@@ -530,7 +532,7 @@ public class JsonUtils<E> {
      * 解析项目车辆信息*
      */
 
-    public static ArrayList<Udvehicle> parsingUdvehicle(Context ctx, String data) {
+    public static ArrayList<Udvehicle> parsingUdvehicle(String data) {
         ArrayList<Udvehicle> list = null;
         Udvehicle udvehicle = null;
         try {
@@ -1418,6 +1420,46 @@ public class JsonUtils<E> {
     }
 
     /**
+     * 封装车辆维修数据
+     *
+     * @return
+     */
+    public static String udcarmainlogToJson(Udcarmainlog udcarmainlog) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udcarmainlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udcarmainlog.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udcarmainlog);
+                    if (value != null && !name.equals("BRANCH")) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            object.put("", "");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
      * 故障提报单*
      */
     public static ArrayList<Udreport> parsingUdreport(Context ctx, String data) {
@@ -1648,6 +1690,7 @@ public class JsonUtils<E> {
         }
 
     }
+
     /**
      * 维修记录*
      */

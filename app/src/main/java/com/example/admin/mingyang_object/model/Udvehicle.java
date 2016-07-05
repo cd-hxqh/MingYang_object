@@ -4,23 +4,15 @@ import java.io.Serializable;
 
 /**
  * Created by apple on 15/10/26.
- *项目车辆
+ * 车辆
  */
 public class Udvehicle implements Serializable {
 
-    private String LICENSENUM; //车牌号
-    private String DRIVER; //司机编号
-    private String TOTALMILEAGE; //累计行驶里程数
-    private String UDPRONUM; //项目台账编号
+    private String DRIVER; //司机
+    private String LICENSENUM; //是车牌号
+    private String PRONUM; //
+    private String TOTALMILEAGE;//
 
-
-    public String getLICENSENUM() {
-        return LICENSENUM;
-    }
-
-    public void setLICENSENUM(String LICENSENUM) {
-        this.LICENSENUM = LICENSENUM;
-    }
 
     public String getDRIVER() {
         return DRIVER;
@@ -30,19 +22,27 @@ public class Udvehicle implements Serializable {
         this.DRIVER = DRIVER;
     }
 
+    public String getLICENSENUM() {
+        return LICENSENUM;
+    }
+
+    public void setLICENSENUM(String LICENSENUM) {
+        this.LICENSENUM = LICENSENUM;
+    }
+
+    public String getPRONUM() {
+        return PRONUM;
+    }
+
+    public void setPRONUM(String PRONUM) {
+        this.PRONUM = PRONUM;
+    }
+
     public String getTOTALMILEAGE() {
         return TOTALMILEAGE;
     }
 
     public void setTOTALMILEAGE(String TOTALMILEAGE) {
         this.TOTALMILEAGE = TOTALMILEAGE;
-    }
-
-    public String getUDPRONUM() {
-        return UDPRONUM;
-    }
-
-    public void setUDPRONUM(String UDPRONUM) {
-        this.UDPRONUM = UDPRONUM;
     }
 }

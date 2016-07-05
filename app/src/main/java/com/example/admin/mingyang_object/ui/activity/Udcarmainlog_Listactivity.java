@@ -25,6 +25,7 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.model.Entity;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
@@ -50,6 +51,10 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
      * 返回按钮*
      */
     private ImageView backImageView;
+    /**
+     * 新增*
+     */
+    private ImageView addImageView;
 
 
     LinearLayoutManager layoutManager;
@@ -77,6 +82,7 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addImageView = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -89,6 +95,11 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
         setSearchEdit();
         titlename.setText(R.string.udcarmainlog_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
+
+        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setOnClickListener(addImageViewOnClickListener);
+
+
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -118,6 +129,18 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     };
 
 
+    /**
+     * 新增*
+     */
+    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udcarmainlog_Listactivity.this, Udcarmainlog_Addactivity.class);
+            startActivityForResult(intent, 0);
+        }
+    };
+
+
     private void getData(String search) {
         HttpManager.getDataPagingInfo(this, HttpManager.getudcarmainlogurl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
@@ -127,6 +150,10 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
+                Udcarmainlog u = new Udcarmainlog();
+                Entity<Udcarmainlog> udcarmainlog = new Entity<Udcarmainlog>();
+                udcarmainlog.setT(u);
+                ArrayList<Udcarmainlog> list = null;
 
                 ArrayList<Udcarmainlog> item = JsonUtils.parsingUdcarmainlog(Udcarmainlog_Listactivity.this, results.getResultlist());
                 refresh_layout.setRefreshing(false);
@@ -206,7 +233,7 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     public void onRefresh() {
         page = 1;
         udcarmainlogAdapter.removeAll(items);
-        items=new ArrayList<Udcarmainlog>();
+        items = new ArrayList<Udcarmainlog>();
         getData(search.getText().toString());
     }
 

@@ -38,6 +38,7 @@ import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.ui.adapter.OptionAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 
@@ -216,8 +217,12 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             }
         }else if (optiontype == Constants.ITEMCODE){
             return HttpManager.getItemUrl(searchText, page, 20);
-        }else if (optiontype == Constants.LOCATIONCODE2){
+        }
+        else if (optiontype == Constants.LOCATIONCODE2){
             return HttpManager.getLoactionUrl(searchText,page,20);
+        }
+        else if (optiontype == Constants.UDVEHICLE){//车辆
+            return HttpManager.getudvehicleurl(searchText, page, 20);
         }
         return "";
     }
@@ -276,10 +281,17 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             if (totalPages == page) {
                                 optionAdapter.addFailurelistDate(items);
                             }
-                        }else if (optiontype == Constants.ITEMCODE) {//
+                        }
+                        else if (optiontype == Constants.ITEMCODE) {//
                             ArrayList<Item> items = JsonUtils.parsingItem(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addItemDate(items);
+                            }
+                        }
+                        else if (optiontype == Constants.UDVEHICLE) {//车辆
+                            ArrayList<Udvehicle> items = JsonUtils.parsingUdvehicle(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addUdvehicleDate(items);
                             }
                         }
                         if (optionAdapter.getItemCount() == 0) {
@@ -339,6 +351,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
     public void responseData(Option option) {
         Intent intent = getIntent();
         intent.putExtra("option", option);
+        Log.i(TAG,"optiontype="+optiontype);
         OptionActivity.this.setResult(optiontype, intent);
         finish();
     }

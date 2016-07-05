@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by apple on 15/10/26.
  * 维修记录
  */
-public class Udcarmainlog extends Entity implements Serializable {
+public class Udcarmainlog  implements Serializable {
 
     private String BRANCHDESC; //所属中心
     private String COMISORNO; //是否提交

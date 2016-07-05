@@ -62,4 +62,8 @@
         <item>11</item>
         <item>12</item>
     </string-array>
+    <string-array name="servicetype_array">
+        <item>事故维修</item>
+        <item>正常维修</item>
+    </string-array>
 </resources>

@@ -140,7 +140,7 @@ public class Ududvehicle_ListActivity extends BaseActivity implements SwipeRefre
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                ArrayList<Udvehicle> item = JsonUtils.parsingUdvehicle(Ududvehicle_ListActivity.this, results.getResultlist());
+                ArrayList<Udvehicle> item = JsonUtils.parsingUdvehicle(results.getResultlist());
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
                 if (item == null || item.isEmpty()) {

@@ -363,6 +363,15 @@ public class HttpManager {
         }
         return "{'appid':'" + Constants.UDCARMAINLOG_APPID + "','objectname':'" + Constants.UDCARMAINLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'MAINLOGNUM DESC'," + ",'sinorsearch':{'MAINLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
+    /**
+     * 设置选择车辆接口
+     */
+    public static String getudvehicleurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDVEHICLE_APPID + "','objectname':'" + Constants.UDVEHICLE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.UDVEHICLE_APPID + "','objectname':'" + Constants.UDVEHICLE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LICENSENUM':'" + value + "','DRIVER':'" + value + "'}}";
+    }
 
 
 

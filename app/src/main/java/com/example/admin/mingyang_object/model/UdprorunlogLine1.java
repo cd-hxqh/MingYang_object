@@ -4,25 +4,25 @@ import java.io.Serializable;
 
 /**
  * Created by think on 2016/7/4.
- * ÍÁ½¨½×¶ÎÈÕ±¨
+ * åœŸå»ºé˜¶æ®µæ—¥æŠ¥
  */
 public class UdprorunlogLine1 implements Serializable{
-    public String CREATEDATE;//´´½¨ÈÕÆÚ
-    public String PERSONID;//ÏîÄ¿¸ºÔğÈË
-    public String PERSONDESC;//ÏîÄ¿¸ºÔğÈËÃèÊö
-    public String FUNNUM;//·ç»úºÅ
-    public String PROPHASE;//µ±Ç°ÏîÄ¿½×¶Î
-    public String LAND;//Õ÷µØ
-    public String INSIDEROAD;//³¡ÄÚµÀÂ·
-    public String OUTSIDEROAD;//³¡ÍâµÀÂ·
-    public int VILLAGERINVOLVED;//´åÃñ×è¹¤
-    public String REMARK;//±¸×¢
-    public String KEYPOINT;//ÏÖ³¡ÖØÄÑµãÃèÊö
-    public String BASESTART;//»ù´¡¿ªÍÚ
-    public String BASEPLACING;//»ù´¡½½Öş
-    public String BASEAOG;//»ù´¡»·µ½»õ
-    public String TAMERAOG;//ËşÍ²µ½»õ
-    public String VEHICLERECORDS;//ÏÖ³¡Ñº³µ¼ÇÂ¼
+    public String CREATEDATE;//åˆ›å»ºæ—¥æœŸ
+    public String PERSONID;//é¡¹ç›®è´Ÿè´£äºº
+    public String PERSONDESC;//é¡¹ç›®è´Ÿè´£äººæè¿°
+    public String FUNNUM;//é£æœºå·
+    public String PROPHASE;//å½“å‰é¡¹ç›®é˜¶æ®µ
+    public String LAND;//å¾åœ°
+    public String INSIDEROAD;//åœºå†…é“è·¯
+    public String OUTSIDEROAD;//åœºå¤–é“è·¯
+    public int VILLAGERINVOLVED;//æ‘æ°‘é˜»å·¥
+    public String REMARK;//å¤‡æ³¨
+    public String KEYPOINT;//ç°åœºé‡éš¾ç‚¹æè¿°
+    public String BASESTART;//åŸºç¡€å¼€æŒ–
+    public String BASEPLACING;//åŸºç¡€æµ‡ç­‘
+    public String BASEAOG;//åŸºç¡€ç¯åˆ°è´§
+    public String TAMERAOG;//å¡”ç­’åˆ°è´§
+    public String VEHICLERECORDS;//ç°åœºæŠ¼è½¦è®°å½•
 
     public String TYPE;
     public String PRORUNLOGNUM;

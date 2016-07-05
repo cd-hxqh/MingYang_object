@@ -207,6 +207,8 @@ public class Constants {
 
 
 
+
+
     //设备appid
     public static final String ASSET_APPID = "UDASSET";
     //设备表名
@@ -328,5 +330,8 @@ public class Constants {
     public static final int ITEMCODE = 220;//物资编码
 
     public static final int LOCATIONCODE2 = 230;//库房
+
+
+    public static final int UDVEHICLE = 240;//车辆
 
 }

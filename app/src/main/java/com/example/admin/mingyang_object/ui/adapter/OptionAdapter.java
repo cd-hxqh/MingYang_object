@@ -21,6 +21,7 @@ import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 
 import java.lang.reflect.Field;
@@ -233,6 +234,19 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option.setName(data.get(i).getITEMNUM());
                 option.setDesc(data.get(i).getDESCRIPTION());
                 option.setValue1(data.get(i).getORDERUNIT());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+    public void addUdvehicleDate(ArrayList<Udvehicle> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getLICENSENUM());
+                option.setDesc(data.get(i).getDRIVER());
+                option.setValue1(data.get(i).getPRONUM());
                 optionList.add(option);
             }
         }

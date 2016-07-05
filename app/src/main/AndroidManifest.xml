@@ -237,16 +237,14 @@
             android:name=".ui.activity.Udcarmainlog_Detailactivity"
             android:label="@string/wxjlxq_text"></activity>
         <activity
+            android:name=".ui.activity.Udcarmainlog_Addactivity"
+            android:label="@string/wxjlxq_text"></activity>
+        <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/wfm_detail_title"></activity>
         <activity
             android:name=".ui.activity.OptionActivity"
             android:label="@string/title_activity_option"></activity>
-        <activity
-            android:name=".ui.activity.ImageUpLoad.ImageUploadActivity"
-            android:label="@string/title_activity_wpmaterialdetails"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
     </application>
 
 </manifest>
