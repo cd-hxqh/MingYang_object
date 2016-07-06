@@ -1,4 +1,4 @@
-package com.example.admin.mingyang_object.ui.activity;
+package com.example.admin.mingyang_object.ui.activity.udpro;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -21,7 +21,10 @@ import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine1;
+import com.example.admin.mingyang_object.model.UdprorunlogLine4;
 import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -97,7 +100,9 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
      * 工作日志*
      */
     private LinearLayout gzrzLinearLayout;
-    /**工装管理**/
+    /**
+     * 工装管理*
+     */
     private LinearLayout gzglLinearLayout;
 
     private Button cancel;//取消
@@ -108,6 +113,8 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
 
     private ArrayList<UdprorunlogLine1> UdprorunlogLine1List = new ArrayList<>();
+    private ArrayList<UdprorunlogLine4> UdprorunlogLine4List = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +158,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         statusText.setText("新建");
         pronumText.setOnClickListener(new LayoutOnClickListener(1, Constants.UDPROCODE));
-        contractsText.setOnClickListener(new LayoutOnClickListener(2,Constants.PERSONCODE));
+        contractsText.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         yearText.setOnClickListener(new NormalListDialogOnClickListener(yearText));
         monthText.setOnClickListener(new NormalListDialogOnClickListener(monthText));
 
@@ -212,9 +219,9 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         gzglLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline4_text_id);
 
         tujianLinearLayout.setOnClickListener(tujianLinearOnClickListener);
-        diaozhuangLinearLayout.setOnClickListener(personLinearOnClickListener);
-        gzrzLinearLayout.setOnClickListener(udvehicleLinearOnClickListener);
-        gzglLinearLayout.setOnClickListener(udvehicleLinearOnClickListener);
+        diaozhuangLinearLayout.setOnClickListener(diaozhuangLinearOnClickListener);
+        gzrzLinearLayout.setOnClickListener(gzrzLinearOnClickListener);
+        gzglLinearLayout.setOnClickListener(gzglLinearOnClickListener);
 
     }
 
@@ -222,15 +229,18 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
     private View.OnClickListener tujianLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Udprorunlog_AddNewActivity.this, Udprorunlog_Line1Activity.class);
-            intent.putExtra("udprorunlog", udprorunlog);
-            intent.putExtra("UdprorunlogLine1List", UdprorunlogLine1List);
-            startActivityForResult(intent, 0);
-            popupWindow.dismiss();
-
+            if (!pronumText.getText().equals("")) {
+                Intent intent = new Intent(Udprorunlog_AddNewActivity.this, Udprorunlog_Line1Activity.class);
+                intent.putExtra("udprorunlog", getUdprorunlog());
+                intent.putExtra("UdprorunlogLine1List", UdprorunlogLine1List);
+                startActivityForResult(intent, 1000);
+                popupWindow.dismiss();
+            } else {
+                Toast.makeText(Udprorunlog_AddNewActivity.this, "请选择项目编号", Toast.LENGTH_SHORT).show();
+            }
         }
     };
-    private View.OnClickListener personLinearOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener diaozhuangLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 //            Intent intent = new Intent(Udprorunlog_DetailActivity.this, UdPerson_ListActivity.class);
@@ -240,12 +250,21 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
 
         }
     };
-    private View.OnClickListener udvehicleLinearOnClickListener = new View.OnClickListener() {
+
+    private View.OnClickListener gzrzLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Intent intent = new Intent(Udprorunlog_DetailActivity.this, Ududvehicle_ListActivity.class);
-//            intent.putExtra("pronum", udpro.getPRONUM());
-//            startActivityForResult(intent, 0);
+
+        }
+    };
+
+    private View.OnClickListener gzglLinearOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udprorunlog_AddNewActivity.this, Udprorunlog_Line4Activity.class);
+            intent.putExtra("udprorunlog", getUdprorunlog());
+            intent.putExtra("UdprorunlogLine4List", UdprorunlogLine4List);
+            startActivityForResult(intent, 4000);
             popupWindow.dismiss();
 
         }
@@ -301,8 +320,8 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                 textView.setText(mMenuItems.get(position).mOperName);
-                if (!yearText.getText().toString().equals("")&&!monthText.getText().equals("")){
-                    descriptionText.setText(yearText.getText().toString()+"年"+monthText.getText()+"月"+pronumDesc);
+                if (!yearText.getText().toString().equals("") && !monthText.getText().equals("")) {
+                    descriptionText.setText(yearText.getText().toString() + "年" + monthText.getText() + "月" + pronumDesc);
                 }
                 dialog.dismiss();
             }
@@ -335,21 +354,41 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
                 });
     }
 
-    private Udprorunlog getUdprorunlog(){
+    private Udprorunlog getUdprorunlog() {
         Udprorunlog udprorunlog = this.udprorunlog;
         udprorunlog.PRORUNLOGNUM = prorunlognumText.getText().toString();
         udprorunlog.DESCRIPTION = descriptionText.getText().toString();
         udprorunlog.PRONUM = pronumText.getText().toString();
 //        udprorunlog.BRANCH = branchText.getText().toString();
-        udprorunlog.UDPRORESC = udprorescText.getText().toString();
-        udprorunlog.CONTRACTS = contractsText.getText().toString();
+//        udprorunlog.UDPRORESC = udprorescText.getText().toString();
+//        udprorunlog.CONTRACTS = contractsText.getText().toString();
         udprorunlog.YEAR = yearText.getText().toString();
         udprorunlog.MONTH = monthText.getText().toString();
         udprorunlog.PROSTAGE = prostageText.getText().toString();
         udprorunlog.STATUS = statusText.getText().toString();
+        udprorunlog.isnew = true;
         return udprorunlog;
     }
 
+    private ArrayList<UdprorunlogLine1> getUdprorunlogLine1() {
+        ArrayList<UdprorunlogLine1> udprorunlogLine1s = new ArrayList<>();
+        for (int i = 0; i < UdprorunlogLine1List.size(); i++) {
+            if (UdprorunlogLine1List.get(i).TYPE != null) {
+                udprorunlogLine1s.add(UdprorunlogLine1List.get(i));
+            }
+        }
+        return udprorunlogLine1s;
+    }
+
+    private ArrayList<UdprorunlogLine4> getUdprorunlogLine4() {
+        ArrayList<UdprorunlogLine4> udprorunlogLine4s = new ArrayList<>();
+        for (int i = 0; i < UdprorunlogLine4List.size(); i++) {
+            if (UdprorunlogLine4List.get(i).TYPE != null) {
+                udprorunlogLine4s.add(UdprorunlogLine4List.get(i));
+            }
+        }
+        return udprorunlogLine4s;
+    }
 
     /**
      * 提交数据*
@@ -361,7 +400,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.UdprorunlogToJson(getUdprorunlog());
+        updataInfo = JsonUtils.UdprorunlogToJson(getUdprorunlog(), getUdprorunlogLine1(),getUdprorunlogLine4());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -401,24 +440,29 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
                     pronumText.setText(option.getName());
-                    pronumDesc = option.getName()+option.getDesc();
+                    pronumDesc = option.getName() + option.getDesc();
                     branchText.setText(option.getValue1());
-                    udprorescText.setText(option.getValue2());
-                    contractsText.setText(option.getValue2());
+                    udprorescText.setText(option.getValue4());
+                    contractsText.setText(option.getValue4());
+                    udprorunlog.CONTRACTS = option.getValue2();
                     prostageText.setText(option.getValue3());
-                    if (!monthText.getText().equals("")&&!yearText.getText().equals("")) {
+                    if (!monthText.getText().equals("") && !yearText.getText().equals("")) {
                         descriptionText.setText(yearText.getText().toString() + "年" + monthText.getText().toString()
                                 + "月" + pronumDesc);
-                    }else {
+                    } else {
                         descriptionText.setText(pronumDesc);
                     }
                     break;
                 case 2:
                     option = (Option) data.getSerializableExtra("option");
-                    contractsText.setText(option.getName());
+                    contractsText.setText(option.getDesc());
+                    udprorunlog.CONTRACTS = option.getName();
                     break;
                 case 1000:
                     UdprorunlogLine1List = (ArrayList<UdprorunlogLine1>) data.getSerializableExtra("UdprorunlogLine1List");
+                    break;
+                case 4000:
+                    UdprorunlogLine4List = (ArrayList<UdprorunlogLine4>) data.getSerializableExtra("UdprorunlogLine4List");
                     break;
             }
         }

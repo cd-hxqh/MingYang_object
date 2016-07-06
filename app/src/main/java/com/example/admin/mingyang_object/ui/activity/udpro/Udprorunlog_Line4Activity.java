@@ -1,4 +1,4 @@
-package com.example.admin.mingyang_object.ui.activity;
+package com.example.admin.mingyang_object.ui.activity.udpro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +18,10 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.Udprorunlog;
-import com.example.admin.mingyang_object.model.UdprorunlogLine1;
-import com.example.admin.mingyang_object.ui.activity.workorder.WpmaterialAddNewActivity;
-import com.example.admin.mingyang_object.ui.activity.workorder.WpmaterialDetailsActivity;
+import com.example.admin.mingyang_object.model.UdprorunlogLine4;
+import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdprorunlogLine1Adapter;
+import com.example.admin.mingyang_object.ui.adapter.UdprorunlogLine4Adapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -35,10 +34,10 @@ import java.util.List;
 
 
 /**
- * 土建阶段日报列表页面
+ * 工装管理列表页面
  * Created by think on 2016/7/4.
  */
-public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+public class Udprorunlog_Line4Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private ImageView backImageView;
     private TextView titleTextView;
     private ImageView menuImageView;
@@ -46,12 +45,12 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private UdprorunlogLine1Adapter udprorunlogLine1Adapter;
+    private UdprorunlogLine4Adapter udprorunlogLine4Adapter;
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     public Udprorunlog udprorunlog;
-    public ArrayList<UdprorunlogLine1>UdprorunlogLine1List = new ArrayList<>();
-    public ArrayList<UdprorunlogLine1> deleteList = new ArrayList<>();
+    public ArrayList<UdprorunlogLine4>UdprorunlogLine4List = new ArrayList<>();
+    public ArrayList<UdprorunlogLine4> deleteList = new ArrayList<>();
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -70,7 +69,7 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
 
     private void getData() {
         udprorunlog = (Udprorunlog) getIntent().getSerializableExtra("udprorunlog");
-        UdprorunlogLine1List = (ArrayList<UdprorunlogLine1>) getIntent().getSerializableExtra("UdprorunlogLine1List");
+        UdprorunlogLine4List = (ArrayList<UdprorunlogLine4>) getIntent().getSerializableExtra("UdprorunlogLine4List");
     }
 
     @Override
@@ -88,13 +87,13 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backOnClickListener);
-        titleTextView.setText(getResources().getString(R.string.udprorunlog_line1_title));
+        titleTextView.setText(getResources().getString(R.string.udprorunlog_line4_title));
         menuImageView.setImageResource(R.mipmap.add);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         confirmlayout.setVisibility(View.GONE);
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
-        layoutManager = new LinearLayoutManager(Udprorunlog_Line1Activity.this);
+        layoutManager = new LinearLayoutManager(Udprorunlog_Line4Activity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
@@ -120,23 +119,24 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
 //        }
 
         if (!udprorunlog.isnew){
-            if (UdprorunlogLine1List == null || UdprorunlogLine1List.size() == 0){
+            if (UdprorunlogLine4List == null || UdprorunlogLine4List.size() == 0){
                 refresh_layout.setRefreshing(true);
                 getdata();
             }else{
-                if (UdprorunlogLine1List != null && UdprorunlogLine1List.size() != 0) {
-                    initList(UdprorunlogLine1List);
+                if (UdprorunlogLine4List != null && UdprorunlogLine4List.size() != 0) {
+                    initList(UdprorunlogLine4List);
 //                woactivityAdapter.addData(woactivityList);
                 }else {
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
         } else {//新建项目日报
-            if (UdprorunlogLine1List == null || UdprorunlogLine1List.size() == 0){
-
+            if (UdprorunlogLine4List == null || UdprorunlogLine4List.size() == 0){
+                initAdapter(new ArrayList<UdprorunlogLine4>());
+                nodatalayout.setVisibility(View.VISIBLE);
             }else {
-                if (UdprorunlogLine1List != null && UdprorunlogLine1List.size() != 0) {
-                    initList(UdprorunlogLine1List);
+                if (UdprorunlogLine4List != null && UdprorunlogLine4List.size() != 0) {
+                    initList(UdprorunlogLine4List);
 //                woactivityAdapter.addData(woactivityList);
                 }else {
                     nodatalayout.setVisibility(View.VISIBLE);
@@ -145,8 +145,8 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
         }
     }
 
-    private void initList(ArrayList<UdprorunlogLine1> list ){
-        ArrayList<UdprorunlogLine1> woactivities = new ArrayList<>();
+    private void initList(ArrayList<UdprorunlogLine4> list ){
+        ArrayList<UdprorunlogLine4> woactivities = new ArrayList<>();
         for (int i = 0;i< list.size();i++){
             if (list.get(i).TYPE!=null&&list.get(i).TYPE.equals("delete")){
                 deleteList.add(list.get(i));
@@ -159,7 +159,7 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
 
     private void getdata() {
         if (udprorunlog.PRORUNLOGNUM != null && !udprorunlog.PRORUNLOGNUM.equals("")) {
-            HttpManager.getDataPagingInfo(Udprorunlog_Line1Activity.this, HttpManager.getUdprorunlogLine1Url(udprorunlog.PRORUNLOGNUM, page, 20), new HttpRequestHandler<Results>() {
+            HttpManager.getDataPagingInfo(Udprorunlog_Line4Activity.this, HttpManager.getUdprorunlogLine4Url(udprorunlog.PRORUNLOGNUM, page, 20), new HttpRequestHandler<Results>() {
                 @Override
                 public void onSuccess(Results results) {
                     Log.i(TAG, "data=" + results);
@@ -167,28 +167,27 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
 
                 @Override
                 public void onSuccess(Results results, int currentPage, int showcount) {
-                    ArrayList<UdprorunlogLine1> udprorunlogLine1s = null;
+                    ArrayList<UdprorunlogLine4> udprorunlogLine4s = null;
                     if (currentPage == page) {
-                        udprorunlogLine1s = JsonUtils.parsingUdprorunlogLine1(Udprorunlog_Line1Activity.this, results.getResultlist(), udprorunlog.PRORUNLOGNUM);
+                        udprorunlogLine4s = JsonUtils.parsingUdprorunlogLine4(Udprorunlog_Line4Activity.this, results.getResultlist(), udprorunlog.PRORUNLOGNUM);
                     }
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
-                    if ((udprorunlogLine1s == null || udprorunlogLine1s.isEmpty())&&page==1) {
+                    if ((udprorunlogLine4s == null || udprorunlogLine4s.isEmpty())&&page==1) {
                         nodatalayout.setVisibility(View.VISIBLE);
-                        initAdapter(new ArrayList<UdprorunlogLine1>());
+                        initAdapter(new ArrayList<UdprorunlogLine4>());
                     } else {
-
-                        if (udprorunlogLine1s != null || udprorunlogLine1s.size() != 0) {
-                            if (UdprorunlogLine1List == null){
-                                UdprorunlogLine1List = new ArrayList<UdprorunlogLine1>();
+                        if (udprorunlogLine4s != null || udprorunlogLine4s.size() != 0) {
+                            if (UdprorunlogLine4List == null){
+                                UdprorunlogLine4List = new ArrayList<UdprorunlogLine4>();
                             }
-                            for (int i = 0; i < udprorunlogLine1s.size(); i++) {
-                                UdprorunlogLine1List.add(udprorunlogLine1s.get(i));
+                            for (int i = 0; i < udprorunlogLine4s.size(); i++) {
+                                UdprorunlogLine4List.add(udprorunlogLine4s.get(i));
                             }
                         }
                         nodatalayout.setVisibility(View.GONE);
 
-                        initAdapter(UdprorunlogLine1List);
+                        initAdapter(UdprorunlogLine4List);
                     }
                 }
 
@@ -210,18 +209,18 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
     /**
      * 获取数据*
      */
-    private void initAdapter(final List<UdprorunlogLine1> list) {
-        udprorunlogLine1Adapter = new UdprorunlogLine1Adapter(Udprorunlog_Line1Activity.this, R.layout.list_item, list);
-        recyclerView.setAdapter(udprorunlogLine1Adapter);
-        udprorunlogLine1Adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+    private void initAdapter(final List<UdprorunlogLine4> list) {
+        udprorunlogLine4Adapter = new UdprorunlogLine4Adapter(Udprorunlog_Line4Activity.this, R.layout.list_item, list);
+        recyclerView.setAdapter(udprorunlogLine4Adapter);
+        udprorunlogLine4Adapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("udprorunlogline1", list.get(position));
+                bundle.putSerializable("udprorunlogline4", list.get(position));
                 bundle.putSerializable("udprorunlog", udprorunlog);
                 bundle.putSerializable("position", position);
-                intent.setClass(Udprorunlog_Line1Activity.this, Udprorunlog_Line1DetailsActivity.class);
+                intent.setClass(Udprorunlog_Line4Activity.this, Udprorunlog_Line4DetailsActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 2);
             }
@@ -247,7 +246,7 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
         @Override
         public void onClick(View v) {
             if (confirmlayout.getVisibility() == View.VISIBLE) {
-                final NormalDialog dialog = new NormalDialog(Udprorunlog_Line1Activity.this);
+                final NormalDialog dialog = new NormalDialog(Udprorunlog_Line4Activity.this);
                 dialog.content("确定放弃修改吗?")//
                         .showAnim(mBasIn)//
                         .dismissAnim(mBasOut)//
@@ -263,12 +262,12 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
                         new OnBtnClickL() {
                             @Override
                             public void onBtnClick() {
-                                Udprorunlog_Line1Activity.this.finish();
+                                Udprorunlog_Line4Activity.this.finish();
 //                                dialog.dismiss();
                             }
                         });
             } else {
-                Udprorunlog_Line1Activity.this.finish();
+                Udprorunlog_Line4Activity.this.finish();
             }
         }
     };
@@ -278,13 +277,16 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
         public void onClick(View view) {
             Intent intent;
             intent = new Intent();
-            intent.setClass(Udprorunlog_Line1Activity.this, WpmaterialAddNewActivity.class);
+            intent.setClass(Udprorunlog_Line4Activity.this, Udprorunlog_Line4AddNewActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("udprorunlog", udprorunlog);
+            intent.putExtras(bundle);
             startActivityForResult(intent, 1);
         }
     };
 
     private void setNodataLayout() {
-        if (udprorunlogLine1Adapter.getItemCount() == 0) {
+        if (udprorunlogLine4Adapter.getItemCount() == 0) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
             nodatalayout.setVisibility(View.GONE);
@@ -295,16 +297,16 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
         @Override
         public void onClick(View v) {
             Intent intent = getIntent();
-            intent.putExtra("UdprorunlogLine1List",getList());
-            Udprorunlog_Line1Activity.this.setResult(1000, intent);
-            Udprorunlog_Line1Activity.this.finish();
+            intent.putExtra("UdprorunlogLine4List",getList());
+            Udprorunlog_Line4Activity.this.setResult(4000, intent);
+            Udprorunlog_Line4Activity.this.finish();
         }
     };
 
-    private ArrayList<UdprorunlogLine1> getList(){
-        ArrayList<UdprorunlogLine1> list = new ArrayList<>();
-        if(udprorunlogLine1Adapter.getData().size()!=0) {
-            list.addAll(udprorunlogLine1Adapter.getData());
+    private ArrayList<UdprorunlogLine4> getList(){
+        ArrayList<UdprorunlogLine4> list = new ArrayList<>();
+        if(udprorunlogLine4Adapter.getData().size()!=0) {
+            list.addAll(udprorunlogLine4Adapter.getData());
         }
         if(deleteList.size()!=0) {
             list.addAll(deleteList);
@@ -317,9 +319,9 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
         switch (resultCode) {
             case 1://新增
                 if (data != null) {
-                    UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
-                    udprorunlogLine1Adapter.add(udprorunlogLine1);
-                    initAdapter(udprorunlogLine1Adapter.getData());
+                    UdprorunlogLine4 udprorunlogLine4 = (UdprorunlogLine4) data.getSerializableExtra("udprorunlogLine4");
+                    udprorunlogLine4Adapter.add(udprorunlogLine4);
+                    initAdapter(udprorunlogLine4Adapter.getData());
                     nodatalayout.setVisibility(View.GONE);
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
@@ -327,11 +329,11 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
                 break;
             case 2://修改
                 if (data != null) {
-                    UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
+                    UdprorunlogLine4 udprorunlogLine1 = (UdprorunlogLine4) data.getSerializableExtra("udprorunlogLine4");
                     int position = data.getIntExtra("position", 0);
-                    udprorunlogLine1Adapter.set(position, udprorunlogLine1);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    udprorunlogLine1Adapter.notifyDataSetChanged();
+                    udprorunlogLine4Adapter.set(position, udprorunlogLine1);
+                    initAdapter(udprorunlogLine4Adapter.getData());
+                    udprorunlogLine4Adapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
@@ -339,21 +341,21 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
             case 3://本地任务删除
                 if (data != null) {
                     int position = data.getIntExtra("position", 0);
-                    udprorunlogLine1Adapter.remove(position);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    udprorunlogLine1Adapter.notifyDataSetChanged();
+                    udprorunlogLine4Adapter.remove(position);
+                    initAdapter(udprorunlogLine4Adapter.getData());
+                    udprorunlogLine4Adapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
                 break;
             case 4://服务器任务删除操作
                 if (data != null) {
-                    UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
+                    UdprorunlogLine4 udprorunlogLine4 = (UdprorunlogLine4) data.getSerializableExtra("udprorunlogLine4");
                     int position = data.getIntExtra("position", 0);
-                    deleteList.add(udprorunlogLine1);
-                    udprorunlogLine1Adapter.remove(position);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    udprorunlogLine1Adapter.notifyDataSetChanged();
+                    deleteList.add(udprorunlogLine4);
+                    udprorunlogLine4Adapter.remove(position);
+                    initAdapter(udprorunlogLine4Adapter.getData());
+                    udprorunlogLine4Adapter.notifyDataSetChanged();
                 }
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
@@ -363,7 +365,7 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        if (!udprorunlog.isnew&& (UdprorunlogLine1List == null || UdprorunlogLine1List.size() == 0)) {
+        if (!udprorunlog.isnew&& (UdprorunlogLine4List == null || UdprorunlogLine4List.size() == 0)) {
             page = 1;
             getdata();
         }else {

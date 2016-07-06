@@ -1,4 +1,4 @@
-package com.example.admin.mingyang_object.ui.activity;
+package com.example.admin.mingyang_object.ui.activity.udpro;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +25,9 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udprorunlog;
+import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdproAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdprorunlogAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 

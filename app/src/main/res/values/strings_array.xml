@@ -66,4 +66,24 @@
         <item>事故维修</item>
         <item>正常维修</item>
     </string-array>
+
+    <string-array name="prophase_array">
+        <item>调试期</item>
+        <item>前期</item>
+        <item>质保期</item>
+        <item>质保外</item>
+    </string-array>
+
+    <string-array name="type2_array">
+        <item>1.5MW轮毂工装</item>
+        <item>1.5MW叶根工装</item>
+        <item>1.5MW叶尖工装</item>
+        <item>1.5MW主机工装</item>
+        <item>1.5MW主机工装后支撑</item>
+        <item>2.0MW轮毂工装</item>
+        <item>2.0MW叶根工装</item>
+        <item>2.0MW叶尖工装</item>
+        <item>2.0MW主机工装</item>
+        <item>2.0MW主机工装后支撑</item>
+    </string-array>
 </resources>

@@ -319,6 +319,7 @@
     <string name="udprorunlog_detail_title">日报详情</string>
     <string name="udprorunlog_addnew_title">日报新增</string>
     <string name="udprorunlog_line1_title">土建阶段日报列表</string>
+    <string name="udprorunlog_line1_details_title">土建阶段日报详情</string>
     <string name="udprorunlogline1_text">土建阶段日报</string>
     <string name="udprorunlogline1_createdate">创建日期:</string>
     <string name="udprorunlogline1_personid">项目负责人:</string>
@@ -336,6 +337,15 @@
     <string name="udprorunlogline1_baseaog">基础环到货:</string>
     <string name="udprorunlogline1_tameraog">塔筒到货:</string>
     <string name="udprorunlogline1_vehiclerecords">现场押车记录:</string>
+
+    <string name="udprorunlog_line4_title">工装管理列表</string>
+    <string name="udprorunlog_line4_details_title">工装管理详情</string>
+    <string name="udprorunlogline4_runlogdate">日期:</string>
+    <string name="udprorunlogline4_type2">类型:</string>
+    <string name="udprorunlogline4_number1">已到货数:</string>
+    <string name="udprorunlogline4_number2">已吊装数:</string>
+    <string name="udprorunlogline4_number3">已返厂数:</string>
+    <string name="udprorunlogline4_number4">风场丢失数:</string>
 
     <string name="udprorunlogline2_text">吊装调试日报</string>
     <string name="udprorunlogline_text">工作日报</string>

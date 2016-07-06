@@ -73,14 +73,22 @@ public class HttpManager {
         if (search.equals("")) {
             if (!type.equals(Constants.DC)) {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WORKTYPE':'" + type + "'}}";
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "'}}";
             } else {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'}";
             }
         } else {
-            return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'WONUM':'%" + search + "%','WORKTYPE':'" + type + "'}}";
+            if (!type.equals(Constants.DC)) {
+                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                        ",'condition':{'WORKTYPE':'" + type + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+            } else {
+                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                        ",'sinorsearch':{'DEBUGWORKORDERNUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+            }
+
         }
     }
 
@@ -188,9 +196,9 @@ public class HttpManager {
      */
     public static String getUdprourl(String value, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'PRONUM desc'}";
         }
-        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'PRONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'PRONUM desc','sinorsearch':{'PRONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
     /**
@@ -270,9 +278,9 @@ public class HttpManager {
      */
     public static String getudprorunlogurl(String value, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'PRORUNLOGNUM desc'}";
         }
-        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'PRORUNLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRORUNLOG_APPID + "','objectname':'" + Constants.UDPRORUNLOG_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'PRORUNLOGNUM desc','sinorsearch':{'PRORUNLOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
     /**
@@ -280,6 +288,15 @@ public class HttpManager {
      */
     public static String getUdprorunlogLine1Url(String prorunlognum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDPRORUNLOGLINE1_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE1_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                "}";
+    }
+
+    /**
+     * 设置工装管理接口*
+     */
+    public static String getUdprorunlogLine4Url(String prorunlognum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDPRORUNLOGLINE4_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE4_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
                 ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
                 "}";
     }
@@ -334,8 +351,6 @@ public class HttpManager {
     }
 
 
-
-
     /**
      * 设置车辆行驶记录的接口
      */
@@ -345,6 +360,7 @@ public class HttpManager {
         }
         return "{'appid':'" + Constants.UDCARDRIVE_APPID + "','objectname':'" + Constants.UDCARDRIVE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CARDRIVELOGNUM DESC'," + ",'sinorsearch':{'CARDRIVELOGNUM':'" + value + "','GOREASON':'" + value + "'}}";
     }
+
     /**
      * 设置车辆加油记录的接口
      */
@@ -354,6 +370,7 @@ public class HttpManager {
         }
         return "{'appid':'" + Constants.UDCARFUELCHARGE_APPID + "','objectname':'" + Constants.UDCARFUELCHARGE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CARFUELCHARGENUM DESC'," + ",'sinorsearch':{'CARFUELCHARGENUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
+
     /**
      * 设置车辆维修记录的接口
      */
@@ -372,8 +389,6 @@ public class HttpManager {
         }
         return "{'appid':'" + Constants.UDVEHICLE_APPID + "','objectname':'" + Constants.UDVEHICLE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LICENSENUM':'" + value + "','DRIVER':'" + value + "'}}";
     }
-
-
 
 
     /**

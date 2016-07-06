@@ -154,14 +154,14 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if (woactivity.ALLPOWER.equals(allpower.getText().toString())
-                    && woactivity.ALLOPTIME.equals(alloptime.getText().toString())
-                    && woactivity.INVCONTENT.equals(invcontent.getText().toString())
-                    && woactivity.UDZGSTU.equals(udzgstu.getText().toString())
-                    && woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
+            if ((woactivity.ALLPOWER==null||woactivity.ALLPOWER.equals(allpower.getText().toString()))
+                    && (woactivity.ALLOPTIME==null||woactivity.ALLOPTIME.equals(alloptime.getText().toString()))
+                    && (woactivity.INVCONTENT==null||woactivity.INVCONTENT.equals(invcontent.getText().toString()))
+                    && (woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
+                    && (woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
                     && (woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
-                    && woactivity.UDRLSTOPDATE.equals(udrlstopdate.getText().toString())
-                    &&woactivity.UDREMARK.equals(udremark.getText().toString())) {//如果内容没有修改
+                    && (woactivity.UDRLSTOPDATE==null||woactivity.UDRLSTOPDATE.equals(udrlstopdate.getText().toString()))
+                    &&(woactivity.UDREMARK==null||woactivity.UDREMARK.equals(udremark.getText().toString()))) {//如果内容没有修改
                 intent.putExtra("woactivity", woactivity);
             } else {
                 Woactivity woactivity = getWoactivity();

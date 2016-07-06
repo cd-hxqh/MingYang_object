@@ -1,4 +1,4 @@
-package com.example.admin.mingyang_object.ui.activity;
+package com.example.admin.mingyang_object.ui.activity.udpro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.UdPerson_ListActivity;
+import com.example.admin.mingyang_object.ui.activity.Udfandetails_ListActivity;
+import com.example.admin.mingyang_object.ui.activity.Ududvehicle_ListActivity;
 
 
 /**
@@ -115,7 +119,7 @@ public class Udpro_DetailActivity extends BaseActivity {
             pronumText.setText(udpro.getPRONUM());
             prDescText.setText(udpro.getDESCRIPTION());
             branchText.setText(udpro.getBRANCH());
-            responsText.setText(udpro.getRESPONS());
+            responsText.setText(udpro.getRESPONSNAME());
             ownerText.setText(udpro.getOWNER());
             signdateText.setText(udpro.getSIGNDATE());
             contractstatusText.setText(udpro.getCONTRACTSTATUS());

@@ -91,4 +91,12 @@ public class Wpmaterial implements Serializable{
     public void setWONUM(String WONUM) {
         this.WONUM = WONUM;
     }
+
+    public boolean isUpload() {
+        return isUpload;
+    }
+
+    public void setIsUpload(boolean isUpload) {
+        this.isUpload = isUpload;
+    }
 }

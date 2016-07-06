@@ -24,6 +24,7 @@ public class Udpro extends Entity implements Serializable {
     private String PERIOD; //质保期（年）
     private String PROSTAGE; //项目当前阶段
     private String RESPONS; //责任人编号
+    private String RESPONSNAME;//责任人描述
     private String SIGNDATE; //签订时间
     private String SITEID; //站点
     private String TESTPRO; //试点项目
@@ -106,6 +107,14 @@ public class Udpro extends Entity implements Serializable {
 
     public void setRESPONS(String RESPONS) {
         this.RESPONS = RESPONS;
+    }
+
+    public String getRESPONSNAME() {
+        return RESPONSNAME;
+    }
+
+    public void setRESPONSNAME(String RESPONSNAME) {
+        this.RESPONSNAME = RESPONSNAME;
     }
 
     public String getSIGNDATE() {

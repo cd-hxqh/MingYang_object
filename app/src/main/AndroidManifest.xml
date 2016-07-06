@@ -158,10 +158,10 @@
             android:label="@string/title_activity_uddebugworkorderlinedetails"
             android:theme="@style/mingyang.ActivityTheme"></activity>
         <activity
-            android:name=".ui.activity.Udpro_ListActivity"
+            android:name=".ui.activity.udpro.Udpro_ListActivity"
             android:label="@string/udrro_text"></activity>
         <activity
-            android:name=".ui.activity.Udpro_DetailActivity"
+            android:name=".ui.activity.udpro.Udpro_DetailActivity"
             android:label="@string/udpro_detail_text"></activity>
         <activity
             android:name=".ui.activity.Udfandetails_ListActivity"
@@ -173,19 +173,34 @@
             android:name=".ui.activity.Ududvehicle_ListActivity"
             android:label="@string/udvehicle_text"></activity>
         <activity
-            android:name=".ui.activity.Udprorunlog_listactivity"
+            android:name=".ui.activity.udpro.Udprorunlog_listactivity"
             android:label="@string/udprorunlog_text"></activity>
         <activity
-            android:name=".ui.activity.Udprorunlog_DetailActivity"
+            android:name=".ui.activity.udpro.Udprorunlog_DetailActivity"
             android:label="@string/udprorunlog_detail_title"></activity>
         <activity
-            android:name=".ui.activity.Udprorunlog_AddNewActivity"
+            android:name=".ui.activity.udpro.Udprorunlog_AddNewActivity"
             android:label="@string/udprorunlog_addnew_title"></activity>
         <activity
-            android:name=".ui.activity.Udprorunlog_Line1Activity"
+            android:name=".ui.activity.udpro.Udprorunlog_Line1Activity"
             android:label="@string/udprorunlog_line1_title"></activity>
         <activity
-            android:name=".ui.activity.Udprorunlog_Line1DetailsActivity"
+            android:name=".ui.activity.udpro.Udprorunlog_Line4Activity"
+            android:label="@string/udprorunlog_line4_title"></activity>
+        <activity
+            android:name=".ui.activity.udpro.Udprorunlog_Line1DetailsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:label="@string/udprorunlog_line1_details_title"></activity>
+        <activity
+            android:name=".ui.activity.udpro.Udprorunlog_Line4DetailsActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:label="@string/udprorunlog_line4_details_title"></activity>
+        <activity
+            android:name=".ui.activity.udpro.Udprorunlog_Line4AddNewActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:label="@string/udprorunlog_line4_details_title"></activity>
+        <activity
+            android:name=".ui.activity.udpro.Udprorunlog_Line1AddNewActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:label="@string/udprorunlog_line1_title"></activity>
         <activity

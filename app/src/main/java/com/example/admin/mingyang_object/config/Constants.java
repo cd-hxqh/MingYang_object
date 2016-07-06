@@ -145,7 +145,10 @@ public class Constants {
     public static final String UDPRORUNLOGLINE1_APPID = "UDPRORUNLOGLINE1";
     //土建阶段日报表名
     public static final String UDPRORUNLOGLINE1_NAME = "UDPRORUNLOGLINE1";
-
+    //工装管理appid
+    public static final String UDPRORUNLOGLINE4_APPID = "UDPRORUNLOGLINE4";
+    //工装管理表名
+    public static final String UDPRORUNLOGLINE4_NAME = "UDPRORUNLOGLINE4";
 
     /**
      * 问题联络单appid*

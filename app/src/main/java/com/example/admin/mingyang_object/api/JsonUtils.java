@@ -25,6 +25,7 @@ import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine1;
+import com.example.admin.mingyang_object.model.UdprorunlogLine4;
 import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
@@ -1025,7 +1026,7 @@ public class JsonUtils<E> {
                 woactivity.WOJO2 = jsonObject.getString("JO2");
                 woactivity.WOJO3 = jsonObject.getString("JO3");
                 woactivity.WOJO4 = jsonObject.getString("JO4");
-                woactivity.WONUM = wonum;
+                woactivity.WONUM = wonum ==null?"":wonum;
                 woactivity.isUpload = true;
                 list.add(woactivity);
             }
@@ -1121,6 +1122,52 @@ public class JsonUtils<E> {
                 udprorunlogLine1.PRORUNLOGNUM = prorunlognum;
                 udprorunlogLine1.isUpload = true;
                 list.add(udprorunlogLine1);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析工装管理子表信息
+     */
+    public static ArrayList<UdprorunlogLine4> parsingUdprorunlogLine4(Context ctx, String data, String prorunlognum) {
+        Log.i(TAG, "UdprorunlogLine1 data=" + data);
+        ArrayList<UdprorunlogLine4> list = null;
+        UdprorunlogLine4 udprorunlogLine4 = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<UdprorunlogLine4>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udprorunlogLine4 = new UdprorunlogLine4();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udprorunlogLine4.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.get(name) != null) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udprorunlogLine4.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udprorunlogLine4);
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udprorunlogLine4.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udprorunlogLine4, jsonObject.get(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                udprorunlogLine4.PRORUNLOGNUM = prorunlognum;
+                udprorunlogLine4.isUpload = true;
+                list.add(udprorunlogLine4);
             }
             return list;
         } catch (JSONException e) {
@@ -1239,7 +1286,7 @@ public class JsonUtils<E> {
                     getOrSet = workOrder.getClass().getMethod("get" + name);
                     Object value = null;
                     value = getOrSet.invoke(workOrder);
-                    if (value != null) {
+                    if (value != null&&!name.equals("isnew")) {
                         jsonObject.put(name, value + "");
                     }
                 } catch (NoSuchMethodException e) {
@@ -1325,7 +1372,8 @@ public class JsonUtils<E> {
      *
      * @return
      */
-    public static String UdprorunlogToJson(Udprorunlog udprorunlog) {
+    public static String UdprorunlogToJson(Udprorunlog udprorunlog,ArrayList<UdprorunlogLine1> udprorunlogLine1s
+                ,ArrayList<UdprorunlogLine4> udprorunlogLine4s) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
@@ -1338,7 +1386,7 @@ public class JsonUtils<E> {
                     getOrSet = udprorunlog.getClass().getMethod("get" + name);
                     Object value = null;
                     value = getOrSet.invoke(udprorunlog);
-                    if (value != null && !name.equals("BRANCH")) {
+                    if (value != null && !name.equals("BRANCH") && !name.equals("isnew")) {
                         jsonObject.put(name, value + "");
                     }
                 } catch (NoSuchMethodException e) {
@@ -1350,66 +1398,66 @@ public class JsonUtils<E> {
                 }
             }
             JSONObject object = new JSONObject();
-//            if (woactivities != null && woactivities.size() != 0) {
-//                object.put("WOACTIVITY", "");
-//                JSONArray woactivityArray = new JSONArray();
-//                JSONObject woactivityObj;
-//                for (int i = 0; i < woactivities.size(); i++) {
-//                    woactivityObj = new JSONObject();
-//                    Field[] field1 = woactivities.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
-//                    for (int j = 0; j < field1.length; j++) {
-//                        field1[j].setAccessible(true);
-//                        String name = field1[j].getName();//获取属性的名字
-//                        Method getOrSet = null;
-//                        try {
-//                            getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
-//                            Object value = null;
-//                            value = getOrSet.invoke(woactivities.get(i));
-//                            if (value != null) {
-//                                woactivityObj.put(name, value+"");
-//                            }
-//                        } catch (NoSuchMethodException e) {
-//                            e.printStackTrace();
-//                        } catch (IllegalAccessException e) {
-//                            e.printStackTrace();
-//                        } catch (InvocationTargetException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    woactivityArray.put(woactivityObj);
-//                }
-//                jsonObject.put("WOACTIVITY", woactivityArray);
-//            }
-//            if (wpmaterials != null && wpmaterials.size() != 0) {
-//                object.put("WPMATERIAL", "");
-//                JSONArray wpmaterialsArray = new JSONArray();
-//                JSONObject wpmaterialsObj;
-//                for (int i = 0; i < wpmaterials.size(); i++) {
-//                    wpmaterialsObj = new JSONObject();
-//                    Field[] field1 = wpmaterials.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
-//                    for (int j = 0; j < field1.length; j++) {
-//                        field1[j].setAccessible(true);
-//                        String name = field1[j].getName();//获取属性的名字
-//                        Method getOrSet = null;
-//                        try {
-//                            getOrSet = wpmaterials.get(i).getClass().getMethod("get" + name);
-//                            Object value = null;
-//                            value = getOrSet.invoke(wpmaterials.get(i));
-//                            if (value != null) {
-//                                wpmaterialsObj.put(name, value+"");
-//                            }
-//                        } catch (NoSuchMethodException e) {
-//                            e.printStackTrace();
-//                        } catch (IllegalAccessException e) {
-//                            e.printStackTrace();
-//                        } catch (InvocationTargetException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    wpmaterialsArray.put(wpmaterialsObj);
-//                }
-//                jsonObject.put("WPMATERIAL", wpmaterialsArray);
-//            }
+            if (udprorunlogLine1s != null && udprorunlogLine1s.size() != 0) {
+                object.put("UDPRORUNLOGLINE1", "");
+                JSONArray woactivityArray = new JSONArray();
+                JSONObject woactivityObj;
+                for (int i = 0; i < udprorunlogLine1s.size(); i++) {
+                    woactivityObj = new JSONObject();
+                    Field[] field1 = udprorunlogLine1s.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = udprorunlogLine1s.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(udprorunlogLine1s.get(i));
+                            if (value != null) {
+                                woactivityObj.put(name, value+"");
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    woactivityArray.put(woactivityObj);
+                }
+                jsonObject.put("UDPRORUNLOGLINE1", woactivityArray);
+            }
+            if (udprorunlogLine4s != null && udprorunlogLine4s.size() != 0) {
+                object.put("UDPRORUNLOGLINE4", "");
+                JSONArray wpmaterialsArray = new JSONArray();
+                JSONObject wpmaterialsObj;
+                for (int i = 0; i < udprorunlogLine4s.size(); i++) {
+                    wpmaterialsObj = new JSONObject();
+                    Field[] field1 = udprorunlogLine4s.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = udprorunlogLine4s.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(udprorunlogLine4s.get(i));
+                            if (value != null) {
+                                wpmaterialsObj.put(name, value+"");
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    wpmaterialsArray.put(wpmaterialsObj);
+                }
+                jsonObject.put("UDPRORUNLOGLINE4", wpmaterialsArray);
+            }
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
             jsonObject.put("relationShip", jsonArray);

@@ -7,9 +7,10 @@ import java.io.Serializable;
  * 土建阶段日报
  */
 public class UdprorunlogLine1 implements Serializable{
+    public int UDPRORUNLOGLINE1ID;
     public String CREATEDATE;//创建日期
     public String PERSONID;//项目负责人
-    public String PERSONDESC;//项目负责人描述
+    public String PERSONDESC;//
     public String FUNNUM;//风机号
     public String PROPHASE;//当前项目阶段
     public String LAND;//征地
@@ -27,6 +28,14 @@ public class UdprorunlogLine1 implements Serializable{
     public String TYPE;
     public String PRORUNLOGNUM;
     public boolean isUpload;
+
+    public int getUDPRORUNLOGLINE1ID() {
+        return UDPRORUNLOGLINE1ID;
+    }
+
+    public void setUDPRORUNLOGLINE1ID(int UDPRORUNLOGLINE1ID) {
+        this.UDPRORUNLOGLINE1ID = UDPRORUNLOGLINE1ID;
+    }
 
     public String getCREATEDATE() {
         return CREATEDATE;

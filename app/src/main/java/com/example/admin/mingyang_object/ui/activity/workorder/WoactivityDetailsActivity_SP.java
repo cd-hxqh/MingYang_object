@@ -147,13 +147,13 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         public void onClick(View view) {
             Intent intent = getIntent();
             if((woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
-                    &&woactivity.UDINSUNIT.equals(udinsunit.getText().toString())
-                    &&woactivity.UDRPRRSB.equals(udrprrsb.getText().toString())
-                    &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
-                    &&woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
-                    &&woactivity.UDZGSTU.equals(udzgstu.getText().toString())
-                    &&woactivity.UDZGRESULT.equals(udzgresult.getText().toString())
-                    &&woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())) {//如果内容没有修改
+                    &&(woactivity.UDINSUNIT==null||woactivity.UDINSUNIT.equals(udinsunit.getText().toString()))
+                    &&(woactivity.UDRPRRSB==null||woactivity.UDRPRRSB.equals(udrprrsb.getText().toString()))
+                    &&(woactivity.UDPROBDESC==null||woactivity.UDPROBDESC.equals(udprobdesc.getText().toString()))
+                    &&(woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
+                    &&(woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
+                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString()))
+                    &&(woactivity.UDZGLIMIT==null||woactivity.UDZGLIMIT.equals(udzglimit.getText().toString()))) {//如果内容没有修改
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();

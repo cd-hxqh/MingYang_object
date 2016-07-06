@@ -336,4 +336,12 @@ public class Woactivity extends Entity implements Serializable {
     public void setTYPE(String TYPE) {
         this.TYPE = TYPE;
     }
+
+    public boolean isUpload() {
+        return isUpload;
+    }
+
+    public void setIsUpload(boolean isUpload) {
+        this.isUpload = isUpload;
+    }
 }
