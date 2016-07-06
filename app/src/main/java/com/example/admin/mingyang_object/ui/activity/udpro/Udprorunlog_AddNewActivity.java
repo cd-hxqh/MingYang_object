@@ -22,6 +22,7 @@ import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine1;
 import com.example.admin.mingyang_object.model.UdprorunlogLine2;
+import com.example.admin.mingyang_object.model.UdprorunlogLine3;
 import com.example.admin.mingyang_object.model.UdprorunlogLine4;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
@@ -115,6 +116,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
 
     private ArrayList<UdprorunlogLine1> UdprorunlogLine1List = new ArrayList<>();
     private ArrayList<UdprorunlogLine2> UdprorunlogLine2List = new ArrayList<>();
+    private ArrayList<UdprorunlogLine3> UdprorunlogLine3List = new ArrayList<>();
     private ArrayList<UdprorunlogLine4> UdprorunlogLine4List = new ArrayList<>();
 
     @Override
@@ -256,7 +258,11 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
     private View.OnClickListener gzrzLinearOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            Intent intent = new Intent(Udprorunlog_AddNewActivity.this, Udprorunlog_Line3Activity.class);
+            intent.putExtra("udprorunlog", getUdprorunlog());
+            intent.putExtra("UdprorunlogLine3List", UdprorunlogLine3List);
+            startActivityForResult(intent, 3000);
+            popupWindow.dismiss();
         }
     };
 
@@ -268,7 +274,6 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
             intent.putExtra("UdprorunlogLine4List", UdprorunlogLine4List);
             startActivityForResult(intent, 4000);
             popupWindow.dismiss();
-
         }
     };
 
@@ -392,6 +397,16 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         return udprorunlogLine2s;
     }
 
+    private ArrayList<UdprorunlogLine3> getUdprorunlogLine3() {
+        ArrayList<UdprorunlogLine3> udprorunlogLine3s = new ArrayList<>();
+        for (int i = 0; i < UdprorunlogLine3List.size(); i++) {
+            if (UdprorunlogLine3List.get(i).TYPE != null) {
+                udprorunlogLine3s.add(UdprorunlogLine3List.get(i));
+            }
+        }
+        return udprorunlogLine3s;
+    }
+
     private ArrayList<UdprorunlogLine4> getUdprorunlogLine4() {
         ArrayList<UdprorunlogLine4> udprorunlogLine4s = new ArrayList<>();
         for (int i = 0; i < UdprorunlogLine4List.size(); i++) {
@@ -412,7 +427,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.UdprorunlogToJson(getUdprorunlog(), getUdprorunlogLine1(),getUdprorunlogLine2(),getUdprorunlogLine4());
+        updataInfo = JsonUtils.UdprorunlogToJson(getUdprorunlog(), getUdprorunlogLine1(),getUdprorunlogLine2(),getUdprorunlogLine3(),getUdprorunlogLine4());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -477,6 +492,9 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
                     break;
                 case 2000:
                     UdprorunlogLine2List = (ArrayList<UdprorunlogLine2>) data.getSerializableExtra("UdprorunlogLine2List");
+                    break;
+                case 3000:
+                    UdprorunlogLine3List = (ArrayList<UdprorunlogLine3>) data.getSerializableExtra("UdprorunlogLine3List");
                     break;
                 case 4000:
                     UdprorunlogLine4List = (ArrayList<UdprorunlogLine4>) data.getSerializableExtra("UdprorunlogLine4List");

@@ -302,6 +302,15 @@ public class HttpManager {
     }
 
     /**
+     * 设置工作日报接口*
+     */
+    public static String getUdprorunlogLine3Url(String prorunlognum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDPRORUNLOGLINE3_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE3_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                "}";
+    }
+
+    /**
      * 设置工装管理接口*
      */
     public static String getUdprorunlogLine4Url(String prorunlognum, int curpage, int showcount) {

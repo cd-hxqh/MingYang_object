@@ -356,6 +356,14 @@
     <string name="udprorunlog_line2_workjob">当日工作内容:</string>
     <string name="udprorunlog_line2_remark">备注:</string>
     <string name="udprorunlogline2_text">吊装调试日报</string>
+
+    <string name="udprorunlog_line3_title">工作日报列表</string>
+    <string name="udprorunlog_line3_details_title">工作日报详情</string>
+    <string name="udprorunlog_line3_runlogdate">日期:</string>
+    <string name="udprorunlog_line3_description">描述:</string>
+    <string name="udprorunlog_line3_weather">天气:</string>
+    <string name="udprorunlog_line3_tem">温度(℃):</string>
+    <string name="udprorunlog_line3_windspeed">平均风速(m/s):</string>
     <string name="udprorunlogline_text">工作日报</string>
     <string name="udprorunlogline4_text">工装管理</string>
     <!--问题联络单-->

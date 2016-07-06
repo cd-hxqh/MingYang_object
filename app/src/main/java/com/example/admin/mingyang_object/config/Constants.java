@@ -150,6 +150,10 @@ public class Constants {
     public static final String UDPRORUNLOGLINE2_APPID = "UDPRORUNLOGLINE2";
     //吊装调试日报表名
     public static final String UDPRORUNLOGLINE2_NAME = "UDPRORUNLOGLINE2";
+    //工作日报appid
+    public static final String UDPRORUNLOGLINE3_APPID = "UDPRORUNLOGLINE";
+    //工作日报表名
+    public static final String UDPRORUNLOGLINE3_NAME = "UDPRORUNLOGLINE";
     //工装管理appid
     public static final String UDPRORUNLOGLINE4_APPID = "UDPRORUNLOGLINE4";
     //工装管理表名

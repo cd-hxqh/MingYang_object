@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +15,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udprorunlog;
-import com.example.admin.mingyang_object.model.UdprorunlogLine2;
+import com.example.admin.mingyang_object.model.UdprorunlogLine3;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.utils.DateSelect;
@@ -32,9 +31,9 @@ import java.util.ArrayList;
 
 /**
  * Created by think on 2016/7/6.
- * 吊装调试日报新增页面
+ * 工作日报新增页面
  */
-public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
+public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
     /**
      * 返回按钮
      */
@@ -44,16 +43,15 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
      */
     private TextView titleTextView;
 
-    private UdprorunlogLine2 udprorunlogLine2 = new UdprorunlogLine2();
+    private UdprorunlogLine3 udprorunlogLine3 = new UdprorunlogLine3();
     private Udprorunlog udprorunlog;
     private int position;
 
-    private TextView createdate;//日期
-    private TextView personid;//项目负责人
-    private TextView person;//
-    private TextView prophase;//当前项目阶段
-    private EditText workjob;//当日工作内容
-    private EditText remark;//备注
+    public TextView runlogdate;//日期
+    public EditText description;//描述
+    public TextView weather;//天气
+    public EditText tem;//温度(℃)
+    public EditText windspeed;//平均风速(m/s)
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button cancel;//删除
@@ -65,7 +63,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_udprorunlog_line2_details);
+        setContentView(R.layout.activity_udprorunlog_line3_details);
 
         geiIntentData();
         findViewById();
@@ -83,12 +81,11 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
 
-        createdate = (TextView) findViewById(R.id.udprorunlog_line2_createdate);
-        personid = (TextView) findViewById(R.id.udprorunlog_line2_personid);
-        person = (TextView) findViewById(R.id.udprorunlog_line2_person);
-        prophase = (TextView) findViewById(R.id.udprorunlog_line2_prophase);
-        workjob = (EditText) findViewById(R.id.udprorunlog_line2_workjob);
-        remark = (EditText) findViewById(R.id.udprorunlog_line2_remark);
+        runlogdate = (TextView) findViewById(R.id.udprorunlog_line3_runlogdate);
+        description = (EditText) findViewById(R.id.udprorunlog_line3_description);
+        weather = (TextView) findViewById(R.id.udprorunlog_line3_weather);
+        tem = (EditText) findViewById(R.id.udprorunlog_line3_tem);
+        windspeed = (EditText) findViewById(R.id.udprorunlog_line3_windspeed);
         confirm = (Button) findViewById(R.id.work_save);
         cancel = (Button) findViewById(R.id.work_cancel);
     }
@@ -101,38 +98,32 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
                 finish();
             }
         });
-        titleTextView.setText("新增" + getResources().getString(R.string.udprorunlog_line2_details_title));
+        titleTextView.setText("新增" + getResources().getString(R.string.udprorunlog_line3_details_title));
 
-        createdate.setText(GetDateAndTime.GetDate());
-        personid.setText(udprorunlog.RESPONSID);
-        person.setText(udprorunlog.UDPRORESC);
-        createdate.setOnClickListener(new DateChecked(createdate));
-        personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
-        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
-
+        runlogdate.setOnClickListener(new DateChecked(runlogdate));
+        weather.setOnClickListener(new NormalListDialogOnClickListener(weather));
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
     }
 
-    private UdprorunlogLine2 getUdprorunlogLine2() {
-        UdprorunlogLine2 udprorunlogLine2 = this.udprorunlogLine2;
-        udprorunlogLine2.CREATEDATE = createdate.getText().toString();
-        udprorunlogLine2.PERSONID = personid.getText().toString();
-        udprorunlogLine2.CREATEBY = person.getText().toString();
-        udprorunlogLine2.PROPHASE = prophase.getText().toString();
-        udprorunlogLine2.WORKJOB = workjob.getText().toString();
-        udprorunlogLine2.REMARK = remark.getText().toString();
-        udprorunlogLine2.TYPE = "add";
-        return udprorunlogLine2;
+    private UdprorunlogLine3 getUdprorunlogLine3() {
+        UdprorunlogLine3 udprorunlogLine3 = this.udprorunlogLine3;
+        udprorunlogLine3.RUNLOGDATE = runlogdate.getText().toString();
+        udprorunlogLine3.DESCRIPTION = description.getText().toString();
+        udprorunlogLine3.WEATHER = weather.getText().toString();
+        udprorunlogLine3.TEM = tem.getText().toString().equals("")?(0.00):Double.parseDouble(tem.getText().toString());
+        udprorunlogLine3.WINDSPEED = windspeed.getText().toString().equals("")?(0.00):Double.parseDouble(windspeed.getText().toString());
+        udprorunlogLine3.TYPE = "add";
+        return udprorunlogLine3;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            intent.putExtra("udprorunlogLine2", getUdprorunlogLine2());
-            Udprorunlog_Line2AddNewActivity.this.setResult(1, intent);
-            Toast.makeText(Udprorunlog_Line2AddNewActivity.this, "吊装调试日报本地新增成功", Toast.LENGTH_SHORT).show();
+            intent.putExtra("udprorunlogLine3", getUdprorunlogLine3());
+            Udprorunlog_Line3AddNewActivity.this.setResult(1, intent);
+            Toast.makeText(Udprorunlog_Line3AddNewActivity.this, "工作日报本地新增成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     };
@@ -153,7 +144,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            new DateSelect(Udprorunlog_Line2AddNewActivity.this, textView).showDialog();
+            new DateSelect(Udprorunlog_Line3AddNewActivity.this, textView).showDialog();
         }
     }
 
@@ -166,7 +157,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            new DateTimeSelect(Udprorunlog_Line2AddNewActivity.this, textView).showDialog();
+            new DateTimeSelect(Udprorunlog_Line3AddNewActivity.this, textView).showDialog();
         }
     }
 
@@ -186,13 +177,13 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     private void NormalListDialog(final TextView textView) {
         String[] types = new String[0];
         mMenuItems = new ArrayList<>();
-        if (textView == prophase) {
-            types = getResources().getStringArray(R.array.prophase_array);
+        if (textView == weather) {
+            types = getResources().getStringArray(R.array.weather_array);
         }
         for (int i = 0; i < types.length; i++) {
             mMenuItems.add(new DialogMenuItem(types[i], 0));
         }
-        final NormalListDialog dialog = new NormalListDialog(Udprorunlog_Line2AddNewActivity.this, mMenuItems);
+        final NormalListDialog dialog = new NormalListDialog(Udprorunlog_Line3AddNewActivity.this, mMenuItems);
         dialog.title("请选择")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -217,7 +208,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Udprorunlog_Line2AddNewActivity.this, OptionActivity.class);
+            Intent intent = new Intent(Udprorunlog_Line3AddNewActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
             intent.putExtra("udprojectnum",udprorunlog.getPRONUM());
             startActivityForResult(intent, requestCode);
@@ -228,13 +219,13 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
         switch (requestCode) {
-            case 1:
-                if (data!=null) {
-                    option = (Option) data.getSerializableExtra("option");
-                    personid.setText(option.getName());
-                    person.setText(option.getDesc());
-                }
-                break;
+//            case 1:
+//                if (data!=null) {
+//                    option = (Option) data.getSerializableExtra("option");
+//                    personid.setText(option.getName());
+//                    person.setText(option.getDesc());
+//                }
+//                break;
         }
     }
 }

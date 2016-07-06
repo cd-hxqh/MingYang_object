@@ -34,12 +34,12 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/udprorunlog_line2_createdate"
+                        android:text="@string/udprorunlog_line3_runlogdate"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
                     <TextView
-                        android:id="@+id/udprorunlog_line2_createdate"
+                        android:id="@+id/udprorunlog_line3_runlogdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
@@ -65,18 +65,18 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/udprorunlog_line2_personid"
+                        android:text="@string/udprorunlog_line3_description"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
-                    <TextView
-                        android:id="@+id/udprorunlog_line2_personid"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/udprorunlog_line3_description"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
-                        android:hint="@string/have_not_data"
+                        android:gravity="center_vertical"
                         android:textColor="@color/light_black"
-                        android:textSize="@dimen/dimens_16dp" />
+                        android:textSize="@dimen/dimens_16dp"  />
                 </LinearLayout>
 
                 <View
@@ -84,35 +84,7 @@
                     android:layout_height="1dp"
                     android:layout_below="@+id/num_linearlayout_id"
                     android:background="@mipmap/line"></View>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_40dp"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/udprorunlog_line2_person"
-                        android:textColor="@color/light_black"
-                        android:textSize="@dimen/dimens_16dp" />
-
-                    <TextView
-                        android:id="@+id/udprorunlog_line2_person"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:hint="@string/have_not_data"
-                        android:textColor="@color/light_black"
-                        android:textSize="@dimen/dimens_16dp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/num_linearlayout_id"
-                    android:background="@mipmap/line"></View>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,12 +96,12 @@
                         android:layout_width="100dp"
                         android:layout_height="@dimen/dimen_40dp"
                         android:gravity="center_vertical"
-                        android:text="@string/udprorunlog_line2_prophase"
+                        android:text="@string/udprorunlog_line3_weather"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
                     <TextView
-                        android:id="@+id/udprorunlog_line2_prophase"
+                        android:id="@+id/udprorunlog_line3_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
@@ -153,15 +125,16 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/udprorunlog_line2_workjob"
+                        android:text="@string/udprorunlog_line3_tem"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
                     <EditText
-                        android:id="@+id/udprorunlog_line2_workjob"
+                        android:id="@+id/udprorunlog_line3_tem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:inputType="numberDecimal"
                         android:gravity="center_vertical"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp"  />
@@ -184,15 +157,16 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/udprorunlog_line2_remark"
+                        android:text="@string/udprorunlog_line3_windspeed"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
                     <EditText
-                        android:id="@+id/udprorunlog_line2_remark"
+                        android:id="@+id/udprorunlog_line3_windspeed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:inputType="numberDecimal"
                         android:gravity="center_vertical"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
