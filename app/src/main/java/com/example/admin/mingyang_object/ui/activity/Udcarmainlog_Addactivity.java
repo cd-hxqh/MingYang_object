@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -91,14 +93,24 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
     private EditText maincontentText; //维修.保养.更换项目
     private EditText number2Text; //上次维修里程表读数
     private EditText number1Text; //本次维修里程表读数
-    private TextView comisornoText; //是否提交
+    private CheckBox comisornoText; //是否提交
     private EditText remarkText; //备注
+
+
+    /**
+     * 是否提交*
+     */
+    private boolean istijiao;
 
 
     /**
      * 保存按钮*
      */
     private Button saveButton;
+    /**
+     * 取消保存*
+     */
+    private Button canleButton;
 
 
     private Udcarmainlog udcarmainlog;
@@ -143,9 +155,10 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
         maincontentText = (EditText) findViewById(R.id.maincontent_text_id);
         number2Text = (EditText) findViewById(R.id.number2_text_id);
         number1Text = (EditText) findViewById(R.id.number1_text_id);
-        comisornoText = (TextView) findViewById(R.id.comisorno_text_id);
+        comisornoText = (CheckBox) findViewById(R.id.comisorno_text_id);
         remarkText = (EditText) findViewById(R.id.remark_text_id);
         saveButton = (Button) findViewById(R.id.work_save);
+        canleButton = (Button) findViewById(R.id.work_cancel);
 
     }
 
@@ -159,8 +172,21 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
         enddateText.setOnClickListener(new DateTimeOnClickListener(enddateText));
 
         servicetypeText.setOnClickListener(servicetypeTextOnClickListener);
+        comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
+
+
         saveButton.setOnClickListener(saveButtonOnClickListener);
+        canleButton.setOnClickListener(canleButtonOnClickListener);
     }
+
+
+    private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            istijiao = isChecked;
+        }
+    };
+
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -168,10 +194,18 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
             finish();
         }
     };
+    private View.OnClickListener canleButtonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            MessageUtils.showMiddleToast(Udcarmainlog_Addactivity.this, "取消新增维修单");
+            finish();
+        }
+    };
 
     private View.OnClickListener licensenumTextOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             Intent intent = new Intent(Udcarmainlog_Addactivity.this, OptionActivity.class);
             intent.putExtra("optiontype", Constants.UDVEHICLE);
             startActivityForResult(intent, 0);
@@ -187,8 +221,10 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
     private View.OnClickListener saveButtonOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showProgressDialog("数据提交中...");
-            startAsyncTask();
+            if (isBiTian()) {
+                showProgressDialog("数据提交中...");
+                startAsyncTask();
+            }
         }
     };
 
@@ -270,6 +306,8 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
         String maincontent = maincontentText.getText().toString(); //维修.保养.更换
         String number2 = number2Text.getText().toString(); //上次维修里程
         String number1 = number1Text.getText().toString(); //本次次维修里程
+
+
         String remark = remarkText.getText().toString(); //备注
         Udcarmainlog udcarmainlog = new Udcarmainlog();
         udcarmainlog.setLICENSENUM(licensenum);
@@ -293,6 +331,10 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
         udcarmainlog.setMAINCONTENT(maincontent);
         udcarmainlog.setNUMBER2(number2);
         udcarmainlog.setNUMBER1(number1);
+        if (istijiao) {
+            udcarmainlog.setCOMISORNO("已提交");
+        }
+
         udcarmainlog.setREMARK(remark);
 
         return udcarmainlog;
@@ -331,6 +373,46 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
             }
         }.execute();
 
+    }
+
+
+    /**
+     * 验证必填项*
+     */
+    private boolean isBiTian() {
+        String licensenum = licensenumText.getText().toString();
+        if (licensenum.equals("")) { //车牌号
+            licensenumText.setError("必填!");
+            licensenumText.requestFocus();
+            return false;
+        }
+        String startdate = startdateText.getText().toString();
+        if (startdate.equals("")) {//维修开始日期
+            startdateText.setError("必填!");
+            startdateText.requestFocus();
+            return false;
+        }
+
+        String enddate = enddateText.getText().toString(); //结束时间
+        if (enddate.equals("")) {//维修结束时间
+            enddateText.setError("必填!");
+            enddateText.requestFocus();
+            return false;
+        }
+        String totalprice = totalpriceText.getText().toString(); //维修总额
+        if (totalprice.equals("")) {//维修总额
+            totalpriceText.setError("必填!");
+            return false;
+        }
+
+        String servicetype = servicetypeText.getText().toString(); //维修类型
+        if (servicetype.equals("")) { //车牌号
+            servicetypeText.setError("必填!");
+            servicetypeText.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
 
