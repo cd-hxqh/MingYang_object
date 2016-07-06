@@ -16,8 +16,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udprorunlog;
-import com.example.admin.mingyang_object.model.UdprorunlogLine1;
-import com.example.admin.mingyang_object.model.UdprorunlogLine4;
+import com.example.admin.mingyang_object.model.UdprorunlogLine2;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.utils.DateSelect;
@@ -32,10 +31,10 @@ import java.util.ArrayList;
 
 
 /**
- * Created by think on 2016/7/5.
- * 工装管理新增页面
+ * Created by think on 2016/7/6.
+ * 吊装调试日报新增页面
  */
-public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
+public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     /**
      * 返回按钮
      */
@@ -45,16 +44,16 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
      */
     private TextView titleTextView;
 
-    private UdprorunlogLine4 udprorunlogLine4 = new UdprorunlogLine4();
+    private UdprorunlogLine2 udprorunlogLine2 = new UdprorunlogLine2();
     private Udprorunlog udprorunlog;
     private int position;
 
-    private TextView runlogdate;//日期
-    private TextView type2;//类型
-    private EditText number1;//已到货数
-    private EditText number2;//已吊装数
-    private EditText number3;//已返厂数
-    private EditText number4;//风场丢失数
+    private TextView createdate;//日期
+    private TextView personid;//项目负责人
+    private TextView person;//
+    private TextView prophase;//当前项目阶段
+    private EditText workjob;//当日工作内容
+    private EditText remark;//备注
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button cancel;//删除
@@ -66,7 +65,7 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_udprorunlog_line4_details);
+        setContentView(R.layout.activity_udprorunlog_line2_details);
 
         geiIntentData();
         findViewById();
@@ -84,12 +83,12 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
 
-        runlogdate = (TextView) findViewById(R.id.udprorunlogline4_runlogdate);
-        type2 = (TextView) findViewById(R.id.udprorunlogline4_type2);
-        number1 = (EditText) findViewById(R.id.udprorunlogline4_number1);
-        number2 = (EditText) findViewById(R.id.udprorunlogline4_number2);
-        number3 = (EditText) findViewById(R.id.udprorunlogline4_number3);
-        number4 = (EditText) findViewById(R.id.udprorunlogline4_number4);
+        createdate = (TextView) findViewById(R.id.udprorunlog_line2_createdate);
+        personid = (TextView) findViewById(R.id.udprorunlog_line2_personid);
+        person = (TextView) findViewById(R.id.udprorunlog_line2_person);
+        prophase = (TextView) findViewById(R.id.udprorunlog_line2_prophase);
+        workjob = (EditText) findViewById(R.id.udprorunlog_line2_workjob);
+        remark = (EditText) findViewById(R.id.udprorunlog_line2_remark);
         confirm = (Button) findViewById(R.id.work_save);
         cancel = (Button) findViewById(R.id.work_cancel);
     }
@@ -102,35 +101,37 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
                 finish();
             }
         });
-        titleTextView.setText("新增" + getResources().getString(R.string.udprorunlog_line4_details_title));
+        titleTextView.setText("新增" + getResources().getString(R.string.udprorunlog_line2_details_title));
 
-        runlogdate.setText(GetDateAndTime.GetDate());
-        runlogdate.setOnClickListener(new DateChecked(runlogdate));
-        type2.setOnClickListener(new NormalListDialogOnClickListener(type2));
+        createdate.setText(GetDateAndTime.GetDate());
+        personid.setText(udprorunlog.RESPONSID);
+        person.setText(udprorunlog.UDPRORESC);
+        createdate.setOnClickListener(new DateChecked(createdate));
+        personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
 
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
     }
 
-    private UdprorunlogLine4 getUdprorunlogLine4() {
-        UdprorunlogLine4 udprorunlogLine4 = this.udprorunlogLine4;
-        udprorunlogLine4.RUNLOGDATE = runlogdate.getText().toString();
-        udprorunlogLine4.TYPE2 = type2.getText().toString();
-        udprorunlogLine4.NUMBER1 = number1.getText().toString().equals("")? 0: Integer.parseInt(number1.getText().toString());
-        udprorunlogLine4.NUMBER2 = number2.getText().toString().equals("")? 0: Integer.parseInt(number2.getText().toString());
-        udprorunlogLine4.NUMBER3 = number3.getText().toString().equals("")? 0: Integer.parseInt(number3.getText().toString());
-        udprorunlogLine4.NUMBER4 = number4.getText().toString().equals("")? 0: Integer.parseInt(number4.getText().toString());
-        udprorunlogLine4.TYPE = "add";
-        return udprorunlogLine4;
+    private UdprorunlogLine2 getUdprorunlogLine2() {
+        UdprorunlogLine2 udprorunlogLine2 = this.udprorunlogLine2;
+        udprorunlogLine2.CREATEDATE = createdate.getText().toString();
+        udprorunlogLine2.PERSONID = personid.getText().toString();
+        udprorunlogLine2.CREATEBY = person.getText().toString();
+        udprorunlogLine2.PROPHASE = prophase.getText().toString();
+        udprorunlogLine2.WORKJOB = workjob.getText().toString();
+        udprorunlogLine2.REMARK = remark.getText().toString();
+        return udprorunlogLine2;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            intent.putExtra("udprorunlogLine4", getUdprorunlogLine4());
-            Udprorunlog_Line4AddNewActivity.this.setResult(1, intent);
-            Toast.makeText(Udprorunlog_Line4AddNewActivity.this, "工装管理本地新增成功", Toast.LENGTH_SHORT).show();
+            intent.putExtra("udprorunlogLine2", getUdprorunlogLine2());
+            Udprorunlog_Line2AddNewActivity.this.setResult(1, intent);
+            Toast.makeText(Udprorunlog_Line2AddNewActivity.this, "吊装调试日报本地新增成功", Toast.LENGTH_SHORT).show();
             finish();
         }
     };
@@ -151,7 +152,7 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            new DateSelect(Udprorunlog_Line4AddNewActivity.this, textView).showDialog();
+            new DateSelect(Udprorunlog_Line2AddNewActivity.this, textView).showDialog();
         }
     }
 
@@ -164,7 +165,7 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
-            new DateTimeSelect(Udprorunlog_Line4AddNewActivity.this, textView).showDialog();
+            new DateTimeSelect(Udprorunlog_Line2AddNewActivity.this, textView).showDialog();
         }
     }
 
@@ -184,13 +185,13 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
     private void NormalListDialog(final TextView textView) {
         String[] types = new String[0];
         mMenuItems = new ArrayList<>();
-        if (textView == type2) {
-            types = getResources().getStringArray(R.array.type2_array);
+        if (textView == prophase) {
+            types = getResources().getStringArray(R.array.prophase_array);
         }
         for (int i = 0; i < types.length; i++) {
             mMenuItems.add(new DialogMenuItem(types[i], 0));
         }
-        final NormalListDialog dialog = new NormalListDialog(Udprorunlog_Line4AddNewActivity.this, mMenuItems);
+        final NormalListDialog dialog = new NormalListDialog(Udprorunlog_Line2AddNewActivity.this, mMenuItems);
         dialog.title("请选择")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -215,11 +216,9 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Udprorunlog_Line4AddNewActivity.this, OptionActivity.class);
+            Intent intent = new Intent(Udprorunlog_Line2AddNewActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
-            if (requestCode == 1){
-                intent.putExtra("udprojectnum",udprorunlog.getPRONUM());
-            }
+            intent.putExtra("udprojectnum",udprorunlog.getPRONUM());
             startActivityForResult(intent, requestCode);
         }
     }
@@ -228,19 +227,13 @@ public class Udprorunlog_Line4AddNewActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
         switch (requestCode) {
-//            case 1:
-//                if (data!=null) {
-//                    option = (Option) data.getSerializableExtra("option");
-//                    funnum.setText(option.getName());
-//                }
-//                break;
-//            case 2:
-//                if (data!=null) {
-//                    option = (Option) data.getSerializableExtra("option");
-//                    personid.setText(option.getName());
-//                    udprorunlogLine1.PERSONDESC = option.getDesc();
-//                }
-//                break;
+            case 1:
+                if (data!=null) {
+                    option = (Option) data.getSerializableExtra("option");
+                    personid.setText(option.getName());
+                    person.setText(option.getDesc());
+                }
+                break;
         }
     }
 }

@@ -579,6 +579,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udplstartdatelayout.setVisibility(View.GONE);
                 udplstopdatelayout.setVisibility(View.GONE);
                 udjpnumlayout.setVisibility(View.GONE);
+                lastlayout.setVisibility(View.GONE);
                 break;
             case "SP"://排查工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -717,7 +718,8 @@ public class Work_DetailsActivity extends BaseActivity {
         public void onClick(View view) {
 //            if (workOrder.WORKTYPE.equals(Constants.SP)||workOrder.WORKTYPE.equals(Constants.TP)
 //                    ||workOrder.WORKTYPE.equals(Constants.WS)) {
-            if (workOrder.WORKTYPE.equals(Constants.FR) || (!workOrder.WORKTYPE.equals(Constants.FR) && !udjpnum.getText().toString().equals(""))) {
+            if (workOrder.WORKTYPE.equals(Constants.FR)|| workOrder.WORKTYPE.equals(Constants.AA)
+                    || (!workOrder.WORKTYPE.equals(Constants.FR)&&!workOrder.WORKTYPE.equals(Constants.AA) && !udjpnum.getText().toString().equals(""))) {
                 Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("workOrder", workOrder);

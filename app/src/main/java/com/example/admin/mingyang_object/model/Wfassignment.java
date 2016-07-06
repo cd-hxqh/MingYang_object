@@ -15,7 +15,7 @@ public class Wfassignment implements Serializable {
     private String DESCRIPTION;//描述
     private String DUEDATE;//到期日期
     private String ORIGPERSON;//进行委派之前的任务分配的原始人员
-    private String OWNERID;//受控制记录的唯一标识
+    private String OWNERID;//受控制记录的唯一标识  //keyValue
     private String OWNERTABLE;//表名
     private String PROCESSNAME;//过程名称
     private String ROLEID;//任务角色

@@ -25,6 +25,7 @@ import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine1;
+import com.example.admin.mingyang_object.model.UdprorunlogLine2;
 import com.example.admin.mingyang_object.model.UdprorunlogLine4;
 import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.Udstock;
@@ -1131,6 +1132,52 @@ public class JsonUtils<E> {
     }
 
     /**
+     * 解析土建阶段子表信息
+     */
+    public static ArrayList<UdprorunlogLine2> parsingUdprorunlogLine2(Context ctx, String data, String prorunlognum) {
+        Log.i(TAG, "UdprorunlogLine2 data=" + data);
+        ArrayList<UdprorunlogLine2> list = null;
+        UdprorunlogLine2 udprorunlogLine2 = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<UdprorunlogLine2>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udprorunlogLine2 = new UdprorunlogLine2();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udprorunlogLine2.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.get(name) != null) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udprorunlogLine2.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udprorunlogLine2);
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udprorunlogLine2.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udprorunlogLine2, jsonObject.get(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                udprorunlogLine2.PRORUNLOGNUM = prorunlognum;
+                udprorunlogLine2.isUpload = true;
+                list.add(udprorunlogLine2);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * 解析工装管理子表信息
      */
     public static ArrayList<UdprorunlogLine4> parsingUdprorunlogLine4(Context ctx, String data, String prorunlognum) {
@@ -1283,11 +1330,13 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    getOrSet = workOrder.getClass().getMethod("get" + name);
-                    Object value = null;
-                    value = getOrSet.invoke(workOrder);
-                    if (value != null&&!name.equals("isnew")) {
-                        jsonObject.put(name, value + "");
+                    if (!name.equals("isnew")) {
+                        getOrSet = workOrder.getClass().getMethod("get" + name);
+                        Object value = null;
+                        value = getOrSet.invoke(workOrder);
+                        if (value != null) {
+                            jsonObject.put(name, value + "");
+                        }
                     }
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
@@ -1373,7 +1422,7 @@ public class JsonUtils<E> {
      * @return
      */
     public static String UdprorunlogToJson(Udprorunlog udprorunlog,ArrayList<UdprorunlogLine1> udprorunlogLine1s
-                ,ArrayList<UdprorunlogLine4> udprorunlogLine4s) {
+                ,ArrayList<UdprorunlogLine2> udprorunlogLine2s,ArrayList<UdprorunlogLine4> udprorunlogLine4s) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
@@ -1383,11 +1432,13 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    getOrSet = udprorunlog.getClass().getMethod("get" + name);
-                    Object value = null;
-                    value = getOrSet.invoke(udprorunlog);
-                    if (value != null && !name.equals("BRANCH") && !name.equals("isnew")) {
-                        jsonObject.put(name, value + "");
+                    if (!name.equals("isnew")) {
+                        getOrSet = udprorunlog.getClass().getMethod("get" + name);
+                        Object value = null;
+                        value = getOrSet.invoke(udprorunlog);
+                        if (value != null && !name.equals("BRANCH")) {
+                            jsonObject.put(name, value + "");
+                        }
                     }
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
@@ -1400,10 +1451,10 @@ public class JsonUtils<E> {
             JSONObject object = new JSONObject();
             if (udprorunlogLine1s != null && udprorunlogLine1s.size() != 0) {
                 object.put("UDPRORUNLOGLINE1", "");
-                JSONArray woactivityArray = new JSONArray();
-                JSONObject woactivityObj;
+                JSONArray udprorunlogline1Array = new JSONArray();
+                JSONObject udprorunlogline1Obj;
                 for (int i = 0; i < udprorunlogLine1s.size(); i++) {
-                    woactivityObj = new JSONObject();
+                    udprorunlogline1Obj = new JSONObject();
                     Field[] field1 = udprorunlogLine1s.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                     for (int j = 0; j < field1.length; j++) {
                         field1[j].setAccessible(true);
@@ -1414,7 +1465,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(udprorunlogLine1s.get(i));
                             if (value != null) {
-                                woactivityObj.put(name, value+"");
+                                udprorunlogline1Obj.put(name, value+"");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1424,9 +1475,39 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
-                    woactivityArray.put(woactivityObj);
+                    udprorunlogline1Array.put(udprorunlogline1Obj);
                 }
-                jsonObject.put("UDPRORUNLOGLINE1", woactivityArray);
+                jsonObject.put("UDPRORUNLOGLINE1", udprorunlogline1Array);
+            }
+            if (udprorunlogLine2s != null && udprorunlogLine2s.size() != 0) {
+                object.put("UDPRORUNLOGLINE2", "");
+                JSONArray udprorunlogline2Array = new JSONArray();
+                JSONObject udprorunlogline2Obj;
+                for (int i = 0; i < udprorunlogLine2s.size(); i++) {
+                    udprorunlogline2Obj = new JSONObject();
+                    Field[] field1 = udprorunlogLine2s.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = udprorunlogLine2s.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(udprorunlogLine2s.get(i));
+                            if (value != null) {
+                                udprorunlogline2Obj.put(name, value+"");
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    udprorunlogline2Array.put(udprorunlogline2Obj);
+                }
+                jsonObject.put("UDPRORUNLOGLINE2", udprorunlogline2Array);
             }
             if (udprorunlogLine4s != null && udprorunlogLine4s.size() != 0) {
                 object.put("UDPRORUNLOGLINE4", "");

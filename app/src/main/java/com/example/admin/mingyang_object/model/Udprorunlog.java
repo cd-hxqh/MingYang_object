@@ -16,7 +16,8 @@ public class Udprorunlog extends Entity implements Serializable {
     public String CONTDESC; //现场联系人名称
     public String PROSTAGE; //项目阶段
     public String STATUS; //状态
-    public String UDPRORESC; //现场负责人
+    public String UDPRORESC; //现场负责人描述
+    public String RESPONSID;//现场负责人编号  子表用
     public String YEAR; //年
     public String MONTH; //月
 
@@ -92,6 +93,22 @@ public class Udprorunlog extends Entity implements Serializable {
 
     public void setUDPRORESC(String UDPRORESC) {
         this.UDPRORESC = UDPRORESC;
+    }
+
+    public String getRESPONSID() {
+        return RESPONSID;
+    }
+
+    public void setRESPONSID(String RESPONSID) {
+        this.RESPONSID = RESPONSID;
+    }
+
+    public boolean isnew() {
+        return isnew;
+    }
+
+    public void setisnew(boolean isnew) {
+        this.isnew = isnew;
     }
 
     public String getYEAR() {
