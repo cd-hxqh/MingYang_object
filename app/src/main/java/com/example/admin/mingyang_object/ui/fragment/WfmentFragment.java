@@ -137,10 +137,19 @@ public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.O
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
 
-        getData(searchText);
+
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        refresh_layout.setRefreshing(true);
+        initAdapter(new ArrayList<Wfassignment>());
+        items = new ArrayList<>();
+        getData(searchText);
     }
 
     @Override
@@ -152,7 +161,6 @@ public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
-
         page = 1;
         getData(searchText);
     }

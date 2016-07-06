@@ -88,9 +88,9 @@ public class AndroidClientService {
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicewfGoOn");
         soapReq.addProperty("processname", processname);//流程名称
-        soapReq.addProperty("mboName", mbo);//工单WORKORDER,采购申请pr
-        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值，采购申请prnum的值
-        soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapReq.addProperty("mboName", mbo);//工单WORKORDER
+        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值
+        soapReq.addProperty("key", key);//如工单：wonum
         soapReq.addProperty("zx", zx);//审批的结果，1为审批通过，0为审批不通过
         if (!desc.equals("")) {
             soapReq.addProperty("desc", desc);//审批意见

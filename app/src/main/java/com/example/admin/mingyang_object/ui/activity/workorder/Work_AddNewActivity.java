@@ -481,6 +481,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 udplstartdatelayout.setVisibility(View.GONE);
                 udplstopdatelayout.setVisibility(View.GONE);
                 udjpnumlayout.setVisibility(View.GONE);
+                lastlayout.setVisibility(View.GONE);
                 break;
             case "SP"://排查工单
                 udplannumlayout.setVisibility(View.GONE);

@@ -478,11 +478,11 @@ public class WorkOrder implements Serializable {
         this.UDRPRRSB = UDRPRRSB;
     }
 
-    public boolean isnew() {
+    public boolean getisnew() {
         return isnew;
     }
 
-    public void setIsnew(boolean isnew) {
+    public void setisnew(boolean isnew) {
         this.isnew = isnew;
     }
 

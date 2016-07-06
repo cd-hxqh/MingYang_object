@@ -293,6 +293,15 @@ public class HttpManager {
     }
 
     /**
+     * 设置吊装调试日报接口*
+     */
+    public static String getUdprorunlogLine2Url(String prorunlognum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDPRORUNLOGLINE2_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE2_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                "}";
+    }
+
+    /**
      * 设置工装管理接口*
      */
     public static String getUdprorunlogLine4Url(String prorunlognum, int curpage, int showcount) {
