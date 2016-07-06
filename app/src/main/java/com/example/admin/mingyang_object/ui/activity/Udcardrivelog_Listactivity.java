@@ -51,6 +51,11 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
      */
     private ImageView backImageView;
 
+    /**
+     * 新增*
+     */
+    private ImageView addImageView;
+
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
@@ -77,6 +82,7 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addImageView = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -89,6 +95,9 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
         setSearchEdit();
         titlename.setText(R.string.udcardrivelog_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
+
+        addImageView.setVisibility(View.VISIBLE);
+        addImageView.setOnClickListener(addImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -114,6 +123,17 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
         @Override
         public void onClick(View v) {
             finish();
+        }
+    };
+
+    /**
+     * 新增*
+     */
+    private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Addactivity.class);
+            startActivityForResult(intent, 0);
         }
     };
 

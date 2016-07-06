@@ -1026,7 +1026,7 @@ public class JsonUtils<E> {
                 woactivity.WOJO2 = jsonObject.getString("JO2");
                 woactivity.WOJO3 = jsonObject.getString("JO3");
                 woactivity.WOJO4 = jsonObject.getString("JO4");
-                woactivity.WONUM = wonum ==null?"":wonum;
+                woactivity.WONUM = wonum == null ? "" : wonum;
                 woactivity.isUpload = true;
                 list.add(woactivity);
             }
@@ -1286,7 +1286,7 @@ public class JsonUtils<E> {
                     getOrSet = workOrder.getClass().getMethod("get" + name);
                     Object value = null;
                     value = getOrSet.invoke(workOrder);
-                    if (value != null&&!name.equals("isnew")) {
+                    if (value != null && !name.equals("isnew")) {
                         jsonObject.put(name, value + "");
                     }
                 } catch (NoSuchMethodException e) {
@@ -1372,8 +1372,8 @@ public class JsonUtils<E> {
      *
      * @return
      */
-    public static String UdprorunlogToJson(Udprorunlog udprorunlog,ArrayList<UdprorunlogLine1> udprorunlogLine1s
-                ,ArrayList<UdprorunlogLine4> udprorunlogLine4s) {
+    public static String UdprorunlogToJson(Udprorunlog udprorunlog, ArrayList<UdprorunlogLine1> udprorunlogLine1s
+            , ArrayList<UdprorunlogLine4> udprorunlogLine4s) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
@@ -1414,7 +1414,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(udprorunlogLine1s.get(i));
                             if (value != null) {
-                                woactivityObj.put(name, value+"");
+                                woactivityObj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1444,7 +1444,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(udprorunlogLine4s.get(i));
                             if (value != null) {
-                                wpmaterialsObj.put(name, value+"");
+                                wpmaterialsObj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1786,8 +1786,6 @@ public class JsonUtils<E> {
     }
 
 
-
-
     /**
      * 封装车辆加油数据
      *
@@ -1828,19 +1826,45 @@ public class JsonUtils<E> {
         return jsonObject.toString();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 封装车辆行驶数据
+     *
+     * @return
+     */
+    public static String udcardrivelogToJson(Udcardrivelog udcardrivelog) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udcardrivelog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udcardrivelog.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udcardrivelog);
+                    if (value != null && !name.equals("BRANCH")) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            object.put("", "");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 
 
 }
