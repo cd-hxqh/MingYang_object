@@ -41,6 +41,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
     private ImageView menuImageView;
 
 
+
     /**
      * 界面信息*
      */

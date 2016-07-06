@@ -189,20 +189,20 @@
             android:label="@string/udprorunlog_line4_title"></activity>
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1DetailsActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line1_details_title"></activity>
+            android:label="@string/udprorunlog_line1_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4DetailsActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line4_details_title"></activity>
+            android:label="@string/udprorunlog_line4_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4AddNewActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line4_details_title"></activity>
+            android:label="@string/udprorunlog_line4_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1AddNewActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line1_title"></activity>
+            android:label="@string/udprorunlog_line1_title"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2Activity"
             android:windowSoftInputMode="adjustPan|stateHidden"
@@ -263,6 +263,9 @@
         <activity
             android:name=".ui.activity.Udcardrivelog_Detailactivity"
             android:label="@string/udcarddrivelog_details_text"></activity>
+        <activity
+            android:name=".ui.activity.Udcardrivelog_Addactivity"
+            android:label="@string/xcjlxj_text"></activity>
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Listactivity"
             android:label="@string/udcarfuelcharge_text"></activity>

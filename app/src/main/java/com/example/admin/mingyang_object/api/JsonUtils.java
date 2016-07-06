@@ -1603,7 +1603,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(udprorunlogLine4s.get(i));
                             if (value != null) {
-                                wpmaterialsObj.put(name, value+"");
+                                wpmaterialsObj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1945,8 +1945,6 @@ public class JsonUtils<E> {
     }
 
 
-
-
     /**
      * 封装车辆加油数据
      *
@@ -1987,19 +1985,45 @@ public class JsonUtils<E> {
         return jsonObject.toString();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 封装车辆行驶数据
+     *
+     * @return
+     */
+    public static String udcardrivelogToJson(Udcardrivelog udcardrivelog) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udcardrivelog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udcardrivelog.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udcardrivelog);
+                    if (value != null && !name.equals("BRANCH")) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            object.put("", "");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 
 
 }

@@ -365,7 +365,7 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
                     MessageUtils.showMiddleToast(Udcarmainlog_Addactivity.this, "新增失败");
                 } else if (workResult.errorMsg.equals("成功")) {
                     MessageUtils.showMiddleToast(Udcarmainlog_Addactivity.this, "维修单" + workResult.wonum + "新增成功");
-//                    finish();
+                    finish();
                 } else {
                     MessageUtils.showMiddleToast(Udcarmainlog_Addactivity.this, workResult.errorMsg);
                 }
