@@ -3,6 +3,7 @@ package com.example.admin.mingyang_object.ui.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,10 +73,13 @@ public class WorkFragment extends Fragment {
         @Override
         public void onClick(View view) {
             if (!type.equals(Constants.DC)) {
+
                 Intent intent = new Intent(getActivity(), Work_ListActivity.class);
                 intent.putExtra("worktype", type);
                 startActivity(intent);
+
             }else {
+                Log.e("调试工单","调试工单1");
                 Intent intent = new Intent(getActivity(), DebugWork_ListActivity.class);
                 intent.putExtra("worktype", type);
                 startActivity(intent);
