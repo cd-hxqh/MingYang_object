@@ -545,13 +545,17 @@ public class HttpManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
                 Results result = JsonUtils.parsingResults(cxt, responseString);
                 if (null == result) {
+                    Log.e("调试工单","调试工单51");
                     SafeHandler.onFailure(handler, cxt.getString(R.string.get_data_info_fail));
-                }
+                }else{
+                    assert result != null;
+                    Log.e("调试工单","调试工单52");
+                    SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
 
-                assert result != null;
-                SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
+                }
             }
         });
     }

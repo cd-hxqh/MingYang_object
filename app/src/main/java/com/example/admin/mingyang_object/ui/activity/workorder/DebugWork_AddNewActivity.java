@@ -3,6 +3,7 @@ package com.example.admin.mingyang_object.ui.activity.workorder;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -80,7 +81,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
-
+        Log.e("调试工单","AddNewActivity");
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addudyxjData();
