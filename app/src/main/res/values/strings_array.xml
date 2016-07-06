@@ -66,6 +66,16 @@
         <item>事故维修</item>
         <item>正常维修</item>
     </string-array>
+    <string-array name="number4_array">
+        <item>0#柴油</item>
+        <item>100#汽油</item>
+        <item>90#汽油</item>
+        <item>92#汽油</item>
+        <item>93#汽油</item>
+        <item>95#汽油</item>
+        <item>97#汽油</item>
+        <item>98#汽油</item>
+    </string-array>
 
     <string-array name="prophase_array">
         <item>调试期</item>

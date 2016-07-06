@@ -243,6 +243,9 @@
             android:name=".ui.activity.Udcarfuelcharge_Listactivity"
             android:label="@string/udcarfuelcharge_text"></activity>
         <activity
+            android:name=".ui.activity.Udcarfuelcharge_Addactivity"
+            android:label="@string/udcarfuelcharge_text"></activity>
+        <activity
             android:name=".ui.activity.Udcarfuelcharge_Detailactivity"
             android:label="@string/udcarfuelcharge_detail_text"></activity>
         <activity

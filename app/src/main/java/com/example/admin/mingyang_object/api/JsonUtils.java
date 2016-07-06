@@ -1786,4 +1786,61 @@ public class JsonUtils<E> {
     }
 
 
+
+
+    /**
+     * 封装车辆加油数据
+     *
+     * @return
+     */
+    public static String udcarfuelchargeToJson(Udcarfuelcharge udcarfuelcharge) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udcarfuelcharge.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udcarfuelcharge.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udcarfuelcharge);
+                    if (value != null && !name.equals("BRANCH")) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            object.put("", "");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -514,5 +514,6 @@
     <string name="number1_1_text">本次维修里程表读数:</string>
     <string name="wxjlxq_text">维修记录详情</string>
     <string name="wxjlxj_text">维修记录新建</string>
+    <string name="jyjlxj_text">加油记录新建</string>
 
 </resources>
