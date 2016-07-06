@@ -556,9 +556,6 @@ public class HttpManager {
                     SafeHandler.onSuccess(handler, result, result.getCurpage(), result.getShowcount());
 
                 }
-
-
-
             }
         });
     }
