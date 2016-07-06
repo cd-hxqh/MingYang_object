@@ -32,7 +32,8 @@ public class Constants {
     /**
      * 通用修改接口*
      */
-    public static final String WORK_URL = "http://192.168.100.17:7001/meaweb/services/MOBILESERVICE";
+//    public static final String WORK_URL = "http://192.168.100.17:7001/meaweb/services/MOBILESERVICE";
+    public static final String WORK_URL = "http://deveam.mywind.com.cn:7001/meaweb/services/MOBILESERVICE";
 
     /**
      * 领料单接口*
