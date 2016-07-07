@@ -12,12 +12,16 @@ import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -68,6 +72,18 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
 
     ArrayList<Udcardrivelog> items = new ArrayList<Udcardrivelog>();
 
+
+    private PopupWindow popupWindow;
+
+    /**
+     * 新增*
+     */
+    private LinearLayout addLinerLayout;
+    /**
+     * 删除*
+     */
+    private LinearLayout deleteLinerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +111,7 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
         setSearchEdit();
         titlename.setText(R.string.udcardrivelog_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
-
+        addImageView.setImageResource(R.mipmap.ic_more);
         addImageView.setVisibility(View.VISIBLE);
         addImageView.setOnClickListener(addImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
@@ -127,13 +143,14 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
     };
 
     /**
-     * 新增*
+     * 操作*
      */
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Addactivity.class);
-            startActivityForResult(intent, 0);
+//            Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Addactivity.class);
+//            startActivityForResult(intent, 0);
+            showPopupWindow(addImageView);
         }
     };
 
@@ -234,4 +251,60 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
         page++;
         getData(searchText);
     }
+
+
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(Udcardrivelog_Listactivity.this).inflate(
+                R.layout.popup_item_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        popupWindow.showAsDropDown(view);
+
+        addLinerLayout = (LinearLayout) contentView.findViewById(R.id.add_linearlayout_id);
+        addLinerLayout.setOnClickListener(addLinerLayoutOnClickListener);
+        deleteLinerLayout = (LinearLayout) contentView.findViewById(R.id.delete_linearlayout_id);
+        deleteLinerLayout.setOnClickListener(deleteLinerLayoutOnClickListener);
+
+    }
+
+
+    /**
+     * 新增*
+     */
+    private View.OnClickListener addLinerLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Addactivity.class);
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+        }
+    };
+    /**
+     * 删除*
+     */
+    private View.OnClickListener deleteLinerLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+        }
+    };
+
 }

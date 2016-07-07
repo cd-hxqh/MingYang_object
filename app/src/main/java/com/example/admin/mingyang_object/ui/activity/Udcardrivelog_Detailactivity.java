@@ -41,7 +41,6 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
     private ImageView menuImageView;
 
 
-
     /**
      * 界面信息*
      */
@@ -96,6 +95,25 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
 
     private Udcardrivelog udcardrivelog;
 
+    private PopupWindow popupWindow;
+    /**
+     * 附件上传*
+     */
+    private LinearLayout uploadLinearLayout;
+    /**
+     * 编辑*
+     */
+    private LinearLayout editLinearLayouut;
+    /**
+     * 是否编辑*
+     */
+    private boolean isEdit = false;
+
+    /**
+     * 操作布局界面*
+     */
+    private LinearLayout operationLinearLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +132,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
     protected void findViewById() {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
+        menuImageView = (ImageView) findViewById(R.id.title_add);
 
 
         cardrivelognumText = (TextView) findViewById(R.id.cardrivelognum_text_id);
@@ -141,6 +160,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         lastfuelconsumptionText = (TextView) findViewById(R.id.lastfuelconsumption_text_id);
         standardfuelconsumptionText = (TextView) findViewById(R.id.standardfuelconsumption_text_id);
         feeText = (TextView) findViewById(R.id.fee_text_id);
+
+        operationLinearLayout = (LinearLayout) findViewById(R.id.button_layout);
 
         if (udcardrivelog != null) {
             cardrivelognumText.setText(udcardrivelog.getCARDRIVELOGNUM());
@@ -172,6 +193,11 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.udcarddrivelog_details_text));
+
+        menuImageView.setVisibility(View.VISIBLE);
+        menuImageView.setImageResource(R.mipmap.ic_more);
+        operationLinearLayout.setVisibility(View.GONE);
+        menuImageView.setOnClickListener(menuImageViewOnClickListener);
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -180,5 +206,87 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
             finish();
         }
     };
+
+    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(menuImageView);
+        }
+    };
+
+
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(Udcardrivelog_Detailactivity.this).inflate(
+                R.layout.popup_item_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        popupWindow.showAsDropDown(view);
+        uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.add_linearlayout_id);
+        editLinearLayouut = (LinearLayout) contentView.findViewById(R.id.delete_linearlayout_id);
+
+        TextView udloadText = (TextView) contentView.findViewById(R.id.textView_id);
+        ImageView udloadImage = (ImageView) contentView.findViewById(R.id.imageView_id);
+        TextView editText = (TextView) contentView.findViewById(R.id.textView_1_id);
+        ImageView editImage = (ImageView) contentView.findViewById(R.id.imageView_1_id);
+        udloadText.setText(getResources().getString(R.string.work_commit));
+        editText.setText(getString(R.string.eidt_text));
+        udloadImage.setImageResource(R.mipmap.ic_upload);
+        editImage.setImageResource(R.mipmap.ic_edit);
+
+
+        editLinearLayouut.setOnClickListener(editLinearLayouutOnClickListener);
+
+    }
+
+
+    private View.OnClickListener editLinearLayouutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            if (isEdit) {
+                operationLinearLayout.setVisibility(View.GONE);
+                isEdit = false;
+            } else {
+                operationLinearLayout.setVisibility(View.VISIBLE);
+                isEdit = true;
+            }
+        }
+
+    };
+
+
+    /**
+     * 编辑状态*
+     */
+    private void isEdit() {
+        //出车日期
+
+        //出车时间
+        //出发地
+        //目的地
+        //出车事由
+        //结束里程
+        //标准油耗
+        //路桥费
+    }
+
 
 }
