@@ -31,13 +31,13 @@ public class UdPersonAdapter extends BaseQuickAdapter<UdPerson> {
     protected void convert(BaseViewHolder helper, UdPerson item) {
         CardView cardView = helper.getView(R.id.card_container);
         helper.setText(R.id.displayname_id, mContext.getString(R.string.displayname_text));
-        helper.setText(R.id.personid_id, mContext.getString(R.string.personid_text));
+        helper.setText(R.id.personid_id, mContext.getString(R.string.departdesc_text));
         helper.setText(R.id.primaryphone_id, mContext.getString(R.string.primaryphone_text));
-        helper.setText(R.id.udjbdescription_id, mContext.getString(R.string.udjbdescription_text));
+        helper.setText(R.id.udjbdescription_id, mContext.getString(R.string.email_text));
         helper.setText(R.id.displayname_text_id, item.getDISPLAYNAME());
-        helper.setText(R.id.personid_text_id, item.getPERSONID());
+        helper.setText(R.id.personid_text_id, item.getDEPARTDESC());
         helper.setText(R.id.primaryphone_text_id, item.getPRIMARYPHONE());
-        helper.setText(R.id.udjbdescription_text_id, item.getUDJBDESCRIPTION());
+        helper.setText(R.id.udjbdescription_text_id, item.getEMAIL());
     }
 
 

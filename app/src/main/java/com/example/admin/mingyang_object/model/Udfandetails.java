@@ -8,21 +8,27 @@ import java.io.Serializable;
  */
 public class Udfandetails implements Serializable {
 
-    private String BWDATE; //并网运行日期
-    private String DJDATE1; //首检完成日期
-    private String DJDATE2; //半年检完成日期
-    private String DZDATE; //吊装完成日期
-    private String EMPST; //机台号
-    private String JDDATE3; //全年检完成日期
-    private String LOCNUM; //机位号
-    private String MODELTYPE; //型号
-    private String PRONUM; //項目台账编号
-    private String SAPNUM; //成品物料代码（SAP）
-    private String SITEID; //站点
-    private String TSDATE; //调试完成日期
-    private String XJDATE; //上次巡检日期
-    private String YYSDATE; //预验收完成日期
-    private String ZYYDATE; //终验收完成日期
+    public String BWDATE; //并网运行日期
+    public String DJDATE1; //首检完成日期
+    public String DJDATE2; //半年检完成日期
+    public String DZDATE; //吊装完成日期
+    public String EMPST; //机台号
+    public String JDDATE3; //全年检完成日期
+    public String LOCNUM; //机位号
+    public String MODELTYPE; //型号
+    public String PRONUM; //項目台账编号
+    public String SAPNUM; //成品物料代码（SAP）
+    public String SITEID; //站点
+    public String TSDATE; //调试完成日期
+    public String XJDATE; //上次巡检日期
+    public String YYSDATE; //预验收完成日期
+    public String ZYYDATE; //终验收完成日期
+    public String STATUS;//状态
+    public String SAPDESC;//成品物料描述
+    public String TJDATE;//土建完成日期
+    public String DJDATE4;//下次半年检日期
+    public String DJDATE5;//下次全年检日期
+    public String XJDATE2;//下次巡检日期
 
 
     public String getBWDATE() {
@@ -143,5 +149,53 @@ public class Udfandetails implements Serializable {
 
     public void setZYYDATE(String ZYYDATE) {
         this.ZYYDATE = ZYYDATE;
+    }
+
+    public String getSTATUS() {
+        return STATUS;
+    }
+
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS;
+    }
+
+    public String getSAPDESC() {
+        return SAPDESC;
+    }
+
+    public void setSAPDESC(String SAPDESC) {
+        this.SAPDESC = SAPDESC;
+    }
+
+    public String getTJDATE() {
+        return TJDATE;
+    }
+
+    public void setTJDATE(String TJDATE) {
+        this.TJDATE = TJDATE;
+    }
+
+    public String getDJDATE4() {
+        return DJDATE4;
+    }
+
+    public void setDJDATE4(String DJDATE4) {
+        this.DJDATE4 = DJDATE4;
+    }
+
+    public String getDJDATE5() {
+        return DJDATE5;
+    }
+
+    public void setDJDATE5(String DJDATE5) {
+        this.DJDATE5 = DJDATE5;
+    }
+
+    public String getXJDATE2() {
+        return XJDATE2;
+    }
+
+    public void setXJDATE2(String XJDATE2) {
+        this.XJDATE2 = XJDATE2;
     }
 }

@@ -15,7 +15,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.UdPerson_ListActivity;
-import com.example.admin.mingyang_object.ui.activity.Udfandetails_ListActivity;
+import com.example.admin.mingyang_object.ui.activity.udpro.Udfandetails_ListActivity;
 import com.example.admin.mingyang_object.ui.activity.Ududvehicle_ListActivity;
 
 

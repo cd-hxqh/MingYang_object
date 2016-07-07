@@ -1,6 +1,5 @@
 package com.example.admin.mingyang_object.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,11 +12,6 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
-import com.example.admin.mingyang_object.model.Udpro;
-import com.example.admin.mingyang_object.ui.activity.BaseActivity;
-import com.example.admin.mingyang_object.ui.activity.UdPerson_ListActivity;
-import com.example.admin.mingyang_object.ui.activity.Udfandetails_ListActivity;
-import com.example.admin.mingyang_object.ui.activity.Ududvehicle_ListActivity;
 
 
 /**

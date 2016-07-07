@@ -1,4 +1,4 @@
-package com.example.admin.mingyang_object.ui.activity;
+package com.example.admin.mingyang_object.ui.activity.udpro;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,12 +25,12 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Udfandetails;
-import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.model.Udfeedback;
+import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdfandetailsAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdproAdapter;
+import com.example.admin.mingyang_object.ui.adapter.UdfeedbackAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
+import com.example.admin.mingyang_object.utils.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,10 @@ import java.util.List;
 
 /**
  * Created by think on 2015/10/27.
- * 风机型号子表
+ * 项目台账界面
  */
-public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
-    private static String TAG = "Udfandetails_ListActivity";
+public class Udfeedback_listactivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+    private static String TAG = "Udfeedback_listactivity";
     /**
      * 编号*
      */
@@ -50,44 +50,30 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
      * 返回按钮*
      */
     private ImageView backImageView;
-
+    private ImageView addimg;
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
-    private UdfandetailsAdapter udfandetailsAdapter;
+    private UdfeedbackAdapter udfeedbackAdapter;
     private SwipeRefreshLayout refresh_layout = null;
-
     private EditText search;
-
     private String searchText = "";
     private int page = 1;
 
-    ArrayList<Udfandetails> items = new ArrayList<Udfandetails>();
+    ArrayList<Udfeedback> items = new ArrayList<Udfeedback>();
 
-    /**
-     * 台账编号*
-     */
-    private String pronum;
-    /**
-     * 站点*
-     */
-    private String siteid;
+
+    private String totalresult; //总共条数
+    private String showcount; //显示条数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worklist);
-        initData();
+
         findViewById();
         initView();
-    }
-
-    private void initData() {
-        pronum = getIntent().getExtras().getString("pronum");
-        siteid = getIntent().getExtras().getString("siteid");
-
-        Log.i(TAG, "pronum=" + pronum + "siteid=" + siteid);
     }
 
 
@@ -95,22 +81,28 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addimg = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         search = (EditText) findViewById(R.id.search_edit);
-        search.setVisibility(View.GONE);
     }
 
     @Override
     protected void initView() {
         setSearchEdit();
-        titlename.setText(R.string.udfandetails_text);
+        titlename.setText(R.string.udfeedback_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
+        addimg.setVisibility(View.VISIBLE);
+        addimg.setOnClickListener(addOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
+
+        udfeedbackAdapter = new UdfeedbackAdapter(Udfeedback_listactivity.this, R.layout.list_item, items);
+        recyclerView.setAdapter(udfeedbackAdapter);
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -136,9 +128,18 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
         }
     };
 
+    private View.OnClickListener addOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udfeedback_listactivity.this,Udfeedback_AddNewActivity.class);
+            startActivity(intent);
+        }
+    };
+
 
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getUdfandetailsurl(search, pronum, siteid, page, 20), new HttpRequestHandler<Results>() {
+        Log.i(TAG, "page=" + page);
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdfeedbacksurl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -146,23 +147,32 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
 
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.i(TAG, "results=" + results.getResultlist());
 
-                ArrayList<Udfandetails> item = JsonUtils.parsingUdfandetails(Udfandetails_ListActivity.this, results.getResultlist());
+                ArrayList<Udfeedback> item = JsonUtils.parsingUdfeedback(Udfeedback_listactivity.this, results.getResultlist());
                 refresh_layout.setRefreshing(false);
                 refresh_layout.setLoading(false);
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
+                    Log.i(TAG, "totalresult=" + results.getTotalresult() + "Showcount=" + results.getShowcount() + "");
+                    totalresult = results.getTotalresult();
+                    showcount = results.getShowcount() + "";
 
                     if (item != null || item.size() != 0) {
+                        if (page == 1){
+                            initAdapter(new ArrayList<Udfeedback>());
+                            items = new ArrayList<Udfeedback>();
+                        }
                         for (int i = 0; i < item.size(); i++) {
+                            Log.i(TAG, "FEEDBACKNUM=" + item.get(i).getFEEDBACKNUM());
                             items.add(item.get(i));
                         }
                     }
                     nodatalayout.setVisibility(View.GONE);
 
-                    initAdapter(items);
+                    initAdapter(item);
+
+
                 }
             }
 
@@ -188,12 +198,12 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
-                                    Udfandetails_ListActivity.this.getCurrentFocus()
+                                    Udfeedback_listactivity.this.getCurrentFocus()
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString().trim();
-                    udfandetailsAdapter.removeAll(items);
-                    items = new ArrayList<Udfandetails>();
+                    udfeedbackAdapter.removeAll(items);
+                    items = new ArrayList<Udfeedback>();
                     getData(searchText);
                     return true;
                 }
@@ -206,17 +216,19 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
     /**
      * 获取数据*
      */
-    private void initAdapter(final List<Udfandetails> list) {
-        udfandetailsAdapter = new UdfandetailsAdapter(Udfandetails_ListActivity.this, R.layout.list_item, list);
-        recyclerView.setAdapter(udfandetailsAdapter);
-        udfandetailsAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+    private void initAdapter(final List<Udfeedback> list) {
+        Log.i(TAG, "list=" + list.size());
+
+        udfeedbackAdapter.addData(list);
+        udfeedbackAdapter.notifyDataSetChanged();
+        udfeedbackAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Intent intent = new Intent(Udfandetails_ListActivity.this, Udpro_DetailActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("udpro", list.get(position));
-//                intent.putExtras(bundle);
-//                startActivityForResult(intent, 0);
+                Intent intent = new Intent(Udfeedback_listactivity.this, Udfeedback_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udfeedback", items.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
             }
         });
     }
@@ -231,6 +243,11 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
     @Override
     public void onLoad() {
         page++;
-        getData(searchText);
+        if (totalresult.equals(showcount)) {
+            MessageUtils.showMiddleToast(Udfeedback_listactivity.this, "已加载全部数据");
+            refresh_layout.setLoading(false);
+        } else {
+            getData(searchText);
+        }
     }
 }

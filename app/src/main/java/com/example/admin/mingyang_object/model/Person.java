@@ -6,13 +6,14 @@ import java.io.Serializable;
  * Created by think on 2016/6/27.
  */
 public class Person implements Serializable {
-    public String PERSONID;
-    public String DISPLAYNAME;
-    public String BRANCH;
-    public String DEPARTMENT;
-    public String PRIMARYPHONE;
-    public String UDJBDESCRIPTION;
-    public String UDPRONUM;
+    public String PERSONID;//编号
+    public String DISPLAYNAME;//名称
+    public String BRANCH;//中心
+    public String DEPARTMENT;//部门
+    public String PRIMARYPHONE;//电话
+    public String UDJBDESCRIPTION;//
+    public String UDPRONUM;//
+    public String DEPARTDESC;//部门
 
     public String getPERSONID() {
         return PERSONID;

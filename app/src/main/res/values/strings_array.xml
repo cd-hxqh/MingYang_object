@@ -109,4 +109,12 @@
         <item>小雨</item>
         <item>阴</item>
     </string-array>
+
+    <string-array name="problemtype_array">
+        <item>备件</item>
+        <item>村民阻工</item>
+        <item>技术支持</item>
+        <item>人员</item>
+        <item>资料</item>
+    </string-array>
 </resources>

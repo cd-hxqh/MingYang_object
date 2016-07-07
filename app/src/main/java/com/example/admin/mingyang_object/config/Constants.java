@@ -132,7 +132,14 @@ public class Constants {
      * 项目车辆表名*
      */
     public static final String UDVEHICLE_NAME = "UDVEHICLE";
-
+    /**
+     * 部门appid*
+     */
+    public static final String UDDEPT_APPID = "UDDEPT";
+    /**
+     * 部门表名*
+     */
+    public static final String UDDEPT_NAME = "UDDEPT";
 
     /**
      * 项目日报appid*
@@ -343,7 +350,10 @@ public class Constants {
 
     public static final int LOCATIONCODE2 = 230;//库房
 
-
     public static final int UDVEHICLE = 240;//车辆
+
+    public static final int WORKORDERCODE = 250;//相关故障工单
+
+    public static final int UDDEPTCODE = 260;//部门
 
 }

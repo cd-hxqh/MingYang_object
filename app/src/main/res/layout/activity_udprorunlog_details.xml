@@ -18,6 +18,11 @@
             android:padding="@dimen/dimens_10">
 
             <LinearLayout
+                android:id="@+id/prorunlognum_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_5"
@@ -47,7 +52,7 @@
                 android:layout_height="1dp"
                 android:layout_below="@+id/num_linearlayout_id"
                 android:background="@mipmap/line"></View>
-
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"

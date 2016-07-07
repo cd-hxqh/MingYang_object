@@ -30,8 +30,8 @@ public class UdfandetailsAdapter extends BaseQuickAdapter<Udfandetails> {
     @Override
     protected void convert(BaseViewHolder helper, Udfandetails item) {
         CardView cardView = helper.getView(R.id.card_container);
-        helper.setText(R.id.item_num_title, mContext.getString(R.string.locnum_text));
-        helper.setText(R.id.item_desc_title, mContext.getString(R.string.modeltype_text));
+        helper.setText(R.id.item_num_title, mContext.getString(R.string.udfandetails_locnum));
+        helper.setText(R.id.item_desc_title, mContext.getString(R.string.udfandetails_modeltype));
         helper.setText(R.id.item_num_text, item.getLOCNUM());
         helper.setText(R.id.item_desc_text, item.getMODELTYPE());
     }

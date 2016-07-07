@@ -298,13 +298,39 @@
     <string name="udvehicle_text">项目车辆</string>
 
     <!--风机型号-->
-    <string name="locnum_text">机位号:</string>
-    <string name="modeltype_text">型号:</string>
+    <string name="udfandetails_details_title">风机型号详情</string>
+    <string name="udfandetails_details">风机详情信息</string>
+    <string name="udfandetails_locnum">机位号:</string>
+    <string name="udfandetails_modeltype">型号:</string>
+    <string name="udfandetails_status">风机状态:</string>
+    <string name="udfandetails_empst">机台号:</string>
+    <string name="udfandetails_sapnum">成品物料代码(SAP):</string>
+    <string name="udfandetails_sapdesc">成品物料描述:</string>
+    <string name="udfandetails_date">各项日期信息</string>
+    <string name="udfandetails_tjdate">土建完成日期:</string>
+    <string name="udfandetails_dzdate">吊装完成日期:</string>
+    <string name="udfandetails_tsdate">调试完成日期:</string>
+    <string name="udfandetails_djdate1">首检完成日期:</string>
+    <string name="udfandetails_jddate3">全年检完成日期:</string>
+    <string name="udfandetails_djdate2">半年检完成日期:</string>
+    <string name="udfandetails_bwdate">并网运行日期:</string>
+    <string name="udfandetails_djdate4">下次半年检日期:</string>
+    <string name="udfandetails_djdate5">下次全年检日期:</string>
+    <string name="udfandetails_xjdate">上次巡检日期:</string>
+    <string name="udfandetails_xjdate2">下次巡检日期:</string>
+    <string name="udfandetails_zyydate">终验收完成日期:</string>
+    <string name="udfandetails_yysdate">预验收完成日期:</string>
+
+    <string name="udfandetails_pronum">項目台账编号</string>
+    <string name="udfandetails_siteid">站点</string>
+
     <!--项目人员-->
     <string name="displayname_text">姓名:</string>
     <string name="personid_text">工号:</string>
+    <string name="departdesc_text">部门:</string>
     <string name="primaryphone_text">手机:</string>
     <string name="udjbdescription_text">职务:</string>
+    <string name="email_text">主要电子邮件:</string>
 
     <!--项目日报-->
     <string name="prorunlognum_text">日志编号:</string>

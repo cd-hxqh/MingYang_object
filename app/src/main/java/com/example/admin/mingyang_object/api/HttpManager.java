@@ -408,6 +408,16 @@ public class HttpManager {
         return "{'appid':'" + Constants.UDVEHICLE_APPID + "','objectname':'" + Constants.UDVEHICLE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LICENSENUM':'" + value + "','DRIVER':'" + value + "'}}";
     }
 
+    /**
+     * 设置选择车辆接口
+     */
+    public static String getUddepturl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDDEPT_APPID + "','objectname':'" + Constants.UDDEPT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.UDDEPT_APPID + "','objectname':'" + Constants.UDDEPT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LICENSENUM':'" + value + "','DRIVER':'" + value + "'}}";
+    }
+
 
     /**
      * 设置person人员表的接口

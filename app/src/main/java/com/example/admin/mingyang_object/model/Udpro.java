@@ -28,6 +28,7 @@ public class Udpro extends Entity implements Serializable {
     private String SIGNDATE; //签订时间
     private String SITEID; //站点
     private String TESTPRO; //试点项目
+    private String RESPONSPHONE;//电话号码
 
     public String getPRONUM() {
         return PRONUM;
@@ -139,5 +140,13 @@ public class Udpro extends Entity implements Serializable {
 
     public void setTESTPRO(String TESTPRO) {
         this.TESTPRO = TESTPRO;
+    }
+
+    public String getRESPONSPHONE() {
+        return RESPONSPHONE;
+    }
+
+    public void setRESPONSPHONE(String RESPONSPHONE) {
+        this.RESPONSPHONE = RESPONSPHONE;
     }
 }

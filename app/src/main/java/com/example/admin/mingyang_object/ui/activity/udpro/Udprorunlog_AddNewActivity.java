@@ -63,6 +63,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
     /**
      * 界面信息*
      */
+    private LinearLayout prorunlognumlayout;
     private TextView prorunlognumText; //日志编号
 
     private TextView descriptionText; //描述
@@ -138,7 +139,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
-
+        prorunlognumlayout = (LinearLayout) findViewById(R.id.prorunlognum_layout);
         prorunlognumText = (TextView) findViewById(R.id.prorunlognum_text_id);
         descriptionText = (TextView) findViewById(R.id.desction_text_id);
         pronumText = (TextView) findViewById(R.id.pronum_text_id);
@@ -160,6 +161,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+        prorunlognumlayout.setVisibility(View.GONE);
         statusText.setText("新建");
         pronumText.setOnClickListener(new LayoutOnClickListener(1, Constants.UDPROCODE));
         contractsText.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));

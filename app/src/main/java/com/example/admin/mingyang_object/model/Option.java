@@ -12,6 +12,7 @@ public class Option implements Serializable {
     String Value2;
     String Value3;
     String Value4;
+    String Value5;
 
     public String getName() {
         return Name;
@@ -59,5 +60,13 @@ public class Option implements Serializable {
 
     public void setValue4(String value4) {
         Value4 = value4;
+    }
+
+    public String getValue5() {
+        return Value5;
+    }
+
+    public void setValue5(String value5) {
+        Value5 = value5;
     }
 }

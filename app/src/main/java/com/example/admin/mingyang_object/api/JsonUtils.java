@@ -18,6 +18,7 @@ import com.example.admin.mingyang_object.model.Udcardrivelog;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
+import com.example.admin.mingyang_object.model.Uddept;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udfeedback;
 import com.example.admin.mingyang_object.model.Udinspo;
@@ -575,9 +576,53 @@ public class JsonUtils<E> {
             e.printStackTrace();
             return null;
         }
-
     }
 
+    /**
+     * 解析部门信息*
+     */
+
+    public static ArrayList<Uddept> parsingUddept(String data) {
+        ArrayList<Uddept> list = null;
+        Uddept uddept = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Uddept>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                uddept = new Uddept();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = uddept.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = uddept.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(uddept);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = uddept.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(uddept, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(uddept);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * 项目日报*
@@ -1719,6 +1764,46 @@ public class JsonUtils<E> {
                 }
                 jsonObject.put("UDPRORUNLOGLINE4", wpmaterialsArray);
             }
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 封装问题联络单数据
+     *
+     * @return
+     */
+    public static String UdfeedbackToJson(Udfeedback udfeedback) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udfeedback.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udfeedback.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udfeedback);
+                    if (value != null) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            object.put("", "");
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
             jsonObject.put("relationShip", jsonArray);

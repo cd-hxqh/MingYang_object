@@ -18,10 +18,12 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.Uddept;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udvehicle;
+import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 
 import java.lang.reflect.Field;
@@ -138,6 +140,8 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option = new Option();
                 option.setName(data.get(i).getPERSONID());
                 option.setDesc(data.get(i).getDISPLAYNAME());
+                option.setValue1(data.get(i).getPRIMARYPHONE());
+                option.setValue2(data.get(i).getBRANCH());
                 optionList.add(option);
             }
         }
@@ -162,12 +166,13 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
             Option option;
             for(int i = 0;i < data.size();i++){
                 option = new Option();
-                option.setName(data.get(i).getPRONUM());
-                option.setDesc(data.get(i).getDESCRIPTION());
-                option.setValue1(data.get(i).getBRANCH());
-                option.setValue2(data.get(i).getRESPONS());
-                option.setValue3(data.get(i).getPROSTAGE());
-                option.setValue4(data.get(i).getRESPONSNAME());
+                option.setName(data.get(i).getPRONUM());//项目编号
+                option.setDesc(data.get(i).getDESCRIPTION());//项目描述
+                option.setValue1(data.get(i).getBRANCH());//所属中心
+                option.setValue2(data.get(i).getRESPONS());//责任人编号
+                option.setValue3(data.get(i).getPROSTAGE());//项目当前阶段
+                option.setValue4(data.get(i).getRESPONSNAME());//责任人描述
+                option.setValue5(data.get(i).getRESPONSPHONE());//电话号码
                 optionList.add(option);
             }
         }
@@ -264,6 +269,32 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
             }
         }
         this.isNoDesc = isNoDesc;
+        notifyDataSetChanged();
+    }
+
+    public void addWorkOrderDate(ArrayList<WorkOrder> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getWONUM());
+                option.setDesc(data.get(i).getDESCRIPTION());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addUddeptDate(ArrayList<Uddept> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getDEPTNUM());
+                option.setDesc(data.get(i).getDESCRIPTION());
+                optionList.add(option);
+            }
+        }
         notifyDataSetChanged();
     }
 }

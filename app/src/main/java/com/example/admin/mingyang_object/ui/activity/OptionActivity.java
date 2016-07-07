@@ -35,10 +35,12 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.Uddept;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udvehicle;
+import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.adapter.OptionAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 
@@ -223,6 +225,10 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         }
         else if (optiontype == Constants.UDVEHICLE){//车辆
             return HttpManager.getudvehicleurl(searchText, page, 20);
+        }else if (optiontype == Constants.WORKORDERCODE){//相关故障工单
+            return HttpManager.getworkorderUrl("FR", searchText, page, 20);
+        }else if (optiontype == Constants.UDDEPTCODE){//部门
+            return HttpManager.getUddepturl(searchText, page, 20);
         }
         return "";
     }
@@ -292,6 +298,16 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             ArrayList<Udvehicle> items = JsonUtils.parsingUdvehicle(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addUdvehicleDate(items);
+                            }
+                        }else if (optiontype == Constants.WORKORDERCODE) {//相关故障工单
+                            ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(OptionActivity.this,results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addWorkOrderDate(items);
+                            }
+                        }else if (optiontype == Constants.UDDEPTCODE) {//部门
+                            ArrayList<Uddept> items = JsonUtils.parsingUddept(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addUddeptDate(items);
                             }
                         }
                         if (optionAdapter.getItemCount() == 0) {

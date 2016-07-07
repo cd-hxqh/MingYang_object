@@ -7,31 +7,38 @@
 
     <include layout="@layout/title_main"></include>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_above="@+id/button_layout">
 
-            <include layout="@layout/activity_udfeedback1_details"></include>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <include layout="@layout/activity_udfeedback2_details"></include>
+                <include layout="@layout/activity_udfeedback1_details"></include>
 
-            <include layout="@layout/activity_udfeedback3_details"></include>
+                <include layout="@layout/activity_udfeedback2_details"></include>
 
-            <include layout="@layout/activity_udfeedback4_details"></include>
+                <include layout="@layout/activity_udfeedback3_details"></include>
 
-            <include layout="@layout/activity_udfeedback5_details"></include>
+                <include layout="@layout/activity_udfeedback4_details"></include>
 
-            <include layout="@layout/activity_udfeedback6_details"></include>
+                <include layout="@layout/activity_udfeedback5_details"></include>
 
-            <include layout="@layout/activity_udfeedback7_details"></include>
-        </LinearLayout>
+                <include layout="@layout/activity_udfeedback6_details"></include>
 
-    </ScrollView>
+                <include layout="@layout/activity_udfeedback7_details"></include>
+            </LinearLayout>
 
+        </ScrollView>
+
+        <include layout="@layout/work_buttom"></include>
+    </RelativeLayout>
 
 </LinearLayout>
