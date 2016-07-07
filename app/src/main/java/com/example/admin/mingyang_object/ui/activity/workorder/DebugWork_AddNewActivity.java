@@ -2,6 +2,7 @@ package com.example.admin.mingyang_object.ui.activity.workorder;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +17,23 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
+import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.model.Woactivity;
+import com.example.admin.mingyang_object.model.Wpmaterial;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -55,7 +66,9 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 
     private DebugWorkOrder workOrder = new DebugWorkOrder();
     private LinearLayout debugworkordernumlayout;
-    private TextView debugworkordernum;//工单号
+    //private TextView debugworkordernum;//工单号
+
+
     private EditText description;//描述
     private TextView pronum;//项目编号
     private TextView status;//状态
@@ -67,6 +80,8 @@ public class DebugWork_AddNewActivity extends BaseActivity {
     private Button work_flow;
 
     private ArrayList<UddebugWorkOrderLine> uddebugWorkOrderLines = new ArrayList<>();
+    private ArrayList<Woactivity> woactivityList = new ArrayList<>();
+    private ArrayList<Wpmaterial> wpmaterialLit = new ArrayList<>();
 //    private ArrayList<Labtrans> labtransList = new ArrayList<>();
 //    private ArrayList<Failurereport> failurereportList = new ArrayList<>();
 
@@ -81,7 +96,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_debugwork_details);
+        setContentView(R.layout.activity_debugwork_add_new);
         geiIntentData();
         findViewById();
         initView();
@@ -105,7 +120,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
 
-        debugworkordernum = (TextView) findViewById(R.id.debugwork_debugworkordernum);
+        //debugworkordernum = (TextView) findViewById(R.id.debugwork_debugworkordernum);
         description = (EditText) findViewById(R.id.debug_description);
         pronum = (TextView) findViewById(R.id.debug_pronum);
         status = (TextView) findViewById(R.id.debug_status);
@@ -116,13 +131,25 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        titlename.setText("调试工单详情");
+        titlename.setText("新建调试工单");
+
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        pronum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","选择项目编号");
+                Intent intent = new Intent(DebugWork_AddNewActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.UDPROCODE);
+                startActivityForResult(intent, 6);
+            }
+        });
+        status.setText("新建");
+        createby.setText(AccountUtils.getpersonId(DebugWork_AddNewActivity.this));
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
@@ -305,38 +332,42 @@ public class DebugWork_AddNewActivity extends BaseActivity {
     /**
      * 提交数据*
      */
-    private void startAsyncTask() {
+    private void startAsyncTask(){
 //        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
 //            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
 //            saveWorkOrder();
 //        } else {
-//            String updataInfo = null;
-////            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, labtransList, failurereportList);
-////            } else if (workOrder.status.equals(Constants.APPROVALED)) {
-////                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-////            }
-//            final String finalUpdataInfo = updataInfo;
-//            new AsyncTask<String, String, WebResult>() {
-//                @Override
-//                protected WebResult doInBackground(String... strings) {
-//                    WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo, AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
-//                    return reviseresult;
-//                }
-//
-//                @Override
-//                protected void onPostExecute(WebResult workResult) {
-//                    super.onPostExecute(workResult);
-//                    if (workResult==null) {
-//                        Toast.makeText(Work_detailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-//                    }else if (workResult.errorMsg.equals("成功!")) {
-//                        Toast.makeText(Work_detailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(Work_detailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
-//                    }
-//                    closeProgressDialog();
-//                }
-//            }.execute();
+        String updataInfo = null;
+//            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+        updataInfo = JsonUtils.DebugWorkToJson(getWorkOrder(), woactivityList,wpmaterialLit);
+//            } else if (workOrder.status.equals(Constants.APPROVALED)) {
+//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
+//            }
+        final String finalUpdataInfo = updataInfo;
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult reviseresult = AndroidClientService.InsertWO(
+                        finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(DebugWork_AddNewActivity.this), Constants.WORK_URL);
+                return reviseresult;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult workResult) {
+                super.onPostExecute(workResult);
+                if (workResult.errorMsg == null) {
+                    Toast.makeText(DebugWork_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("成功")) {
+                    Toast.makeText(DebugWork_AddNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
+                    workOrder.isnew = false;
+                    finish();
+                } else {
+                    Toast.makeText(DebugWork_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                }
+                closeProgressDialog();
+            }
+
+        }.execute();
 ////        }
 
     }
@@ -524,14 +555,31 @@ public class DebugWork_AddNewActivity extends BaseActivity {
     }
 
     private DebugWorkOrder getWorkOrder() {
+
         DebugWorkOrder workOrder = this.workOrder;
+        //描述
+        workOrder.DESCRIPTION=description.getText().toString();
+        //项目编号
+        workOrder.PRONUM=pronum.getText().toString();
+        //状态
+        workOrder.STATUS=status.getText().toString();
+        //创建人
+        workOrder.CREATEBY=createby.getText().toString();
+
+        workOrder.isnew=true;
+
         return workOrder;
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Option option;
+        Option option;
+        if (requestCode==6)
+        {
+           option = (Option) data.getSerializableExtra("option");
+                    pronum.setText(option.getName());
+        }
         switch (resultCode) {
 //            case Constants.ASSETCODE:
 //                option = (Option) data.getSerializableExtra("option");

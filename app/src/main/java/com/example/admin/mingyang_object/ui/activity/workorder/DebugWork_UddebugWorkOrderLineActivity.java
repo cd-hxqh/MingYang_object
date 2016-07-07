@@ -64,6 +64,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         getData();
         findViewById();
         initView();
+        Log.e("调试工单","调试工单子表列表");
     }
 
     private void getData() {

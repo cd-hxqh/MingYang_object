@@ -1460,9 +1460,111 @@ public class JsonUtils<E> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.e("封装工单",jsonObject.toString());
         return jsonObject.toString();
     }
-
+    /**
+     * 封装调试工单数据
+     *
+     * @param workOrder
+     * @param woactivities
+     * @return
+     */
+    public static String DebugWorkToJson(DebugWorkOrder workOrder, ArrayList<Woactivity> woactivities, ArrayList<Wpmaterial> wpmaterials) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    if (!name.equals("isnew")) {
+                        getOrSet = workOrder.getClass().getMethod("get" + name);
+                        Object value = null;
+                        value = getOrSet.invoke(workOrder);
+                        if (value != null) {
+                            jsonObject.put(name, value + "");
+                        }
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            if (woactivities != null && woactivities.size() != 0) {
+                object.put("WOACTIVITY", "");
+                JSONArray woactivityArray = new JSONArray();
+                JSONObject woactivityObj;
+                for (int i = 0; i < woactivities.size(); i++) {
+                    woactivityObj = new JSONObject();
+                    Field[] field1 = woactivities.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(woactivities.get(i));
+                            if (value != null) {
+                                woactivityObj.put(name, value + "");
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    woactivityArray.put(woactivityObj);
+                }
+                jsonObject.put("WOACTIVITY", woactivityArray);
+            }
+            if (wpmaterials != null && wpmaterials.size() != 0) {
+                object.put("WPMATERIAL", "");
+                JSONArray wpmaterialsArray = new JSONArray();
+                JSONObject wpmaterialsObj;
+                for (int i = 0; i < wpmaterials.size(); i++) {
+                    wpmaterialsObj = new JSONObject();
+                    Field[] field1 = wpmaterials.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = wpmaterials.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(wpmaterials.get(i));
+                            if (value != null) {
+                                wpmaterialsObj.put(name, value + "");
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    wpmaterialsArray.put(wpmaterialsObj);
+                }
+                jsonObject.put("WPMATERIAL", wpmaterialsArray);
+            }
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
     /**
      * 封装项目日报数据
      *

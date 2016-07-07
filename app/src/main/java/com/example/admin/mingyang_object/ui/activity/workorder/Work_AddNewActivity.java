@@ -762,6 +762,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 }
                 closeProgressDialog();
             }
+
         }.execute();
 ////        }
 
