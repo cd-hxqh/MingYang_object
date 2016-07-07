@@ -22,6 +22,7 @@ import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -74,6 +75,9 @@ public class DebugWork_AddNewActivity extends BaseActivity {
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     private ProgressDialog mProgressDialog;
 
+    private Button cancel;
+    private Button save;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +85,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
-        Log.e("调试工单","AddNewActivity");
+
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addudyxjData();
@@ -106,6 +110,8 @@ public class DebugWork_AddNewActivity extends BaseActivity {
         pronum = (TextView) findViewById(R.id.debug_pronum);
         status = (TextView) findViewById(R.id.debug_status);
         createby = (TextView) findViewById(R.id.debug_createby);
+        cancel = (Button) findViewById(R.id.work_cancel);
+        save = (Button) findViewById(R.id.work_save);
     }
 
     @Override
@@ -126,7 +132,20 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
 //        work_flow.setOnClickListener(approvalBtnOnClickListener);
-
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //finish();
+                Log.e("调试工单","按下取消按钮");
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //submitDataInfo();
+                Log.e("调试工单","按下确定按钮");
+            }
+        });
     }
 
     private View.OnClickListener udyxjOnClickListener = new View.OnClickListener() {

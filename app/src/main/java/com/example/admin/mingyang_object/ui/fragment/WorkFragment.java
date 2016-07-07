@@ -79,7 +79,7 @@ public class WorkFragment extends Fragment {
                 startActivity(intent);
 
             }else {
-                Log.e("调试工单","调试工单1");
+
                 Intent intent = new Intent(getActivity(), DebugWork_ListActivity.class);
                 intent.putExtra("worktype", type);
                 startActivity(intent);

@@ -178,8 +178,11 @@
             android:layout_height="1dp"
             android:background="@mipmap/line" />
 
-
     </LinearLayout>
+
+    <include layout="@layout/work_buttom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"></include>
     <!--<include layout="@layout/work_buttom3"></include>-->
 
 </RelativeLayout>

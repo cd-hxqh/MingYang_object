@@ -59,15 +59,12 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worklist);
 
-
-        Log.e("调试工单","1");
-
         findViewById();
-        Log.e("调试工单","2");
+
         getIntentData();
-        Log.e("调试工单","3");
+
         initView();
-        Log.e("调试工单","4");
+
     }
 
     private void getIntentData(){

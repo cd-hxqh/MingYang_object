@@ -56,16 +56,17 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        Log.e("调试工单","调试工单3");
+
         setContentView(R.layout.activity_worklist);
-        Log.e("调试工单","调试工单4");
+
         findViewById();
-        Log.e("调试工单","调试工单5");
+
         getIntentData();
-        Log.e("调试工单","调试工单6");
+
         initView();
-        Log.e("调试工单","调试工单7");
+
     }
 
     private void getIntentData(){
