@@ -55,7 +55,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
     private BaseAnimatorSet mBasOut;
     private LinearLayout confirmlayout;
     private Button confirmBtn;
-
+    private String pronum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +65,9 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         findViewById();
         initView();
         Log.e("调试工单","调试工单子表列表");
+        Intent intent= getIntent();
+        pronum=intent.getStringExtra("pronum");
+        Log.e("调试工单","调试工单子表列表"+pronum);
     }
 
     private void getData() {
@@ -249,6 +252,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         public void onClick(View view) {
             Intent intent;
             intent = new Intent(DebugWork_UddebugWorkOrderLineActivity.this, UddebugWorkOrderLineAddNewActivity.class);
+            intent.putExtra("pronum" ,pronum);
 //            intent.putExtra("taskid", (woactivityAdapter.woactivityList.size() + 1) * 10);
             startActivityForResult(intent, 1);
         }
@@ -325,6 +329,8 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                 confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
                 break;
+            //
+            //Divinesword
         }
     }
 

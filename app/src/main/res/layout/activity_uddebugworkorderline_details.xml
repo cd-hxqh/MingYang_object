@@ -486,4 +486,5 @@
     </LinearLayout>
     <!--<include layout="@layout/work_buttom3"></include>-->
     </ScrollView>
+    <include layout="@layout/work_buttom"></include>
 </RelativeLayout>

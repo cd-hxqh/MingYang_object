@@ -272,12 +272,21 @@ public class DebugWork_AddNewActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(DebugWork_AddNewActivity.this, DebugWork_UddebugWorkOrderLineActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("debugworkOrder", workOrder);
-            bundle.putSerializable("uddebugWorkOrderLines", uddebugWorkOrderLines);
-            intent.putExtras(bundle);
-            startActivityForResult(intent,1000);
+            Log.e("调试工单","准备跳转到调试工单子表");
+            if ("".equals(pronum.getText().toString()))
+            {
+                Toast.makeText(DebugWork_AddNewActivity.this, "请选择项目编号", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Intent intent = new Intent(DebugWork_AddNewActivity.this, DebugWork_UddebugWorkOrderLineActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("debugworkOrder", workOrder);
+                bundle.putSerializable("uddebugWorkOrderLines", uddebugWorkOrderLines);
+                intent.putExtras(bundle);
+                intent.putExtra("pronum",pronum.getText().toString());
+                startActivityForResult(intent,1000);
+            }
             popupWindow.dismiss();
         }
     };
