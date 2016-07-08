@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/startdate_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/starttime_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -95,6 +95,8 @@
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginLeft="@dimen/dimen_5"
             android:gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <TextView
@@ -104,9 +106,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/departure_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:layout_toRightOf="@+id/item_num_title"
@@ -125,6 +127,8 @@
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginLeft="@dimen/dimen_5"
             android:gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <TextView
@@ -134,9 +138,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/destination_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -151,9 +155,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_5"
             android:gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <TextView
@@ -163,9 +169,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/goreason_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"

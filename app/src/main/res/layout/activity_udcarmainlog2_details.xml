@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/startdate_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/enddate_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -104,13 +104,13 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/price_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
-                android:layout_toRightOf="@+id/item_num_title"
                 android:hint="@string/have_not_data"
+                android:inputType="numberDecimal"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
         </LinearLayout>
@@ -134,12 +134,13 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/mainnumber_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
+                android:inputType="numberDecimal"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
         </LinearLayout>
@@ -163,12 +164,13 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/totalprice_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
+                android:inputType="numberDecimal"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
         </LinearLayout>
@@ -192,9 +194,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/invoicenum_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"

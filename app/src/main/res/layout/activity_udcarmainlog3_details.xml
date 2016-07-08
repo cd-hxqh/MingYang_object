@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/servicetype_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -75,9 +75,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/mainplace_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -104,9 +104,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/maincontent_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:layout_toRightOf="@+id/item_num_title"
@@ -134,12 +134,13 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/number2_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
+                android:inputType="numberDecimal"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
         </LinearLayout>
@@ -163,9 +164,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/number1_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -192,14 +193,11 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <CheckBox
                 android:id="@+id/comisorno_text_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+                android:layout_marginLeft="@dimen/dimen_5" />
         </LinearLayout>
 
         <View
@@ -221,9 +219,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/remark_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"

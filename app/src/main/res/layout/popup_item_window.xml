@@ -6,9 +6,8 @@
 
     <LinearLayout
         android:id="@+id/add_linearlayout_id"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/dimens_10">
 
@@ -16,13 +15,13 @@
             android:id="@+id/imageView_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_add" />
+            android:src="@mipmap/ic_add1" />
 
         <TextView
             android:id="@+id/textView_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimens_10"
+            android:layout_marginLeft="@dimen/dimen_5"
             android:text="新建"
             android:textSize="@dimen/dimens_16dp" />
 
@@ -36,9 +35,8 @@
 
     <LinearLayout
         android:id="@+id/delete_linearlayout_id"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/dimens_10">
 
@@ -46,13 +44,13 @@
             android:id="@+id/imageView_1_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_delete" />
+            android:src="@mipmap/ic_delete1" />
 
         <TextView
             android:id="@+id/textView_1_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimens_10"
+            android:layout_marginLeft="@dimen/dimen_5"
             android:text="删除"
             android:textSize="@dimen/dimens_16dp" />
 

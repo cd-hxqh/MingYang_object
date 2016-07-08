@@ -1,13 +1,35 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
+import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.utils.MessageUtils;
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+
+import java.util.ArrayList;
 
 
 /**
@@ -24,6 +46,11 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
      * 标题
      */
     private TextView titleTextView;
+
+    /**
+     * 菜单
+     */
+    private ImageView menuImageView;
 
 
     /**
@@ -61,13 +88,13 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
 
     private TextView enddateText; //维修结束日期
 
-    private TextView priceText; //维修单价
+    private EditText priceText; //维修单价
 
-    private TextView mainnumberText; //维修数量
+    private EditText mainnumberText; //维修数量
 
-    private TextView totalpriceText; //维修总额
+    private EditText totalpriceText; //维修总额
 
-    private TextView invoicenumText; //维修发票号
+    private EditText invoicenumText; //维修发票号
 
 
     /**
@@ -75,15 +102,48 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
      */
 
     private TextView servicetypeText; //维修类型
-    private TextView mainplaceText; //维修地点
-    private TextView maincontentText; //维修.保养.更换项目
-    private TextView number2Text; //上次维修里程表读数
-    private TextView number1Text; //本次维修里程表读数
-    private TextView comisornoText; //是否提交
-    private TextView remarkText; //备注
+    private EditText mainplaceText; //维修地点
+    private EditText maincontentText; //维修.保养.更换项目
+    private EditText number2Text; //上次维修里程表读数
+    private EditText number1Text; //本次维修里程表读数
+    private CheckBox comisornoText; //是否提交
+    private EditText remarkText; //备注
 
+    /**
+     * 是否提交*
+     */
+    private boolean iscomis;
 
     private Udcarmainlog udcarmainlog;
+
+    private PopupWindow popupWindow;
+
+
+    /**
+     * 附件上传*
+     */
+    private LinearLayout uploadLinearLayout;
+    /**
+     * 编辑*
+     */
+    private LinearLayout editLinearLayouut;
+    /**
+     * 是否编辑*
+     */
+    private boolean isEdit = false;
+
+    /**
+     * 操作布局界面*
+     */
+    private LinearLayout operationLinearLayout;
+    /**
+     * 保存*
+     */
+    private Button saveButton;
+    /**
+     * 取消*
+     */
+    private Button cancelButton;
 
 
     @Override
@@ -93,6 +153,8 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
+
+
     }
 
     private void geiIntentData() {
@@ -103,6 +165,7 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
     protected void findViewById() {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
+        menuImageView = (ImageView) findViewById(R.id.title_add);
 
 
         mainlognumText = (TextView) findViewById(R.id.mainlognum_text_id);
@@ -119,18 +182,23 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
 
         startdateText = (TextView) findViewById(R.id.startdate_text_id);
         enddateText = (TextView) findViewById(R.id.enddate_text_id);
-        priceText = (TextView) findViewById(R.id.price_text_id);
-        mainnumberText = (TextView) findViewById(R.id.mainnumber_text_id);
-        totalpriceText = (TextView) findViewById(R.id.totalprice_text_id);
-        invoicenumText = (TextView) findViewById(R.id.invoicenum_text_id);
+        priceText = (EditText) findViewById(R.id.price_text_id);
+        mainnumberText = (EditText) findViewById(R.id.mainnumber_text_id);
+        totalpriceText = (EditText) findViewById(R.id.totalprice_text_id);
+        invoicenumText = (EditText) findViewById(R.id.invoicenum_text_id);
 
         servicetypeText = (TextView) findViewById(R.id.servicetype_text_id);
-        mainplaceText = (TextView) findViewById(R.id.mainplace_text_id);
-        maincontentText = (TextView) findViewById(R.id.maincontent_text_id);
-        number2Text = (TextView) findViewById(R.id.number2_text_id);
-        number1Text = (TextView) findViewById(R.id.number1_text_id);
-        comisornoText = (TextView) findViewById(R.id.comisorno_text_id);
-        remarkText = (TextView) findViewById(R.id.remark_text_id);
+        mainplaceText = (EditText) findViewById(R.id.mainplace_text_id);
+        maincontentText = (EditText) findViewById(R.id.maincontent_text_id);
+        number2Text = (EditText) findViewById(R.id.number2_text_id);
+        number1Text = (EditText) findViewById(R.id.number1_text_id);
+        comisornoText = (CheckBox) findViewById(R.id.comisorno_text_id);
+        remarkText = (EditText) findViewById(R.id.remark_text_id);
+
+        operationLinearLayout = (LinearLayout) findViewById(R.id.button_layout);
+        saveButton = (Button) findViewById(R.id.work_save);
+        cancelButton = (Button) findViewById(R.id.work_cancel);
+
 
         if (udcarmainlog != null) {
             mainlognumText.setText(udcarmainlog.getMAINLOGNUM());
@@ -156,7 +224,12 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
             maincontentText.setText(udcarmainlog.getMAINCONTENT());
             number2Text.setText(udcarmainlog.getNUMBER2());
             number1Text.setText(udcarmainlog.getNUMBER1());
-            comisornoText.setText(udcarmainlog.getCOMISORNO());
+            if (udcarmainlog.getCOMISORNO()==null||udcarmainlog.getCOMISORNO().equals("")) {
+
+                comisornoText.setChecked(false);
+            } else {
+                comisornoText.setChecked(true);
+            }
             remarkText.setText(udcarmainlog.getREMARK());
         }
     }
@@ -165,7 +238,27 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.wxjlxq_text));
+
+        menuImageView.setVisibility(View.VISIBLE);
+        menuImageView.setImageResource(R.mipmap.ic_more);
+        operationLinearLayout.setVisibility(View.GONE);
+        menuImageView.setOnClickListener(menuImageViewOnClickListener);
+
+        comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
+
+        isEdit(isEdit);
+
+        saveButton.setOnClickListener(saveButtonOnClickListener);
     }
+
+
+    private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            iscomis = isChecked;
+        }
+    };
+
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -173,5 +266,211 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
             finish();
         }
     };
+
+
+    private View.OnClickListener saveButtonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showProgressDialog("数据提交中...");
+            startAsyncTask();
+        }
+    };
+
+
+    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(menuImageView);
+        }
+    };
+
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(Udcarmainlog_Detailactivity.this).inflate(
+                R.layout.popup_item_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        popupWindow.showAsDropDown(view);
+        uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.add_linearlayout_id);
+        editLinearLayouut = (LinearLayout) contentView.findViewById(R.id.delete_linearlayout_id);
+
+        TextView udloadText = (TextView) contentView.findViewById(R.id.textView_id);
+        ImageView udloadImage = (ImageView) contentView.findViewById(R.id.imageView_id);
+        TextView editText = (TextView) contentView.findViewById(R.id.textView_1_id);
+        ImageView editImage = (ImageView) contentView.findViewById(R.id.imageView_1_id);
+        udloadText.setText(getResources().getString(R.string.work_commit));
+        editText.setText(getString(R.string.eidt_text));
+        udloadImage.setImageResource(R.mipmap.ic_upload);
+        editImage.setImageResource(R.mipmap.ic_edit);
+
+
+        editLinearLayouut.setOnClickListener(editLinearLayouutOnClickListener);
+
+    }
+
+
+    private View.OnClickListener editLinearLayouutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            isEdit(!isEdit);
+            if (isEdit) {
+                operationLinearLayout.setVisibility(View.GONE);
+                isEdit = false;
+            } else {
+                operationLinearLayout.setVisibility(View.VISIBLE);
+                isEdit = true;
+            }
+        }
+
+    };
+
+
+    /**
+     * 编辑状态*
+     */
+    private void isEdit(boolean isshow) {
+        //维修开始日期
+        startdateText.setEnabled(isshow);
+        //维修结束日期
+        enddateText.setEnabled(isshow);
+        //维修单价
+        priceText.setEnabled(isshow);
+        //维修数量
+        mainnumberText.setEnabled(isshow);
+        //维修总额
+        totalpriceText.setEnabled(isshow);
+        //维修发票号
+        invoicenumText.setEnabled(isshow);
+        //维修类型
+        servicetypeText.setEnabled(isshow);
+        //维修地点
+        mainplaceText.setEnabled(isshow);
+        //维修、保养、更换项目
+        maincontentText.setEnabled(isshow);
+        //上次维修里程表读数
+        number2Text.setEnabled(isshow);
+        //本次维修里程表读数
+        number1Text.setEnabled(isshow);
+        //是否提交
+        comisornoText.setEnabled(isshow);
+        //备注
+        remarkText.setEnabled(isshow);
+    }
+
+
+    /**
+     * 提交数据*
+     */
+    private void startAsyncTask() {
+        String updataInfo = null;
+        updataInfo = JsonUtils.udcarmainlogToJson(capsulation(udcarmainlog));
+
+        Log.i(TAG, "updataInfo=" + updataInfo);
+        final String finalUpdataInfo = updataInfo;
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult reviseresult = AndroidClientService.UpdateWO(
+                        finalUpdataInfo, "UDCARMAINLOG", "MAINLOGNUM", udcarmainlog.getMAINLOGNUM(), Constants.WORK_URL);
+                return reviseresult;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult workResult) {
+                super.onPostExecute(workResult);
+                if (workResult.errorMsg == null) {
+                    MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, "更新失败");
+                } else if (workResult.errorMsg.equals("成功")) {
+                    MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, "维修记录" + workResult.wonum + "更新成功");
+                    finish();
+                } else {
+                    MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, workResult.errorMsg);
+                }
+                closeProgressDialog();
+            }
+        }.execute();
+
+    }
+
+
+    /**
+     * 封装需要上传的数据*
+     */
+    private Udcarmainlog capsulation(Udcarmainlog udcarmainlog) {
+
+        String startdate = startdateText.getText().toString(); //维修开始日期
+        String enddate = enddateText.getText().toString(); //维修结束日期
+        String price = priceText.getText().toString(); //维修单价
+        String mainnumber = mainnumberText.getText().toString(); //维修数量
+        String totalprice = totalpriceText.getText().toString(); //维修总额
+        String invoicenum = invoicenumText.getText().toString(); //维修发票号
+        String servicetype = servicetypeText.getText().toString(); //维修类型
+        String mainplace = mainplaceText.getText().toString(); //维修地点
+        String maincontent = maincontentText.getText().toString(); //维修、保养、更换项目
+        String number2 = number2Text.getText().toString(); //上次维修里程表读数
+        String number1 = number1Text.getText().toString(); //本次次维修里程表读数
+        String remark = remarkText.getText().toString(); //备注
+        if (!startdate.equals("") && !startdate.equals(udcarmainlog.getSTARTDATE())) {
+            udcarmainlog.setSTARTDATE(startdate);
+        }
+        if (!enddate.equals("") && !enddate.equals(udcarmainlog.getENDDATE())) {
+            udcarmainlog.setENDDATE(enddate);
+        }
+        if (!price.equals("") && !price.equals(udcarmainlog.getPRICE())) {
+            udcarmainlog.setPRICE(price);
+        }
+        if (!mainnumber.equals("") && !mainnumber.equals(udcarmainlog.getMAINNUMBER())) {
+            udcarmainlog.setMAINNUMBER(mainnumber);
+        }
+        if (!totalprice.equals("") && !totalprice.equals(udcarmainlog.getTOTALPRICE())) {
+            udcarmainlog.setTOTALPRICE(totalprice);
+        }
+        if (!invoicenum.equals("") && !invoicenum.equals(udcarmainlog.getINVOICENUM())) {
+            udcarmainlog.setINVOICENUM(invoicenum);
+        }
+        if (!servicetype.equals("") && !servicetype.equals(udcarmainlog.getSERVICETYPE())) {
+            udcarmainlog.setSERVICETYPE(servicetype);
+        }
+        if (!mainplace.equals("") && !mainplace.equals(udcarmainlog.getMAINPLACE())) {
+            udcarmainlog.setMAINPLACE(mainplace);
+        }
+        if (!maincontent.equals("") && !mainplace.equals(udcarmainlog.getMAINCONTENT())) {
+            udcarmainlog.setMAINCONTENT(maincontent);
+        }
+        if (!number2.equals("") && !mainplace.equals(udcarmainlog.getNUMBER2())) {
+            udcarmainlog.setNUMBER2(number2);
+        }
+        if (!number1.equals("") && !number1.equals(udcarmainlog.getNUMBER1())) {
+            udcarmainlog.setNUMBER1(number1);
+        }
+        if (!remark.equals("") && !remark.equals(udcarmainlog.getREMARK())) {
+            udcarmainlog.setREMARK(remark);
+        }
+        if (iscomis) {
+            udcarmainlog.setCOMISORNO("已提交");
+        }
+
+
+        return udcarmainlog;
+    }
+
 
 }

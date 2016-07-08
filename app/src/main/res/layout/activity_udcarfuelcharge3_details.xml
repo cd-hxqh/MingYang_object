@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/chargedate_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -75,12 +75,13 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/number2_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
+                android:inputType="numberDecimal"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
         </LinearLayout>
@@ -104,13 +105,14 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/number1_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:layout_toRightOf="@+id/item_num_title"
                 android:hint="@string/have_not_data"
+                android:inputType="numberDecimal"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
         </LinearLayout>
@@ -136,7 +138,7 @@
 
             <TextView
                 android:id="@+id/number3_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -165,7 +167,7 @@
 
             <TextView
                 android:id="@+id/number4_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -194,7 +196,7 @@
 
             <TextView
                 android:id="@+id/number5_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -221,9 +223,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/price_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -250,9 +252,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/fuelcost_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -281,7 +283,7 @@
 
             <TextView
                 android:id="@+id/lastfuelconsumption_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -308,9 +310,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/invoicenum_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -337,9 +339,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/place_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"
@@ -354,7 +356,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_5"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -366,9 +368,9 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/remark_text_id"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:hint="@string/have_not_data"

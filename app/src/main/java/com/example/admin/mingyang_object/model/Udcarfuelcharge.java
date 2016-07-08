@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by apple on 15/10/26.
- * 行驶记录
+ * 加油记录
  */
 public class Udcarfuelcharge extends Entity implements Serializable {
 
