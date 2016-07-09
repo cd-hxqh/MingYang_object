@@ -52,6 +52,14 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
     public TextView weather;//天气
     public EditText tem;//温度(℃)
     public EditText windspeed;//平均风速(m/s)
+
+    public TextView worktype;//工作性质
+    public EditText workpg;//工作班成员
+    public EditText workcron;//工作任务
+    public TextView compsta;//完成情况
+    public EditText situation;//异常情况说明
+    public EditText remark;//备注
+
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button cancel;//删除
@@ -86,6 +94,14 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
         weather = (TextView) findViewById(R.id.udprorunlog_line3_weather);
         tem = (EditText) findViewById(R.id.udprorunlog_line3_tem);
         windspeed = (EditText) findViewById(R.id.udprorunlog_line3_windspeed);
+
+        worktype = (TextView) findViewById(R.id.udprorunlog_line3_worktype);
+        workpg = (EditText) findViewById(R.id.udprorunlog_line3_workpg);
+        workcron = (EditText) findViewById(R.id.udprorunlog_line3_workcron);
+        compsta = (TextView) findViewById(R.id.udprorunlog_line3_compsta);
+        situation = (EditText) findViewById(R.id.udprorunlog_line3_situation);
+        remark = (EditText) findViewById(R.id.udprorunlog_line3_remark);
+
         confirm = (Button) findViewById(R.id.work_save);
         cancel = (Button) findViewById(R.id.work_cancel);
     }
@@ -102,6 +118,8 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
 
         runlogdate.setOnClickListener(new DateChecked(runlogdate));
         weather.setOnClickListener(new NormalListDialogOnClickListener(weather));
+        worktype.setOnClickListener(new NormalListDialogOnClickListener(worktype));
+        compsta.setOnClickListener(new NormalListDialogOnClickListener(compsta));
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
     }
@@ -113,6 +131,12 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
         udprorunlogLine3.WEATHER = weather.getText().toString();
         udprorunlogLine3.TEM = tem.getText().toString().equals("")?(0.00):Double.parseDouble(tem.getText().toString());
         udprorunlogLine3.WINDSPEED = windspeed.getText().toString().equals("")?(0.00):Double.parseDouble(windspeed.getText().toString());
+        udprorunlogLine3.WORKTYPE = worktype.getText().toString();
+        udprorunlogLine3.WORKPG = workpg.getText().toString();
+        udprorunlogLine3.WORKCRON = workcron.getText().toString();
+        udprorunlogLine3.COMPSTA = compsta.getText().toString();
+        udprorunlogLine3.SITUATION = situation.getText().toString();
+        udprorunlogLine3.REMARK = remark.getText().toString();
         udprorunlogLine3.TYPE = "add";
         return udprorunlogLine3;
     }
@@ -179,6 +203,10 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
         mMenuItems = new ArrayList<>();
         if (textView == weather) {
             types = getResources().getStringArray(R.array.weather_array);
+        }else if (textView == worktype){
+            types = getResources().getStringArray(R.array.worktype_array);
+        }else if (textView == compsta){
+            types = getResources().getStringArray(R.array.compsta_array);
         }
         for (int i = 0; i < types.length; i++) {
             mMenuItems.add(new DialogMenuItem(types[i], 0));

@@ -9,16 +9,26 @@ import java.io.Serializable;
  */
 public class Udstockline implements Serializable {
 
-
+    private int UDSTOCKLINEID;
     private String ZPDROW;//行项目
     private String LGORT;//位置
     private String MAKTX;//物料描述
     private String MATNR;//物料编码
     private String MSEHL;//单位
     private String STOCKNUM;//盘点编号
-    private String ACTUALQTY;//实盘数量
-    private String DIFFQTY;//差异数量
+    private int ACTUALQTY;//实盘数量
+    private int DIFFQTY;//差异数量
     private String DIFFREASON;//差异原因
+
+    private String TYPE;
+
+    public int getUDSTOCKLINEID() {
+        return UDSTOCKLINEID;
+    }
+
+    public void setUDSTOCKLINEID(int UDSTOCKLINEID) {
+        this.UDSTOCKLINEID = UDSTOCKLINEID;
+    }
 
     public String getZPDROW() {
         return ZPDROW;
@@ -68,19 +78,19 @@ public class Udstockline implements Serializable {
         this.STOCKNUM = STOCKNUM;
     }
 
-    public String getACTUALQTY() {
+    public int getACTUALQTY() {
         return ACTUALQTY;
     }
 
-    public void setACTUALQTY(String ACTUALQTY) {
+    public void setACTUALQTY(int ACTUALQTY) {
         this.ACTUALQTY = ACTUALQTY;
     }
 
-    public String getDIFFQTY() {
+    public int getDIFFQTY() {
         return DIFFQTY;
     }
 
-    public void setDIFFQTY(String DIFFQTY) {
+    public void setDIFFQTY(int DIFFQTY) {
         this.DIFFQTY = DIFFQTY;
     }
 
@@ -90,5 +100,13 @@ public class Udstockline implements Serializable {
 
     public void setDIFFREASON(String DIFFREASON) {
         this.DIFFREASON = DIFFREASON;
+    }
+
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
     }
 }

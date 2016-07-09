@@ -324,9 +324,9 @@ public class HttpManager {
      */
     public static String getudstockurl(String value, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'STOCKNUM DESC'}";
         }
-        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'STOCKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'STOCKNUM DESC','sinorsearch':{'STOCKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
     /**
@@ -342,9 +342,9 @@ public class HttpManager {
      */
     public static String getudreporturl(String value, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+            return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'REPORTNUM DESC'}";
         }
-        return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'sinorsearch':{'REPORTNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'REPORTNUM DESC','sinorsearch':{'REPORTNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 
@@ -361,11 +361,11 @@ public class HttpManager {
     /**
      * 设置巡检项目的接口
      */
-    public static String getudinsprojecturl(String value, String insponum, int curpage, int showcount) {
-        if (value.equals("")) {
-            return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'INSPONUM':'" + insponum + "'}}";
-        }
-        return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'condition':{'INSPONUM':'" + insponum + "'}" + ",'sinorsearch':{'JPTASK':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    public static String getudinsprojecturl(String insponum, int curpage, int showcount) {
+//        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'JPTASK','condition':{'INSPONUM':'" + insponum + "'}}";
+//        }
+//        return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'JPTASK','condition':{'INSPONUM':'" + insponum + "'}" + ",'sinorsearch':{'JPTASK':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 

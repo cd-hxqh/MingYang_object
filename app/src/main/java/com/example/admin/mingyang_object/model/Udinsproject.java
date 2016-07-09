@@ -8,16 +8,18 @@ import java.io.Serializable;
  */
 public class Udinsproject extends Entity implements Serializable {
 
-    private String JPTASK; //任务编号
-    private String DESCRIPTION; //描述
-    private String JO1; //系统/项目
-    private String JO2;//子系统/子项目
-    private String JO3; //标准/检修方法
-    private String INSPUNIT; //巡检部位
-    private String SERIALNUM; //序号
-    private String OK; //巡检结果？
-    private String INSPCONTENT; //巡检不合格原因
-    private String INSPONUM; //巡检单编号
+    public String JPTASK; //任务编号
+    public String DESCRIPTION; //描述
+    public String JO1; //系统/项目
+    public String JO2;//子系统/子项目
+    public String JO3; //标准/检修方法
+    public String INSPUNIT; //巡检部位
+    public String SERIALNUM; //序号
+    public String OK; //巡检结果？
+    public String INSPCONTENT; //巡检不合格原因
+    public String INSPONUM; //巡检单编号
+
+    public String TYPE;
 
     public String getJPTASK() {
         return JPTASK;
@@ -97,5 +99,13 @@ public class Udinsproject extends Entity implements Serializable {
 
     public void setINSPONUM(String INSPONUM) {
         this.INSPONUM = INSPONUM;
+    }
+
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
     }
 }

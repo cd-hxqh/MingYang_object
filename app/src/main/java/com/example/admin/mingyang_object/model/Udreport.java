@@ -33,6 +33,8 @@ public class Udreport extends Entity implements Serializable {
     private String REPORTTIME; //提报时间
     private String RESULT; //处理结果
     private String STATUSTYPE; //状态
+    private String WONUM;//故障工单号
+    private String UDPBFORMNUM;//质量问题反馈单编号
 
     public String getPRODESC() {
         return PRODESC;
@@ -232,5 +234,21 @@ public class Udreport extends Entity implements Serializable {
 
     public void setSTATUSTYPE(String STATUSTYPE) {
         this.STATUSTYPE = STATUSTYPE;
+    }
+
+    public String getWONUM() {
+        return WONUM;
+    }
+
+    public void setWONUM(String WONUM) {
+        this.WONUM = WONUM;
+    }
+
+    public String getUDPBFORMNUM() {
+        return UDPBFORMNUM;
+    }
+
+    public void setUDPBFORMNUM(String UDPBFORMNUM) {
+        this.UDPBFORMNUM = UDPBFORMNUM;
     }
 }

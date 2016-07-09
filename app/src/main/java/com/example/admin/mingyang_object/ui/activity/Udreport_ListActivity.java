@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -49,7 +50,9 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
     /**
      * 返回按钮*
      */
-    private ImageView backImageView;
+    private RelativeLayout backImageView;
+
+    private ImageView addimg;
 
 
     LinearLayoutManager layoutManager;
@@ -76,7 +79,8 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
-        backImageView = (ImageView) findViewById(R.id.title_back_id);
+        backImageView = (RelativeLayout) findViewById(R.id.title_back);
+        addimg = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -89,6 +93,14 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
         setSearchEdit();
         titlename.setText(R.string.udreport_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
+        addimg.setVisibility(View.VISIBLE);
+        addimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Udreport_ListActivity.this,Udreport_AddNewActivity.class);
+                startActivity(intent);
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -136,6 +148,10 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
                 } else {
 
                     if (item != null || item.size() != 0) {
+                        if (page==1){
+                            initAdapter(new ArrayList<Udreport>());
+                            items = new ArrayList<Udreport>();
+                        }
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }

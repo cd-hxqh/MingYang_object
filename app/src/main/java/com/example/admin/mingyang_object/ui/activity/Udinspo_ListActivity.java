@@ -136,6 +136,10 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
                 } else {
 
                     if (item != null || item.size() != 0) {
+                        if (page == 1){
+                            items = new ArrayList<Udinspo>();
+                            initAdapter(new ArrayList<Udinspo>());
+                        }
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }

@@ -375,6 +375,11 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
     @Override
     public void onLoad() {
         if (!workOrder.isnew) {
+            if (wpmaterialList.size() <= 20) {
+                page = 1;
+            } else {
+                page = wpmaterialList.size() / 20 + 1;
+            }
             page++;
             getdata();
         }else {

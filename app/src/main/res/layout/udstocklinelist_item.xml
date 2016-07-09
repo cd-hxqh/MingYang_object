@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/zpdrow_text_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="x1488"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/matnr_text_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="62023503800"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/actualqty_text_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="28"

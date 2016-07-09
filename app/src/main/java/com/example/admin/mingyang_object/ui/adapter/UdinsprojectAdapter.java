@@ -31,10 +31,12 @@ public class UdinsprojectAdapter extends BaseQuickAdapter<Udinsproject> {
     @Override
     protected void convert(BaseViewHolder helper, Udinsproject item) {
         CardView cardView = helper.getView(R.id.card_container);
-        helper.setText(R.id.item_num_title, mContext.getString(R.string.jptask_text));
-        helper.setText(R.id.item_desc_title, mContext.getString(R.string.woactivity_description));
-        helper.setText(R.id.item_num_text, item.getJPTASK());
-        helper.setText(R.id.item_desc_text, item.getDESCRIPTION());
+        helper.setText(R.id.jptask_id, mContext.getString(R.string.jptask_text));
+        helper.setText(R.id.desc_id, mContext.getString(R.string.item_desc_title));
+        helper.setText(R.id.result2_id, mContext.getString(R.string.result2_text));
+        helper.setText(R.id.jptask_text_id, item.getJPTASK());
+        helper.setText(R.id.item_desc_id, item.getDESCRIPTION());
+        helper.setText(R.id.result2_text_id, (item.getOK()!=null&&item.getOK().equals("Y"))?"合格":"不合格");
     }
 
 

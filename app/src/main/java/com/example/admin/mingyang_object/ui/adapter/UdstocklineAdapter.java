@@ -31,8 +31,8 @@ public class UdstocklineAdapter extends BaseQuickAdapter<Udstockline> {
     protected void convert(BaseViewHolder helper, Udstockline item) {
         CardView cardView = helper.getView(R.id.card_container);
         helper.setText(R.id.zpdrow_text_id, item.getZPDROW());
-        helper.setText(R.id.matnr_text_id, item.getMATNR());
-        helper.setText(R.id.actualqty_text_id, item.getACTUALQTY());
+        helper.setText(R.id.matnr_text_id, item.getMAKTX());
+        helper.setText(R.id.actualqty_text_id, item.getACTUALQTY()+"");
     }
 
 

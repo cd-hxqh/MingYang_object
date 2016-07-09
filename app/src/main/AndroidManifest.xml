@@ -252,6 +252,11 @@
             android:label="@string/udreport_text"></activity>
         <activity
             android:name=".ui.activity.Udreport_DetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:label="@string/udreport_detail_text"></activity>
+        <activity
+            android:name=".ui.activity.Udreport_AddNewActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:label="@string/udreport_detail_text"></activity>
         <activity
             android:name=".ui.activity.Udinspo_ListActivity"
@@ -264,6 +269,7 @@
             android:label="@string/udinsproject_text"></activity>
         <activity
             android:name=".ui.activity.Udinsproject_DetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:label="@string/udinsproject_details_text"></activity>
         <activity
             android:name=".ui.activity.Udcardrivelog_Listactivity"

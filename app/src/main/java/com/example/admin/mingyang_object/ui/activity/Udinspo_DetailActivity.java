@@ -1,20 +1,40 @@
 package com.example.admin.mingyang_object.ui.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udinspo;
+import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.utils.DateSelect;
+import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalDialog;
+import com.flyco.dialog.widget.NormalListDialog;
+
+import java.util.ArrayList;
 
 
 /**
@@ -104,11 +124,20 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
     private PopupWindow popupWindow;
 
+    private LinearLayout buttonlayout;
+    private Button cancel;
+    private Button save;
+
     /**
      * 巡检项目*
      */
     private LinearLayout udinsprojectLinear;
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+
+    private ArrayList<Udinsproject> udinsprojectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +189,10 @@ public class Udinspo_DetailActivity extends BaseActivity {
         lastrundateText = (TextView) findViewById(R.id.lastrundate_text_id);
         nextrundateText = (TextView) findViewById(R.id.nextrundate_text_id);
 
+        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
+        cancel = (Button) findViewById(R.id.work_cancel);
+        save = (Button) findViewById(R.id.work_save);
+
         if (udinspo != null) {
             reportnumText.setText(udinspo.getINSPONUM());
             descriptionText.setText(udinspo.getDESCRIPTION());
@@ -204,6 +237,29 @@ public class Udinspo_DetailActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+
+        if (udinspo.getSTATUS().equals("待执行")) {
+            buttonlayout.setVisibility(View.VISIBLE);
+            weatherText.setOnClickListener(new NormalListDialogOnClickListener(weatherText));
+            inspodateText.setOnClickListener(new DateChecked(inspodateText));
+            stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
+            oktimeText.setOnClickListener(new DateAndTimeChecked(oktimeText));
+        }else {
+            buttonlayout.setVisibility(View.GONE);
+        }
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitDataInfo();
+            }
+        });
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -254,11 +310,173 @@ public class Udinspo_DetailActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Udinspo_DetailActivity.this, Udinsproject_ListActivity.class);
-            intent.putExtra("insponum", udinspo.getINSPONUM());
-            startActivityForResult(intent, 0);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("udinspo", udinspo);
+            bundle.putSerializable("udinsprojectList", udinsprojectList);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, 1000);
             popupWindow.dismiss();
 
         }
     };
 
+    private class NormalListDialogOnClickListener implements View.OnClickListener {
+        TextView textView;
+
+        public NormalListDialogOnClickListener(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            NormalListDialog(textView);
+        }
+    }
+
+    private void NormalListDialog(final TextView textView) {
+        String[] types = new String[0];
+        mMenuItems = new ArrayList<>();
+        if (textView == weatherText) {
+            types = getResources().getStringArray(R.array.weather_array);
+        }
+        for (int i = 0; i < types.length; i++) {
+            mMenuItems.add(new DialogMenuItem(types[i], 0));
+        }
+        final NormalListDialog dialog = new NormalListDialog(Udinspo_DetailActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                textView.setText(mMenuItems.get(position).mOperName);
+                dialog.dismiss();
+            }
+        });
+    }
+
+    class DateAndTimeChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateAndTimeChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateTimeSelect(Udinspo_DetailActivity.this, textView).showDialog();
+        }
+    }
+
+    class DateChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateSelect(Udinspo_DetailActivity.this, textView).showDialog();
+        }
+    }
+
+    private Udinspo getUdinspo(){
+        Udinspo udinspo = this.udinspo;
+        udinspo.setWEATHER(weatherText.getText().toString());
+        udinspo.setINSPODATE(inspodateText.getText().toString());
+        udinspo.setSTOPTIME(stoptimeText.getText().toString());
+        udinspo.setOKTIME(oktimeText.getText().toString());
+        return udinspo;
+    }
+
+    private ArrayList<Udinsproject> getUdinsprojectList() {
+        ArrayList<Udinsproject> udinsprojects = new ArrayList<>();
+        for (int i = 0; i < udinsprojectList.size(); i++) {
+            if (udinsprojectList.get(i).TYPE != null && udinsprojectList.get(i).TYPE.equals("update")) {
+                udinsprojects.add(udinsprojectList.get(i));
+            }
+        }
+        return udinsprojects;
+    }
+
+    /**
+     * 提交数据*
+     */
+    private void submitDataInfo() {
+        final NormalDialog dialog = new NormalDialog(Udinspo_DetailActivity.this);
+        dialog.content("确定修改巡检单吗?")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
+                    }
+                });
+    }
+
+    /**
+     * 提交数据*
+     */
+    private void startAsyncTask() {
+//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
+//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
+//            saveWorkOrder();
+//        } else {
+        String updataInfo = null;
+//            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
+        updataInfo = JsonUtils.UdinspoToJson(getUdinspo(), getUdinsprojectList());
+//            } else if (workOrder.status.equals(Constants.APPROVALED)) {
+//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
+//            }
+        final String finalUpdataInfo = updataInfo;
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                        "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
+                return reviseresult;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult workResult) {
+                super.onPostExecute(workResult);
+                if (workResult.errorMsg == null) {
+                    Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单失败", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("成功")) {
+                    Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udinspo_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                }
+                closeProgressDialog();
+            }
+        }.execute();
+////        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            switch (requestCode) {
+                case 1000:
+                    if (data.hasExtra("udinsprojectList") && data.getSerializableExtra("udinsprojectList") != null) {
+                        udinsprojectList = (ArrayList<Udinsproject>) data.getSerializableExtra("udinsprojectList");
+                    }
+                    break;
+            }
+        }
+    }
 }

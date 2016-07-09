@@ -207,6 +207,10 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
                 } else {
 
                     if (item != null || item.size() != 0) {
+                        if (page == 1){
+                            items = new ArrayList<Udstock>();
+                            initAdapter(new ArrayList<Udstock>());
+                        }
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }

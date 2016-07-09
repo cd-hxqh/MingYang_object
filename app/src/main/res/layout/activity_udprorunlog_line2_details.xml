@@ -15,7 +15,10 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,37 +177,38 @@
                     android:layout_height="1dp"
                     android:background="@mipmap/line" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_40dp"
-                    android:layout_marginLeft="@dimen/dimen_5"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="@dimen/dimen_40dp"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/udprorunlog_line2_remark"
-                        android:textColor="@color/light_black"
-                        android:textSize="@dimen/dimens_16dp" />
+                    <!--<TextView-->
+                        <!--android:layout_width="100dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/udprorunlog_line2_remark"-->
+                        <!--android:textColor="@color/light_black"-->
+                        <!--android:textSize="@dimen/dimens_16dp" />-->
 
-                    <EditText
-                        android:id="@+id/udprorunlog_line2_remark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/light_black"
-                        android:textSize="@dimen/dimens_16dp" />
+                    <!--<EditText-->
+                        <!--android:id="@+id/udprorunlog_line2_remark"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:textColor="@color/light_black"-->
+                        <!--android:textSize="@dimen/dimens_16dp" />-->
 
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@mipmap/line" />
-
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:background="@mipmap/line" />-->
+            </LinearLayout>
+            <include layout="@layout/layout_udprorunlog_line2"/>
             </LinearLayout>
         </ScrollView>
 

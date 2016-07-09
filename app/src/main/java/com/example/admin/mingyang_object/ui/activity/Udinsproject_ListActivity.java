@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,9 @@ import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdinspoAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdinsprojectAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,21 +65,27 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
     private String searchText = "";
     private int page = 1;
 
-    ArrayList<Udinsproject> items = new ArrayList<Udinsproject>();
+    public ArrayList<Udinsproject> udinsprojectList = new ArrayList<>();
 
-    private String insponum;
+    private Udinspo udinspo;
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private LinearLayout confirmlayout;
+    private Button confirmBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_worklist);
+        setContentView(R.layout.activity_woactivity);
         geiIntentData();
         findViewById();
         initView();
     }
 
     private void geiIntentData() {
-        insponum = getIntent().getExtras().getString("insponum");
+        udinspo = (Udinspo) getIntent().getExtras().getSerializable("udinspo");
+        udinsprojectList = (ArrayList<Udinsproject>) getIntent().getSerializableExtra("udinsprojectList");
     }
 
 
@@ -87,17 +97,21 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-        search = (EditText) findViewById(R.id.search_edit);
+
+        confirmlayout = (LinearLayout) findViewById(R.id.button_layout);
+        confirmBtn = (Button) findViewById(R.id.confirm);
     }
 
     @Override
     protected void initView() {
-        setSearchEdit();
+//        setSearchEdit();
         titlename.setText(R.string.udinsproject_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
+        confirmlayout.setVisibility(View.GONE);
+        confirmBtn.setOnClickListener(confirmBtnOnClickListener);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -106,7 +120,15 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
                 android.R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
 
-        getData(searchText);
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+        if (udinsprojectList == null || udinsprojectList.size() == 0) {
+            getData();
+        } else {
+            initAdapter(udinsprojectList);
+            refresh_layout.setRefreshing(false);
+        }
+        setNodataLayout();
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
@@ -124,8 +146,8 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
     };
 
 
-    private void getData(String search) {
-        HttpManager.getDataPagingInfo(this, HttpManager.getudinsprojecturl(search,insponum, page, 20), new HttpRequestHandler<Results>() {
+    private void getData() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getudinsprojecturl(udinspo.getINSPONUM(), page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -142,13 +164,17 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
                 } else {
 
                     if (item != null || item.size() != 0) {
+                        if (page == 1) {
+                            udinsprojectList = new ArrayList<Udinsproject>();
+                            initAdapter(new ArrayList<Udinsproject>());
+                        }
                         for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
+                            udinsprojectList.add(item.get(i));
                         }
                     }
                     nodatalayout.setVisibility(View.GONE);
 
-                    initAdapter(items);
+                    initAdapter(udinsprojectList);
                 }
             }
 
@@ -160,64 +186,121 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
         });
     }
 
-    private void setSearchEdit() {
-        SpannableString msp = new SpannableString("XX搜索");
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search);
-        msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        search.setHint(msp);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    // 先隐藏键盘
-                    ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(
-                                    Udinsproject_ListActivity.this.getCurrentFocus()
-                                            .getWindowToken(),
-                                    InputMethodManager.HIDE_NOT_ALWAYS);
-                    searchText = search.getText().toString().trim();
-                    udinsprojectAdapter.removeAll(items);
-                    items = new ArrayList<Udinsproject>();
-                    getData(searchText);
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
+//    private void setSearchEdit() {
+//        SpannableString msp = new SpannableString("XX搜索");
+//        Drawable drawable = getResources().getDrawable(R.mipmap.ic_search);
+//        msp.setSpan(new ImageSpan(drawable), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+//        search.setHint(msp);
+//        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    // 先隐藏键盘
+//                    ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+//                            .hideSoftInputFromWindow(
+//                                    Udinsproject_ListActivity.this.getCurrentFocus()
+//                                            .getWindowToken(),
+//                                    InputMethodManager.HIDE_NOT_ALWAYS);
+//                    searchText = search.getText().toString().trim();
+//                    udinsprojectAdapter.removeAll(udinsprojectList);
+//                    udinsprojectList = new ArrayList<Udinsproject>();
+//                    getData(searchText);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
 
 
     /**
      * 获取数据*
      */
     private void initAdapter(final List<Udinsproject> list) {
-        udinsprojectAdapter = new UdinsprojectAdapter(Udinsproject_ListActivity.this, R.layout.list_item, list);
+        udinsprojectAdapter = new UdinsprojectAdapter(Udinsproject_ListActivity.this, R.layout.list_item_2, list);
         recyclerView.setAdapter(udinsprojectAdapter);
         udinsprojectAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(Udinsproject_ListActivity.this, Udinsproject_DetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("udinsproject", items.get(position));
+                bundle.putSerializable("udinsproject", list.get(position));
+                bundle.putSerializable("udinspo", udinspo);
                 intent.putExtras(bundle);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, 2);
             }
         });
+    }
+
+    private View.OnClickListener confirmBtnOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = getIntent();
+            intent.putExtra("udinsprojectList", getList());
+            Udinsproject_ListActivity.this.setResult(1000, intent);
+            Udinsproject_ListActivity.this.finish();
+        }
+    };
+
+    private void setNodataLayout() {
+        if (udinsprojectAdapter == null){
+            nodatalayout.setVisibility(View.GONE);
+            return;
+        }
+        if (udinsprojectAdapter.getItemCount() == 0) {
+            nodatalayout.setVisibility(View.VISIBLE);
+        } else {
+            nodatalayout.setVisibility(View.GONE);
+        }
+    }
+
+    private ArrayList<Udinsproject> getList() {
+        ArrayList<Udinsproject> list = new ArrayList<>();
+        if (udinsprojectAdapter.getData().size() != 0) {
+            list.addAll(udinsprojectAdapter.getData());
+        }
+        return list;
     }
 
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
         page = 1;
-        udinsprojectAdapter.removeAll(items);
-        getData(search.getText().toString());
+        if (udinsprojectList == null || udinsprojectAdapter.getItemCount() == 0) {
+            udinsprojectAdapter.removeAll(udinsprojectList);
+            getData();
+        } else {
+            refresh_layout.setRefreshing(false);
+        }
     }
 
     @Override
     public void onLoad() {
+        if (udinsprojectList.size() <= 20) {
+            page = 1;
+        } else {
+            page = udinsprojectList.size() / 20 + 1;
+        }
         page++;
-        getData(searchText);
+        getData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode) {
+            case 2://修改
+                if (data != null) {
+                    Udinsproject udinsproject = (Udinsproject) data.getSerializableExtra("udinsproject");
+                    int position = data.getIntExtra("position", 0);
+                    udinsprojectAdapter.set(position, udinsproject);
+                    initAdapter(udinsprojectAdapter.getData());
+                    udinsprojectAdapter.notifyDataSetChanged();
+                }
+                confirmlayout.setVisibility(View.VISIBLE);
+                setNodataLayout();
+                break;
+        }
     }
 }

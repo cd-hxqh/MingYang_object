@@ -67,6 +67,7 @@ public class WorkOrder implements Serializable {
     public String UDJGTYPE;//技改类型
     public String UDFJAPPNUM;//主控程序版本号
     public String UDRPRRSB;//负责人/提报人
+    public String UDREPORTNUM;//故障提报单号
 
     public boolean isnew;//是否是新增工单
 
@@ -476,6 +477,14 @@ public class WorkOrder implements Serializable {
 
     public void setUDRPRRSB(String UDRPRRSB) {
         this.UDRPRRSB = UDRPRRSB;
+    }
+
+    public String getUDREPORTNUM() {
+        return UDREPORTNUM;
+    }
+
+    public void setUDREPORTNUM(String UDREPORTNUM) {
+        this.UDREPORTNUM = UDREPORTNUM;
     }
 
     public boolean getisnew() {

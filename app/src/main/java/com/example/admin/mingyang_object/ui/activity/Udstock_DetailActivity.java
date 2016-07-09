@@ -289,6 +289,7 @@ public class Udstock_DetailActivity extends BaseActivity {
                 Intent intent = new Intent(Udstock_DetailActivity.this, Udstockline_DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("udstockline", items.get(position));
+                bundle.putSerializable("udstock", udstock);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
             }

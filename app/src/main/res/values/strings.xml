@@ -382,6 +382,17 @@
     <string name="udprorunlog_line2_workjob">当日工作内容:</string>
     <string name="udprorunlog_line2_remark">备注:</string>
     <string name="udprorunlogline2_text">吊装调试日报</string>
+    <string name="udprorunlogline2_funnum">机位号:</string>
+    <string name="udprorunlogline2_remark1">备注:</string>
+    <string name="udprorunlogline2_string1">吊装开始:</string>
+    <string name="udprorunlogline2_string2">吊装完成:</string>
+    <string name="udprorunlogline2_string3">安装验收:</string>
+    <string name="udprorunlogline2_string4">并网调试:</string>
+    <string name="udprorunlogline2_string5">动态调试:</string>
+    <string name="udprorunlogline2_string6">调试验收:</string>
+    <string name="udprorunlogline2_string7">试运行开始:</string>
+    <string name="udprorunlogline2_string8">试运行完成:</string>
+    <string name="udprorunlogline2_string9">预验收完成:</string>
 
     <string name="udprorunlog_line3_title">工作日报列表</string>
     <string name="udprorunlog_line3_details_title">工作日报详情</string>
@@ -391,6 +402,12 @@
     <string name="udprorunlog_line3_tem">温度(℃):</string>
     <string name="udprorunlog_line3_windspeed">平均风速(m/s):</string>
     <string name="udprorunlogline_text">工作日报</string>
+    <string name="udprorunlog_line3_worktype">工作性质:</string>
+    <string name="udprorunlog_line3_workpg">工作班成员:</string>
+    <string name="udprorunlog_line3_workcron">工作任务:</string>
+    <string name="udprorunlog_line3_compsta">完成情况:</string>
+    <string name="udprorunlog_line3_situation">异常情况说明:</string>
+    <string name="udprorunlog_line3_remark">备注:</string>
     <string name="udprorunlogline4_text">工装管理</string>
     <!--问题联络单-->
     <string name="problemtype_text">问题类型:</string>
@@ -425,7 +442,7 @@
 
     <!-- 库存盘点-->
     <string name="udstick_text">盘点单号:</string>
-    <string name="zpdnum_text">盘点单号凭证:</string>
+    <string name="zpdnum_text">盘点凭证号:</string>
     <string name="location_text">仓库:</string>
     <string name="locdesc_text">仓库名称:</string>
     <string name="createdby_text">创建人:</string>
@@ -463,6 +480,8 @@
     <string name="fault_code1_text">故障代码:</string>
     <string name="cudescribe_text">故障描述:</string>
     <string name="result_text">处理结果:</string>
+    <string name="udreport_wonum">故障工单号:</string>
+    <string name="udreport_udpbformnum">质量问题反馈单号:</string>
     <string name="udreport_detail_text">故障提报单详情</string>
 
     <!--巡检单-->
@@ -492,7 +511,9 @@
     <string name="jo3_text">标准/检修方法:</string>
     <string name="serialnum_text">序号:</string>
     <string name="inspunit_text">巡检部位:</string>
-    <string name="ok_text">巡检结果:</string>
+    <string name="ok_text">已完成?:</string>
+    <string name="inspcontent_text">巡检不合格原因:</string>
+    <string name="result2_text">结果:</string>
     <string name="udinsproject_details_text">巡检项目详情</string>
 
     <!--行驶记录-->

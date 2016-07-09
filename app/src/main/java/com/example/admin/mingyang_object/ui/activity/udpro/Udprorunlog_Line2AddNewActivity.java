@@ -53,7 +53,20 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     private TextView person;//
     private TextView prophase;//当前项目阶段
     private EditText workjob;//当日工作内容
+//    private EditText remark;//备注
+
+    private TextView funnum;//机位号
     private EditText remark;//备注
+    private EditText string1;//吊装开始
+    private EditText string2;//吊装完成
+    private EditText string3;//安装验收
+    private EditText string4;//并网调试
+    private EditText string5;//动态调试
+    private EditText string6;//调试验收
+    private EditText string7;//试运行开始
+    private EditText string8;//试运行完成
+    private EditText string9;//预验收完成
+
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button cancel;//删除
@@ -88,7 +101,20 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         person = (TextView) findViewById(R.id.udprorunlog_line2_person);
         prophase = (TextView) findViewById(R.id.udprorunlog_line2_prophase);
         workjob = (EditText) findViewById(R.id.udprorunlog_line2_workjob);
-        remark = (EditText) findViewById(R.id.udprorunlog_line2_remark);
+        remark = (EditText) findViewById(R.id.udprorunlogline2_remark);
+
+        funnum = (TextView) findViewById(R.id.udprorunlogline2_funnum);
+//        remark1 = (EditText) findViewById(R.id.udprorunlogline2_remark1);
+        string1 = (EditText) findViewById(R.id.udprorunlogline2_string1);
+        string2 = (EditText) findViewById(R.id.udprorunlogline2_string2);
+        string3 = (EditText) findViewById(R.id.udprorunlogline2_string3);
+        string4 = (EditText) findViewById(R.id.udprorunlogline2_string4);
+        string5 = (EditText) findViewById(R.id.udprorunlogline2_string5);
+        string6 = (EditText) findViewById(R.id.udprorunlogline2_string6);
+        string7 = (EditText) findViewById(R.id.udprorunlogline2_string7);
+        string8 = (EditText) findViewById(R.id.udprorunlogline2_string8);
+        string9 = (EditText) findViewById(R.id.udprorunlogline2_string9);
+
         confirm = (Button) findViewById(R.id.work_save);
         cancel = (Button) findViewById(R.id.work_cancel);
     }
@@ -109,6 +135,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         createdate.setOnClickListener(new DateChecked(createdate));
         personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
+        funnum.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
 
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
@@ -122,6 +149,17 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         udprorunlogLine2.PROPHASE = prophase.getText().toString();
         udprorunlogLine2.WORKJOB = workjob.getText().toString();
         udprorunlogLine2.REMARK = remark.getText().toString();
+        udprorunlogLine2.FUNNUM = funnum.getText().toString();
+//        udprorunlogLine2.REMARK1 = remark1.getText().toString();
+        udprorunlogLine2.STRING1 = string1.getText().toString();
+        udprorunlogLine2.STRING2 = string2.getText().toString();
+        udprorunlogLine2.STRING3 = string3.getText().toString();
+        udprorunlogLine2.STRING4 = string4.getText().toString();
+        udprorunlogLine2.STRING5 = string5.getText().toString();
+        udprorunlogLine2.STRING6 = string6.getText().toString();
+        udprorunlogLine2.STRING7 = string7.getText().toString();
+        udprorunlogLine2.STRING8 = string8.getText().toString();
+        udprorunlogLine2.STRING9 = string9.getText().toString();
         udprorunlogLine2.TYPE = "add";
         return udprorunlogLine2;
     }
@@ -219,7 +257,14 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         public void onClick(View view) {
             Intent intent = new Intent(Udprorunlog_Line2AddNewActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
-            intent.putExtra("udprojectnum",udprorunlog.getPRONUM());
+            if (requestCode == 2) {
+                if (udprorunlog.PRONUM == null || udprorunlog.PRONUM.equals("")) {
+                    Toast.makeText(Udprorunlog_Line2AddNewActivity.this, "请先选择项目编号", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    intent.putExtra("udprojectnum", udprorunlog.PRONUM);
+                }
+            }
             startActivityForResult(intent, requestCode);
         }
     }
@@ -229,12 +274,17 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         Option option;
         switch (requestCode) {
             case 1:
-                if (data!=null) {
+                if (data != null) {
                     option = (Option) data.getSerializableExtra("option");
                     personid.setText(option.getName());
                     person.setText(option.getDesc());
                 }
                 break;
+            case 2:
+                if (data != null) {
+                    option = (Option) data.getSerializableExtra("option");
+                    funnum.setText(option.getName());
+                }
         }
     }
 }
