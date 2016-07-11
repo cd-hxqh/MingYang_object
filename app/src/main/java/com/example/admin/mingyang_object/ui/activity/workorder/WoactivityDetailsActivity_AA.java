@@ -144,33 +144,55 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         return woactivity;
     }
 
+    private boolean isOK(){
+        if (udstarttime.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_AA.this,"开始时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udendtime.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_AA.this,"结束时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (wojo1.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_AA.this,"工作任务不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udzglimit.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_AA.this,"整改期限不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (lead.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_AA.this,"整改责任人不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return  true;
+    }
+
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if(woactivity.WOJO1.equals(wojo1.getText().toString())
-                    &&woactivity.UDSTARTTIME.equals(udstarttime.getText().toString())
-                    &&woactivity.UDENDTIME.equals(udendtime.getText().toString())
-                    &&woactivity.UDZYSBASIC.equals(udzysbasic.getText().toString())
-                    &&(woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
-                    &&woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
-                    &&woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())
-                    &&woactivity.LEAD.equals(lead.getText().toString())
-                    &&woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
-                    &&woactivity.UDZGRESULT.equals(udzgresult.getText().toString())
-                    &&woactivity.UDREMARK.equals(udremark.getText().toString())) {//如果内容没有修改
-                intent.putExtra("woactivity",woactivity);
-            }else {
-                Woactivity woactivity = getWoactivity();
-                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
-                    woactivity.TYPE = "update";
+            if (isOK()) {
+                Intent intent = getIntent();
+                if (woactivity.WOJO1.equals(wojo1.getText().toString())
+                        && woactivity.UDSTARTTIME.equals(udstarttime.getText().toString())
+                        && woactivity.UDENDTIME.equals(udendtime.getText().toString())
+                        && woactivity.UDZYSBASIC.equals(udzysbasic.getText().toString())
+                        && (woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
+                        && woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
+                        && woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())
+                        && woactivity.LEAD.equals(lead.getText().toString())
+                        && woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
+                        && woactivity.UDZGRESULT.equals(udzgresult.getText().toString())
+                        && woactivity.UDREMARK.equals(udremark.getText().toString())) {//如果内容没有修改
+                    intent.putExtra("woactivity", woactivity);
+                } else {
+                    Woactivity woactivity = getWoactivity();
+                    if (woactivity.TYPE == null || !woactivity.TYPE.equals("add")) {
+                        woactivity.TYPE = "update";
+                    }
+                    intent.putExtra("woactivity", woactivity);
+                    Toast.makeText(WoactivityDetailsActivity_AA.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
                 }
-                intent.putExtra("woactivity", woactivity);
-                Toast.makeText(WoactivityDetailsActivity_AA.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+                intent.putExtra("position", position);
+                WoactivityDetailsActivity_AA.this.setResult(2, intent);
+                finish();
             }
-            intent.putExtra("position", position);
-            WoactivityDetailsActivity_AA.this.setResult(2, intent);
-            finish();
         }
     };
 

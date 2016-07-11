@@ -111,36 +111,52 @@ public class WpmaterialDetailsActivity extends BaseActivity {
     private Wpmaterial getWpmaterial() {
         Wpmaterial wpmaterial = this.wpmaterial;
         wpmaterial.ITEMNUM = itemnum.getText().toString();
-//        wpmaterial.ITEMDESC = itemdesc.getText().toString();
+        wpmaterial.ITEMDESC = itemdesc.getText().toString();
         wpmaterial.ITEMQTY = itemqty.getText().toString();
-//        wpmaterial.ORDERUNIT = orderunit.getText().toString();//不上传，由ITEMNUM决定
+        wpmaterial.ORDERUNIT = orderunit.getText().toString();
         wpmaterial.LOCATION = location.getText().toString();
-//        wpmaterial.LOCDESC = locdesc.getText().toString();
+        wpmaterial.LOCDESC = locdesc.getText().toString();
         return wpmaterial;
+    }
+
+    private boolean isOK(){
+        if (itemnum.getText().toString().equals("")){
+            Toast.makeText(WpmaterialDetailsActivity.this,"物资编码不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (itemqty.getText().toString().equals("")){
+            Toast.makeText(WpmaterialDetailsActivity.this,"物资数量不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (location.getText().toString().equals("")){
+            Toast.makeText(WpmaterialDetailsActivity.this,"库房不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if(wpmaterial.ITEMNUM.equals(itemnum.getText().toString())
-                    &&wpmaterial.ITEMDESC.equals(itemdesc.getText().toString())
-                    &&wpmaterial.ITEMQTY.equals(itemqty.getText().toString())
-                    &&wpmaterial.ORDERUNIT.equals(orderunit.getText().toString())
-                    &&wpmaterial.LOCATION.equals(location.getText().toString())
-                    &&wpmaterial.LOCDESC.equals(locdesc.getText().toString())) {//如果内容没有修改
-                intent.putExtra("wpmaterial",wpmaterial);
-            }else {
-                Wpmaterial wpmaterial = getWpmaterial();
-                if(wpmaterial.TYPE==null||!wpmaterial.TYPE.equals("add")) {
-                    wpmaterial.TYPE = "update";
+            if (isOK()) {
+                Intent intent = getIntent();
+                if (wpmaterial.ITEMNUM.equals(itemnum.getText().toString())
+                        && wpmaterial.ITEMDESC.equals(itemdesc.getText().toString())
+                        && wpmaterial.ITEMQTY.equals(itemqty.getText().toString())
+                        && wpmaterial.ORDERUNIT.equals(orderunit.getText().toString())
+                        && wpmaterial.LOCATION.equals(location.getText().toString())
+                        && wpmaterial.LOCDESC.equals(locdesc.getText().toString())) {//如果内容没有修改
+                    intent.putExtra("wpmaterial", wpmaterial);
+                } else {
+                    Wpmaterial wpmaterial = getWpmaterial();
+                    if (wpmaterial.TYPE == null || !wpmaterial.TYPE.equals("add")) {
+                        wpmaterial.TYPE = "update";
+                    }
+                    intent.putExtra("wpmaterial", wpmaterial);
+                    Toast.makeText(WpmaterialDetailsActivity.this, "物料本地修改成功", Toast.LENGTH_SHORT).show();
                 }
-                intent.putExtra("wpmaterial", wpmaterial);
-                Toast.makeText(WpmaterialDetailsActivity.this, "物料本地修改成功", Toast.LENGTH_SHORT).show();
+                intent.putExtra("position", position);
+                WpmaterialDetailsActivity.this.setResult(2, intent);
+                finish();
             }
-            intent.putExtra("position", position);
-            WpmaterialDetailsActivity.this.setResult(2, intent);
-            finish();
         }
     };
 
@@ -181,18 +197,20 @@ public class WpmaterialDetailsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                option = (Option) data.getSerializableExtra("option");
-                itemnum.setText(option.getName());
-                itemdesc.setText(option.getDesc());
-                orderunit.setText(option.getValue1());
-                break;
-            case 2:
-                option = (Option) data.getSerializableExtra("option");
-                location.setText(option.getName());
-                locdesc.setText(option.getDesc());
-                break;
+        if (data != null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    itemnum.setText(option.getName());
+                    itemdesc.setText(option.getDesc());
+                    orderunit.setText(option.getValue1());
+                    break;
+                case 2:
+                    option = (Option) data.getSerializableExtra("option");
+                    location.setText(option.getName());
+                    locdesc.setText(option.getDesc());
+                    break;
+            }
         }
     }
 }

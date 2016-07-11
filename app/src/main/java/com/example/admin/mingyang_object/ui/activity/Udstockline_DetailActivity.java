@@ -188,7 +188,7 @@ public class Udstockline_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udstockline_DetailActivity.this,finalUpdataInfo,
                         "UDSTOCK", "STOCKNUM", udstock.getSTOCKNUM(), Constants.WORK_URL);
                 return reviseresult;
             }

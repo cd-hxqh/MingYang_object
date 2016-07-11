@@ -317,50 +317,52 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (resultCode) {
-            case 1://新增
-                if (data != null) {
-                    UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
-                    udprorunlogLine1Adapter.add(udprorunlogLine1);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    nodatalayout.setVisibility(View.GONE);
-                }
-                confirmlayout.setVisibility(View.VISIBLE);
-                setNodataLayout();
-                break;
-            case 2://修改
-                if (data != null) {
-                    UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
-                    int position = data.getIntExtra("position", 0);
-                    udprorunlogLine1Adapter.set(position, udprorunlogLine1);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    udprorunlogLine1Adapter.notifyDataSetChanged();
-                }
-                confirmlayout.setVisibility(View.VISIBLE);
-                setNodataLayout();
-                break;
-            case 3://本地任务删除
-                if (data != null) {
-                    int position = data.getIntExtra("position", 0);
-                    udprorunlogLine1Adapter.remove(position);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    udprorunlogLine1Adapter.notifyDataSetChanged();
-                }
-                confirmlayout.setVisibility(View.VISIBLE);
-                setNodataLayout();
-                break;
-            case 4://服务器任务删除操作
-                if (data != null) {
-                    UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
-                    int position = data.getIntExtra("position", 0);
-                    deleteList.add(udprorunlogLine1);
-                    udprorunlogLine1Adapter.remove(position);
-                    initAdapter(udprorunlogLine1Adapter.getData());
-                    udprorunlogLine1Adapter.notifyDataSetChanged();
-                }
-                confirmlayout.setVisibility(View.VISIBLE);
-                setNodataLayout();
-                break;
+        if (data!=null) {
+            switch (resultCode) {
+                case 1://新增
+                    if (data != null) {
+                        UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
+                        udprorunlogLine1Adapter.add(udprorunlogLine1);
+                        initAdapter(udprorunlogLine1Adapter.getData());
+                        nodatalayout.setVisibility(View.GONE);
+                    }
+                    confirmlayout.setVisibility(View.VISIBLE);
+                    setNodataLayout();
+                    break;
+                case 2://修改
+                    if (data != null) {
+                        UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
+                        int position = data.getIntExtra("position", 0);
+                        udprorunlogLine1Adapter.set(position, udprorunlogLine1);
+                        initAdapter(udprorunlogLine1Adapter.getData());
+                        udprorunlogLine1Adapter.notifyDataSetChanged();
+                    }
+                    confirmlayout.setVisibility(View.VISIBLE);
+                    setNodataLayout();
+                    break;
+                case 3://本地任务删除
+                    if (data != null) {
+                        int position = data.getIntExtra("position", 0);
+                        udprorunlogLine1Adapter.remove(position);
+                        initAdapter(udprorunlogLine1Adapter.getData());
+                        udprorunlogLine1Adapter.notifyDataSetChanged();
+                    }
+                    confirmlayout.setVisibility(View.VISIBLE);
+                    setNodataLayout();
+                    break;
+                case 4://服务器任务删除操作
+                    if (data != null) {
+                        UdprorunlogLine1 udprorunlogLine1 = (UdprorunlogLine1) data.getSerializableExtra("udprorunlogLine1");
+                        int position = data.getIntExtra("position", 0);
+                        deleteList.add(udprorunlogLine1);
+                        udprorunlogLine1Adapter.remove(position);
+                        initAdapter(udprorunlogLine1Adapter.getData());
+                        udprorunlogLine1Adapter.notifyDataSetChanged();
+                    }
+                    confirmlayout.setVisibility(View.VISIBLE);
+                    setNodataLayout();
+                    break;
+            }
         }
     }
 

@@ -70,4 +70,12 @@ public class Person implements Serializable {
     public void setUDPRONUM(String UDPRONUM) {
         this.UDPRONUM = UDPRONUM;
     }
+
+    public String getDEPARTDESC() {
+        return DEPARTDESC;
+    }
+
+    public void setDEPARTDESC(String DEPARTDESC) {
+        this.DEPARTDESC = DEPARTDESC;
+    }
 }

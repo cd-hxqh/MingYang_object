@@ -29,6 +29,17 @@
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/title_choose"
+        android:layout_width="46dp"
+        android:layout_height="26dp"
+        android:layout_toLeftOf="@+id/title_add"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="全部"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/title_add"

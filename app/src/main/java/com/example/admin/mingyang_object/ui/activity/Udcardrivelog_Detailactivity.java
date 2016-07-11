@@ -371,8 +371,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(
-                        finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM", udcardrivelog.getCARDRIVELOGNUM(), Constants.WORK_URL);
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udcardrivelog_Detailactivity.this,
+                        finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM",udcardrivelog.getCARDRIVELOGNUM(), Constants.WORK_URL);
                 return reviseresult;
             }
 

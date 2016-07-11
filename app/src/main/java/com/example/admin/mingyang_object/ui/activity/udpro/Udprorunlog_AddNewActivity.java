@@ -356,9 +356,11 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("数据提交中...");
-                        startAsyncTask();
-                        dialog.dismiss();
+                        if (isOK()) {
+                            showProgressDialog("数据提交中...");
+                            startAsyncTask();
+                            dialog.dismiss();
+                        }
                     }
                 });
     }
@@ -377,6 +379,23 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         udprorunlog.STATUS = statusText.getText().toString();
         udprorunlog.isnew = true;
         return udprorunlog;
+    }
+
+    private boolean isOK(){
+        if (pronumText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_AddNewActivity.this,"项目编号不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (contractsText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_AddNewActivity.this,"现场联系人不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (yearText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_AddNewActivity.this,"年份不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (monthText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_AddNewActivity.this,"月份不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private ArrayList<UdprorunlogLine1> getUdprorunlogLine1() {
@@ -437,7 +456,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udprorunlog_AddNewActivity.this,
                         finalUpdataInfo, "UDPRORUNLOG", "PRORUNLOGNUM", AccountUtils.getpersonId(Udprorunlog_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

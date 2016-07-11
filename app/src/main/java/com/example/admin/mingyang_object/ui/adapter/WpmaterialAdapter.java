@@ -32,9 +32,9 @@ public class WpmaterialAdapter extends BaseQuickAdapter<Wpmaterial> {
     protected void convert(BaseViewHolder helper, Wpmaterial item) {
         CardView cardView = helper.getView(R.id.card_container);
         helper.setText(R.id.item_num_title, mContext.getString(R.string.wpmaterial_itemnum));
-        helper.setText(R.id.item_desc_title, mContext.getString(R.string.wpmaterial_itemqty));
+        helper.setText(R.id.item_desc_title, mContext.getString(R.string.wpmaterial_itemdesc));
         helper.setText(R.id.item_num_text, item.getITEMNUM());
-        helper.setText(R.id.item_desc_text, item.getITEMQTY());
+        helper.setText(R.id.item_desc_text, item.getITEMDESC());
 
     }
 

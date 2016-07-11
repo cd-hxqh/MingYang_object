@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 巡检单
  */
 public class Udinsproject extends Entity implements Serializable {
-
+    public String UDINSPROJECTID;//
     public String JPTASK; //任务编号
     public String DESCRIPTION; //描述
     public String JO1; //系统/项目
@@ -20,6 +20,14 @@ public class Udinsproject extends Entity implements Serializable {
     public String INSPONUM; //巡检单编号
 
     public String TYPE;
+
+    public String getUDINSPROJECTID() {
+        return UDINSPROJECTID;
+    }
+
+    public void setUDINSPROJECTID(String UDINSPROJECTID) {
+        this.UDINSPROJECTID = UDINSPROJECTID;
+    }
 
     public String getJPTASK() {
         return JPTASK;

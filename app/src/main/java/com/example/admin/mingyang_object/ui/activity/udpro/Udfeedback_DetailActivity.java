@@ -442,7 +442,7 @@ public class Udfeedback_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udfeedback_DetailActivity.this,finalUpdataInfo,
                         "UDFEEDBACK", "FEEDBACKNUM", udfeedback.getFEEDBACKNUM(), Constants.WORK_URL);
                 return reviseresult;
             }

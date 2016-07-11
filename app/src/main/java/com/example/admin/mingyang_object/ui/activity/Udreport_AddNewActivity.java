@@ -350,7 +350,7 @@ public class Udreport_AddNewActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udreport_AddNewActivity.this,
                         finalUpdataInfo, "UDREPORT", "REPORTNUM", AccountUtils.getpersonId(Udreport_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

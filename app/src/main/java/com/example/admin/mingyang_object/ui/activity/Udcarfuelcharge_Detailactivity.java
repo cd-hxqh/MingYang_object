@@ -408,7 +408,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udcarfuelcharge_Detailactivity.this,
                         finalUpdataInfo, "UDCARFUELCHARGE", "CARFUELCHARGENUM", udcarfuelcharge.getCARFUELCHARGENUM(), Constants.WORK_URL);
                 return reviseresult;
             }

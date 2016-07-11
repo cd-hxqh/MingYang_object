@@ -343,9 +343,11 @@ public class Udfeedback_AddNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("数据提交中...");
-                        startAsyncTask();
-                        dialog.dismiss();
+                        if (isOK()) {
+                            showProgressDialog("数据提交中...");
+                            startAsyncTask();
+                            dialog.dismiss();
+                        }
                     }
                 });
     }
@@ -358,6 +360,20 @@ public class Udfeedback_AddNewActivity extends BaseActivity {
         udfeedback.setPROBLEMSITUATION(problemsituationText.getText().toString());
         udfeedback.setPRONUM(pronumText.getText().toString());
         return udfeedback;
+    }
+
+    private boolean isOK(){
+        if (problemtypeText.getText().toString().equals("")){
+            Toast.makeText(Udfeedback_AddNewActivity.this,"问题类型不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (emergencyText.getText().toString().equals("")){
+            Toast.makeText(Udfeedback_AddNewActivity.this,"紧急程度不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (pronumText.getText().toString().equals("")){
+            Toast.makeText(Udfeedback_AddNewActivity.this,"项目编号不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -378,7 +394,7 @@ public class Udfeedback_AddNewActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udfeedback_AddNewActivity.this,
                         finalUpdataInfo, "UDFEEDBACK", "FEEDBACKNUM", AccountUtils.getpersonId(Udfeedback_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

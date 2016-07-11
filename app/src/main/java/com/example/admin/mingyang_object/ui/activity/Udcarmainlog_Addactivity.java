@@ -353,7 +353,7 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udcarmainlog_Addactivity.this,
                         finalUpdataInfo, "UDCARMAINLOG", "MAINLOGNUM", AccountUtils.getpersonId(Udcarmainlog_Addactivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

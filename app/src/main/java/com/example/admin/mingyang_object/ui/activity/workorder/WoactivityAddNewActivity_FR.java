@@ -112,14 +112,30 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
         return woactivity;
     }
 
+    private boolean isOK(){
+        if (owner.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_FR.this,"负责人不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udacstarttime.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_FR.this,"计划开始时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udacstoptime.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_FR.this,"计划完成时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            intent.putExtra("woactivity", getWoactivity());
-            WoactivityAddNewActivity_FR.this.setResult(1, intent);
-            Toast.makeText(WoactivityAddNewActivity_FR.this, "任务本地新增成功", Toast.LENGTH_SHORT).show();
-            finish();
+            if (isOK()) {
+                Intent intent = getIntent();
+                intent.putExtra("woactivity", getWoactivity());
+                WoactivityAddNewActivity_FR.this.setResult(1, intent);
+                Toast.makeText(WoactivityAddNewActivity_FR.this, "任务本地新增成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     };
 

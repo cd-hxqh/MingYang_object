@@ -97,6 +97,13 @@
     <string name="start">启动中…</string>
     <string name="approve">审批提交中…</string>
 
+    <!--状态-->
+    <string name="status_1">新建</string>
+    <string name="status_2">待审批</string>
+    <string name="status_3">已提交</string>
+    <string name="status_4">已关闭</string>
+    <string name="status_all">所有</string>
+
     <!--流程审批-->
 
 

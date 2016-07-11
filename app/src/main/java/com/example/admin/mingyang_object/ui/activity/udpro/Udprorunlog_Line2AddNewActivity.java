@@ -272,19 +272,21 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                if (data != null) {
-                    option = (Option) data.getSerializableExtra("option");
-                    personid.setText(option.getName());
-                    person.setText(option.getDesc());
-                }
-                break;
-            case 2:
-                if (data != null) {
-                    option = (Option) data.getSerializableExtra("option");
-                    funnum.setText(option.getName());
-                }
+        if (data != null) {
+            switch (requestCode) {
+                case 1:
+                    if (data != null) {
+                        option = (Option) data.getSerializableExtra("option");
+                        personid.setText(option.getName());
+                        person.setText(option.getDesc());
+                    }
+                    break;
+                case 2:
+                    if (data != null) {
+                        option = (Option) data.getSerializableExtra("option");
+                        funnum.setText(option.getName());
+                    }
+            }
         }
     }
 }

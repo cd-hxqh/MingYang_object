@@ -43,7 +43,7 @@ public class HttpManager {
     /**
      * 设置工单接口*
      */
-    public static String getworkorderUrl(String type, String search, int curpage, int showcount) {
+    public static String getworkorderUrl(String type,String status, String search, int curpage, int showcount) {
         switch (type) {
             case Constants.FR://故障工单
                 appid = "UDREPORTWO";
@@ -72,17 +72,28 @@ public class HttpManager {
         }
         if (search.equals("")) {
             if (!type.equals(Constants.DC)) {
-                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "'}}";
+                if (status.equals("全部")) {
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "'}}";
+                }else {
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
+                }
             } else {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                         "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'}";
             }
         } else {
             if (!type.equals(Constants.DC)) {
-                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
-                        ",'condition':{'WORKTYPE':'" + type + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                if (status.equals("全部")) {
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                            ",'condition':{'WORKTYPE':'" + type + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                }else {
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                            ",'condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                }
             } else {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                         "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
@@ -139,7 +150,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "'}}";
         }
-        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "','LOCATION':'" + value + "'}}";
+        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LOCATION':'" + value + "','DESCRIPTION':'" + value + "'},'condition':{'UDPRONUM':'" + pronum + "','UDLOCNUM':'" + locnum + "'}}";
     }
 
     /**
@@ -149,7 +160,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE':'库房','TESTSITE':'1'}}";
         }
-        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE':'库房','TESTSITE':'1','DESCRIPTION':'" + value + "'}}";
+        return "{'appid':'" + Constants.LOCATION_APPID + "','objectname':'" + Constants.LOCATION_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LOCATION':'" + value + "','DESCRIPTION':'" + value + "'},'condition':{'TYPE':'库房','TESTSITE':'1'}}";
     }
 
     /**
@@ -208,7 +219,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TESTPRO':'Y'}}";
         }
-        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TESTPRO':'Y','PRONUM':'" + value + "'}}";
+        return "{'appid':'" + Constants.UDPRO_APPID + "','objectname':'" + Constants.UDPRO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PRONUM':'" + value + "','DESCRIPTION':'" + value + "'},'condition':{'TESTPRO':'Y'}}";
     }
 
     /**
@@ -228,7 +239,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
         }
-        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "'}}";
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LOCNUM':'" + value + "','MODELTYPE':'" + value + "'},'condition':{'PRONUM':'=" + pronum + "'}}";
     }
 
     /**
@@ -238,7 +249,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
         }
-        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "'}}";
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','option':'read','sinorsearch':{'LOCNUM':'" + value + "','MODELTYPE':'" + value + "'},'condition':{'PRONUM':'=" + pronum + "'}}";
     }
 
     /**
@@ -426,17 +437,17 @@ public class HttpManager {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'STATUS':'=活动'}}";
         }
-        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DISPLAYNAME':'" + serch + "'}}";
+        return "{'appid':'" + Constants.PERSON_APPID + "','objectname':'" + Constants.PERSON_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PERSONID':'" + serch + "','DISPLAYNAME':'" + serch + "'},'condition':{'STATUS':'=活动'}}";
     }
 
     /**
-     * 设置person人员表的接口
+     * 设置工作计划的接口
      */
     public static String getJobplanUrl(String serch, int curpage, int showcount, String type) {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动'}}";
         }
-        return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动','DESCRIPTION':'" + serch + "'}}";
+        return "{'appid':'" + Constants.JOBPLAN_APPID + "','objectname':'" + Constants.JOBPLAN_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'JPNUM':'" + serch + "','DESCRIPTION':'" + serch + "'},'condition':{'UDSTNDTYPE':'" + type + "','STATUS':'活动'}}";
     }
 
     /**
@@ -446,7 +457,7 @@ public class HttpManager {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.UDINVESTP_APPID + "','objectname':'" + Constants.UDINVESTP_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + type + "'}}";
         }
-        return "{'appid':'" + Constants.UDINVESTP_APPID + "','objectname':'" + Constants.UDINVESTP_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'APPTYPE':'" + type + "','DESCRIPTION':'" + serch + "'}}";
+        return "{'appid':'" + Constants.UDINVESTP_APPID + "','objectname':'" + Constants.UDINVESTP_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PLANNUM':'" + serch + "','PROJECTNUM':'" + serch + "'},'condition':{'APPTYPE':'" + type + "'}}";
     }
 
     /**
@@ -456,7 +467,7 @@ public class HttpManager {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE2':'*'}}";
         }
-        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'TYPE2':'*','CODEDESC':'" + serch + "'}}";
+        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'FAILURECODE':'" + serch + "','CODEDESC':'" + serch + "'},'condition':{'TYPE2':'*'}}";
     }
 
     /**
@@ -466,17 +477,17 @@ public class HttpManager {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "'}}";
         }
-        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PARENT':'" + parent + "','CODEDESC':'" + serch + "'}}";
+        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'FAILURECODE':'" + serch + "','CODEDESC':'" + serch + "'},'condition':{'PARENT':'" + parent + "'}}";
     }
 
     /**
-     * 设置故障类的接口
+     * 设置物资编码的接口
      */
     public static String getItemUrl(String serch, int curpage, int showcount) {
         if (serch.equals("")) {
             return "{'appid':'" + Constants.ITEM_APPID + "','objectname':'" + Constants.ITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.ITEM_APPID + "','objectname':'" + Constants.ITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'DESCRIPTION':'" + serch + "'}}";
+        return "{'appid':'" + Constants.ITEM_APPID + "','objectname':'" + Constants.ITEM_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'ITEMNUM':'" + serch + "','DESCRIPTION':'" + serch + "'}}";
     }
 
     /**

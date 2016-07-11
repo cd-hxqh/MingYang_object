@@ -103,23 +103,39 @@ public class WpmaterialAddNewActivity extends BaseActivity {
     private Wpmaterial getWpmaterial() {
         Wpmaterial wpmaterial = this.wpmaterial;
         wpmaterial.ITEMNUM = itemnum.getText().toString();
-//        wpmaterial.ITEMDESC = itemdesc.getText().toString();
+        wpmaterial.ITEMDESC = itemdesc.getText().toString();
         wpmaterial.ITEMQTY = itemqty.getText().toString();
-//        wpmaterial.ORDERUNIT = orderunit.getText().toString();//不上传，由ITEMNUM决定
+        wpmaterial.ORDERUNIT = orderunit.getText().toString();//不上传，由ITEMNUM决定
         wpmaterial.LOCATION = location.getText().toString();
-//        wpmaterial.LOCDESC = locdesc.getText().toString();
+        wpmaterial.LOCDESC = locdesc.getText().toString();
         wpmaterial.TYPE = "add";
         return wpmaterial;
+    }
+
+    private boolean isOK(){
+        if (itemnum.getText().toString().equals("")){
+            Toast.makeText(WpmaterialAddNewActivity.this,"物资编码不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (itemqty.getText().toString().equals("")){
+            Toast.makeText(WpmaterialAddNewActivity.this,"物资数量不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (location.getText().toString().equals("")){
+            Toast.makeText(WpmaterialAddNewActivity.this,"库房不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            intent.putExtra("wpmaterial", getWpmaterial());
-            WpmaterialAddNewActivity.this.setResult(1, intent);
-            Toast.makeText(WpmaterialAddNewActivity.this, "物料本地新增成功", Toast.LENGTH_SHORT).show();
-            finish();
+            if (isOK()) {
+                Intent intent = getIntent();
+                intent.putExtra("wpmaterial", getWpmaterial());
+                WpmaterialAddNewActivity.this.setResult(1, intent);
+                Toast.makeText(WpmaterialAddNewActivity.this, "物料本地新增成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     };
 
@@ -151,18 +167,20 @@ public class WpmaterialAddNewActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                option = (Option) data.getSerializableExtra("option");
-                itemnum.setText(option.getName());
-                itemdesc.setText(option.getDesc());
-                orderunit.setText(option.getValue1());
-                break;
-            case 2:
-                option = (Option) data.getSerializableExtra("option");
-                location.setText(option.getName());
-                locdesc.setText(option.getDesc());
-                break;
+        if (data!=null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    itemnum.setText(option.getName());
+                    itemdesc.setText(option.getDesc());
+                    orderunit.setText(option.getValue1());
+                    break;
+                case 2:
+                    option = (Option) data.getSerializableExtra("option");
+                    location.setText(option.getName());
+                    locdesc.setText(option.getDesc());
+                    break;
+            }
         }
     }
 }

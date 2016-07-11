@@ -55,7 +55,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
     private EditText remark;//备注
 
     private TextView funnum;//机位号
-//    private EditText remark1;//备注
+    //    private EditText remark1;//备注
     private EditText string1;//吊装开始
     private EditText string2;//吊装完成
     private EditText string3;//安装验收
@@ -281,14 +281,13 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                if (data!=null) {
+        if (data != null) {
+            switch (requestCode) {
+                case 1:
                     option = (Option) data.getSerializableExtra("option");
                     personid.setText(option.getName());
                     person.setText(option.getDesc());
-                }
-                break;
+                    break;
 //            case 2:
 //                if (data!=null) {
 //                    option = (Option) data.getSerializableExtra("option");
@@ -296,6 +295,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
 //                    udprorunlogLine1.PERSONDESC = option.getDesc();
 //                }
 //                break;
+            }
         }
     }
 }

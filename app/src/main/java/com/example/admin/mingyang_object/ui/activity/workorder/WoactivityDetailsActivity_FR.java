@@ -112,26 +112,42 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         return woactivity;
     }
 
+    private boolean isOK(){
+        if (owner.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_FR.this,"负责人不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udacstarttime.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_FR.this,"计划开始时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udacstoptime.getText().toString().equals("")){
+            Toast.makeText(WoactivityDetailsActivity_FR.this,"计划完成时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if(woactivity.DESCRIPTION.equals(description.getText().toString())
-                    &&woactivity.OWNER.equals(owner.getText().toString())
-                    &&woactivity.UDACSTARTTIME.equals(udacstarttime.getText().toString())
-                    &&woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString())) {//如果内容没有修改
-                intent.putExtra("woactivity",woactivity);
-            }else {
-                Woactivity woactivity = getWoactivity();
-                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
-                    woactivity.TYPE = "update";
+            if (isOK()) {
+                Intent intent = getIntent();
+                if (woactivity.DESCRIPTION.equals(description.getText().toString())
+                        && woactivity.OWNER.equals(owner.getText().toString())
+                        && woactivity.UDACSTARTTIME.equals(udacstarttime.getText().toString())
+                        && woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString())) {//如果内容没有修改
+                    intent.putExtra("woactivity", woactivity);
+                } else {
+                    Woactivity woactivity = getWoactivity();
+                    if (woactivity.TYPE == null || !woactivity.TYPE.equals("add")) {
+                        woactivity.TYPE = "update";
+                    }
+                    intent.putExtra("woactivity", woactivity);
+                    Toast.makeText(WoactivityDetailsActivity_FR.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
                 }
-                intent.putExtra("woactivity", woactivity);
-                Toast.makeText(WoactivityDetailsActivity_FR.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+                intent.putExtra("position", position);
+                WoactivityDetailsActivity_FR.this.setResult(2, intent);
+                finish();
             }
-            intent.putExtra("position", position);
-            WoactivityDetailsActivity_FR.this.setResult(2, intent);
-            finish();
         }
     };
 

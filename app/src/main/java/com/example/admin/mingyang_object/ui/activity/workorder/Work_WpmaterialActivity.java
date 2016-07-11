@@ -144,6 +144,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
                 }
             }
         }
+        setNodataLayout();
     }
 
     private void initList(ArrayList<Wpmaterial> list ){
@@ -285,7 +286,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
     };
 
     private void setNodataLayout() {
-        if (wpmaterialAdapter.getItemCount() == 0) {
+        if (wpmaterialAdapter!=null&&wpmaterialAdapter.getItemCount() == 0) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
             nodatalayout.setVisibility(View.GONE);

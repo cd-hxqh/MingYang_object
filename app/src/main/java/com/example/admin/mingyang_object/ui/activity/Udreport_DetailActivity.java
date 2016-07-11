@@ -511,7 +511,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udreport_DetailActivity.this,finalUpdataInfo,
                         "UDREPORT", "REPORTNUM", udreport.getREPORTNUM(), Constants.WORK_URL);
                 return reviseresult;
             }
@@ -577,7 +577,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udreport_DetailActivity.this,
                         finalUpdataInfo,"WORKORDER", "WONUM" , AccountUtils.getpersonId(Udreport_DetailActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }
@@ -665,7 +665,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udreport_DetailActivity.this,
                         finalUpdataInfo, "UDQTYFORM", "QTYFORMNUM", AccountUtils.getpersonId(Udreport_DetailActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

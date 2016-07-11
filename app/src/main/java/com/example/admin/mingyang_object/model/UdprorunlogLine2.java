@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 吊装调试日报
  */
 public class UdprorunlogLine2 implements Serializable{
-    public int UDPRORUNLOGLINE2ID;
+    public int UDPRORUNLOGLINE2DZID;
     public String CREATEDATE;//日期
     public String PERSONID;//项目负责人
     public String CREATEBY;//负责人描述
@@ -31,12 +31,12 @@ public class UdprorunlogLine2 implements Serializable{
     public String PRORUNLOGNUM;
     public boolean isUpload;
 
-    public int getUDPRORUNLOGLINE2ID() {
-        return UDPRORUNLOGLINE2ID;
+    public int getUDPRORUNLOGLINE2DZID() {
+        return UDPRORUNLOGLINE2DZID;
     }
 
-    public void setUDPRORUNLOGLINE2ID(int UDPRORUNLOGLINE2ID) {
-        this.UDPRORUNLOGLINE2ID = UDPRORUNLOGLINE2ID;
+    public void setUDPRORUNLOGLINE2DZID(int UDPRORUNLOGLINE2ID) {
+        this.UDPRORUNLOGLINE2DZID = UDPRORUNLOGLINE2ID;
     }
 
     public String getCREATEDATE() {

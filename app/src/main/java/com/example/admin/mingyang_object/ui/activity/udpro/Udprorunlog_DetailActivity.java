@@ -361,16 +361,13 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        InspectData();
-                        dialog.dismiss();
+                        if (isOK()) {
+                            showProgressDialog("数据提交中...");
+                            startAsyncTask();
+                            dialog.dismiss();
+                        }
                     }
                 });
-    }
-
-    //检查字段
-    private void InspectData() {
-        showProgressDialog("数据提交中...");
-        startAsyncTask();
     }
 
     private Udprorunlog getUdprorunlog() {
@@ -386,6 +383,23 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         udprorunlog.PROSTAGE = prostageText.getText().toString();
         udprorunlog.STATUS = statusText.getText().toString();
         return udprorunlog;
+    }
+
+    private boolean isOK(){
+        if (pronumText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_DetailActivity.this,"项目编号不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (contractsText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_DetailActivity.this,"现场联系人不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (yearText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_DetailActivity.this,"年份不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (monthText.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_DetailActivity.this,"月份不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private ArrayList<UdprorunlogLine1> getUdprorunlogLine1() {
@@ -446,7 +460,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udprorunlog_DetailActivity.this,finalUpdataInfo,
                         "UDPRORUNLOG", "PRORUNLOGNUM", udprorunlog.PRORUNLOGNUM, Constants.WORK_URL);
                 return reviseresult;
             }

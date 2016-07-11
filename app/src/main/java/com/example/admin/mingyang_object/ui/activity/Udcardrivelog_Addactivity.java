@@ -286,7 +286,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Udcardrivelog_Addactivity.this,
                         finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM", AccountUtils.getpersonId(Udcardrivelog_Addactivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

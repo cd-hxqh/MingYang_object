@@ -356,7 +356,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(DebugWork_AddNewActivity.this,
                         finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(DebugWork_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

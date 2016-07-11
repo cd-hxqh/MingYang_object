@@ -1451,12 +1451,12 @@ public class JsonUtils<E> {
                         String name = field1[j].getName();//获取属性的名字
                         Method getOrSet = null;
                         try {
-                            getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
-                            Object value = null;
-                            value = getOrSet.invoke(woactivities.get(i));
-                            if (value != null) {
-                                woactivityObj.put(name, value + "");
-                            }
+                                getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
+                                Object value = null;
+                                value = getOrSet.invoke(woactivities.get(i));
+                                if (value != null) {
+                                    woactivityObj.put(name, value + "");
+                                }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
                         } catch (IllegalAccessException e) {
@@ -1464,6 +1464,9 @@ public class JsonUtils<E> {
                         } catch (InvocationTargetException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if (woactivityObj.get("TYPE").equals("add") && woactivityObj.has("WORKORDERID") && woactivityObj.get("WORKORDERID").equals("0")) {
+                        woactivityObj.remove("WORKORDERID");
                     }
                     woactivityArray.put(woactivityObj);
                 }
@@ -1481,11 +1484,13 @@ public class JsonUtils<E> {
                         String name = field1[j].getName();//获取属性的名字
                         Method getOrSet = null;
                         try {
-                            getOrSet = wpmaterials.get(i).getClass().getMethod("get" + name);
-                            Object value = null;
-                            value = getOrSet.invoke(wpmaterials.get(i));
-                            if (value != null) {
-                                wpmaterialsObj.put(name, value + "");
+                            if (!name.equals("isUpload") && name.equals("WPITEMID") || name.equals("ITEMNUM") || name.equals("ITEMQTY") || name.equals("LOCATION") || name.equals("TYPE")) {
+                                getOrSet = wpmaterials.get(i).getClass().getMethod("get" + name);
+                                Object value = null;
+                                value = getOrSet.invoke(wpmaterials.get(i));
+                                if (value != null) {
+                                    wpmaterialsObj.put(name, value + "");
+                                }
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1494,6 +1499,9 @@ public class JsonUtils<E> {
                         } catch (InvocationTargetException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if (wpmaterialsObj.get("TYPE").equals("add") && wpmaterialsObj.has("WPITEMID") && wpmaterialsObj.get("WPITEMID").equals("0")) {
+                        wpmaterialsObj.remove("WPITEMID");
                     }
                     wpmaterialsArray.put(wpmaterialsObj);
                 }
@@ -1715,6 +1723,9 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
+                    if (udprorunlogline1Obj.get("TYPE").equals("add") && udprorunlogline1Obj.has("UDPRORUNLOGLINE1ID") && udprorunlogline1Obj.get("UDPRORUNLOGLINE1ID").equals("0")) {
+                        udprorunlogline1Obj.remove("UDPRORUNLOGLINE1ID");
+                    }
                     udprorunlogline1Array.put(udprorunlogline1Obj);
                 }
                 jsonObject.put("UDPRORUNLOGLINE1", udprorunlogline1Array);
@@ -1744,6 +1755,9 @@ public class JsonUtils<E> {
                         } catch (InvocationTargetException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if (udprorunlogline2Obj.get("TYPE").equals("add") && udprorunlogline2Obj.has("UDPRORUNLOGLINE2ID") && udprorunlogline2Obj.get("UDPRORUNLOGLINE2ID").equals("0")) {
+                        udprorunlogline2Obj.remove("UDPRORUNLOGLINE2ID");
                     }
                     udprorunlogline2Array.put(udprorunlogline2Obj);
                 }
@@ -1781,10 +1795,10 @@ public class JsonUtils<E> {
             }
             if (udprorunlogLine4s != null && udprorunlogLine4s.size() != 0) {
                 object.put("UDPRORUNLOGLINE4", "");
-                JSONArray wpmaterialsArray = new JSONArray();
-                JSONObject wpmaterialsObj;
+                JSONArray udprorunlogLine4Array = new JSONArray();
+                JSONObject udprorunlogLine4Obj;
                 for (int i = 0; i < udprorunlogLine4s.size(); i++) {
-                    wpmaterialsObj = new JSONObject();
+                    udprorunlogLine4Obj = new JSONObject();
                     Field[] field1 = udprorunlogLine4s.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                     for (int j = 0; j < field1.length; j++) {
                         field1[j].setAccessible(true);
@@ -1795,7 +1809,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(udprorunlogLine4s.get(i));
                             if (value != null) {
-                                wpmaterialsObj.put(name, value + "");
+                                udprorunlogLine4Obj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1805,9 +1819,12 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
-                    wpmaterialsArray.put(wpmaterialsObj);
+                    if (udprorunlogLine4Obj.get("TYPE").equals("add") && udprorunlogLine4Obj.has("UDPRORUNLOGLINE4ID") && udprorunlogLine4Obj.get("UDPRORUNLOGLINE4ID").equals("0")) {
+                        udprorunlogLine4Obj.remove("UDPRORUNLOGLINE4ID");
+                    }
+                    udprorunlogLine4Array.put(udprorunlogLine4Obj);
                 }
-                jsonObject.put("UDPRORUNLOGLINE4", wpmaterialsArray);
+                jsonObject.put("UDPRORUNLOGLINE4", udprorunlogLine4Array);
             }
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
@@ -1900,6 +1917,7 @@ public class JsonUtils<E> {
 
     /**
      * 封装质量问题反馈单数据
+     *
      * @return
      */
     public static String UdqtyformToJson(Udqtyform udqtyform) {
@@ -1971,10 +1989,10 @@ public class JsonUtils<E> {
             JSONObject object = new JSONObject();
             if (udinsprojects != null && udinsprojects.size() != 0) {
                 object.put("UDSTOCKLINE", "");
-                JSONArray wpmaterialsArray = new JSONArray();
-                JSONObject wpmaterialsObj;
+                JSONArray udinsprojectArray = new JSONArray();
+                JSONObject udinsprojectObj;
                 for (int i = 0; i < udinsprojects.size(); i++) {
-                    wpmaterialsObj = new JSONObject();
+                    udinsprojectObj = new JSONObject();
                     Field[] field1 = udinsprojects.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                     for (int j = 0; j < field1.length; j++) {
                         field1[j].setAccessible(true);
@@ -1985,7 +2003,7 @@ public class JsonUtils<E> {
                             Object value = null;
                             value = getOrSet.invoke(udinsprojects.get(i));
                             if (value != null) {
-                                wpmaterialsObj.put(name, value + "");
+                                udinsprojectObj.put(name, value + "");
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -1995,9 +2013,12 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
-                    wpmaterialsArray.put(wpmaterialsObj);
+                    if (udinsprojectObj.get("TYPE").equals("add") && udinsprojectObj.has("UDPRORUNLOGLINE4ID") && udinsprojectObj.get("UDPRORUNLOGLINE4ID").equals("0")) {
+                        udinsprojectObj.remove("UDPRORUNLOGLINE4ID");
+                    }
+                    udinsprojectArray.put(udinsprojectObj);
                 }
-                jsonObject.put("UDSTOCKLINE", wpmaterialsArray);
+                jsonObject.put("UDINSPROJECT", udinsprojectArray);
             }
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
@@ -2063,6 +2084,9 @@ public class JsonUtils<E> {
                         } catch (InvocationTargetException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if (wpmaterialsObj.get("TYPE").equals("add") && wpmaterialsObj.has("UDSTOCKLINEID") && wpmaterialsObj.get("UDSTOCKLINEID").equals("0")) {
+                        wpmaterialsObj.remove("UDSTOCKLINEID");
                     }
                     wpmaterialsArray.put(wpmaterialsObj);
                 }

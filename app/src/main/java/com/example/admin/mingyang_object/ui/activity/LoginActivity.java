@@ -23,7 +23,11 @@ import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,9 +103,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
         ipText.setOnClickListener(this);
-//        mBasIn = new BounceTopEnter();
-//        mBasOut = new SlideBottomExit();
-//        addIpData();
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+        addIpData();
     }
 
     private CompoundButton.OnCheckedChangeListener cheBoxOnCheckedChangListener = new CompoundButton.OnCheckedChangeListener() {
@@ -127,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
 
             case R.id.ip_address_id:
-//                NormalListDialog();
+                NormalListDialog();
                 break;
 
         }
@@ -235,34 +239,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //    }
 
 
-//    private void NormalListDialog() {
-//        final NormalListDialog dialog = new NormalListDialog(LoginActivity.this, mMenuItems);
-//        dialog.title("请选择")//
-//                .showAnim(mBasIn)//
-//                .dismissAnim(mBasOut)//
-//                .show();
-//        dialog.setOnOperItemClickL(new OnOperItemClickL() {
-//            @Override
-//            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.i(TAG, "ip=" + idadresss[position]);
-//                AccountUtils.setIpAddress(LoginActivity.this, idadresss[position]);
-//
-//                dialog.dismiss();
-//            }
-//        });
-//    }
+    private void NormalListDialog() {
+        final NormalListDialog dialog = new NormalListDialog(LoginActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "ip=" + idadresss[position]);
+                AccountUtils.setIpAddress(LoginActivity.this, idadresss[position]);
+
+                dialog.dismiss();
+            }
+        });
+    }
 
 
-//    /**
-//     * 设置服务端地址*
-//     */
-//    private void addIpData() {
-//        String[] inspotypes = getResources().getStringArray(R.array.address_text);
-//        idadresss = getResources().getStringArray(R.array.address_text);
-//
-//        for (int i = 0; i < inspotypes.length; i++)
-//            mMenuItems.add(new DialogMenuItem(inspotypes[i], 0));
-//
-//
-//    }
+    /**
+     * 设置服务端地址*
+     */
+    private void addIpData() {
+        String[] inspotypes = getResources().getStringArray(R.array.address_text);
+        idadresss = getResources().getStringArray(R.array.address_text);
+
+        for (int i = 0; i < inspotypes.length; i++)
+            mMenuItems.add(new DialogMenuItem(inspotypes[i], 0));
+
+
+    }
 }

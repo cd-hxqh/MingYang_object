@@ -717,13 +717,191 @@ public class Work_AddNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("数据提交中...");
-                        startAsyncTask();
-                        dialog.dismiss();
+                        if (isOK()) {
+                            showProgressDialog("数据提交中...");
+                            startAsyncTask();
+                            dialog.dismiss();
+                        }
                     }
                 });
     }
 
+    //检查字段
+    private boolean isOK() {
+        switch (workOrder.WORKTYPE) {
+            case "FR"://故障工单
+                if (udprojectnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udlocnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (failurecode.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入故障类", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (problemcode.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入故障问题", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (culevel.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请选择故障等级", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udrprrsb.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入提报人", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udzglimit.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入提报时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (schedstart.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (schedfinish.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划完成时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (lead2.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入维护/运行组长", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udinspoby_2.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入维护/运行人员", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "AA"://终验收工单
+                if (udprojectnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (lead.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入负责人", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udlocnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "SP"://排查工单
+                if (udprojectnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udjpnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入排查标准", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udplstartdate.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udplstopdate.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划完成时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (lead.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入排查负责人", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (wtcode.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入风机型号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (pccompnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入排查完成台数", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (pctype.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入排查类型", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (pcreson.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入排查原因", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "TP"://技改工单
+                if (udprojectnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udjpnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入技改标准", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (pcreson.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入技改原因", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (lead.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入技改负责人", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udplstartdate.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udplstopdate.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划完成时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udjgtype.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入技改类型", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (wtcode.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入风机型号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (pccompnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入技改风机台数", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "WS"://定检工单
+                if (udprojectnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udlocnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udjpnum.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入定检标准编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udplstartdate.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (udplstopdate.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入计划完成时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (lead.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入定检组长", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (djtype.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入定检类型", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (wtcode.getText().toString().equals("")) {
+                    Toast.makeText(Work_AddNewActivity.this, "请输入风机型号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+        }
+        return true;
+    }
 
     /**
      * 提交数据*
@@ -743,7 +921,7 @@ public class Work_AddNewActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(
+                WebResult reviseresult = AndroidClientService.InsertWO(Work_AddNewActivity.this,
                         finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(Work_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }

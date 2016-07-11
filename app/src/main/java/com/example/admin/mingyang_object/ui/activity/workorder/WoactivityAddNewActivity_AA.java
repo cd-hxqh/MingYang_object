@@ -134,14 +134,36 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
         return woactivity;
     }
 
+    private boolean isOK(){
+        if (udstarttime.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_AA.this,"开始时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udendtime.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_AA.this,"结束时间不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (wojo1.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_AA.this,"工作任务不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (udzglimit.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_AA.this,"整改期限不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }else if (lead.getText().toString().equals("")){
+            Toast.makeText(WoactivityAddNewActivity_AA.this,"整改责任人不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return  true;
+    }
+
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            intent.putExtra("woactivity", getWoactivity());
-            WoactivityAddNewActivity_AA.this.setResult(1, intent);
-            Toast.makeText(WoactivityAddNewActivity_AA.this, "任务本地新增成功", Toast.LENGTH_SHORT).show();
-            finish();
+            if (isOK()) {
+                Intent intent = getIntent();
+                intent.putExtra("woactivity", getWoactivity());
+                WoactivityAddNewActivity_AA.this.setResult(1, intent);
+                Toast.makeText(WoactivityAddNewActivity_AA.this, "任务本地新增成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     };
 

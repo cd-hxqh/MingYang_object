@@ -122,7 +122,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     }
 
     private void getData(String search){
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, search, page, 20), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype,"全部", search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                // Log.i(TAG, "data=" + results);

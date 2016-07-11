@@ -226,7 +226,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         else if (optiontype == Constants.UDVEHICLE){//车辆
             return HttpManager.getudvehicleurl(searchText, page, 20);
         }else if (optiontype == Constants.WORKORDERCODE){//相关故障工单
-            return HttpManager.getworkorderUrl("FR", searchText, page, 20);
+            return HttpManager.getworkorderUrl("FR","全部", searchText, page, 20);
         }else if (optiontype == Constants.UDDEPTCODE){//部门
             return HttpManager.getUddepturl(searchText, page, 20);
         }

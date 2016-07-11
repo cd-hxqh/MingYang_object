@@ -388,7 +388,7 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udcarmainlog_Detailactivity.this,
                         finalUpdataInfo, "UDCARMAINLOG", "MAINLOGNUM", udcarmainlog.getMAINLOGNUM(), Constants.WORK_URL);
                 return reviseresult;
             }

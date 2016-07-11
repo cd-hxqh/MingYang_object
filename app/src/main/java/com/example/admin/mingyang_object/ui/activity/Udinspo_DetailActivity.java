@@ -445,7 +445,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this,finalUpdataInfo,
                         "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
                 return reviseresult;
             }
