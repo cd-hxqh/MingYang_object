@@ -293,6 +293,8 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
             case 1://新增
                 if (data != null) {
                     UddebugWorkOrderLine woactivity = (UddebugWorkOrderLine) data.getSerializableExtra("uddebugWorkOrderLine");
+                    Log.e("调试工单","新增调试工单子表成功");
+                    Log.e("调试工单","新增调试工单子表成功，调试责任人"+woactivity.RESPONSIBLEPERSON);
                     woactivityAdapter.add(woactivity);
                     nodatalayout.setVisibility(View.GONE);
                 }

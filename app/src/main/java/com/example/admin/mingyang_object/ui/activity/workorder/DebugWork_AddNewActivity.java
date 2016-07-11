@@ -589,6 +589,10 @@ public class DebugWork_AddNewActivity extends BaseActivity {
            option = (Option) data.getSerializableExtra("option");
                     pronum.setText(option.getName());
         }
+        if (resultCode==2)
+        {
+
+        }
         switch (resultCode) {
 //            case Constants.ASSETCODE:
 //                option = (Option) data.getSerializableExtra("option");
