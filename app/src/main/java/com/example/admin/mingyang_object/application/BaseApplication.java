@@ -1,6 +1,7 @@
 package com.example.admin.mingyang_object.application;
 
 import android.app.Application;
+import android.content.Context;
 
 
 /**
@@ -9,6 +10,10 @@ import android.app.Application;
 public class BaseApplication extends Application {
     private String username;
     private static BaseApplication mContext;
+
+    private static Context context;
+
+
     private String OrderResult;
 
     public String getUsername() {
@@ -40,6 +45,12 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         mContext = this;
+        context = this.getApplicationContext();
+    }
+
+
+    public static Context getContext() {
+        return context;
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -302,11 +303,21 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         editImage.setImageResource(R.mipmap.ic_edit);
 
 
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
         editLinearLayouut.setOnClickListener(editLinearLayouutOnClickListener);
 
     }
 
 
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udcardrivelog_Detailactivity.this, PhotoActivity.class);
+            startActivityForResult(intent, 0);
+        }
+
+    };
     private View.OnClickListener editLinearLayouutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -361,7 +372,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult reviseresult = AndroidClientService.UpdateWO(
-                        finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM",udcardrivelog.getCARDRIVELOGNUM(), Constants.WORK_URL);
+                        finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM", udcardrivelog.getCARDRIVELOGNUM(), Constants.WORK_URL);
                 return reviseresult;
             }
 

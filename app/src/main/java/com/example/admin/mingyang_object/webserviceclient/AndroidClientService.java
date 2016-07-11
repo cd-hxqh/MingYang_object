@@ -276,7 +276,6 @@ public class AndroidClientService {
      * 通用修改
      */
     public static WebResult UpdateWO(String json, String mboObjectName, String mboKey, String mboKeyValue, String url) {
-//        http://192.168.100.17:7001/meaweb/services/MOBILESERVICE
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -332,5 +331,43 @@ public class AndroidClientService {
 //        }
 //        return workResult;
 //    }
+
+
+    /**
+     * 通过webservice实现图片上传
+     *
+     * @param imageBuffer
+     */
+    /**
+     * 通用修改
+     */
+    public static String connectWebService(String filename, String image, String ownertable, String ownerid, String url) {
+        Log.i(TAG, "filename=" + filename);
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceuploadImage");
+        soapReq.addProperty("filename", filename);//文件名
+        soapReq.addProperty("image", image);//图片Json
+        soapReq.addProperty("ownertable", ownertable);//表名
+        soapReq.addProperty("ownerid", ownerid);//表主键值
+        soapEnvelope.setOutputSoapObject(soapReq);
+        HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
+        try {
+            httpTransport.call("urn:action", soapEnvelope);
+        } catch (IOException | XmlPullParserException e) {
+            return null;
+        }
+        String obj = null;
+        String webResult = null;
+        try {
+            webResult = soapEnvelope.getResponse().toString();
+            Log.i(TAG, "webResult=" + webResult);
+        } catch (SoapFault soapFault) {
+            soapFault.printStackTrace();
+        }
+        return webResult;
+    }
+
 
 }

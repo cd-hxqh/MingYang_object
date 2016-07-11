@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.admin.mingyang_object">
+    package="com.example.admin.mingyang_object" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -17,293 +17,298 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <!-- Permission for Unit Test -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-
 
     <application
         android:name=".application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/SampleTheme">
+        android:theme="@style/SampleTheme" >
         <activity
             android:name=".ui.activity.LoadActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.Work_ListActivity"
             android:label="@string/work_list_title"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.DebugWork_ListActivity"
             android:label="@string/work_list_title"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.Work_DetailsActivity"
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.Work_AddNewActivity"
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.DebugWork_DetailsActivity"
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.DebugWork_AddNewActivity"
             android:label="@string/work_detail_title"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.DebugWork_UddebugWorkOrderLineActivity"
             android:label="@string/title_activity_uddebugworkorderlinelist"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.Work_PlanActivity"
             android:label="@string/work_plan_title"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.Work_WoactivityActivity"
             android:label="@string/title_activity_workwoactivity"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_AA"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_SP"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_TP"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_WS"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityDetailsActivity_FR"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_AA"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_SP"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_TP"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_WS"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WoactivityAddNewActivity_FR"
             android:label="@string/title_activity_woactivitydetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.Work_WpmaterialActivity"
             android:label="@string/title_activity_wpmaterial"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WpmaterialDetailsActivity"
             android:label="@string/title_activity_wpmaterialdetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.WpmaterialAddNewActivity"
             android:label="@string/title_activity_wpmaterialdetails"
             android:theme="@style/mingyang.ActivityTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.workorder.UddebugWorkOrderLineDetailsActivity"
             android:label="@string/title_activity_uddebugworkorderlinedetails"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.workorder.UddebugWorkOrderLineAddNewActivity"
             android:label="@string/title_activity_uddebugworkorderlinedetails"
-            android:theme="@style/mingyang.ActivityTheme"></activity>
+            android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.udpro.Udpro_ListActivity"
-            android:label="@string/udrro_text"></activity>
+            android:label="@string/udrro_text" />
         <activity
             android:name=".ui.activity.udpro.Udpro_DetailActivity"
-            android:label="@string/udpro_detail_text"></activity>
+            android:label="@string/udpro_detail_text" />
         <activity
             android:name=".ui.activity.udpro.Udfandetails_ListActivity"
-            android:label="@string/udfandetails_text"></activity>
+            android:label="@string/udfandetails_text" />
         <activity
             android:name=".ui.activity.udpro.Udfandetails_DetailActivity"
-            android:label="@string/udfandetails_details_title"></activity>
+            android:label="@string/udfandetails_details_title" />
         <activity
             android:name=".ui.activity.UdPerson_ListActivity"
-            android:label="@string/person_text"></activity>
+            android:label="@string/person_text" />
         <activity
             android:name=".ui.activity.Ududvehicle_ListActivity"
-            android:label="@string/udvehicle_text"></activity>
+            android:label="@string/udvehicle_text" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_listactivity"
-            android:label="@string/udprorunlog_text"></activity>
+            android:label="@string/udprorunlog_text" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_DetailActivity"
-            android:label="@string/udprorunlog_detail_title"></activity>
+            android:label="@string/udprorunlog_detail_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_AddNewActivity"
-            android:label="@string/udprorunlog_addnew_title"></activity>
+            android:label="@string/udprorunlog_addnew_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1Activity"
-            android:label="@string/udprorunlog_line1_title"></activity>
+            android:label="@string/udprorunlog_line1_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4Activity"
-            android:label="@string/udprorunlog_line4_title"></activity>
+            android:label="@string/udprorunlog_line4_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1DetailsActivity"
             android:label="@string/udprorunlog_line1_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4DetailsActivity"
             android:label="@string/udprorunlog_line4_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4AddNewActivity"
             android:label="@string/udprorunlog_line4_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1AddNewActivity"
             android:label="@string/udprorunlog_line1_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2Activity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line2_title"></activity>
+            android:label="@string/udprorunlog_line2_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2DetailsActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line2_details_title"></activity>
+            android:label="@string/udprorunlog_line2_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2AddNewActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line2_details_title"></activity>
+            android:label="@string/udprorunlog_line2_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line3Activity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line3_title"></activity>
+            android:label="@string/udprorunlog_line3_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line3DetailsActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line3_details_title"></activity>
+            android:label="@string/udprorunlog_line3_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line3AddNewActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udprorunlog_line3_details_title"></activity>
+            android:label="@string/udprorunlog_line3_details_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udfeedback_listactivity"
-            android:label="@string/udfeedback_text"></activity>
+            android:label="@string/udfeedback_text" />
         <activity
             android:name=".ui.activity.udpro.Udfeedback_DetailActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udfeedback_text"></activity>
+            android:label="@string/udfeedback_text"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udfeedback_AddNewActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udfeedback_text"></activity>
+            android:label="@string/udfeedback_text"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udstock_DetailActivity"
-            android:label="@string/udstock_detail_text"></activity>
+            android:label="@string/udstock_detail_text" />
         <activity
             android:name=".ui.activity.Udstockline_DetailActivity"
-            android:label="@string/udstockline_text"></activity>
+            android:label="@string/udstockline_text" />
         <activity
             android:name=".ui.activity.Udreport_ListActivity"
-            android:label="@string/udreport_text"></activity>
+            android:label="@string/udreport_text" />
         <activity
             android:name=".ui.activity.Udreport_DetailActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udreport_detail_text"></activity>
+            android:label="@string/udreport_detail_text"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udreport_AddNewActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udreport_detail_text"></activity>
+            android:label="@string/udreport_detail_text"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udinspo_ListActivity"
-            android:label="@string/udinspo_text"></activity>
+            android:label="@string/udinspo_text" />
         <activity
             android:name=".ui.activity.Udinspo_DetailActivity"
-            android:label="@string/udinspo_detail_text"></activity>
+            android:label="@string/udinspo_detail_text" />
         <activity
             android:name=".ui.activity.Udinsproject_ListActivity"
-            android:label="@string/udinsproject_text"></activity>
+            android:label="@string/udinsproject_text" />
         <activity
             android:name=".ui.activity.Udinsproject_DetailActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:label="@string/udinsproject_details_text"></activity>
+            android:label="@string/udinsproject_details_text"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Listactivity"
-            android:label="@string/udcardrivelog_text"></activity>
+            android:label="@string/udcardrivelog_text" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Detailactivity"
-            android:label="@string/udcarddrivelog_details_text"></activity>
+            android:label="@string/udcarddrivelog_details_text" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Addactivity"
-            android:label="@string/xcjlxj_text"></activity>
+            android:label="@string/xcjlxj_text" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Listactivity"
-            android:label="@string/udcarfuelcharge_text"></activity>
+            android:label="@string/udcarfuelcharge_text" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Addactivity"
-            android:label="@string/udcarfuelcharge_text"></activity>
+            android:label="@string/udcarfuelcharge_text" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Detailactivity"
-            android:label="@string/udcarfuelcharge_detail_text"></activity>
+            android:label="@string/udcarfuelcharge_detail_text" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Listactivity"
-            android:label="@string/udcarmainlog_text"></activity>
+            android:label="@string/udcarmainlog_text" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Detailactivity"
-            android:label="@string/wxjlxq_text"></activity>
+            android:label="@string/wxjlxq_text" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Addactivity"
-            android:label="@string/wxjlxq_text"></activity>
+            android:label="@string/wxjlxq_text" />
         <activity
             android:name=".ui.activity.Wfm_Details_Activity"
-            android:label="@string/wfm_detail_title"></activity>
+            android:label="@string/wfm_detail_title" />
         <activity
             android:name=".ui.activity.OptionActivity"
-            android:label="@string/title_activity_option"></activity>
+            android:label="@string/title_activity_option" />
+        <activity
+            android:name=".ui.activity.PhotoActivity"
+            android:label="@string/title_activity_photo" >
+        </activity>
     </application>
 
 </manifest>
