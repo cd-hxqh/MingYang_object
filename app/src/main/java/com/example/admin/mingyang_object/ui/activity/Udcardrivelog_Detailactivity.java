@@ -314,6 +314,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         public void onClick(View v) {
             popupWindow.dismiss();
             Intent intent = new Intent(Udcardrivelog_Detailactivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable","UDCARDRIVELOG");
+            intent.putExtra("ownerid",udcardrivelog.getUDCARDRIVELOGID());
             startActivityForResult(intent, 0);
         }
 

@@ -1,5 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -325,8 +326,22 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
 
 
         editLinearLayouut.setOnClickListener(editLinearLayouutOnClickListener);
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
 
     }
+
+
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udcarfuelcharge_Detailactivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDCARFUELCHARGE");
+            intent.putExtra("ownerid", udcarfuelcharge.getUDCARFUELCHARGEID());
+            startActivityForResult(intent, 0);
+        }
+
+    };
 
 
     private View.OnClickListener editLinearLayouutOnClickListener = new View.OnClickListener() {

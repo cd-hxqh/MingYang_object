@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Udcardrivelog extends Entity implements Serializable {
 
+    private String UDCARDRIVELOGID; //主键
     private String CARDRIVELOGNUM; //记录编号
     private String CREATEBY; //创建人名称
     private String CREATEDATE; //创建日期
@@ -33,6 +34,15 @@ public class Udcardrivelog extends Entity implements Serializable {
     private String NOWPROJECT; //
     private String DESCRIPTION; // 描述
     private String COMISORNO; //是否提交
+
+
+    public String getUDCARDRIVELOGID() {
+        return UDCARDRIVELOGID;
+    }
+
+    public void setUDCARDRIVELOGID(String UDCARDRIVELOGID) {
+        this.UDCARDRIVELOGID = UDCARDRIVELOGID;
+    }
 
     public String getCOMISORNO() {
         return COMISORNO;

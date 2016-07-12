@@ -1,28 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_gray_1"
     android:orientation="vertical"
     tools:context="com.example.admin.mingyang_object.ui.activity.PhotoActivity">
 
     <include layout="@layout/title_main"></include>
 
-    <Button
-        android:id="@+id/picker_btn"
+    <TextView
+        android:id="@+id/text_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_5"
-        android:text="选择图片" />
+        android:layout_below="@+id/title_relativelayout_id"
+        android:layout_marginTop="@dimen/dimens_10"
+        android:gravity="center"
+        android:text="请选择需要上传的图片"
+        android:textSize="16sp" />
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/title_relativelayout_id"
+        android:layout_marginBottom="60dp"
         android:cacheColorHint="@android:color/transparent"
-        android:horizontalSpacing="2dip"
+        android:horizontalSpacing="@dimen/dimen_5"
         android:listSelector="@android:color/transparent"
         android:numColumns="3"
+        android:padding="@dimen/dimens_10"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="2dip" />
+        android:verticalSpacing="@dimen/dimen_5" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dimens_10"
+        android:paddingTop="@dimen/dimens_10">
+
+        <Button
+            android:id="@+id/picker_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_button"
+            android:gravity="center"
+            android:text="选择图片"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+</RelativeLayout>

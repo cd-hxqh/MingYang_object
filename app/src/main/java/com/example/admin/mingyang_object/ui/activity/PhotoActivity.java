@@ -54,6 +54,10 @@ public class PhotoActivity extends BaseActivity {
      */
     private TextView titleTextView;
     /**
+     * text_hint*
+     */
+    private TextView textView;
+    /**
      * 提交按钮*
      */
     private Button submitBtn;
@@ -76,21 +80,40 @@ public class PhotoActivity extends BaseActivity {
     ArrayList<String> result = new ArrayList<String>();
 
 
+    /**
+     * 表名*
+     */
+    private String ownertable;
+    /**
+     * 主键ID*
+     */
+    private String ownerid;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
         int screenWidth = OtherUtils.getWidthInPx(getApplicationContext());
         mColumnWidth = (screenWidth - OtherUtils.dip2px(getApplicationContext(), 4)) / 3;
+        getInitData();
+
         findViewById();
         initView();
 
+    }
+
+    private void getInitData() {
+        ownertable = getIntent().getExtras().getString("ownertable");
+        ownerid = getIntent().getExtras().getString("ownerid");
+        Log.i(TAG, "ownertable=" + ownertable + ",ownerid=" + ownerid);
     }
 
     @Override
     protected void findViewById() {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
+        textView = (TextView) findViewById(R.id.text_id);
         submitBtn = (Button) findViewById(R.id.submit_btn);
         chooseImageBtn = (Button) findViewById(R.id.picker_btn);
         mGrideView = (GridView) findViewById(R.id.gridview);
@@ -104,6 +127,14 @@ public class PhotoActivity extends BaseActivity {
         chooseImageBtn.setOnClickListener(chooseImageBtnOnClickListener);
         submitBtn.setVisibility(View.VISIBLE);
         submitBtn.setOnClickListener(submitBtnOnClickListener);
+        if (result == null || result.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+            mGrideView.setVisibility(View.GONE);
+
+        } else {
+            textView.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+        }
 
     }
 
@@ -139,7 +170,9 @@ public class PhotoActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             showProgressDialog("提交数据中");
-            startAsyncTask(result.get(0));
+            for (int i = 0; i < result.size(); i++) {
+                startAsyncTask(result.get(i));
+            }
         }
     };
 
@@ -149,11 +182,11 @@ public class PhotoActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_PHOTO) {
             if (resultCode == RESULT_OK) {
-                result = data.getStringArrayListExtra(PhotoPickerActivity.KEY_RESULT);
-                for (String r : result) {
-                    Log.i(TAG, "r=" + r);
-                    Log.i(TAG, "r=" + getFileName(r));
+                ArrayList<String> result1 = data.getStringArrayListExtra(PhotoPickerActivity.KEY_RESULT);
+                for (String r : result1) {
+                    result.add(r);
                 }
+
                 showResult(result);
             }
         }
@@ -185,6 +218,15 @@ public class PhotoActivity extends BaseActivity {
         } else {
             mAdapter.setPathList(mResults);
             mAdapter.notifyDataSetChanged();
+        }
+
+        if (mResults == null || mResults.size() == 0) {
+            textView.setVisibility(View.VISIBLE);
+            mGrideView.setVisibility(View.GONE);
+
+        } else {
+            textView.setVisibility(View.GONE);
+            mGrideView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -261,25 +303,28 @@ public class PhotoActivity extends BaseActivity {
      */
     private void startAsyncTask(String fileName) {
         String updataInfo = null;
+        String name = null;
         updataInfo = getuploadBuffer(fileName);
+        name = getFileName(fileName);
 
         Log.i(TAG, "updataInfo=" + updataInfo);
         final String finalUpdataInfo = updataInfo;
+        final String finalname = name;
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
-                String reviseresult = AndroidClientService.connectWebService(
-                        "1468208395115.jpg", finalUpdataInfo, "UDCARMAINLOG", "640", Constants.WORK_URL);
+                String reviseresult = AndroidClientService.connectWebService(PhotoActivity.this,
+                        finalname, finalUpdataInfo, ownertable, ownerid, Constants.WORK_URL);
                 return reviseresult;
             }
 
             @Override
             protected void onPostExecute(String workResult) {
                 super.onPostExecute(workResult);
-                if (workResult== null) {
-                    MessageUtils.showMiddleToast(PhotoActivity.this, "上传失败");
+                if (workResult == null) {
+                    MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传失败");
                 } else {
-                    MessageUtils.showMiddleToast(PhotoActivity.this, workResult);
+                    MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传成功");
                 }
                 closeProgressDialog();
             }

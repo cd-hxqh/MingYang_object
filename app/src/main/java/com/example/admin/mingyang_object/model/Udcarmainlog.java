@@ -6,8 +6,10 @@ import java.io.Serializable;
  * Created by apple on 15/10/26.
  * 维修记录
  */
-public class Udcarmainlog  implements Serializable {
+public class Udcarmainlog implements Serializable {
 
+
+    private String UDCARMAINLOGID; //主键ID
     private String BRANCHDESC; //所属中心
     private String COMISORNO; //是否提交
     private String CREATEBY; //录入人名称
@@ -35,6 +37,14 @@ public class Udcarmainlog  implements Serializable {
     private String SERVICETYPE; //维修类型
     private String STARTDATE; //开始维修时间
     private String ENDDATE; //结束维修时间
+
+    public String getUDCARMAINLOGID() {
+        return UDCARMAINLOGID;
+    }
+
+    public void setUDCARMAINLOGID(String UDCARMAINLOGID) {
+        this.UDCARMAINLOGID = UDCARMAINLOGID;
+    }
 
     public String getSTARTDATE() {
         return STARTDATE;

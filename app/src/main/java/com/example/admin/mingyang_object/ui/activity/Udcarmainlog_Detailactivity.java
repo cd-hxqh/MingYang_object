@@ -1,5 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -224,7 +225,7 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
             maincontentText.setText(udcarmainlog.getMAINCONTENT());
             number2Text.setText(udcarmainlog.getNUMBER2());
             number1Text.setText(udcarmainlog.getNUMBER1());
-            if (udcarmainlog.getCOMISORNO()==null||udcarmainlog.getCOMISORNO().equals("")) {
+            if (udcarmainlog.getCOMISORNO() == null || udcarmainlog.getCOMISORNO().equals("")) {
 
                 comisornoText.setChecked(false);
             } else {
@@ -322,8 +323,21 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
 
 
         editLinearLayouut.setOnClickListener(editLinearLayouutOnClickListener);
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
 
     }
+
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udcarmainlog_Detailactivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDCARMAINLOG");
+            intent.putExtra("ownerid", udcarmainlog.getUDCARMAINLOGID());
+            startActivityForResult(intent, 0);
+        }
+
+    };
 
 
     private View.OnClickListener editLinearLayouutOnClickListener = new View.OnClickListener() {

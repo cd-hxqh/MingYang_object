@@ -1,4 +1,6 @@
 <resources>
-    <color name="white" >#ffffff</color>
+    <color name="white">#ffffff</color>
     <color name="bg_floder_press">#bdbdbd</color>
+    <color name="nomal_button_color">#0F75B4</color>
+    <color name="press_button_color">#0399F0</color>
 </resources>

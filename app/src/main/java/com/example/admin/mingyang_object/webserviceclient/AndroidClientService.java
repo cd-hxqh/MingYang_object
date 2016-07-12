@@ -157,7 +157,7 @@ public class AndroidClientService {
     /**
      * 通用修改
      */
-    public static WebResult UpdateWO(Context context,String json, String mboObjectName, String mboKey, String mboKeyValue, String url) {
+    public static WebResult UpdateWO(Context context, String json, String mboObjectName, String mboKey, String mboKeyValue, String url) {
 //        http://192.168.100.17:7001/meaweb/services/MOBILESERVICE
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -224,8 +224,9 @@ public class AndroidClientService {
     /**
      * 通用修改
      */
-    public static String connectWebService(String filename, String image, String ownertable, String ownerid, String url) {
-        Log.i(TAG, "filename=" + filename);
+    public static String connectWebService(Context context, String filename, String image, String ownertable, String ownerid, String url) {
+        Log.i(TAG, "filename=" + filename + ",ownertable=" + ownertable + ",ownerid=" + ownerid);
+        Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
@@ -235,7 +236,7 @@ public class AndroidClientService {
         soapReq.addProperty("ownertable", ownertable);//表名
         soapReq.addProperty("ownerid", ownerid);//表主键值
         soapEnvelope.setOutputSoapObject(soapReq);
-        HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
+        HttpTransportSE httpTransport = new HttpTransportSE(AccountUtils.getIpAddress(context) + url, timeOut);
         try {
             httpTransport.call("urn:action", soapEnvelope);
         } catch (IOException | XmlPullParserException e) {

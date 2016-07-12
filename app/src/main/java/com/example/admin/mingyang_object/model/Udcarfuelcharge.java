@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Udcarfuelcharge extends Entity implements Serializable {
 
+    private String UDCARFUELCHARGEID; //主键ID
     private String CARFUELCHARGENUM; //编号
     private String DESCRIPTION; //描述
     private String LICENSENUM; //车牌号
@@ -35,6 +36,14 @@ public class Udcarfuelcharge extends Entity implements Serializable {
     private String RESPNAME; //责任人名称
     private String COMISORNO; //是否提交
 
+
+    public String getUDCARFUELCHARGEID() {
+        return UDCARFUELCHARGEID;
+    }
+
+    public void setUDCARFUELCHARGEID(String UDCARFUELCHARGEID) {
+        this.UDCARFUELCHARGEID = UDCARFUELCHARGEID;
+    }
 
     public String getCOMISORNO() {
         return COMISORNO;
