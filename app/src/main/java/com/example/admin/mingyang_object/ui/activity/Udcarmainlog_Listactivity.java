@@ -112,7 +112,7 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
         backImageView.setOnClickListener(backImageViewOnClickListener);
 
         addImageView.setVisibility(View.VISIBLE);
-        addImageView.setImageResource(R.mipmap.ic_more);
+//        addImageView.setImageResource(R.mipmap.ic_more);
         addImageView.setOnClickListener(addImageViewOnClickListener);
 
 
@@ -151,8 +151,8 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showPopupWindow(addImageView);
-
+            Intent intent = new Intent(Udcarmainlog_Listactivity.this, Udcarmainlog_Addactivity.class);
+            startActivityForResult(intent, 0);
         }
     };
 
@@ -260,7 +260,6 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     }
 
 
-
     private void showPopupWindow(View view) {
 
         View contentView = LayoutInflater.from(Udcarmainlog_Listactivity.this).inflate(
@@ -314,11 +313,6 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
             popupWindow.dismiss();
         }
     };
-
-
-
-
-
 
 
 }

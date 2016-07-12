@@ -104,15 +104,12 @@
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
-            <TextView
+            <CheckBox
                 android:id="@+id/comisorno_text_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
-                android:layout_toRightOf="@+id/item_num_title"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+                android:layout_toRightOf="@+id/item_num_title" />
         </LinearLayout>
 
         <View

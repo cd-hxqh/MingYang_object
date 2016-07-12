@@ -9,10 +9,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -48,6 +52,11 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
      */
     private ImageView menuImageView;
 
+    /**
+     * scrollview*
+     */
+    private ScrollView scrollview;
+
 
     /**
      * 界面信息*
@@ -78,7 +87,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
 
     private TextView createdateText; //创建时间
 
-    private TextView comisornoText; //是否提交
+    private CheckBox comisornoText; //是否提交
 
     /**
      * 出车信息*
@@ -101,6 +110,10 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
     private EditText standardfuelconsumptionText; //标准油耗
     private EditText feeText; //路桥费
 
+    /**
+     * 是否提交*
+     */
+    private boolean iscomis;
     private Udcardrivelog udcardrivelog;
 
     private PopupWindow popupWindow;
@@ -149,6 +162,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
+        scrollview = (ScrollView) findViewById(R.id.scrollview_id);
 
 
         cardrivelognumText = (TextView) findViewById(R.id.cardrivelognum_text_id);
@@ -161,7 +175,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
 
         driveridText = (TextView) findViewById(R.id.driverid_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
-        comisornoText = (TextView) findViewById(R.id.comisorno_text_id);
+        comisornoText = (CheckBox) findViewById(R.id.comisorno_text_id);
 
         startdateText = (TextView) findViewById(R.id.startdate_text_id);
         starttimeText = (TextView) findViewById(R.id.starttime_text_id);
@@ -192,7 +206,12 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
             branchdescText.setText(udcardrivelog.getBRANCHDESC());
             driveridText.setText(udcardrivelog.getDRIVERID());
             createdateText.setText(udcardrivelog.getCREATEDATE());
-            comisornoText.setText(udcardrivelog.getCOMISORNO());
+            if (udcardrivelog.getCOMISORNO() == null || udcardrivelog.getCOMISORNO().equals("")) {
+                comisornoText.setChecked(false);
+            } else {
+                comisornoText.setChecked(true);
+            }
+
             startdateText.setText(udcardrivelog.getSTARTDATE());
             starttimeText.setText(udcardrivelog.getSTARTTIME());
             departureText.setText(udcardrivelog.getDEPARTURE());
@@ -220,11 +239,17 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         isEdit(isEdit);
         startdateText.setOnClickListener(startdateTextOnClickListener);
         starttimeText.setOnClickListener(starttimeTextOnClickListener);
+        comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
 
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
     }
-
+    private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            iscomis = isChecked;
+        }
+    };
 
     private View.OnClickListener saveButtonOnClickListener = new View.OnClickListener() {
         @Override
@@ -314,8 +339,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         public void onClick(View v) {
             popupWindow.dismiss();
             Intent intent = new Intent(Udcardrivelog_Detailactivity.this, PhotoActivity.class);
-            intent.putExtra("ownertable","UDCARDRIVELOG");
-            intent.putExtra("ownerid",udcardrivelog.getUDCARDRIVELOGID());
+            intent.putExtra("ownertable", "UDCARDRIVELOG");
+            intent.putExtra("ownerid", udcardrivelog.getUDCARDRIVELOGID());
             startActivityForResult(intent, 0);
         }
 
@@ -324,17 +349,35 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             popupWindow.dismiss();
-            isEdit(!isEdit);
-            if (isEdit) {
-                operationLinearLayout.setVisibility(View.GONE);
-                isEdit = false;
+            if (udcardrivelog.getCOMISORNO() != null && udcardrivelog.getCOMISORNO().equals("已提交")) {
+                MessageUtils.showMiddleToast(Udcardrivelog_Detailactivity.this, "该记录状态已提交,不可编辑");
             } else {
-                operationLinearLayout.setVisibility(View.VISIBLE);
-                isEdit = true;
+
+
+                isEdit(!isEdit);
+                if (isEdit) {
+                    operationLinearLayout.setVisibility(View.GONE);
+                    setSpace(0);
+                    isEdit = false;
+                } else {
+                    operationLinearLayout.setVisibility(View.VISIBLE);
+                    setSpace(200);
+                    isEdit = true;
+                }
             }
         }
 
     };
+
+
+    /**
+     * 设置scrollview的距离*
+     */
+    private void setSpace(int space) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+        layoutParams.bottomMargin = space;//将默认的距离底部20dp，改为0，这样底部区域全被scrollview填满。
+        scrollview.setLayoutParams(layoutParams);
+    }
 
 
     /**
@@ -374,7 +417,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult reviseresult = AndroidClientService.UpdateWO(Udcardrivelog_Detailactivity.this,
-                        finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM",udcardrivelog.getCARDRIVELOGNUM(), Constants.WORK_URL);
+                        finalUpdataInfo, "UDCARDRIVELOG", "CARDRIVELOGNUM", udcardrivelog.getCARDRIVELOGNUM(), Constants.WORK_URL);
                 return reviseresult;
             }
 
@@ -433,9 +476,9 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         if (!fee.equals("") && !fee.equals(udcardrivelog.getFEE())) {
             udcardrivelog.setFEE(fee);
         }
-//        if (istijiao) {
-//            udcardrivelog.setCOMISORNO("已提交");
-//        }
+        if (iscomis) {
+            udcardrivelog.setCOMISORNO("已提交");
+        }
 
 
         return udcardrivelog;

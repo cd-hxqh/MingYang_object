@@ -50,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@mipmap/ic_choose_data"
                 android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
@@ -80,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_5"
+                android:drawableRight="@mipmap/ic_choose_data"
                 android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
@@ -92,10 +94,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_5"
+            android:paddingRight="@dimen/dimen_5">
 
             <TextView
                 android:layout_width="100dp"
@@ -123,9 +128,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_5"
+            android:paddingRight="@dimen/dimens_10">
 
             <TextView
                 android:layout_width="100dp"
@@ -154,6 +162,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginLeft="@dimen/dimen_5"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -184,6 +194,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40dp"
             android:layout_marginLeft="@dimen/dimen_5"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

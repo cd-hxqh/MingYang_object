@@ -111,7 +111,7 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
         setSearchEdit();
         titlename.setText(R.string.udcardrivelog_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        addImageView.setImageResource(R.mipmap.ic_more);
+//        addImageView.setImageResource(R.mipmap.ic_more);
         addImageView.setVisibility(View.VISIBLE);
         addImageView.setOnClickListener(addImageViewOnClickListener);
         layoutManager = new LinearLayoutManager(this);
@@ -148,7 +148,9 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showPopupWindow(addImageView);
+//            showPopupWindow(addImageView);
+            Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Addactivity.class);
+            startActivityForResult(intent, 0);
         }
     };
 

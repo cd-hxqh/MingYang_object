@@ -10,10 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -54,6 +58,11 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
      */
     private ImageView menuImageView;
 
+    /**
+     * scrollview*
+     */
+    private ScrollView scrollview;
+
 
     /**
      * 界面信息*
@@ -88,7 +97,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
 
     private TextView createdateText; //录入日期
 
-    private TextView comisornoText; //是否提交
+    private CheckBox comisornoText; //是否提交
 
     /**
      * 加油记录详细信息
@@ -107,7 +116,10 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
     private EditText placeText; //加油地点
     private EditText remarkText; //备注
 
-
+    /**
+     * 是否提交*
+     */
+    private boolean iscomis;
     private Udcarfuelcharge udcarfuelcharge;
 
     private PopupWindow popupWindow;
@@ -162,6 +174,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
+        scrollview = (ScrollView) findViewById(R.id.scrollview_id);
 
 
         carfuelchargenumText = (TextView) findViewById(R.id.carfuelchargenum_text_id);
@@ -176,7 +189,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         driveridText = (TextView) findViewById(R.id.driverid_text_id);
         createbyText = (TextView) findViewById(R.id.createby_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
-        comisornoText = (TextView) findViewById(R.id.comisorno_text_id);
+        comisornoText = (CheckBox) findViewById(R.id.comisorno_text_id);
 
         chargedateText = (TextView) findViewById(R.id.chargedate_text_id);
         number2Text = (EditText) findViewById(R.id.number2_text_id);
@@ -209,7 +222,12 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
             driveridText.setText(udcarfuelcharge.getDRIVERID());
             createbyText.setText(udcarfuelcharge.getCREATEBY());
             createdateText.setText(udcarfuelcharge.getCREATEDATE());
-            comisornoText.setText(udcarfuelcharge.getCOMISORNO());
+            if (udcarfuelcharge.getCOMISORNO() == null || udcarfuelcharge.getCOMISORNO().equals("")) {
+                comisornoText.setChecked(false);
+            } else {
+                comisornoText.setChecked(true);
+            }
+
 
             chargedateText.setText(udcarfuelcharge.getCHARGEDATE());
             number2Text.setText(udcarfuelcharge.getNUMBER2());
@@ -238,9 +256,17 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         chargedateText.setOnClickListener(new DateTimeOnClickListener(chargedateText));
         number4Text.setOnClickListener(number4TextOnClickListener);
         isEdit(isEdit);
-
+        comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
         saveButton.setOnClickListener(saveButtonOnClickListener);
     }
+
+
+    private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            iscomis = isChecked;
+        }
+    };
 
     //时间选择监听
     private class DateTimeOnClickListener implements View.OnClickListener {
@@ -348,17 +374,33 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             popupWindow.dismiss();
-            isEdit(!isEdit);
-            if (isEdit) {
-                operationLinearLayout.setVisibility(View.GONE);
-                isEdit = false;
+
+            if (udcarfuelcharge.getCOMISORNO() != null && udcarfuelcharge.getCOMISORNO().equals("已提交")) {
+                MessageUtils.showMiddleToast(Udcarfuelcharge_Detailactivity.this, "该记录状态已提交,不可编辑");
             } else {
-                operationLinearLayout.setVisibility(View.VISIBLE);
-                isEdit = true;
+                isEdit(!isEdit);
+                if (isEdit) {
+                    operationLinearLayout.setVisibility(View.GONE);
+                    setSpace(0);
+                    isEdit = false;
+                } else {
+                    operationLinearLayout.setVisibility(View.VISIBLE);
+                    setSpace(200);
+                    isEdit = true;
+                }
             }
         }
 
     };
+
+    /**
+     * 设置scrollview的距离*
+     */
+    private void setSpace(int space) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+        layoutParams.bottomMargin = space;//将默认的距离底部20dp，改为0，这样底部区域全被scrollview填满。
+        scrollview.setLayoutParams(layoutParams);
+    }
 
 
     /**
@@ -487,9 +529,9 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         if (!remark.equals("") && !remark.equals(udcarfuelcharge.getREMARK())) {
             udcarfuelcharge.setREMARK(remark);
         }
-//        if (istijiao) {
-//            udcardrivelog.setCOMISORNO("已提交");
-//        }
+        if (iscomis) {
+            udcarfuelcharge.setCOMISORNO("已提交");
+        }
 
 
         return udcarfuelcharge;

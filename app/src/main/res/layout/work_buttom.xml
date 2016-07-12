@@ -23,7 +23,8 @@
             android:layout_marginRight="15dp"
             android:layout_weight="1.0"
             android:background="@drawable/semi_round_backgroud"
-            android:text="@string/work_cancel" />
+            android:text="@string/work_cancel"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/work_save"
@@ -33,6 +34,7 @@
             android:layout_marginRight="30dp"
             android:layout_weight="1.0"
             android:background="@drawable/semi_round_backgroud"
-            android:text="@string/work_save" />
+            android:text="@string/work_save"
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

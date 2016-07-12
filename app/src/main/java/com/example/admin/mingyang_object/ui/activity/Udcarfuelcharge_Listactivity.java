@@ -113,7 +113,7 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
         backImageView.setOnClickListener(backImageViewOnClickListener);
 
         addImageView.setVisibility(View.VISIBLE);
-        addImageView.setImageResource(R.mipmap.ic_more);
+//        addImageView.setImageResource(R.mipmap.ic_more);
         addImageView.setOnClickListener(addImageViewOnClickListener);
 
         layoutManager = new LinearLayoutManager(this);
@@ -151,7 +151,9 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
     private View.OnClickListener addImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showPopupWindow(addImageView);
+//            showPopupWindow(addImageView);
+            Intent intent = new Intent(Udcarfuelcharge_Listactivity.this, Udcarfuelcharge_Addactivity.class);
+            startActivityForResult(intent, 0);
         }
     };
 

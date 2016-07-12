@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
@@ -23,6 +25,7 @@ import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
 import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -52,6 +55,11 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
      * 菜单
      */
     private ImageView menuImageView;
+
+    /**
+     * scrollview*
+     */
+    private ScrollView scrollview;
 
 
     /**
@@ -167,6 +175,7 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
+        scrollview = (ScrollView) findViewById(R.id.scrollview_id);
 
 
         mainlognumText = (TextView) findViewById(R.id.mainlognum_text_id);
@@ -220,7 +229,12 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
             totalpriceText.setText(udcarmainlog.getTOTALPRICE());
             invoicenumText.setText(udcarmainlog.getINVOICENUM());
 
-            servicetypeText.setText(udcarmainlog.getSERVICETYPE());
+
+            if (udcarmainlog.getSERVICETYPE().equals("normal")) {
+                servicetypeText.setText("正常维修");
+            } else {
+                servicetypeText.setText("事故维修");
+            }
             mainplaceText.setText(udcarmainlog.getMAINPLACE());
             maincontentText.setText(udcarmainlog.getMAINCONTENT());
             number2Text.setText(udcarmainlog.getNUMBER2());
@@ -245,11 +259,29 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         operationLinearLayout.setVisibility(View.GONE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
+        startdateText.setOnClickListener(new DateTimeOnClickListener(startdateText));
+        enddateText.setOnClickListener(new DateTimeOnClickListener(enddateText));
+
         comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
 
         isEdit(isEdit);
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
+    }
+
+
+    //时间选择监听
+    private class DateTimeOnClickListener implements View.OnClickListener {
+        TextView textView;
+
+        private DateTimeOnClickListener(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View view) {
+            new DateSelect(Udcarmainlog_Detailactivity.this, textView).showDialog();
+        }
     }
 
 
@@ -345,16 +377,33 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         public void onClick(View v) {
             popupWindow.dismiss();
             isEdit(!isEdit);
-            if (isEdit) {
-                operationLinearLayout.setVisibility(View.GONE);
-                isEdit = false;
+
+            if (udcarmainlog.getCOMISORNO() != null && udcarmainlog.getCOMISORNO().equals("已提交")) {
+                MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, "该记录状态已提交,不可编辑");
             } else {
-                operationLinearLayout.setVisibility(View.VISIBLE);
-                isEdit = true;
+                if (isEdit) {
+                    operationLinearLayout.setVisibility(View.GONE);
+                    setSpace(0);
+                    isEdit = false;
+                } else {
+                    operationLinearLayout.setVisibility(View.VISIBLE);
+                    setSpace(200);
+                    isEdit = true;
+                }
             }
         }
 
     };
+
+
+    /**
+     * 设置scrollview的距离*
+     */
+    private void setSpace(int space) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) scrollview.getLayoutParams();
+        layoutParams.bottomMargin = space;//将默认的距离底部20dp，改为0，这样底部区域全被scrollview填满。
+        scrollview.setLayoutParams(layoutParams);
+    }
 
 
     /**
