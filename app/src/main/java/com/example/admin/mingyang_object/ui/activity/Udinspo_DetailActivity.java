@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -134,6 +136,11 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private Button save;
 
     /**
+     * 是否停机*
+     */
+    private boolean istingji = false;
+
+    /**
      * 巡检项目*
      */
     private LinearLayout udinsprojectLinear;
@@ -253,6 +260,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
             inspodateText.setOnClickListener(new DateChecked(inspodateText));
             stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
             oktimeText.setOnClickListener(new DateAndTimeChecked(oktimeText));
+            isstopCheckBox.setOnCheckedChangeListener(isstopCheckBoxOnCheckedChangeListener);
         } else {
             buttonlayout.setVisibility(View.GONE);
         }
@@ -274,6 +282,15 @@ public class Udinspo_DetailActivity extends BaseActivity {
             }
         });
     }
+
+
+    private CompoundButton.OnCheckedChangeListener isstopCheckBoxOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            istingji = isChecked;
+        }
+    };
+
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -411,6 +428,12 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
     private Udinspo getUdinspo() {
         Udinspo udinspo = this.udinspo;
+        udinspo.setWEATHER(weatherText.getText().toString());
+        if (istingji) {
+            udinspo.setISSTOP("Y");
+        } else {
+            udinspo.setISSTOP("N");
+        }
         udinspo.setWEATHER(weatherText.getText().toString());
         udinspo.setINSPODATE(inspodateText.getText().toString());
         udinspo.setSTOPTIME(stoptimeText.getText().toString());
