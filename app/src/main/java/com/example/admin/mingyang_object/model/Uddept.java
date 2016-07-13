@@ -2,6 +2,7 @@ package com.example.admin.mingyang_object.model;
 
 import java.io.Serializable;
 
+
 /**
  * Created by think on 2016/7/7.
  * 部门
