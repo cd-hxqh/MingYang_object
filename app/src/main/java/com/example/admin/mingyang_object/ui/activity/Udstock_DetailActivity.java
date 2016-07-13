@@ -213,9 +213,22 @@ public class Udstock_DetailActivity extends BaseActivity {
 
         popupWindow.showAsDropDown(view);
         uploadfile = (LinearLayout) contentView.findViewById(R.id.upload_file_id);
+        uploadfile.setOnClickListener(uploadfileOnClickListener);
 
 
     }
+
+
+    private View.OnClickListener uploadfileOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udstock_DetailActivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDSTOCK");
+            intent.putExtra("ownerid", udstock.getUDSTOCKID());
+            startActivityForResult(intent, 0);
+        }
+    };
 
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {

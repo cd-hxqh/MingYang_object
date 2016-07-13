@@ -325,6 +325,7 @@ public class PhotoActivity extends BaseActivity {
                     MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传失败");
                 } else {
                     MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传成功");
+                    finish();
                 }
                 closeProgressDialog();
             }

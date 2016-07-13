@@ -28,6 +28,7 @@ import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
@@ -222,7 +223,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
         cuisplanTCheckBox.setClickable(false);
-        if (udreport.getWONUM()==null||udreport.getWONUM().equals("")) {
+        if (udreport.getWONUM() == null || udreport.getWONUM().equals("")) {
             pronumText.setOnClickListener(new LayoutOnClickListener(1, Constants.UDPROCODE));
             location_codeText.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
             assetlocText.setOnClickListener(new LayoutOnClickListener(3, Constants.LOCATIONCODE));
@@ -232,7 +233,7 @@ public class Udreport_DetailActivity extends BaseActivity {
             end_timeText.setOnClickListener(new DateTimeOnClickListener(end_timeText));
             fault_codedescText.setOnClickListener(new LayoutOnClickListener(4, Constants.FAILURECODE));
             fault_code1Text.setOnClickListener(new LayoutOnClickListener(5, Constants.PROBLEMCODE));
-        }else {
+        } else {
             is_endCheckBox.setClickable(false);
             cudescribeText.setFocusableInTouchMode(false);
             cudescribeText.setFocusable(false);
@@ -303,7 +304,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         commitLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
         workorderLayout.setOnClickListener(workorderOnClickListener);
         udpbforLayout.setOnClickListener(udpbforOnClickListener);
-//        commitLinearLayout.setOnClickListener(commitOnClickListener);
+        commitLinearLayout.setOnClickListener(commitOnClickListener);
 
     }
 
@@ -317,28 +318,38 @@ public class Udreport_DetailActivity extends BaseActivity {
     private View.OnClickListener workorderOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (udreport.getWONUM()!=null&&!udreport.getWONUM().equals("")){
+            if (udreport.getWONUM() != null && !udreport.getWONUM().equals("")) {
                 popupWindow.dismiss();
-                Toast.makeText(Udreport_DetailActivity.this,"已生成故障工单",Toast.LENGTH_SHORT).show();
-            }else {
+                Toast.makeText(Udreport_DetailActivity.this, "已生成故障工单", Toast.LENGTH_SHORT).show();
+            } else {
                 popupWindow.dismiss();
                 submitDataInfo2();
             }
+        }
+    };
+    private View.OnClickListener commitOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udreport_DetailActivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDREPORT");
+            intent.putExtra("ownerid", udreport.getUDREPORTID());
+            startActivityForResult(intent, 0);
         }
     };
 
     private View.OnClickListener udpbforOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (udreport.getSTATUSTYPE().equals("已提报")&&statustypeText.getText().toString().equals("已提报")
-                    &&(udreport.getUDPBFORMNUM()==null||udreport.getUDPBFORMNUM().equals(""))){
+            if (udreport.getSTATUSTYPE().equals("已提报") && statustypeText.getText().toString().equals("已提报")
+                    && (udreport.getUDPBFORMNUM() == null || udreport.getUDPBFORMNUM().equals(""))) {
                 popupWindow.dismiss();
                 submitDataInfo3();
-            }else if (udreport.getUDPBFORMNUM()!=null&&!udreport.getUDPBFORMNUM().equals("")){
-                Toast.makeText(Udreport_DetailActivity.this,"已生成质量问题反馈单!",Toast.LENGTH_SHORT).show();
-            }else {
+            } else if (udreport.getUDPBFORMNUM() != null && !udreport.getUDPBFORMNUM().equals("")) {
+                Toast.makeText(Udreport_DetailActivity.this, "已生成质量问题反馈单!", Toast.LENGTH_SHORT).show();
+            } else {
                 popupWindow.dismiss();
-                Toast.makeText(Udreport_DetailActivity.this,"仅当已提报状态可以生成质量问题反馈单!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Udreport_DetailActivity.this, "仅当已提报状态可以生成质量问题反馈单!", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -377,10 +388,10 @@ public class Udreport_DetailActivity extends BaseActivity {
                 intent.putExtra("udlocnum", location_codeText.getText().toString());
             }
             if (requestCode == 5) {
-                if (udreport.getFAULT_CODE()!=null&&udreport.getFAULT_CODE().equals("") && failurelist.equals("")) {
+                if (udreport.getFAULT_CODE() != null && udreport.getFAULT_CODE().equals("") && failurelist.equals("")) {
                     Toast.makeText(Udreport_DetailActivity.this, "请先选择故障类", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (udreport.getFAULT_CODE()!=null&&!udreport.getFAULT_CODE().equals("") && failurelist.equals("")) {
+                } else if (udreport.getFAULT_CODE() != null && !udreport.getFAULT_CODE().equals("") && failurelist.equals("")) {
                     Toast.makeText(Udreport_DetailActivity.this, "请重新选择故障类", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -408,9 +419,9 @@ public class Udreport_DetailActivity extends BaseActivity {
         mMenuItems = new ArrayList<>();
         if (textView == culevelText) {
             types = getResources().getStringArray(R.array.culevel_array);
-        }else if (textView == faulttypeText){
+        } else if (textView == faulttypeText) {
             types = getResources().getStringArray(R.array.faulttype_array);
-        }else if (textView == statustypeText){
+        } else if (textView == statustypeText) {
             types = getResources().getStringArray(R.array.status_array);
         }
         for (int i = 0; i < types.length; i++) {
@@ -446,7 +457,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         }
     }
 
-    private Udreport getUdreport(){
+    private Udreport getUdreport() {
         Udreport udreport = this.udreport;
         udreport.setBRANCH(branchText.getText().toString());
         udreport.setPRONUM(pronumText.getText().toString());
@@ -494,7 +505,7 @@ public class Udreport_DetailActivity extends BaseActivity {
     }
 
     /**
-     * 提交工单数据*
+     * 提交故障数据*
      */
     private void startAsyncTask() {
 //        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
@@ -511,7 +522,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Udreport_DetailActivity.this,finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udreport_DetailActivity.this, finalUpdataInfo,
                         "UDREPORT", "REPORTNUM", udreport.getREPORTNUM(), Constants.WORK_URL);
                 return reviseresult;
             }
@@ -563,22 +574,14 @@ public class Udreport_DetailActivity extends BaseActivity {
      * 提交质量反馈单数据*
      */
     private void startAsyncTask2() {
-//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-//            saveWorkOrder();
-//        } else {
         String updataInfo = null;
-//            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
         updataInfo = JsonUtils.WorkToJson(getWorkOrder());
-//            } else if (workOrder.status.equals(Constants.APPROVALED)) {
-//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-//            }
         final String finalUpdataInfo = updataInfo;
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult reviseresult = AndroidClientService.InsertWO(Udreport_DetailActivity.this,
-                        finalUpdataInfo,"WORKORDER", "WONUM" , AccountUtils.getpersonId(Udreport_DetailActivity.this), Constants.WORK_URL);
+                        finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(Udreport_DetailActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }
 
@@ -586,23 +589,22 @@ public class Udreport_DetailActivity extends BaseActivity {
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
                 if (workResult.errorMsg == null) {
-                    Toast.makeText(Udreport_DetailActivity.this, "生成故障工单失败", Toast.LENGTH_SHORT).show();
+                    MessageUtils.showMiddleToast(Udreport_DetailActivity.this, "生成故障工单失败");
                 } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Udreport_DetailActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
+                    MessageUtils.showMiddleToast(Udreport_DetailActivity.this, "工单" + workResult.wonum + "新增成功");
                     udreport.setWONUM(workResult.wonum);
                     wonum.setText(workResult.wonum);
-                    startAsyncTask();//保存工单号
+                    startAsyncTask();//保存
                 } else {
-                    Toast.makeText(Udreport_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                    MessageUtils.showMiddleToast(Udreport_DetailActivity.this, workResult.errorMsg);
                 }
                 closeProgressDialog();
             }
 
         }.execute();
-////        }
     }
 
-    private WorkOrder getWorkOrder(){
+    private WorkOrder getWorkOrder() {
         WorkOrder workOrder = new WorkOrder();
         workOrder.BRANCH = branchText.getText().toString();
         workOrder.UDPROJECTNUM = pronumText.getText().toString();
@@ -651,16 +653,8 @@ public class Udreport_DetailActivity extends BaseActivity {
      * 提交数据*
      */
     private void startAsyncTask3() {
-//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-//            saveWorkOrder();
-//        } else {
         String updataInfo = null;
-//            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
         updataInfo = JsonUtils.UdqtyformToJson(getUdqtyform());
-//            } else if (workOrder.status.equals(Constants.APPROVALED)) {
-//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
-//            }
         final String finalUpdataInfo = updataInfo;
         new AsyncTask<String, String, WebResult>() {
             @Override
@@ -687,10 +681,9 @@ public class Udreport_DetailActivity extends BaseActivity {
             }
 
         }.execute();
-////        }
     }
 
-    private Udqtyform getUdqtyform(){
+    private Udqtyform getUdqtyform() {
         Udqtyform udqtyform = new Udqtyform();
         udqtyform.PRONUM = udreport.getPRONUM();
         udqtyform.FAULTDATE = getDate(udreport.getHAPPEN_TIME());
@@ -698,14 +691,14 @@ public class Udreport_DetailActivity extends BaseActivity {
         return udqtyform;
     }
 
-    private String getDate(String datetime){
+    private String getDate(String datetime) {
         String srcPattern = "yyyy-MM-dd hh:mm:ss";
         String outPattern = "yyyy-MM-dd";
         String out = "";
         try {
             out = new SimpleDateFormat(outPattern).format(new SimpleDateFormat(srcPattern).parse(datetime));
         } catch (ParseException e) {
-            Toast.makeText(Udreport_DetailActivity.this,"无效时间格式",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udreport_DetailActivity.this, "无效时间格式", Toast.LENGTH_SHORT).show();
         }
         return out;
     }
