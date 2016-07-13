@@ -115,7 +115,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         invcontent.setText(woactivity.INVCONTENT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgmeasure.setText(woactivity.UDZGMEASURE);
-        perinspr.setChecked(woactivity.PERINSPR != 0);
+        perinspr.setChecked(woactivity.PERINSPR.equals("Y"));
         udrlstopdate.setText(woactivity.UDRLSTOPDATE);
         udremark.setText(woactivity.UDREMARK);
 
@@ -144,7 +144,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         woactivity.INVCONTENT = invcontent.getText().toString();
         woactivity.UDZGSTU = udzgstu.getText().toString();
         woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
-        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
         woactivity.UDRLSTOPDATE = udrlstopdate.getText().toString();
         woactivity.UDREMARK = udremark.getText().toString();
         return woactivity;
@@ -159,7 +159,7 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
                     && (woactivity.INVCONTENT==null||woactivity.INVCONTENT.equals(invcontent.getText().toString()))
                     && (woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
                     && (woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
-                    && (woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
+                    && (woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
                     && (woactivity.UDRLSTOPDATE==null||woactivity.UDRLSTOPDATE.equals(udrlstopdate.getText().toString()))
                     &&(woactivity.UDREMARK==null||woactivity.UDREMARK.equals(udremark.getText().toString()))) {//如果内容没有修改
                 intent.putExtra("woactivity", woactivity);

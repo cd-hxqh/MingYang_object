@@ -23,6 +23,9 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.WoactivityDao;
+import com.example.admin.mingyang_object.dao.WorkOrderDao;
+import com.example.admin.mingyang_object.dao.WpmaterialDao;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
@@ -30,8 +33,11 @@ import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.MessageUtils;
+import com.example.admin.mingyang_object.utils.NetWorkHelper;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -337,8 +343,8 @@ public class Work_DetailsActivity extends BaseActivity {
         actstart.setText(workOrder.ACTSTART);
         actfinish.setText(workOrder.ACTFINISH);
         isstoped.setChecked(workOrder.ISSTOPED != 0);
-        pmchgevalstart.setText(workOrder.PMCHGEVALSTART);
-        pmchgevalend.setText(workOrder.PMCHGEVALEND);
+        pmchgevalstart.setText(workOrder.UDSTOPTIME);
+        pmchgevalend.setText(workOrder.UDRESTARTTIME);
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             lead2.setText(workOrder.LEAD);
             udinspoby_2.setText(workOrder.UDINSPOBY);
@@ -437,6 +443,10 @@ public class Work_DetailsActivity extends BaseActivity {
             }
         });
         setLayout();
+
+        if(workOrder.id!=0){
+            getLocationData(workOrder.id);
+        }
     }
 
 //    private View.OnClickListener djtypeOnClickListener = new View.OnClickListener() {
@@ -802,11 +812,9 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        if (isOK()) {
-                            showProgressDialog("数据提交中...");
-                            startAsyncTask();
-                            dialog.dismiss();
-                        }
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
                     }
                 });
     }
@@ -993,42 +1001,85 @@ public class Work_DetailsActivity extends BaseActivity {
      * 提交数据*
      */
     private void startAsyncTask() {
-//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-//            saveWorkOrder();
-//        } else {
-        String updataInfo = null;
+        if (AccountUtils.getIsOffLine(Work_DetailsActivity.this) || NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
+            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
+            saveWorkOrder();
+            closeProgressDialog();
+        } else {
+            if (isOK()) {
+                String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWpmaterialList());
+                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), getWoactivityList(), getWpmaterialList());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
-        final String finalUpdataInfo = updataInfo;
-        new AsyncTask<String, String, WebResult>() {
-            @Override
-            protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Work_DetailsActivity.this,finalUpdataInfo,
-                        "WORKORDER", "WONUM", workOrder.WONUM, Constants.WORK_URL);
-                return reviseresult;
-            }
+                final String finalUpdataInfo = updataInfo;
+                new AsyncTask<String, String, WebResult>() {
+                    @Override
+                    protected WebResult doInBackground(String... strings) {
+                        WebResult reviseresult = AndroidClientService.UpdateWO(Work_DetailsActivity.this, finalUpdataInfo,
+                                "WORKORDER", "WONUM", workOrder.WONUM, Constants.WORK_URL);
+                        return reviseresult;
+                    }
 
-            @Override
-            protected void onPostExecute(WebResult workResult) {
-                super.onPostExecute(workResult);
-                if (workResult == null || workResult.errorMsg == null) {
-                    Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Work_DetailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    protected void onPostExecute(WebResult workResult) {
+                        super.onPostExecute(workResult);
+                        if (workResult == null || workResult.errorMsg == null) {
+                            Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
+                        } else if (workResult.errorMsg.equals("成功")) {
+                            Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Work_DetailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                        }
+                        closeProgressDialog();
+                    }
+                }.execute();
+            }else {
                 closeProgressDialog();
             }
-        }.execute();
-////        }
-
+        }
     }
 
+    private void saveWorkOrder() {
+        WorkOrder workOrder = getWorkOrder();
+        workOrder.belong = AccountUtils.getpersonId(Work_DetailsActivity.this);
+//        workOrder.ishistory = true;
+        new WorkOrderDao(Work_DetailsActivity.this).update(workOrder);
+        int id = workOrder.id;
+        if (id != 0) {
+            if (woactivityList.size() != 0) {
+                for (Woactivity woactivity : woactivityList) {
+                    woactivity.belongid = id;
+                }
+                if (new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM).size()>0){//删除默认保存的记录，防止重复
+                    new WoactivityDao(Work_DetailsActivity.this).deleteList(new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM));
+                }
+                new WoactivityDao(Work_DetailsActivity.this).create(woactivityList);
+            }
+            if (wpmaterialLit.size() != 0) {
+                for (Wpmaterial wplabor : wpmaterialLit) {
+                    wplabor.belongid = id;
+                }
+                if (new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM).size()>0){//删除默认保存的记录，防止重复
+                    new WpmaterialDao(Work_DetailsActivity.this).deleteList(new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM));
+                }
+                new WpmaterialDao(Work_DetailsActivity.this).create(wpmaterialLit);
+            }
+        }
+    }
+
+    //如果为历史数据，则获取本地子表信息
+    private void getLocationData(int  id){
+        woactivityList = (ArrayList<Woactivity>) new WoactivityDao(Work_DetailsActivity.this).queryById(id);
+        if(woactivityList ==null ||woactivityList.size()==0){//如果没有修过记录，则查找默认保存记录
+            woactivityList = (ArrayList<Woactivity>) new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM);
+        }
+        wpmaterialLit = (ArrayList<Wpmaterial>) new WpmaterialDao(Work_DetailsActivity.this).queryById(id);
+        if (wpmaterialLit == null || wpmaterialLit.size() == 0){
+            wpmaterialLit = (ArrayList<Wpmaterial>) new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM);
+        }
+    }
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -1310,8 +1361,8 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.ACTSTART = actstart.getText().toString();
         workOrder.ACTFINISH = actfinish.getText().toString();
         workOrder.ISSTOPED = isstoped.isChecked() ? 1 : 0;
-        workOrder.PMCHGEVALSTART = pmchgevalstart.getText().toString();
-        workOrder.PMCHGEVALEND = pmchgevalend.getText().toString();
+        workOrder.UDSTOPTIME = pmchgevalstart.getText().toString();
+        workOrder.UDRESTARTTIME = pmchgevalend.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             workOrder.UDRPRRSB = udrprrsb.getText().toString();
             workOrder.UDJGRESULT = udjgresult.getText().toString();

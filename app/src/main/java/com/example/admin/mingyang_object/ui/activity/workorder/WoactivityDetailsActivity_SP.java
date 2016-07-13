@@ -114,7 +114,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo2.setText(woactivity.WOJO2);
         wojo3.setText(woactivity.WOJO3);
         wojo4.setText(woactivity.WOJO4);
-        perinspr.setChecked(woactivity.PERINSPR != 0);
+        perinspr.setChecked(woactivity.PERINSPR.equals("Y"));
         udinsunit.setText(woactivity.UDINSUNIT);
         udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);
@@ -131,7 +131,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
 
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
-        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
         woactivity.UDINSUNIT = udinsunit.getText().toString();
         woactivity.UDRPRRSB = udrprrsb.getText().toString();
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
@@ -146,7 +146,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if((woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
+            if((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
                     &&(woactivity.UDINSUNIT==null||woactivity.UDINSUNIT.equals(udinsunit.getText().toString()))
                     &&(woactivity.UDRPRRSB==null||woactivity.UDRPRRSB.equals(udrprrsb.getText().toString()))
                     &&(woactivity.UDPROBDESC==null||woactivity.UDPROBDESC.equals(udprobdesc.getText().toString()))
@@ -219,11 +219,13 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                option = (Option) data.getSerializableExtra("option");
-                udrprrsb.setText(option.getName());
-                break;
+        if (data!=null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    udrprrsb.setText(option.getName());
+                    break;
+            }
         }
     }
 }

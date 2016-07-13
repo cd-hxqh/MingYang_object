@@ -1,23 +1,42 @@
 package com.example.admin.mingyang_object.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
 /**
  * Created by think on 2016/6/30.
  * 物料
  */
+@DatabaseTable(tableName = "Wpmaterial")
 public class Wpmaterial implements Serializable{
+
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(columnName = "WPITEMID")
     public int WPITEMID;//唯一标识
+    @DatabaseField(columnName = "ITEMNUM")
     public String ITEMNUM;//物资编码
+    @DatabaseField(columnName = "ITEMDESC")
     public String ITEMDESC;//物资描述
+    @DatabaseField(columnName = "ITEMQTY")
     public String ITEMQTY;//数量
+    @DatabaseField(columnName = "ORDERUNIT")
     public String ORDERUNIT;//订购单位
+    @DatabaseField(columnName = "LOCATION")
     public String LOCATION;//库房
+    @DatabaseField(columnName = "LOCDESC")
     public String LOCDESC;//库房描述
-//    public String
+
+    @DatabaseField(columnName = "TYPE")
     public String TYPE;
+    @DatabaseField(columnName = "WONUM")
     public String WONUM;
+    @DatabaseField(columnName = "isUpload")
     public boolean isUpload;
+    @DatabaseField(columnName = "belongid")
+    public int belongid;//所属工单本地存储id
 
 
     public int getWPITEMID() {

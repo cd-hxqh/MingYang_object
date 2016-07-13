@@ -1,49 +1,102 @@
 package com.example.admin.mingyang_object.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
 /**
  * Created by apple on 15/10/26.
  * 巡检单
  */
+@DatabaseTable(tableName = "Udinspo")
 public class Udinspo extends Entity implements Serializable {
 
+    @DatabaseField(generatedId = true)
+    private int id;
+    @DatabaseField(columnName = "ALLTIME")
     private String ALLTIME; //累计停机时间
+    @DatabaseField(columnName = "BRANCH")
     private String BRANCH; //中心编号
+    @DatabaseField(columnName = "CHANGEBY")
     private String CHANGEBY; //更改人编号
+    @DatabaseField(columnName = "CHANGEDATE")
     private String CHANGEDATE;//更改时间
+    @DatabaseField(columnName = "COMPTIME")
     private String COMPTIME; //计划完成时间
+    @DatabaseField(columnName = "CREATEBY")
     private String CREATEBY; //创建人编号
+    @DatabaseField(columnName = "CREATEDATE")
     private String CREATEDATE; //创建时间
+    @DatabaseField(columnName = "DESCRIPTION")
     private String DESCRIPTION; //描述
+    @DatabaseField(columnName = "FJNUM")
     private String FJNUM; //设备位置
+    @DatabaseField(columnName = "INSPOBY")
     private String INSPOBY; //巡检人员
+    @DatabaseField(columnName = "INSPOBY2")
     private String INSPOBY2; //巡检人员编号
+    @DatabaseField(columnName = "INSPOBY3")
     private String INSPOBY3; //巡检人员编号
+    @DatabaseField(columnName = "INSPODATE")
     private String INSPODATE; //巡检日期
+    @DatabaseField(columnName = "INSPONUM")
     private String INSPONUM; //巡检单编号
+    @DatabaseField(columnName = "INSPPLANNUM")
     private String INSPPLANNUM; //巡检计划编号
+    @DatabaseField(columnName = "ISSTOP")
     private String ISSTOP; //是否停机？
+    @DatabaseField(columnName = "JPNUM")
     private String JPNUM; //巡检标准
+    @DatabaseField(columnName = "LASTRUNDATE")
     private String LASTRUNDATE; //上次巡检时间
+    @DatabaseField(columnName = "MODELTYPE")
     private String MODELTYPE; //风机型号
+    @DatabaseField(columnName = "NEXTRUNDATE")
     private String NEXTRUNDATE; //下次巡检时间
+    @DatabaseField(columnName = "OKTIME")
     private String OKTIME; //恢复时间
+    @DatabaseField(columnName = "PRONUM")
     private String PRONUM; //项目编号
+    @DatabaseField(columnName = "RESBY")
     private String RESBY; //巡检负责人编号
+    @DatabaseField(columnName = "STARTTIME")
     private String STARTTIME; //计划开始时间
+    @DatabaseField(columnName = "STATUS")
     private String STATUS; //状态
+    @DatabaseField(columnName = "STOPTIME")
     private String STOPTIME; //停机时间
+    @DatabaseField(columnName = "UDLOCNUM")
     private String UDLOCNUM; //机位号
+    @DatabaseField(columnName = "WEATHER")
     private String WEATHER; //天气
+    @DatabaseField(columnName = "PRODESC")
     private String PRODESC; //项目名称
+    @DatabaseField(columnName = "JPDESC")
     private String JPDESC; //巡检标准名称
+    @DatabaseField(columnName = "FJDESC")
     private String FJDESC; //设备位置名称
+    @DatabaseField(columnName = "NAME")
     private String NAME; //巡检负责人名称
+    @DatabaseField(columnName = "NAME1")
     private String NAME1; //巡检人员名称
+    @DatabaseField(columnName = "NAME2")
     private String NAME2; //巡检人员名称
+    @DatabaseField(columnName = "NAME3")
     private String NAME3; //巡检人员名称
 
+    @DatabaseField(columnName = "isUpdate")
+    public boolean isUpdate;//是否是本地已修改巡检单
+    @DatabaseField(columnName = "belong")
+    public boolean belong;//工单所属用户
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNAME() {
         return NAME;

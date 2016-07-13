@@ -1067,13 +1067,29 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 woactivity = new Woactivity();
                 jsonObject = jsonArray.getJSONObject(i);
-                woactivity.TASKID = jsonObject.getString("JPTASK");
-                woactivity.DESCRIPTION = jsonObject.getString("DESCRIPTION");
-                woactivity.WOJO1 = jsonObject.getString("JO1");
-                woactivity.WOJO2 = jsonObject.getString("JO2");
-                woactivity.WOJO3 = jsonObject.getString("JO3");
-                woactivity.WOJO4 = jsonObject.getString("JO4");
+                Field[] field = woactivity.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = woactivity.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(woactivity);
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = woactivity.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(woactivity, jsonObject.get(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 woactivity.WONUM = wonum == null ? "" : wonum;
+                woactivity.TYPE = "";
                 woactivity.isUpload = true;
                 list.add(woactivity);
             }

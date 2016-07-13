@@ -123,7 +123,7 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
         woactivity.UDSTARTTIME = udstarttime.getText().toString();
         woactivity.UDENDTIME = udendtime.getText().toString();
         woactivity.UDZYSBASIC = udzysbasic.getText().toString();
-        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
         woactivity.UDZGLIMIT = udzglimit.getText().toString();
         woactivity.LEAD = lead.getText().toString();

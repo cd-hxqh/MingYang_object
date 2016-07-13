@@ -120,28 +120,38 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
-        if (!workOrder.isnew){
-            if (wpmaterialList == null || wpmaterialList.size() == 0){
-                refresh_layout.setRefreshing(true);
-                getdata();
-            }else{
-                if (wpmaterialList != null && wpmaterialList.size() != 0) {
-                    initList(wpmaterialList);
+        if (workOrder.id==0) {
+            if (!workOrder.isnew) {
+                if (wpmaterialList == null || wpmaterialList.size() == 0) {
+                    refresh_layout.setRefreshing(true);
+                    getdata();
+                } else {
+                    if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                        initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
+                    } else {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
+                }
+            } else {//新建工单
+                if (wpmaterialList == null || wpmaterialList.size() == 0) {
+
+                } else {
+                    if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                        initList(wpmaterialList);
+//                woactivityAdapter.addData(woactivityList);
+                    } else {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
                 }
             }
-        } else {//新建工单
-            if (wpmaterialList == null || wpmaterialList.size() == 0){
-
-            }else {
-                if (wpmaterialList != null && wpmaterialList.size() != 0) {
-                    initList(wpmaterialList);
+        }else {//本地历史工单
+            if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
+            } else {
+                initAdapter(new ArrayList<Wpmaterial>());
+                nodatalayout.setVisibility(View.VISIBLE);
             }
         }
         setNodataLayout();

@@ -18,23 +18,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.WorkOrderDao;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
 
@@ -49,14 +60,8 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     private TextView titlename;
     private ImageView addimg;
     private TextView choose;
-    private PopupWindow popupWindow;
     private RelativeLayout backlayout;
 
-    private LinearLayout status1Linearlayout;
-    private LinearLayout status2Linearlayout;
-    private LinearLayout status3Linearlayout;
-    private LinearLayout status4Linearlayout;
-    private LinearLayout statusallLinearlayout;
     private String status = "全部";
 
     private String worktype;
@@ -68,10 +73,17 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     private EditText search;
     private String searchText = "";
     private int page = 1;
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worklist);
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
 
         findViewById();
 
@@ -101,7 +113,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         setSearchEdit();
         titlename.setText(WorkTypeUtils.getTitle(worktype));
         choose.setVisibility(View.VISIBLE);
-        choose.setOnClickListener(chooseOnClickListener);
+        choose.setOnClickListener(new NormalListDialogOnClickListener(choose));
         addimg.setVisibility(View.VISIBLE);
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,42 +149,66 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     }
 
     private void getData(String search,String status){
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype,status, search, page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
+        if (!AccountUtils.getIsOffLine(Work_ListActivity.this)&&!status.equals("本地记录")) {
+            HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype, status, search, page, 20), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                    Log.i(TAG, "data=" + results);
+                }
 
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-                if (results.getResultlist()!=null) {
-                    ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist());
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    if (items == null || items.isEmpty()) {
-                        nodatalayout.setVisibility(View.VISIBLE);
+                @Override
+                public void onSuccess(Results results, int totalPages, int currentPage) {
+                    if (results.getResultlist() != null) {
+                        ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_ListActivity.this, results.getResultlist());
+                        refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
+                        if (items == null || items.isEmpty()) {
+                            nodatalayout.setVisibility(View.VISIBLE);
+                        } else {
+                            nodatalayout.setVisibility(View.GONE);
+                            new WorkOrderDao(Work_ListActivity.this).update(items);
+                            if (page == 1) {
+                                workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
+                                recyclerView.setAdapter(workListAdapter);
+                            }
+                            if (totalPages == page) {
+                                workListAdapter.adddate(items);
+                            }
+                        }
                     } else {
-                        nodatalayout.setVisibility(View.GONE);
-                        if (page == 1) {
-                            workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
-                            recyclerView.setAdapter(workListAdapter);
-                        }
-                        if (totalPages == page) {
-                            workListAdapter.adddate(items);
-                        }
+                        refresh_layout.setRefreshing(false);
+                        nodatalayout.setVisibility(View.VISIBLE);
                     }
-                }else {
+                }
+
+                @Override
+                public void onFailure(String error) {
                     refresh_layout.setRefreshing(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
+            });
+        }else if (AccountUtils.getIsOffLine(Work_ListActivity.this)&&!status.equals("本地记录")){//本地保存记录
+            refresh_layout.setRefreshing(false);
+            workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
+            recyclerView.setAdapter(workListAdapter);
+            if (search.equals("")) {
+                workListAdapter.adddate((ArrayList<WorkOrder>) new WorkOrderDao(Work_ListActivity.this).queryByType(worktype,status));
+            }else {
+                workListAdapter.adddate((ArrayList<WorkOrder>) new WorkOrderDao(Work_ListActivity.this).queryByType2(worktype, search, status));
             }
-
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
+            if (workListAdapter.getItemCount()==0){
                 nodatalayout.setVisibility(View.VISIBLE);
             }
-        });
+        }else if (status.equals("本地记录")){//本地修改保存的记录
+            refresh_layout.setRefreshing(false);
+            workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
+            recyclerView.setAdapter(workListAdapter);
+            workListAdapter.adddate((ArrayList<WorkOrder>) new WorkOrderDao(Work_ListActivity.this).
+                    queryForLoc(worktype, search, AccountUtils.getpersonId(Work_ListActivity.this)));
+            if (workListAdapter.getItemCount()==0){
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void setSearchEdit(){
@@ -185,7 +221,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     // 先隐藏键盘
                     ((InputMethodManager) search.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(
@@ -193,9 +229,9 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                                             .getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     searchText = search.getText().toString().trim();
-                    workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
+                    workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
                     recyclerView.setAdapter(workListAdapter);
-                    getData(searchText,status);
+                    getData(searchText, status);
                     return true;
                 }
                 return false;
@@ -203,118 +239,54 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         });
     }
 
-    private View.OnClickListener chooseOnClickListener = new View.OnClickListener() {
+    private class NormalListDialogOnClickListener implements View.OnClickListener {
+        TextView textView;
+
+        public NormalListDialogOnClickListener(TextView textView) {
+            this.textView = textView;
+        }
+
         @Override
         public void onClick(View v) {
-            showPopupWindow(choose);
+            NormalListDialog(textView);
         }
-    };
-
-    /**
-     * 初始化showPopupWindow*
-     */
-    private void showPopupWindow(View view) {
-
-        // 一个自定义的布局，作为显示的内容
-        View contentView = LayoutInflater.from(Work_ListActivity.this).inflate(
-                R.layout.status_popup_window, null);
-
-
-        popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setTouchable(true);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-
-                return false;
-                // 这里如果返回true的话，touch事件将被拦截
-                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
-            }
-        });
-
-        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
-        // 我觉得这里是API的一个bug
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(
-                R.mipmap.popup_background_mtrl_mult));
-
-        // 设置好参数之后再show
-        popupWindow.showAsDropDown(view);
-
-        status1Linearlayout = (LinearLayout) contentView.findViewById(R.id.status_1_id);
-        status2Linearlayout = (LinearLayout) contentView.findViewById(R.id.status_2_id);
-        status3Linearlayout = (LinearLayout) contentView.findViewById(R.id.status_3_id);
-        status4Linearlayout = (LinearLayout) contentView.findViewById(R.id.status_4_id);
-        statusallLinearlayout = (LinearLayout) contentView.findViewById(R.id.status_all_id);
-        status1Linearlayout.setOnClickListener(status1OnClickListener);
-        status2Linearlayout.setOnClickListener(status2OnClickListener);
-        status3Linearlayout.setOnClickListener(status3OnClickListener);
-        status4Linearlayout.setOnClickListener(status4OnClickListener);
-        statusallLinearlayout.setOnClickListener(statusallOnClickListener);
     }
 
-    private View.OnClickListener status1OnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
-            recyclerView.setAdapter(workListAdapter);
-            status = getString(R.string.status_1);
-            choose.setText(status);
-            getData(search.getText().toString(), status);
-            popupWindow.dismiss();
+    private void NormalListDialog(final TextView textView) {
+        String[] types = new String[0];
+        mMenuItems = new ArrayList<>();
+        if (worktype.equals(Constants.FR)) {//故障工单
+            types = getResources().getStringArray(R.array.gz_status_array);
+        } else if (worktype.equals(Constants.AA)) {//终验收工单
+            types = getResources().getStringArray(R.array.zys_status_array);
+        } else if (worktype.equals(Constants.SP)) {//排查工单
+            types = getResources().getStringArray(R.array.pc_status_array);
+        } else if (worktype.equals(Constants.TP)) {//技改工单
+            types = getResources().getStringArray(R.array.jg_status_array);
+        }else if (worktype.equals(Constants.WS)) {//定检工单
+            types = getResources().getStringArray(R.array.dj_status_array);
         }
-    };
-
-    private View.OnClickListener status2OnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
-            recyclerView.setAdapter(workListAdapter);
-            status = getString(R.string.status_2);
-            choose.setText(status);
-            getData(search.getText().toString(),status);
-            popupWindow.dismiss();
+        for (int i = 0; i < types.length; i++) {
+            mMenuItems.add(new DialogMenuItem(types[i], 0));
         }
-    };
-
-    private View.OnClickListener status3OnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
-            recyclerView.setAdapter(workListAdapter);
-            status = getString(R.string.status_3);
-            choose.setText(status);
-            getData(search.getText().toString(),status);
-            popupWindow.dismiss();
-        }
-    };
-
-    private View.OnClickListener status4OnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
-            recyclerView.setAdapter(workListAdapter);
-            status = getString(R.string.status_4);
-            choose.setText(status);
-            getData(search.getText().toString(),status);
-            popupWindow.dismiss();
-        }
-    };
-
-    private View.OnClickListener statusallOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
-            recyclerView.setAdapter(workListAdapter);
-            status = "全部";
-            choose.setText(status);
-            getData(search.getText().toString(),status);
-            popupWindow.dismiss();
-        }
-    };
+        final NormalListDialog dialog = new NormalListDialog(Work_ListActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                textView.setText(mMenuItems.get(position).mOperName);
+                workListAdapter = new WorkListAdapter(Work_ListActivity.this,worktype);
+                recyclerView.setAdapter(workListAdapter);
+                status = mMenuItems.get(position).mOperName;
+                choose.setText(status);
+                getData(search.getText().toString(), status);
+                dialog.dismiss();
+            }
+        });
+    }
 
     //下拉刷新触发事件
     @Override

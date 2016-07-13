@@ -32,9 +32,6 @@ public class AccountUtils {
 
     }
 
-    ;
-
-
     /**
      * 读取记住状态*
      */
@@ -44,6 +41,28 @@ public class AccountUtils {
         return sharedPreferences.getBoolean(cxt.getString(R.string.logined_member_ischeck), false);
     }
 
+    /**
+     * 记录是否离线
+     *
+     * @param cxt
+     * @param isOffLine *
+     */
+
+    public static void setIsOffLine(Context cxt, boolean isOffLine) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        sharedPreferences.edit().putBoolean(cxt.getString(R.string.logined_user_isoffline), isOffLine).commit();
+
+    }
+
+    /**
+     * 读取是否离线*
+     */
+    public static boolean getIsOffLine(Context cxt) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        return sharedPreferences.getBoolean(cxt.getString(R.string.logined_user_isoffline), false);
+    }
 
     /**
      * 记录用户名与密码
