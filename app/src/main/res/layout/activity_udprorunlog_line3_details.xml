@@ -44,9 +44,10 @@
 
                     <TextView
                         android:id="@+id/udprorunlog_line3_runlogdate"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:drawableRight="@mipmap/ic_choose_data"
                         android:hint="@string/have_not_data"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />

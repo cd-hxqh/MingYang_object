@@ -104,12 +104,13 @@
 
                     <TextView
                         android:id="@+id/woactivity_udstarttime"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:drawableRight="@mipmap/ic_choose_data"
                         android:hint="@string/have_not_data"
                         android:textColor="@color/light_black"
-                        android:textSize="@dimen/dimens_16dp" />
+                        android:textSize="@dimen/dimens_16dp"/>
                 </LinearLayout>
 
                 <View
@@ -133,9 +134,10 @@
 
                     <TextView
                         android:id="@+id/woactivity_udendtime"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:drawableRight="@mipmap/ic_choose_data"
                         android:hint="@string/have_not_data"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
@@ -256,9 +258,10 @@
 
                     <TextView
                         android:id="@+id/woactivity_udzglimit"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:drawableRight="@mipmap/ic_choose_data"
                         android:hint="@string/have_not_data"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />

@@ -185,11 +185,11 @@
     <string name="work_pccompnum1">计划定检风机台数:</string>
     <string name="work_wtcode">风机型号:</string>
     <string name="work_assettype">设备类别:</string>
-    <string name="work_perinspr">定检结果(Y\N):</string>//<!--排查结果/PERINSPR-->
-    <string name="work_perinspr2">排查结果(Y\N):</string>
-    <string name="work_perinspr3">技改结果(Y\N):</string>
+    <string name="work_perinspr">定检结果:</string>//<!--排查结果/PERINSPR-->
+    <string name="work_perinspr2">排查结果:</string>
+    <string name="work_perinspr3">技改结果:</string>
     <string name="work_udremark">备注:</string>
-    <string name="work_isbigpar">大部件发放(Y/N):</string>
+    <string name="work_isbigpar">大部件发放:</string>
     <string name="work_udzgmeasure">故障处理方案:</string>
     <string name="work_plannum">排查计划编号:</string>
     <string name="work_pccompnum">排查完成台数:</string>

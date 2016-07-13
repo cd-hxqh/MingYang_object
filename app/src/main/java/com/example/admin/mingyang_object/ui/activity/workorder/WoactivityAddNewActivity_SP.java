@@ -35,9 +35,9 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
 
     private TextView taskid;//任务
     private EditText description;//描述
-    private EditText wojo1;//系统/项目
-    private EditText wojo2;//子系统/子项目
-    private EditText wojo3;//检查/检修方法
+    private TextView wojo1;//系统/项目
+    private TextView wojo2;//子系统/子项目
+    private TextView wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
     private CheckBox perinspr;//排查结果
     private EditText udinsunit;//排查部位
@@ -75,9 +75,9 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
 
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
         description = (EditText) findViewById(R.id.woactivity_description);
-        wojo1 = (EditText) findViewById(R.id.woactivity_wojo1);
-        wojo2 = (EditText) findViewById(R.id.woactivity_wojo2);
-        wojo3 = (EditText) findViewById(R.id.woactivity_wojo3);
+        wojo1 = (TextView) findViewById(R.id.woactivity_wojo1);
+        wojo2 = (TextView) findViewById(R.id.woactivity_wojo2);
+        wojo3 = (TextView) findViewById(R.id.woactivity_wojo3);
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udinsunit = (EditText) findViewById(R.id.woactivity_udinsunit);
