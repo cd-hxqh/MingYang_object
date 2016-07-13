@@ -246,6 +246,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                                 woactivityList.add(woactivities.get(i));
                             }
                         }
+                        new WoactivityDao(Work_WoactivityActivity.this).create(woactivities);//默认保存到本地
                         nodatalayout.setVisibility(View.GONE);
 
                         initAdapter(woactivityList);

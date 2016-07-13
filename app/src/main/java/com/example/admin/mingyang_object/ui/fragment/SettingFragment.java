@@ -16,7 +16,12 @@ import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.UdinspoDao;
+import com.example.admin.mingyang_object.dao.UdinsprojectDao;
+import com.example.admin.mingyang_object.dao.WoactivityDao;
 import com.example.admin.mingyang_object.dao.WorkOrderDao;
+import com.example.admin.mingyang_object.dao.WpmaterialDao;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.Utils;
 
 import java.io.File;
@@ -30,9 +35,9 @@ public class SettingFragment extends Fragment {
 
     private static final String TAG = "SettingFragment";
     /**
-     * 本地数据*
+     * 是否在线*
      */
-    RelativeLayout dataRelativeLayout;
+    TextView isonline;
     /**
      * 清除缓存*
      */
@@ -53,7 +58,9 @@ public class SettingFragment extends Fragment {
     TextView cacheSize;
 
 
-    /** 自定义进度条 **/
+    /**
+     * 自定义进度条 *
+     */
     private ProgressDialog progressDialog = null;
 
     @Override
@@ -75,7 +82,7 @@ public class SettingFragment extends Fragment {
      * 初始化界面控件*
      */
     private void findById(View view) {
-        dataRelativeLayout = (RelativeLayout) view.findViewById(R.id.upload_data_id);
+        isonline = (TextView) view.findViewById(R.id.isonline_id);
         clearRelativeLayout = (RelativeLayout) view.findViewById(R.id.clear_cache_id);
 
 
@@ -92,13 +99,13 @@ public class SettingFragment extends Fragment {
     }
 
     private void initView() {
-
-        dataRelativeLayout.setOnClickListener(dataRelativeLayoutOnClickListener);
+        isonline.setText(AccountUtils.getIsOffLine(getActivity()) ? "离线登录" : "在线");
+//        dataRelativeLayout.setOnClickListener(dataRelativeLayoutOnClickListener);
 
         clearRelativeLayout.setOnClickListener(clearRelativeLayoutOnClickListener);
 
         cacheSize.setText(getDataFileSize() + "/M");
-
+        cacheSize.setVisibility(View.VISIBLE);
 
     }
 
@@ -129,7 +136,7 @@ public class SettingFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("提示");
-        builder.setMessage("清除缓存将删除本地所有信息，确定要清除缓存吗？");
+        builder.setMessage("清除缓存将删除本地所有记录，确定要清除缓存吗？");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
             @Override
@@ -137,7 +144,7 @@ public class SettingFragment extends Fragment {
                 ClearCache();
 //                if (clearCache()) {
 //                    cacheSize.setText(getDataFileSize());
-                    Toast.makeText(getActivity(), "清除成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "清除成功", Toast.LENGTH_SHORT).show();
 //                } else {
 //                    Toast.makeText(getActivity(), "清除失败", Toast.LENGTH_SHORT).show();
 //                }
@@ -207,5 +214,9 @@ public class SettingFragment extends Fragment {
      */
     private void ClearCache() {
         new WorkOrderDao(getActivity()).deleteall();
+        new WoactivityDao(getActivity()).deleteall();
+        new WpmaterialDao(getActivity()).deleteall();
+        new UdinspoDao(getActivity()).deleteall();
+        new UdinsprojectDao(getActivity()).deleteall();
     }
 }

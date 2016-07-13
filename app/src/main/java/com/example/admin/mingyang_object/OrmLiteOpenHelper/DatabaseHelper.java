@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.admin.mingyang_object.model.Udinspo;
+import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
@@ -21,11 +22,10 @@ import java.util.Map;
  * Created by think on 2016/7/12.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 10;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
-
         super(context, Utils.getFilePath(context), null, DATABASE_VERSION);
     }
 
@@ -37,6 +37,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Woactivity.class);
             TableUtils.createTable(connectionSource, Wpmaterial.class);
             TableUtils.createTable(connectionSource, Udinspo.class);
+            TableUtils.createTable(connectionSource, Udinsproject.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,6 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Woactivity.class, true);
             TableUtils.dropTable(connectionSource, Wpmaterial.class, true);
             TableUtils.dropTable(connectionSource, Udinspo.class, true);
+            TableUtils.dropTable(connectionSource, Udinsproject.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

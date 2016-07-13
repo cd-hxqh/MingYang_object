@@ -127,7 +127,7 @@ public class WorkOrderDao {
         try {
             if (status.equals("全部")) {
                 return WorkOrderDaoOpe.queryBuilder().orderBy("WONUM", false).where().eq("WORKTYPE", type)
-                        .and().eq("WONUM", search).or().eq("DESCRIPTION", search).query();
+                        .and().like("WONUM", "%" + search + "%").or().like("DESCRIPTION", "%" + search + "%").query();
             } else {
                 return WorkOrderDaoOpe.queryBuilder().orderBy("WONUM", false).where().eq("WORKTYPE", type).and().eq("UDSTATUS", status)
                         .and().like("WONUM", "%" + search + "%").or().like("DESCRIPTION", "%" + search + "%").query();

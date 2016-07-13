@@ -18,6 +18,7 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.WpmaterialDao;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
@@ -198,6 +199,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
                                 wpmaterialList.add(wpmaterials.get(i));
                             }
                         }
+                        new WpmaterialDao(Work_WpmaterialActivity.this).create(wpmaterials);
                         nodatalayout.setVisibility(View.GONE);
 
                         initAdapter(wpmaterialList);

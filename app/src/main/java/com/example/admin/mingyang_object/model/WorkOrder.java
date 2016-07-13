@@ -21,6 +21,8 @@ public class WorkOrder implements Serializable {
 
     @DatabaseField(generatedId = true)
     public int id;
+    @DatabaseField(columnName = "WORKORDERID")
+    public int WORKORDERID;//工单服务器id
     @DatabaseField(columnName = "WONUM")
     public String WONUM;//工单号
     @DatabaseField(columnName = "DESCRIPTION")
@@ -140,6 +142,14 @@ public class WorkOrder implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getWORKORDERID() {
+        return WORKORDERID;
+    }
+
+    public void setWORKORDERID(int WORKORDERID) {
+        this.WORKORDERID = WORKORDERID;
     }
 
     public String getPROBLEMCODE() {

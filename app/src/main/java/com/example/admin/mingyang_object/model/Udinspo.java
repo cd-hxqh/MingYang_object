@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Udinspo extends Entity implements Serializable {
 
     @DatabaseField(generatedId = true)
-    private int id;
+    public int id;
     @DatabaseField(columnName = "UDINSPOID")
     private String UDINSPOID; //主键ID
     @DatabaseField(columnName = "ALLTIME")
@@ -90,7 +90,7 @@ public class Udinspo extends Entity implements Serializable {
     @DatabaseField(columnName = "isUpdate")
     public boolean isUpdate;//是否是本地已修改巡检单
     @DatabaseField(columnName = "belong")
-    public boolean belong;//工单所属用户
+    public String  belong;//工单所属用户
 
 
     public String getUDINSPOID() {

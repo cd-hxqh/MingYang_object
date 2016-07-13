@@ -52,6 +52,8 @@ import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -115,8 +117,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView actstart;//实际开始时间
     private TextView actfinish;//实际结束时间
     private CheckBox isstoped;//是否停机
-    private TextView pmchgevalstart;//故障开始时间
-    private TextView pmchgevalend;//故障恢复时间
+    private TextView udstoptime;//故障开始时间
+    private TextView udrestarttime;//故障恢复时间
     private TextView udjgresult;//累计时间
     private EditText udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
@@ -243,8 +245,8 @@ public class Work_AddNewActivity extends BaseActivity {
         actstart = (TextView) findViewById(R.id.work_actstart);
         actfinish = (TextView) findViewById(R.id.work_actfinish);
         isstoped = (CheckBox) findViewById(R.id.work_isstoped);
-        pmchgevalstart = (TextView) findViewById(R.id.work_pmchgevalstart);
-        pmchgevalend = (TextView) findViewById(R.id.work_pmchgevalend);
+        udstoptime = (TextView) findViewById(R.id.work_pmchgevalstart);
+        udrestarttime = (TextView) findViewById(R.id.work_pmchgevalend);
         udjgresult = (TextView) findViewById(R.id.work_udjgresult);
         udprobdesc = (EditText) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
@@ -363,8 +365,8 @@ public class Work_AddNewActivity extends BaseActivity {
         schedfinish.setOnClickListener(new DateTimeOnClickListener(schedfinish));
         actstart.setOnClickListener(new DateTimeOnClickListener(actstart));
         actfinish.setOnClickListener(new DateTimeOnClickListener(actfinish));
-        pmchgevalstart.setOnClickListener(new DateTimeOnClickListener(pmchgevalstart));
-        pmchgevalend.setOnClickListener(new DateTimeOnClickListener(pmchgevalend));
+        udstoptime.setOnClickListener(new DateTimeOnClickListener(udstoptime));
+        udrestarttime.setOnClickListener(new DateTimeOnClickListener(udrestarttime));
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
 //        work_flow.setOnClickListener(approvalBtnOnClickListener);
@@ -454,6 +456,34 @@ public class Work_AddNewActivity extends BaseActivity {
         public void onClick(View view) {
             new DateTimeSelect(Work_AddNewActivity.this, textView).showDialog();
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus&&!udstoptime.getText().toString().equals("")&&!udrestarttime.getText().toString().equals("")
+                &&udjgresult.getText().toString().equals("")){
+            udjgresult.setText(getTime(udstoptime.getText().toString(),udrestarttime.getText().toString()));
+        }
+    }
+
+    //计算时间差
+    private String getTime(String time1,String time2){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date now = null;
+        java.util.Date date = null;
+        try {
+            now = df.parse(time1);
+            date=df.parse(time2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long l=date.getTime()-now.getTime();
+        long day=l/(24*60*60*1000);//天
+        long hour=(l/(60*60*1000)-day*24);//小时
+        long min=((l/(60*1000))-day*24*60-hour*60);//分
+        long s=(l/1000-day*24*60*60-hour*60*60-min*60);//秒
+        return "累积停机"+day+"天"+hour+"小时"+min+"分"+s+"秒";
     }
 
     //按照工单类型修改布局
@@ -1147,8 +1177,8 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.ACTSTART = actstart.getText().toString();
         workOrder.ACTFINISH = actfinish.getText().toString();
         workOrder.ISSTOPED = isstoped.isChecked() ? 1 : 0;
-        workOrder.UDSTOPTIME = pmchgevalstart.getText().toString();
-        workOrder.UDRESTARTTIME = pmchgevalend.getText().toString();
+        workOrder.UDSTOPTIME = udstoptime.getText().toString();
+        workOrder.UDRESTARTTIME = udrestarttime.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             workOrder.UDRPRRSB = udrprrsb.getText().toString();
             workOrder.UDJGRESULT = udjgresult.getText().toString();

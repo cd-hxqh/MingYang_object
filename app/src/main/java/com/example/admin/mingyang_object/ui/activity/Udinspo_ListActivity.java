@@ -141,7 +141,7 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
 
 
     private void getData(String search,String status, final int page) {
-        if (!AccountUtils.getIsOffLine(Udinspo_ListActivity.this)) {
+        if (!AccountUtils.getIsOffLine(Udinspo_ListActivity.this)&&!status.equals("本地记录")) {
             HttpManager.getDataPagingInfo(this, HttpManager.getudinspourl(search, status, page, 20), new HttpRequestHandler<Results>() {
                 @Override
                 public void onSuccess(Results results) {
@@ -180,12 +180,25 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             });
-        }else {
+        }else if (AccountUtils.getIsOffLine(Udinspo_ListActivity.this)&&!status.equals("本地记录")){//本地保存记录
             refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
             if (search.equals("")) {
                 items = (ArrayList<Udinspo>) new UdinspoDao(Udinspo_ListActivity.this).queryForAllByNum(status);
+            }else {
+                items = (ArrayList<Udinspo>) new UdinspoDao(Udinspo_ListActivity.this).queryForAllByNum(search,status);
             }
             initAdapter(items);
+            if (udinspoAdapter.getItemCount()==0){
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        }else if (status.equals("本地记录")){//本地修改保存的记录
+            refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
+            items = (ArrayList<Udinspo>) new UdinspoDao(Udinspo_ListActivity.this).
+                    queryForLoc(search, AccountUtils.getpersonId(Udinspo_ListActivity.this));
+            initAdapter(new UdinspoDao(Udinspo_ListActivity.this).
+                    queryForLoc(search, AccountUtils.getpersonId(Udinspo_ListActivity.this)));
             if (udinspoAdapter.getItemCount()==0){
                 nodatalayout.setVisibility(View.VISIBLE);
             }

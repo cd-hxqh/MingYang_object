@@ -42,8 +42,10 @@ public class WpmaterialDao {
             WpmaterialDaoOpe.callBatchTasks(new Callable<Void>() {
                 @Override
                 public Void call() throws Exception {
-                    for (Wpmaterial woactivity : list) {
-                        WpmaterialDaoOpe.createOrUpdate(woactivity);
+                    for (Wpmaterial wpmaterial : list) {
+                        if (!isexit(wpmaterial)) {
+                            WpmaterialDaoOpe.createOrUpdate(wpmaterial);
+                        }
                     }
                     return null;
                 }
@@ -143,18 +145,17 @@ public class WpmaterialDao {
     }
 
 
-//    public boolean isexit(Wpmaterial wplabor){
-//        try {
-//            List<Wpmaterial>workOrderList = WpmaterialDaoOpe.queryBuilder().where().eq("wonum",wplabor.wonum)
-//                    .and().eq("laborcode",wplabor.laborcode).query();
-//            if(workOrderList.size()>0){
-//                return true;
-//            }else {
-//                return false;
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
+    public boolean isexit(Wpmaterial wplabor){
+        try {
+            List<Wpmaterial>workOrderList = WpmaterialDaoOpe.queryBuilder().where().eq("WPITEMID",wplabor.WPITEMID).query();
+            if(workOrderList.size()>0){
+                return true;
+            }else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

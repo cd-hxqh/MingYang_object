@@ -189,6 +189,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             });
         }else if (AccountUtils.getIsOffLine(Work_ListActivity.this)&&!status.equals("本地记录")){//本地保存记录
             refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
             workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
             recyclerView.setAdapter(workListAdapter);
             if (search.equals("")) {
@@ -201,6 +202,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             }
         }else if (status.equals("本地记录")){//本地修改保存的记录
             refresh_layout.setRefreshing(false);
+            refresh_layout.setLoading(false);
             workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
             recyclerView.setAdapter(workListAdapter);
             workListAdapter.adddate((ArrayList<WorkOrder>) new WorkOrderDao(Work_ListActivity.this).

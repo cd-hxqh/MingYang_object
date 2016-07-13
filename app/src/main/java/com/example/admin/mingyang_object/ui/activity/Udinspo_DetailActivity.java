@@ -19,13 +19,18 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.UdinspoDao;
+import com.example.admin.mingyang_object.dao.UdinsprojectDao;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.MessageUtils;
+import com.example.admin.mingyang_object.utils.NetWorkHelper;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
@@ -252,6 +257,10 @@ public class Udinspo_DetailActivity extends BaseActivity {
             buttonlayout.setVisibility(View.GONE);
         }
 
+        if(udinspo.id!=0){
+            getLocationData(udinspo.id);
+        }
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -449,10 +458,11 @@ public class Udinspo_DetailActivity extends BaseActivity {
      * 提交数据*
      */
     private void startAsyncTask() {
-//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-//            saveWorkOrder();
-//        } else {
+        if (NetWorkHelper.isNetwork(Udinspo_DetailActivity.this)) {
+            MessageUtils.showMiddleToast(Udinspo_DetailActivity.this, "暂无网络,现离线保存数据!");
+            saveWorkOrder();
+            closeProgressDialog();
+        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
         updataInfo = JsonUtils.UdinspoToJson(getUdinspo(), getUdinsprojectList());
@@ -481,8 +491,34 @@ public class Udinspo_DetailActivity extends BaseActivity {
                 closeProgressDialog();
             }
         }.execute();
-////        }
+        }
+    }
 
+    private void saveWorkOrder() {
+        Udinspo udinspo = getUdinspo();
+        udinspo.belong = AccountUtils.getpersonId(Udinspo_DetailActivity.this);
+//        workOrder.ishistory = true;
+        new UdinspoDao(Udinspo_DetailActivity.this).update(udinspo);
+        int id = udinspo.id;
+        if (id != 0) {
+            if (udinsprojectList.size() != 0) {
+                for (Udinsproject udinsproject : udinsprojectList) {
+                    udinsproject.belongid = id;
+                }
+                if (new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()).size()>0){//删除默认保存的记录，防止重复
+                    new UdinsprojectDao(Udinspo_DetailActivity.this).deleteList(new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()));
+                }
+                new UdinsprojectDao(Udinspo_DetailActivity.this).create(udinsprojectList);
+            }
+        }
+    }
+
+    //如果为历史数据，则获取本地子表信息
+    private void getLocationData(int  id){
+        udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryById(id);
+        if(udinsprojectList ==null ||udinsprojectList.size()==0){//如果没有修过记录，则查找默认保存记录
+            udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM());
+        }
     }
 
     @Override

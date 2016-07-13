@@ -90,7 +90,49 @@ public class UdinspoDao {
      */
     public List<Udinspo> queryForAllByNum(String status){
         try {
-            return DaoOpe.queryBuilder().orderBy("INSPONUM",false).where().eq("STATUS",status).query();
+            if (status.equals("全部")) {
+                return DaoOpe.queryBuilder().orderBy("INSPONUM", false).query();
+            }else {
+                return DaoOpe.queryBuilder().orderBy("INSPONUM", false).where().eq("STATUS", status).query();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 按状态查询巡检单
+     * @return
+     */
+    public List<Udinspo> queryForAllByNum(String search,String status){
+        try {
+            if (status.equals("全部")) {
+                return DaoOpe.queryBuilder().orderBy("INSPONUM", false)
+                        .where().like("INSPONUM", "%" + search + "%").or().like("DESCRIPTION", "%" + search + "%").query();
+            }else {
+                return DaoOpe.queryBuilder().orderBy("INSPONUM", false).where().eq("STATUS", status)
+                        .and().like("INSPONUM", "%" + search + "%").or().like("DESCRIPTION", "%" + search + "%").query();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 查询本地修改过的工单
+     *
+     * @return
+     */
+    public List<Udinspo> queryForLoc(String search,String userid) {
+        try {
+            if (search.equals("")) {
+                return DaoOpe.queryBuilder().orderBy("INSPONUM", false).where().eq("belong",userid).query();
+            } else {
+                return DaoOpe.queryBuilder().orderBy("INSPONUM", false).where().eq("belong",userid)
+                        .and().like("INSPONUM", "%" + search + "%").or().like("DESCRIPTION", "%" + search + "%").query();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -166,7 +208,7 @@ public class UdinspoDao {
     }
 
     /**
-     * 按照巡检单单号查询本地是否存在此工单
+     * 按照巡检单单号查询本地是否存在此巡检单单
      * @param num
      * @return
      */
