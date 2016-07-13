@@ -261,11 +261,13 @@ public class Udinspo_DetailActivity extends BaseActivity {
             stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
             oktimeText.setOnClickListener(new DateAndTimeChecked(oktimeText));
             isstopCheckBox.setOnCheckedChangeListener(isstopCheckBoxOnCheckedChangeListener);
+            setIsEnabled(true);
         } else {
+            weatherText.setEnabled(false);
             buttonlayout.setVisibility(View.GONE);
         }
 
-        if(udinspo.id!=0){
+        if (udinspo.id != 0) {
             getLocationData(udinspo.id);
         }
 
@@ -281,6 +283,18 @@ public class Udinspo_DetailActivity extends BaseActivity {
                 submitDataInfo();
             }
         });
+    }
+
+
+    /**
+     * 判断数据是否能修改*
+     */
+    private void setIsEnabled(boolean isEnabled) {
+        weatherText.setEnabled(isEnabled);
+        inspodateText.setEnabled(isEnabled);
+        stoptimeText.setEnabled(isEnabled);
+        oktimeText.setEnabled(isEnabled);
+        isstopCheckBox.setEnabled(isEnabled);
     }
 
 
@@ -486,34 +500,34 @@ public class Udinspo_DetailActivity extends BaseActivity {
             saveWorkOrder();
             closeProgressDialog();
         } else {
-        String updataInfo = null;
+            String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.UdinspoToJson(getUdinspo(), getUdinsprojectList());
+            updataInfo = JsonUtils.UdinspoToJson(getUdinspo(), getUdinsprojectList());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
-        final String finalUpdataInfo = updataInfo;
-        new AsyncTask<String, String, WebResult>() {
-            @Override
-            protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this, finalUpdataInfo,
-                        "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
-                return reviseresult;
-            }
-
-            @Override
-            protected void onPostExecute(WebResult workResult) {
-                super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
-                    Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单失败", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Udinspo_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+            final String finalUpdataInfo = updataInfo;
+            new AsyncTask<String, String, WebResult>() {
+                @Override
+                protected WebResult doInBackground(String... strings) {
+                    WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this, finalUpdataInfo,
+                            "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
+                    return reviseresult;
                 }
-                closeProgressDialog();
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(WebResult workResult) {
+                    super.onPostExecute(workResult);
+                    if (workResult.errorMsg == null) {
+                        Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单失败", Toast.LENGTH_SHORT).show();
+                    } else if (workResult.errorMsg.equals("成功")) {
+                        Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Udinspo_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                    }
+                    closeProgressDialog();
+                }
+            }.execute();
         }
     }
 
@@ -528,7 +542,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
                 for (Udinsproject udinsproject : udinsprojectList) {
                     udinsproject.belongid = id;
                 }
-                if (new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()).size()>0){//删除默认保存的记录，防止重复
+                if (new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()).size() > 0) {//删除默认保存的记录，防止重复
                     new UdinsprojectDao(Udinspo_DetailActivity.this).deleteList(new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()));
                 }
                 new UdinsprojectDao(Udinspo_DetailActivity.this).create(udinsprojectList);
@@ -537,9 +551,9 @@ public class Udinspo_DetailActivity extends BaseActivity {
     }
 
     //如果为历史数据，则获取本地子表信息
-    private void getLocationData(int  id){
+    private void getLocationData(int id) {
         udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryById(id);
-        if(udinsprojectList ==null ||udinsprojectList.size()==0){//如果没有修过记录，则查找默认保存记录
+        if (udinsprojectList == null || udinsprojectList.size() == 0) {//如果没有修过记录，则查找默认保存记录
             udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM());
         }
     }
