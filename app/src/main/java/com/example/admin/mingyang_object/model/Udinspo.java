@@ -14,6 +14,8 @@ public class Udinspo extends Entity implements Serializable {
 
     @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField(columnName = "UDINSPOID")
+    private String UDINSPOID; //主键ID
     @DatabaseField(columnName = "ALLTIME")
     private String ALLTIME; //累计停机时间
     @DatabaseField(columnName = "BRANCH")
@@ -89,6 +91,15 @@ public class Udinspo extends Entity implements Serializable {
     public boolean isUpdate;//是否是本地已修改巡检单
     @DatabaseField(columnName = "belong")
     public boolean belong;//工单所属用户
+
+
+    public String getUDINSPOID() {
+        return UDINSPOID;
+    }
+
+    public void setUDINSPOID(String UDINSPOID) {
+        this.UDINSPOID = UDINSPOID;
+    }
 
     public int getId() {
         return id;

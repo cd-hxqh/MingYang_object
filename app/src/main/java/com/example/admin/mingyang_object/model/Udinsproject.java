@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 巡检单
  */
 public class Udinsproject extends Entity implements Serializable {
-    public String UDINSPROJECTID;//
+    public String UDINSPROJECTID;//主键ID
     public String JPTASK; //任务编号
     public String DESCRIPTION; //描述
     public String JO1; //系统/项目

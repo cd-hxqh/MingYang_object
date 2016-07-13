@@ -132,6 +132,10 @@ public class Udinspo_DetailActivity extends BaseActivity {
      * 巡检项目*
      */
     private LinearLayout udinsprojectLinear;
+    /**
+     * 图片上传*
+     */
+    private LinearLayout uploadLinearLayout;
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -244,7 +248,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
             inspodateText.setOnClickListener(new DateChecked(inspodateText));
             stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
             oktimeText.setOnClickListener(new DateAndTimeChecked(oktimeText));
-        }else {
+        } else {
             buttonlayout.setVisibility(View.GONE);
         }
 
@@ -300,8 +304,10 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         popupWindow.showAsDropDown(view);
         udinsprojectLinear = (LinearLayout) contentView.findViewById(R.id.udinproject_id);
+        uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.upload_data_id);
 
         udinsprojectLinear.setOnClickListener(udinsprojectLinearOnClickListener);
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
 
     }
 
@@ -315,6 +321,18 @@ public class Udinspo_DetailActivity extends BaseActivity {
             bundle.putSerializable("udinsprojectList", udinsprojectList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 1000);
+            popupWindow.dismiss();
+
+        }
+    };
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udinspo_DetailActivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDINSPO");
+            intent.putExtra("ownerid", udinspo.getUDINSPOID());
+            startActivityForResult(intent, 0);
             popupWindow.dismiss();
 
         }
@@ -382,7 +400,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
         }
     }
 
-    private Udinspo getUdinspo(){
+    private Udinspo getUdinspo() {
         Udinspo udinspo = this.udinspo;
         udinspo.setWEATHER(weatherText.getText().toString());
         udinspo.setINSPODATE(inspodateText.getText().toString());
@@ -445,7 +463,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this,finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this, finalUpdataInfo,
                         "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
                 return reviseresult;
             }
