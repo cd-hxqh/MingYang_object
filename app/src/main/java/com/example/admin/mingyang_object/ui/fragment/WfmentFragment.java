@@ -202,41 +202,46 @@ public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.O
      * 获取数据*
      */
     private void getData(String search) {
-        HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwfassignmentUrl(AccountUtils.getpersonId(getActivity()), search, page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
-
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-                ArrayList<Wfassignment> item = JsonUtils.parsingWfassignment(getActivity(), results.getResultlist());
-                refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
-                if (item == null || item.isEmpty()) {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                } else {
-
-                    if (item != null || item.size() != 0) {
-                        if (page == 1){
-                            initAdapter(new ArrayList<Wfassignment>());
-                        }
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
-                        }
-                    }
-                    nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(items);
+        if (!AccountUtils.getIsOffLine(getActivity())) {
+            HttpManager.getDataPagingInfo(getActivity(), HttpManager.getwfassignmentUrl(AccountUtils.getpersonId(getActivity()), search, page, 20), new HttpRequestHandler<Results>() {
+                @Override
+                public void onSuccess(Results results) {
+                    Log.i(TAG, "data=" + results);
                 }
-            }
 
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
+                @Override
+                public void onSuccess(Results results, int totalPages, int currentPage) {
+                    ArrayList<Wfassignment> item = JsonUtils.parsingWfassignment(getActivity(), results.getResultlist());
+                    refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
+                    if (item == null || item.isEmpty()) {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    } else {
+
+                        if (item != null || item.size() != 0) {
+                            if (page == 1) {
+                                initAdapter(new ArrayList<Wfassignment>());
+                            }
+                            for (int i = 0; i < item.size(); i++) {
+                                items.add(item.get(i));
+                            }
+                        }
+                        nodatalayout.setVisibility(View.GONE);
+
+                        initAdapter(items);
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    refresh_layout.setRefreshing(false);
+                    nodatalayout.setVisibility(View.VISIBLE);
+                }
+            });
+        }else {
+            refresh_layout.setRefreshing(false);
+            nodatalayout.setVisibility(View.VISIBLE);
+        }
     }
 
 

@@ -3,6 +3,9 @@ package com.example.admin.mingyang_object.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,65 +14,143 @@ import java.io.Serializable;
 /**
  * Created by think on 2015/10/28.
  */
+@DatabaseTable(tableName = "WorkOrder")
 public class WorkOrder implements Serializable {
 //    private static final String TAG = "WorkOrder";
 //    private static final long serialVersionUID = 2015050105L;
 
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(columnName = "WORKORDERID")
+    public int WORKORDERID;//工单服务器id
+    @DatabaseField(columnName = "WONUM")
     public String WONUM;//工单号
+    @DatabaseField(columnName = "DESCRIPTION")
     public String DESCRIPTION;//描述
+    @DatabaseField(columnName = "BRANCH")
     public String BRANCH;//中心
+    @DatabaseField(columnName = "UDPROJECTNUM")
     public String UDPROJECTNUM;//项目
+    @DatabaseField(columnName = "UDLOCNUM")
     public String UDLOCNUM;//机位号
+    @DatabaseField(columnName = "UDLOCATION")
     public String UDLOCATION;//位置
+    @DatabaseField(columnName = "LEAD")
     public String LEAD;//运行组/维护组工程师
+    @DatabaseField(columnName = "FAILURECODE")
     public String FAILURECODE;//故障类
+    @DatabaseField(columnName = "PROBLEMCODE")
     public String PROBLEMCODE;//问题原因
+    @DatabaseField(columnName = "CULEVEL")
     public String CULEVEL;//故障等级
+    @DatabaseField(columnName = "UDZGLIMIT")
     public String UDZGLIMIT;//提报时间
+    @DatabaseField(columnName = "UDPLANNUM")
     public String UDPLANNUM;//终验收计划号
+    @DatabaseField(columnName = "SCHEDSTART")
     public String SCHEDSTART;//故障开始时间
+    @DatabaseField(columnName = "SCHEDFINISH")
     public String SCHEDFINISH;//故障结束时间
+    @DatabaseField(columnName = "ACTSTART")
     public String ACTSTART;//实际开始时间
+    @DatabaseField(columnName = "ACTFINISH")
     public String ACTFINISH;//实际结束时间
+    @DatabaseField(columnName = "ISSTOPED")
     public int ISSTOPED;//是否停机
-    public String PMCHGEVALSTART;//故障开始时间
-    public String PMCHGEVALEND;//故障恢复时间
+    @DatabaseField(columnName = "UDSTOPTIME")
+    public String UDSTOPTIME;//故障开始时间
+    @DatabaseField(columnName = "UDRESTARTTIME")
+    public String UDRESTARTTIME;//故障恢复时间
 //    public String UDJGRESULT;//累计时间
+    @DatabaseField(columnName = "UDPROBDESC")
     public String UDPROBDESC;//故障隐患描述
+    @DatabaseField(columnName = "WORKTYPE")
     public String WORKTYPE;//工单类型
+    @DatabaseField(columnName = "STATUS")
     public String STATUS;//状态
+    @DatabaseField(columnName = "UDSTATUS")
     public String UDSTATUS;//状态
+    @DatabaseField(columnName = "CREATEDATE")
     public String CREATEDATE;//创建时间
+    @DatabaseField(columnName = "CREATEBY")
     public String CREATEBY;//创建人
+    @DatabaseField(columnName = "UDJPNUM")
     public String UDJPNUM;//定检标准编号/排查标准/技改标准
+    @DatabaseField(columnName = "UDPLSTARTDATE")
     public String UDPLSTARTDATE;//计划开始时间
+    @DatabaseField(columnName = "UDPLSTOPDATE")
     public String UDPLSTOPDATE;//计划完成时间
+    @DatabaseField(columnName = "UDRLSTARTDATE")
     public String UDRLSTARTDATE;//实际开始时间
+    @DatabaseField(columnName = "UDRLSTOPDATE")
     public String UDRLSTOPDATE;//实际完成时间
+    @DatabaseField(columnName = "UDINSPOBY")
     public String UDINSPOBY;//定检人员1
+    @DatabaseField(columnName = "UDINSPOBY2")
     public String UDINSPOBY2;//定检人员2
+    @DatabaseField(columnName = "UDINSPOBY3")
     public String UDINSPOBY3;//定检人员3
+    @DatabaseField(columnName = "DJPLANNUM")
     public String DJPLANNUM;//定检计划编号
+    @DatabaseField(columnName = "DJTYPE")
     public String DJTYPE;//定检类型
+    @DatabaseField(columnName = "WTCODE")
     public String WTCODE;//风机型号
+    @DatabaseField(columnName = "ASSETTYPE")
     public String ASSETTYPE;//设备类别
+    @DatabaseField(columnName = "PERINSPR")
     public int PERINSPR;//定检结果（Y\N）
+    @DatabaseField(columnName = "UDREMARK")
     public String UDREMARK;//备注
+    @DatabaseField(columnName = "ISBIGPAR")
     public int ISBIGPAR;//大部件发放（Y/N）
+    @DatabaseField(columnName = "UDZGMEASURE")
     public String UDZGMEASURE;//故障处理方案
+    @DatabaseField(columnName = "PLANNUM")
     public String PLANNUM;//排查计划编号
+    @DatabaseField(columnName = "PCCOMPNUM")
     public String PCCOMPNUM;//排查完成台数/计划定检风机台数
+    @DatabaseField(columnName = "PCTYPE")
     public String PCTYPE;//排查类型
+    @DatabaseField(columnName = "UDFJFOL")
     public String UDFJFOL;//风机跟踪
+    @DatabaseField(columnName = "PCRESON")
     public String PCRESON;//排查原因/技改原因
+    @DatabaseField(columnName = "UDJGRESULT")
     public String UDJGRESULT;//排查结果/累计时间
+    @DatabaseField(columnName = "JGPLANNUM")
     public String JGPLANNUM;//技改计划编号
+    @DatabaseField(columnName = "UDJGTYPE")
     public String UDJGTYPE;//技改类型
+    @DatabaseField(columnName = "UDFJAPPNUM")
     public String UDFJAPPNUM;//主控程序版本号
+    @DatabaseField(columnName = "UDRPRRSB")
     public String UDRPRRSB;//负责人/提报人
+    @DatabaseField(columnName = "UDREPORTNUM")
     public String UDREPORTNUM;//故障提报单号
 
+    @DatabaseField(columnName = "isnew")
     public boolean isnew;//是否是新增工单
+    @DatabaseField(columnName = "isUpdate")
+    public boolean isUpdate;//是否是本地已修改工单
+    @DatabaseField(columnName = "belong")
+    public String  belong;//工单所属用户
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getWORKORDERID() {
+        return WORKORDERID;
+    }
+
+    public void setWORKORDERID(int WORKORDERID) {
+        this.WORKORDERID = WORKORDERID;
+    }
 
     public String getPROBLEMCODE() {
         return PROBLEMCODE;
@@ -207,20 +288,20 @@ public class WorkOrder implements Serializable {
         this.ISSTOPED = ISSTOPED;
     }
 
-    public String getPMCHGEVALSTART() {
-        return PMCHGEVALSTART;
+    public String getUDSTOPTIME() {
+        return UDSTOPTIME;
     }
 
-    public void setPMCHGEVALSTART(String PMCHGEVALSTART) {
-        this.PMCHGEVALSTART = PMCHGEVALSTART;
+    public void setUDSTOPTIME(String UDSTOPTIME) {
+        this.UDSTOPTIME = UDSTOPTIME;
     }
 
-    public String getPMCHGEVALEND() {
-        return PMCHGEVALEND;
+    public String getUDRESTARTTIME() {
+        return UDRESTARTTIME;
     }
 
-    public void setPMCHGEVALEND(String PMCHGEVALEND) {
-        this.PMCHGEVALEND = PMCHGEVALEND;
+    public void setUDRESTARTTIME(String UDRESTARTTIME) {
+        this.UDRESTARTTIME = UDRESTARTTIME;
     }
 
     public String getUDPROBDESC() {
@@ -493,6 +574,22 @@ public class WorkOrder implements Serializable {
 
     public void setisnew(boolean isnew) {
         this.isnew = isnew;
+    }
+
+    public boolean isUpdate() {
+        return isUpdate;
+    }
+
+    public void setisUpdate(boolean isUpdate) {
+        this.isUpdate = isUpdate;
+    }
+
+    public String getbelong() {
+        return belong;
+    }
+
+    public void setbelong(String belong) {
+        this.belong = belong;
     }
 
 //    @Override

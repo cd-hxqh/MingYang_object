@@ -20,6 +20,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udpro;
+import com.example.admin.mingyang_object.utils.MessageUtils;
 
 
 /**
@@ -75,6 +76,14 @@ public class Udinsproject_DetailActivity extends BaseActivity {
     private int position;
 
 
+    private PopupWindow popupWindow;
+
+    /**
+     * 附件上传*
+     */
+    private LinearLayout uploadLinearLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,13 +96,14 @@ public class Udinsproject_DetailActivity extends BaseActivity {
     private void geiIntentData() {
         udinsproject = (Udinsproject) getIntent().getSerializableExtra("udinsproject");
         udinspo = (Udinspo) getIntent().getSerializableExtra("udinspo");
-        position = getIntent().getIntExtra("position",0);
+        position = getIntent().getIntExtra("position", 0);
     }
 
     @Override
     protected void findViewById() {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
+        menuImageView = (ImageView) findViewById(R.id.title_add);
 
 
         jptaskText = (TextView) findViewById(R.id.jptask_text_id);
@@ -132,6 +142,9 @@ public class Udinsproject_DetailActivity extends BaseActivity {
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.udinsproject_details_text));
+        menuImageView.setVisibility(View.VISIBLE);
+        menuImageView.setImageResource(R.mipmap.ic_more);
+        menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
 //        if (udinspo.getSTATUS().equals("待执行")){
 //            inspunitText.setFocusable(true);
@@ -152,13 +165,21 @@ public class Udinsproject_DetailActivity extends BaseActivity {
         okCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                inspcontentLayout.setVisibility(isChecked?View.GONE:View.VISIBLE);
-                inspcontentText.setText(isChecked?"":inspcontentText.getText().toString());
+                inspcontentLayout.setVisibility(isChecked ? View.GONE : View.VISIBLE);
+                inspcontentText.setText(isChecked ? "" : inspcontentText.getText().toString());
             }
         });
         cancel.setOnClickListener(backImageViewOnClickListener);
         confirm.setOnClickListener(confirmOnClickListener);
     }
+
+    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(menuImageView);
+        }
+    };
+
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -167,7 +188,7 @@ public class Udinsproject_DetailActivity extends BaseActivity {
         }
     };
 
-    private Udinsproject getUdinsproject(){
+    private Udinsproject getUdinsproject() {
         Udinsproject udinsproject = this.udinsproject;
         udinsproject.setINSPUNIT(inspunitText.getText().toString());
         udinsproject.setOK(okCheckBox.isChecked() ? "Y" : "N");
@@ -179,21 +200,67 @@ public class Udinsproject_DetailActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if(udinsproject.INSPUNIT.equals(inspunitText.getText().toString())
-                    &&udinsproject.OK.equals(okCheckBox.isChecked()?"Y":"N")
-                    &&udinsproject.INSPCONTENT.equals(inspcontentText.getText().toString())) {//如果内容没有修改
-                intent.putExtra("udinsproject",udinsproject);
-            }else {
+            if (udinsproject.INSPUNIT.equals(inspunitText.getText().toString())
+                    && udinsproject.OK.equals(okCheckBox.isChecked() ? "Y" : "N")
+                    && udinsproject.INSPCONTENT.equals(inspcontentText.getText().toString())) {//如果内容没有修改
+                intent.putExtra("udinsproject", udinsproject);
+            } else {
                 Udinsproject udinsproject = getUdinsproject();
-                if(udinsproject.TYPE==null||!udinsproject.TYPE.equals("add")) {
+                if (udinsproject.TYPE == null || !udinsproject.TYPE.equals("add")) {
                     udinsproject.TYPE = "update";
                 }
                 intent.putExtra("udinsproject", udinsproject);
-                Toast.makeText(Udinsproject_DetailActivity.this, "巡检项目本地修改成功", Toast.LENGTH_SHORT).show();
+                MessageUtils.showMiddleToast(Udinsproject_DetailActivity.this, "巡检项目本地修改成功");
             }
             intent.putExtra("position", position);
             Udinsproject_DetailActivity.this.setResult(2, intent);
             finish();
         }
     };
+
+
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(Udinsproject_DetailActivity.this).inflate(
+                R.layout.upload_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        popupWindow.showAsDropDown(view);
+        uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.upload_file_id);
+
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
+
+    }
+
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udinsproject_DetailActivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDINSPROJECTID");
+            intent.putExtra("ownerid", udinsproject.getUDINSPROJECTID());
+            startActivityForResult(intent, 0);
+            popupWindow.dismiss();
+
+        }
+    };
+
+
 }

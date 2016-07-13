@@ -1,52 +1,97 @@
 package com.example.admin.mingyang_object.model;
 
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
 /**
  * Created by think on 2016/6/21.
  * 工单任务
  */
+@DatabaseTable(tableName = "Woactivity")
 public class Woactivity extends Entity implements Serializable {
 
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(columnName = "WORKORDERID")
     public int WORKORDERID;
+    @DatabaseField(columnName = "TASKID")
     public String TASKID;//任务
+    @DatabaseField(columnName = "DESCRIPTION")
     public String DESCRIPTION;//描述
+    @DatabaseField(columnName = "WOJO1")
     public String WOJO1;//系统/项目
+    @DatabaseField(columnName = "WOJO2")
     public String WOJO2;//子系统/子项目
+    @DatabaseField(columnName = "WOJO3")
     public String WOJO3;//检查/检修方法
+    @DatabaseField(columnName = "WOJO4")
     public String WOJO4;//kks编码
 //    public String INVCONTENT;//技改完成情况
+    @DatabaseField(columnName = "UDSAFTYDESC")
     public String UDSAFTYDESC;//安全缺失(隐患)描述
+    @DatabaseField(columnName = "UDZGSTU")
     public String UDZGSTU;//整改情况回复/检修情况
+    @DatabaseField(columnName = "UDINSUNIT")
     public String UDINSUNIT;//排查部位
+    @DatabaseField(columnName = "UDRPRRSB")
     public String UDRPRRSB;//整改责任人
+    @DatabaseField(columnName = "ALLPOWER")
     public String ALLPOWER;//人员数量
+    @DatabaseField(columnName = "ALLOPTIME")
     public String ALLOPTIME;//耗时(小时)
+    @DatabaseField(columnName = "INVCONTENT")
     public String INVCONTENT;//定检规格/技改完成情况
+    @DatabaseField(columnName = "UDRLSTOPDATE")
     public String UDRLSTOPDATE;//完成时间
+    @DatabaseField(columnName = "SCHEDSTART")
     public String SCHEDSTART;//计划开始时间
+    @DatabaseField(columnName = "SCHEDFINISH")
     public String SCHEDFINISH;//计划完成时间
-    public String ESTDUR;//估计持续时间
+    @DatabaseField(columnName = "ESTDUR")
+    public int ESTDUR;//估计持续时间
+    @DatabaseField(columnName = "OWNER")
     public String OWNER;//负责人
+    @DatabaseField(columnName = "ACTSTART")
     public String ACTSTART;//实际开始时间
+    @DatabaseField(columnName = "ACTFINISH")
     public String ACTFINISH;//实际完成时间
+    @DatabaseField(columnName = "UDSTARTTIME")
     public String UDSTARTTIME;//开始时间
+    @DatabaseField(columnName = "UDENDTIME")
     public String UDENDTIME;//结束时间
+    @DatabaseField(columnName = "UDZYSCORN")
     public String UDZYSCORN;//工作任务
+    @DatabaseField(columnName = "UDZYSBASIC")
     public String UDZYSBASIC;//执行标准
-    public int PERINSPR;//验收/排查/定检结果
+    @DatabaseField(columnName = "PERINSPR")
+    public String  PERINSPR;//验收/排查/定检结果
+    @DatabaseField(columnName = "UDPROBDESC")
     public String UDPROBDESC;//问题描述
+    @DatabaseField(columnName = "UDREMARK")
     public String UDREMARK;//备注
+    @DatabaseField(columnName = "LEAD")
     public String LEAD;//整改责任人
+    @DatabaseField(columnName = "UDZGMEASURE")
     public String UDZGMEASURE;//整改方案/整改措施及建议/不合格修正措施负责人
+    @DatabaseField(columnName = "UDZGLIMIT")
     public String UDZGLIMIT;//整改期限
+    @DatabaseField(columnName = "UDZGRESULT")
     public String UDZGRESULT;//整改完成情况/整改结果验证
+    @DatabaseField(columnName = "UDACSTARTTIME")
     public String UDACSTARTTIME;//计划开始时间
+    @DatabaseField(columnName = "UDACSTOPTIME")
     public String UDACSTOPTIME;//计划完成时间
 
+    @DatabaseField(columnName = "belongid")
+    public int belongid;//所属工单本地存储id
+    @DatabaseField(columnName = "isUpload")
     public boolean isUpload;//是否是服务器数据
+    @DatabaseField(columnName = "WONUM")
     public String WONUM;
+    @DatabaseField(columnName = "TYPE")
     public String TYPE;
 
     public int getWORKORDERID() {
@@ -185,11 +230,11 @@ public class Woactivity extends Entity implements Serializable {
         this.SCHEDFINISH = SCHEDFINISH;
     }
 
-    public String getESTDUR() {
+    public int getESTDUR() {
         return ESTDUR;
     }
 
-    public void setESTDUR(String ESTDUR) {
+    public void setESTDUR(int ESTDUR) {
         this.ESTDUR = ESTDUR;
     }
 
@@ -249,11 +294,11 @@ public class Woactivity extends Entity implements Serializable {
         this.UDZYSBASIC = UDZYSBASIC;
     }
 
-    public int getPERINSPR() {
+    public String getPERINSPR() {
         return PERINSPR;
     }
 
-    public void setPERINSPR(int PERINSPR) {
+    public void setPERINSPR(String PERINSPR) {
         this.PERINSPR = PERINSPR;
     }
 

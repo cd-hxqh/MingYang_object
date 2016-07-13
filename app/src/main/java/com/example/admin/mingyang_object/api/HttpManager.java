@@ -362,11 +362,20 @@ public class HttpManager {
     /**
      * 设置巡检单的接口
      */
-    public static String getudinspourl(String value, int curpage, int showcount) {
+    public static String getudinspourl(String value,String status, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'}";
+            if (status.equals("全部")){
+                return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'}";
+            }else {
+                return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC','condition':{'STATUS':'" + status + "'}}";
+            }
+        }else {
+            if (status.equals("全部")){
+                return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'," + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+            }else {
+                return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'," + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'},'condition':{'STATUS':'" + status + "'}}";
+            }
         }
-        return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'," + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
     /**

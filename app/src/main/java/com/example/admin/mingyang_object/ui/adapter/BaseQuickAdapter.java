@@ -278,6 +278,11 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged();
     }
 
+    public void addData(ArrayList<T> data) {
+        this.mData.addAll(data);
+        notifyDataSetChanged();
+    }
+
     public void setLoadingView(View loadingView) {
         this.mLoadingView = loadingView;
     }

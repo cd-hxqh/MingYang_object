@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 public class Udpro extends Entity implements Serializable {
 
+
     private String PRONUM; //项目编号
     private String DESCRIPTION; //项目描述
     private String BRANCH; //所属中心
@@ -29,6 +30,7 @@ public class Udpro extends Entity implements Serializable {
     private String SITEID; //站点
     private String TESTPRO; //试点项目
     private String RESPONSPHONE;//电话号码
+
 
     public String getPRONUM() {
         return PRONUM;

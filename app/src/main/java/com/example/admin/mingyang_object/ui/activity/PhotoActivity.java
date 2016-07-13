@@ -169,9 +169,13 @@ public class PhotoActivity extends BaseActivity {
     private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showProgressDialog("提交数据中");
-            for (int i = 0; i < result.size(); i++) {
-                startAsyncTask(result.get(i));
+            if (result == null || result.size() == 0) {
+                MessageUtils.showMiddleToast(PhotoActivity.this, "请选择需要上传的图片");
+            } else {
+                showProgressDialog("提交数据中");
+                for (int i = 0; i < result.size(); i++) {
+                    startAsyncTask(result.get(i));
+                }
             }
         }
     };
@@ -325,6 +329,7 @@ public class PhotoActivity extends BaseActivity {
                     MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传失败");
                 } else {
                     MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传成功");
+                    finish();
                 }
                 closeProgressDialog();
             }

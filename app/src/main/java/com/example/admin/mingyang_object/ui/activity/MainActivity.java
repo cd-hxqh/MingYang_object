@@ -16,6 +16,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.ui.fragment.NavigationDrawerFragment;
 import com.example.admin.mingyang_object.ui.fragment.ProjectFragment;
+import com.example.admin.mingyang_object.ui.fragment.SettingFragment;
 import com.example.admin.mingyang_object.ui.fragment.UdstockFragment;
 import com.example.admin.mingyang_object.ui.fragment.WfmentFragment;
 import com.example.admin.mingyang_object.ui.fragment.WorkFragment;
@@ -65,6 +66,10 @@ public class MainActivity extends BaseActivity
      * 资源管理*
      */
     private ZiyuanFragment mNewZiyuanFragment;
+    /**
+     * 设置
+     */
+    private SettingFragment mSettingFragment;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -157,7 +162,6 @@ public class MainActivity extends BaseActivity
                     mNewYunweiFragment.setArguments(bundle);
                 }
                 fragmentTransaction.replace(R.id.container, mNewYunweiFragment).commit();
-
                 break;
             case 5://资源管理
                 if (mNewZiyuanFragment == null) {
@@ -166,8 +170,14 @@ public class MainActivity extends BaseActivity
                     mNewZiyuanFragment.setArguments(bundle);
                 }
                 fragmentTransaction.replace(R.id.container, mNewZiyuanFragment).commit();
-
-
+                break;
+            case 6:
+                if (mSettingFragment == null) {
+                    mSettingFragment = new SettingFragment();
+                    Bundle bundle = new Bundle();
+                    mSettingFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mSettingFragment).commit();
                 break;
         }
 

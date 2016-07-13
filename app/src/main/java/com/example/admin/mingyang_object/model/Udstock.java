@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Udstock implements Serializable {
 
 
+    private String UDSTOCKID;//主键ID
     private String STOCKNUM;//盘点单号
     private String DESCRIPTION;//描述
     private String LOCATION;//仓库编号
@@ -19,6 +20,13 @@ public class Udstock implements Serializable {
     private String CREATEDATE;//创建时间
     private String ZPDNUM;//过账时间
 
+    public String getUDSTOCKID() {
+        return UDSTOCKID;
+    }
+
+    public void setUDSTOCKID(String UDSTOCKID) {
+        this.UDSTOCKID = UDSTOCKID;
+    }
 
     public String getSTOCKNUM() {
         return STOCKNUM;

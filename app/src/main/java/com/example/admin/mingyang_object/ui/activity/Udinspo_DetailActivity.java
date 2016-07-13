@@ -10,22 +10,29 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.UdinspoDao;
+import com.example.admin.mingyang_object.dao.UdinsprojectDao;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.MessageUtils;
+import com.example.admin.mingyang_object.utils.NetWorkHelper;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
@@ -129,9 +136,18 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private Button save;
 
     /**
+     * 是否停机*
+     */
+    private boolean istingji = false;
+
+    /**
      * 巡检项目*
      */
     private LinearLayout udinsprojectLinear;
+    /**
+     * 图片上传*
+     */
+    private LinearLayout uploadLinearLayout;
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -244,8 +260,15 @@ public class Udinspo_DetailActivity extends BaseActivity {
             inspodateText.setOnClickListener(new DateChecked(inspodateText));
             stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
             oktimeText.setOnClickListener(new DateAndTimeChecked(oktimeText));
-        }else {
+            isstopCheckBox.setOnCheckedChangeListener(isstopCheckBoxOnCheckedChangeListener);
+            setIsEnabled(true);
+        } else {
+            weatherText.setEnabled(false);
             buttonlayout.setVisibility(View.GONE);
+        }
+
+        if (udinspo.id != 0) {
+            getLocationData(udinspo.id);
         }
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -261,6 +284,27 @@ public class Udinspo_DetailActivity extends BaseActivity {
             }
         });
     }
+
+
+    /**
+     * 判断数据是否能修改*
+     */
+    private void setIsEnabled(boolean isEnabled) {
+        weatherText.setEnabled(isEnabled);
+        inspodateText.setEnabled(isEnabled);
+        stoptimeText.setEnabled(isEnabled);
+        oktimeText.setEnabled(isEnabled);
+        isstopCheckBox.setEnabled(isEnabled);
+    }
+
+
+    private CompoundButton.OnCheckedChangeListener isstopCheckBoxOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            istingji = isChecked;
+        }
+    };
+
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
         @Override
@@ -300,8 +344,10 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         popupWindow.showAsDropDown(view);
         udinsprojectLinear = (LinearLayout) contentView.findViewById(R.id.udinproject_id);
+        uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.upload_data_id);
 
         udinsprojectLinear.setOnClickListener(udinsprojectLinearOnClickListener);
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
 
     }
 
@@ -315,6 +361,18 @@ public class Udinspo_DetailActivity extends BaseActivity {
             bundle.putSerializable("udinsprojectList", udinsprojectList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 1000);
+            popupWindow.dismiss();
+
+        }
+    };
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(Udinspo_DetailActivity.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "UDINSPO");
+            intent.putExtra("ownerid", udinspo.getUDINSPOID());
+            startActivityForResult(intent, 0);
             popupWindow.dismiss();
 
         }
@@ -382,8 +440,14 @@ public class Udinspo_DetailActivity extends BaseActivity {
         }
     }
 
-    private Udinspo getUdinspo(){
+    private Udinspo getUdinspo() {
         Udinspo udinspo = this.udinspo;
+        udinspo.setWEATHER(weatherText.getText().toString());
+        if (istingji) {
+            udinspo.setISSTOP("Y");
+        } else {
+            udinspo.setISSTOP("N");
+        }
         udinspo.setWEATHER(weatherText.getText().toString());
         udinspo.setINSPODATE(inspodateText.getText().toString());
         udinspo.setSTOPTIME(stoptimeText.getText().toString());
@@ -431,40 +495,67 @@ public class Udinspo_DetailActivity extends BaseActivity {
      * 提交数据*
      */
     private void startAsyncTask() {
-//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-//            saveWorkOrder();
-//        } else {
-        String updataInfo = null;
+        if (NetWorkHelper.isNetwork(Udinspo_DetailActivity.this)) {
+            MessageUtils.showMiddleToast(Udinspo_DetailActivity.this, "暂无网络,现离线保存数据!");
+            saveWorkOrder();
+            closeProgressDialog();
+        } else {
+            String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.UdinspoToJson(getUdinspo(), getUdinsprojectList());
+            updataInfo = JsonUtils.UdinspoToJson(getUdinspo(), getUdinsprojectList());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
-        final String finalUpdataInfo = updataInfo;
-        new AsyncTask<String, String, WebResult>() {
-            @Override
-            protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this,finalUpdataInfo,
-                        "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
-                return reviseresult;
-            }
-
-            @Override
-            protected void onPostExecute(WebResult workResult) {
-                super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
-                    Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单失败", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Udinspo_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+            final String finalUpdataInfo = updataInfo;
+            new AsyncTask<String, String, WebResult>() {
+                @Override
+                protected WebResult doInBackground(String... strings) {
+                    WebResult reviseresult = AndroidClientService.UpdateWO(Udinspo_DetailActivity.this, finalUpdataInfo,
+                            "UDINSPO", "INSPONUM", udinspo.getINSPONUM(), Constants.WORK_URL);
+                    return reviseresult;
                 }
-                closeProgressDialog();
-            }
-        }.execute();
-////        }
 
+                @Override
+                protected void onPostExecute(WebResult workResult) {
+                    super.onPostExecute(workResult);
+                    if (workResult.errorMsg == null) {
+                        Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单失败", Toast.LENGTH_SHORT).show();
+                    } else if (workResult.errorMsg.equals("成功")) {
+                        Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Udinspo_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                    }
+                    closeProgressDialog();
+                }
+            }.execute();
+        }
+    }
+
+    private void saveWorkOrder() {
+        Udinspo udinspo = getUdinspo();
+        udinspo.belong = AccountUtils.getpersonId(Udinspo_DetailActivity.this);
+//        workOrder.ishistory = true;
+        new UdinspoDao(Udinspo_DetailActivity.this).update(udinspo);
+        int id = udinspo.id;
+        if (id != 0) {
+            if (udinsprojectList.size() != 0) {
+                for (Udinsproject udinsproject : udinsprojectList) {
+                    udinsproject.belongid = id;
+                }
+                if (new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()).size() > 0) {//删除默认保存的记录，防止重复
+                    new UdinsprojectDao(Udinspo_DetailActivity.this).deleteList(new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM()));
+                }
+                new UdinsprojectDao(Udinspo_DetailActivity.this).create(udinsprojectList);
+            }
+        }
+    }
+
+    //如果为历史数据，则获取本地子表信息
+    private void getLocationData(int id) {
+        udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryById(id);
+        if (udinsprojectList == null || udinsprojectList.size() == 0) {//如果没有修过记录，则查找默认保存记录
+            udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM());
+        }
     }
 
     @Override

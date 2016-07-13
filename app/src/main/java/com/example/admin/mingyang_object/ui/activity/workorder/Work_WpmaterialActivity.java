@@ -18,6 +18,7 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.WpmaterialDao;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
@@ -120,28 +121,38 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
-        if (!workOrder.isnew){
-            if (wpmaterialList == null || wpmaterialList.size() == 0){
-                refresh_layout.setRefreshing(true);
-                getdata();
-            }else{
-                if (wpmaterialList != null && wpmaterialList.size() != 0) {
-                    initList(wpmaterialList);
+        if (workOrder.id==0) {
+            if (!workOrder.isnew) {
+                if (wpmaterialList == null || wpmaterialList.size() == 0) {
+                    refresh_layout.setRefreshing(true);
+                    getdata();
+                } else {
+                    if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                        initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
+                    } else {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
+                }
+            } else {//新建工单
+                if (wpmaterialList == null || wpmaterialList.size() == 0) {
+
+                } else {
+                    if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                        initList(wpmaterialList);
+//                woactivityAdapter.addData(woactivityList);
+                    } else {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
                 }
             }
-        } else {//新建工单
-            if (wpmaterialList == null || wpmaterialList.size() == 0){
-
-            }else {
-                if (wpmaterialList != null && wpmaterialList.size() != 0) {
-                    initList(wpmaterialList);
+        }else {//本地历史工单
+            if (wpmaterialList != null && wpmaterialList.size() != 0) {
+                initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
+            } else {
+                initAdapter(new ArrayList<Wpmaterial>());
+                nodatalayout.setVisibility(View.VISIBLE);
             }
         }
         setNodataLayout();
@@ -188,6 +199,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
                                 wpmaterialList.add(wpmaterials.get(i));
                             }
                         }
+                        new WpmaterialDao(Work_WpmaterialActivity.this).create(wpmaterials);
                         nodatalayout.setVisibility(View.GONE);
 
                         initAdapter(wpmaterialList);

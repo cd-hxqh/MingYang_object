@@ -111,7 +111,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udstarttime.setText(woactivity.UDSTARTTIME);
         udendtime.setText(woactivity.UDENDTIME);
         udzysbasic.setText(woactivity.UDZYSBASIC);
-        perinspr.setChecked(woactivity.PERINSPR != 0);
+        perinspr.setChecked(woactivity.PERINSPR .equals("Y"));
         udprobdesc.setText(woactivity.UDPROBDESC);
         udzglimit.setText(woactivity.UDZGLIMIT);
         lead.setText(woactivity.LEAD);
@@ -134,7 +134,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         woactivity.UDSTARTTIME = udstarttime.getText().toString();
         woactivity.UDENDTIME = udendtime.getText().toString();
         woactivity.UDZYSBASIC = udzysbasic.getText().toString();
-        woactivity.PERINSPR = perinspr.isChecked() ? 1 : 0;
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
         woactivity.UDZGLIMIT = udzglimit.getText().toString();
         woactivity.LEAD = lead.getText().toString();
@@ -173,7 +173,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
                         && woactivity.UDSTARTTIME.equals(udstarttime.getText().toString())
                         && woactivity.UDENDTIME.equals(udendtime.getText().toString())
                         && woactivity.UDZYSBASIC.equals(udzysbasic.getText().toString())
-                        && (woactivity.PERINSPR == (perinspr.isChecked() ? 1 : 0))
+                        && (woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
                         && woactivity.UDPROBDESC.equals(udprobdesc.getText().toString())
                         && woactivity.UDZGLIMIT.equals(udzglimit.getText().toString())
                         && woactivity.LEAD.equals(lead.getText().toString())

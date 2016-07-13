@@ -26,6 +26,7 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.dao.UdinsprojectDao;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
@@ -122,11 +123,23 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
-        if (udinsprojectList == null || udinsprojectList.size() == 0) {
-            getData();
-        } else {
-            initAdapter(udinsprojectList);
-            refresh_layout.setRefreshing(false);
+        if (udinspo.id==0) {
+            if (udinsprojectList == null || udinsprojectList.size() == 0) {
+                getData();
+            } else {
+                initAdapter(udinsprojectList);
+                refresh_layout.setRefreshing(false);
+            }
+        }else {//本地历史记录
+            if (udinsprojectList != null && udinsprojectList.size() != 0) {
+                initAdapter(udinsprojectList);
+                refresh_layout.setRefreshing(false);
+//                woactivityAdapter.addData(woactivityList);
+            } else {
+                initAdapter(new ArrayList<Udinsproject>());
+                nodatalayout.setVisibility(View.VISIBLE);
+                refresh_layout.setRefreshing(false);
+            }
         }
         setNodataLayout();
 
@@ -170,8 +183,10 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
                         }
                         for (int i = 0; i < item.size(); i++) {
                             udinsprojectList.add(item.get(i));
+                            item.get(i).setINSPONUM(udinspo.getINSPONUM());
                         }
                     }
+                    new UdinsprojectDao(Udinsproject_ListActivity.this).create(item);
                     nodatalayout.setVisibility(View.GONE);
 
                     initAdapter(udinsprojectList);

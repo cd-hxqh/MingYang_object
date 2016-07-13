@@ -19,6 +19,7 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.WoactivityDao;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
@@ -125,34 +126,45 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
             menuImageView.setVisibility(View.GONE);
         }
 
-        if (!workOrder.isnew){
-            if (woactivityList == null || woactivityList.size() == 0){
-                refresh_layout.setRefreshing(true);
-                getdata();
-            }else{
-                if (woactivityList != null && woactivityList.size() != 0) {
-                    initList(woactivityList);
+        if (workOrder.id==0) {//服务器的工单
+            if (!workOrder.isnew) {
+                if (woactivityList == null || woactivityList.size() == 0) {
+                    refresh_layout.setRefreshing(true);
+                    getdata();
+                } else {
+                    if (woactivityList != null && woactivityList.size() != 0) {
+                        initList(woactivityList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
+                    } else {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
+                }
+            } else {//新建工单
+                if (woactivityList == null || woactivityList.size() == 0) {
+                    initAdapter(new ArrayList<Woactivity>());
+                    if (!workOrder.WORKTYPE.equals(Constants.AA) && !workOrder.WORKTYPE.equals(Constants.FR)) {
+                        refresh_layout.setRefreshing(true);
+                        getNewData();
+                    } else {
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    if (woactivityList != null && woactivityList.size() != 0) {
+                        initList(woactivityList);
+//                woactivityAdapter.addData(woactivityList);
+                    } else {
+                        initAdapter(new ArrayList<Woactivity>());
+                        nodatalayout.setVisibility(View.VISIBLE);
+                    }
                 }
             }
-        } else {//新建工单
-            if (woactivityList == null || woactivityList.size() == 0){
-                initAdapter(new ArrayList<Woactivity>());
-                if (!workOrder.WORKTYPE.equals(Constants.AA)&&!workOrder.WORKTYPE.equals(Constants.FR)){
-                    refresh_layout.setRefreshing(true);
-                    getNewData();
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
-            }else {
-                if (woactivityList != null && woactivityList.size() != 0) {
-                    initList(woactivityList);
+        }else {//本地历史工单
+            if (woactivityList != null && woactivityList.size() != 0) {
+                initList(woactivityList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                }
+            } else {
+                initAdapter(new ArrayList<Woactivity>());
+                nodatalayout.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -189,12 +201,12 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                         nodatalayout.setVisibility(View.VISIBLE);
                         initAdapter(new ArrayList<Woactivity>());
                     } else {
-
                         if (woactivities != null || woactivities.size() != 0) {
                             for (int i = 0; i < woactivities.size(); i++) {
                                 woactivityList.add(woactivities.get(i));
                             }
                         }
+                        new WoactivityDao(Work_WoactivityActivity.this).create(woactivities);//默认保存到本地
                         nodatalayout.setVisibility(View.GONE);
 
                         initAdapter(woactivityList);
@@ -234,6 +246,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
                                 woactivityList.add(woactivities.get(i));
                             }
                         }
+                        new WoactivityDao(Work_WoactivityActivity.this).create(woactivities);//默认保存到本地
                         nodatalayout.setVisibility(View.GONE);
 
                         initAdapter(woactivityList);

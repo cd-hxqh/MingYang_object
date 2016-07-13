@@ -317,7 +317,7 @@ public class Constants {
     /**
      * 数据库名称 *
      */
-    public static final String TB_NAME = "sqlite-eam.db";
+    public static final String TB_NAME = "sqlite-mingyang.db";
 
     /**
      * 选项跳转请求值

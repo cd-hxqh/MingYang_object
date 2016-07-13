@@ -1,24 +1,47 @@
 package com.example.admin.mingyang_object.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
 /**
  * Created by apple on 15/10/26.
  * 巡检单
  */
+@DatabaseTable(tableName = "Udinsproject")
 public class Udinsproject extends Entity implements Serializable {
+
+    @DatabaseField(generatedId = true)
+    private int id;
+    @DatabaseField(columnName = "UDINSPROJECTID")
     public String UDINSPROJECTID;//
+    @DatabaseField(columnName = "JPTASK")
     public String JPTASK; //任务编号
+    @DatabaseField(columnName = "DESCRIPTION")
     public String DESCRIPTION; //描述
+    @DatabaseField(columnName = "JO1")
     public String JO1; //系统/项目
+    @DatabaseField(columnName = "JO2")
     public String JO2;//子系统/子项目
+    @DatabaseField(columnName = "JO3")
     public String JO3; //标准/检修方法
+    @DatabaseField(columnName = "INSPUNIT")
     public String INSPUNIT; //巡检部位
+    @DatabaseField(columnName = "SERIALNUM")
     public String SERIALNUM; //序号
+    @DatabaseField(columnName = "OK")
     public String OK; //巡检结果？
+    @DatabaseField(columnName = "INSPCONTENT")
     public String INSPCONTENT; //巡检不合格原因
+    @DatabaseField(columnName = "INSPONUM")
     public String INSPONUM; //巡检单编号
 
+    @DatabaseField(columnName = "belongid")
+    public int belongid;//所属巡检单单本地存储id
+    @DatabaseField(columnName = "isUpload")
+    public boolean isUpload;//是否是服务器数据
+    @DatabaseField(columnName = "TYPE")
     public String TYPE;
 
     public String getUDINSPROJECTID() {

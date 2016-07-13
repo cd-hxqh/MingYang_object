@@ -61,7 +61,7 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
     private void geiIntentData() {
         woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        position = getIntent().getIntExtra("position",0);
+        position = getIntent().getIntExtra("position", 0);
     }
 
     @Override
@@ -112,17 +112,17 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         return woactivity;
     }
 
-    private boolean isOK(){
-        if (owner.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_FR.this,"负责人不能为空",Toast.LENGTH_SHORT).show();
-            return false;
-        }else if (udacstarttime.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_FR.this,"计划开始时间不能为空",Toast.LENGTH_SHORT).show();
-            return false;
-        }else if (udacstoptime.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_FR.this,"计划完成时间不能为空",Toast.LENGTH_SHORT).show();
-            return false;
-        }
+    private boolean isOK() {
+//        if (owner.getText().toString().equals("")){
+//            Toast.makeText(WoactivityDetailsActivity_FR.this,"负责人不能为空",Toast.LENGTH_SHORT).show();
+//            return false;
+//        }else if (udacstarttime.getText().toString().equals("")){
+//            Toast.makeText(WoactivityDetailsActivity_FR.this,"计划开始时间不能为空",Toast.LENGTH_SHORT).show();
+//            return false;
+//        }else if (udacstoptime.getText().toString().equals("")){
+//            Toast.makeText(WoactivityDetailsActivity_FR.this,"计划完成时间不能为空",Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         return true;
     }
 
@@ -131,10 +131,14 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         public void onClick(View view) {
             if (isOK()) {
                 Intent intent = getIntent();
-                if (woactivity.DESCRIPTION.equals(description.getText().toString())
-                        && woactivity.OWNER.equals(owner.getText().toString())
-                        && woactivity.UDACSTARTTIME.equals(udacstarttime.getText().toString())
-                        && woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString())) {//如果内容没有修改
+                if (((woactivity.DESCRIPTION == null && description.getText().toString().equals(""))
+                        || woactivity.DESCRIPTION.equals(description.getText().toString()))
+                        && ((woactivity.OWNER == null && owner.getText().toString().equals(""))
+                        || woactivity.OWNER.equals(owner.getText().toString()))
+                        && ((woactivity.UDACSTARTTIME == null && udacstarttime.getText().toString().equals(""))
+                        || woactivity.UDACSTARTTIME.equals(udacstarttime.getText().toString()))
+                        && ((woactivity.UDACSTOPTIME == null && udacstoptime.getText().toString().equals(""))
+                        || woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString()))) {//如果内容没有修改
                     intent.putExtra("woactivity", woactivity);
                 } else {
                     Woactivity woactivity = getWoactivity();
@@ -156,9 +160,9 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         public void onClick(View v) {
             Intent intent = getIntent();
             intent.putExtra("position", position);
-            if (!woactivity.isUpload){
+            if (!woactivity.isUpload) {
                 WoactivityDetailsActivity_FR.this.setResult(3, intent);
-            }else {
+            } else {
                 Woactivity woactivity = getWoactivity();
                 woactivity.TYPE = "delete";
                 intent.putExtra("woactivity", woactivity);
@@ -201,11 +205,13 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                option = (Option) data.getSerializableExtra("option");
-                owner.setText(option.getName());
-                break;
+        if (data != null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    owner.setText(option.getName());
+                    break;
+            }
         }
     }
 }

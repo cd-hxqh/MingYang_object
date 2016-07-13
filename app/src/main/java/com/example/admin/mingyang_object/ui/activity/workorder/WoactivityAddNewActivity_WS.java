@@ -113,7 +113,7 @@ public class WoactivityAddNewActivity_WS extends BaseActivity {
         invcontent.setText(woactivity.INVCONTENT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgmeasure.setText(woactivity.UDZGMEASURE);
-        perinspr.setChecked(woactivity.PERINSPR != 0);
+        perinspr.setChecked(woactivity.PERINSPR.equals("Y"));
         udrlstopdate.setText(woactivity.UDRLSTOPDATE);
         udremark.setText(woactivity.UDREMARK);
 //        confirm.setOnClickListener(confirmOnClickListener);

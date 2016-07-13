@@ -22,6 +22,9 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.dao.WoactivityDao;
+import com.example.admin.mingyang_object.dao.WorkOrderDao;
+import com.example.admin.mingyang_object.dao.WpmaterialDao;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
@@ -33,6 +36,8 @@ import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.GetDateAndTime;
+import com.example.admin.mingyang_object.utils.MessageUtils;
+import com.example.admin.mingyang_object.utils.NetWorkHelper;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -47,6 +52,8 @@ import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -110,8 +117,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView actstart;//实际开始时间
     private TextView actfinish;//实际结束时间
     private CheckBox isstoped;//是否停机
-    private TextView pmchgevalstart;//故障开始时间
-    private TextView pmchgevalend;//故障恢复时间
+    private TextView udstoptime;//故障开始时间
+    private TextView udrestarttime;//故障恢复时间
     private TextView udjgresult;//累计时间
     private EditText udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
@@ -238,8 +245,8 @@ public class Work_AddNewActivity extends BaseActivity {
         actstart = (TextView) findViewById(R.id.work_actstart);
         actfinish = (TextView) findViewById(R.id.work_actfinish);
         isstoped = (CheckBox) findViewById(R.id.work_isstoped);
-        pmchgevalstart = (TextView) findViewById(R.id.work_pmchgevalstart);
-        pmchgevalend = (TextView) findViewById(R.id.work_pmchgevalend);
+        udstoptime = (TextView) findViewById(R.id.work_pmchgevalstart);
+        udrestarttime = (TextView) findViewById(R.id.work_pmchgevalend);
         udjgresult = (TextView) findViewById(R.id.work_udjgresult);
         udprobdesc = (EditText) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
@@ -345,10 +352,10 @@ public class Work_AddNewActivity extends BaseActivity {
         udplannum.setOnClickListener(new LayoutOnClickListener(10, Constants.ZYS_UDPLANNUMCODE));
         failurecode.setOnClickListener(new LayoutOnClickListener(12, Constants.FAILURECODE));
         problemcode.setOnClickListener(new LayoutOnClickListener(13, Constants.PROBLEMCODE));
-        lead2.setOnClickListener(new LayoutOnClickListener(14,Constants.PERSONCODE));
-        udinspoby_2.setOnClickListener(new LayoutOnClickListener(15,Constants.PERSONCODE));
-        udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16,Constants.PERSONCODE));
-        udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17,Constants.PERSONCODE));
+        lead2.setOnClickListener(new LayoutOnClickListener(14, Constants.PERSONCODE));
+        udinspoby_2.setOnClickListener(new LayoutOnClickListener(15, Constants.PERSONCODE));
+        udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16, Constants.PERSONCODE));
+        udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17, Constants.PERSONCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -358,8 +365,8 @@ public class Work_AddNewActivity extends BaseActivity {
         schedfinish.setOnClickListener(new DateTimeOnClickListener(schedfinish));
         actstart.setOnClickListener(new DateTimeOnClickListener(actstart));
         actfinish.setOnClickListener(new DateTimeOnClickListener(actfinish));
-        pmchgevalstart.setOnClickListener(new DateTimeOnClickListener(pmchgevalstart));
-        pmchgevalend.setOnClickListener(new DateTimeOnClickListener(pmchgevalend));
+        udstoptime.setOnClickListener(new DateTimeOnClickListener(udstoptime));
+        udrestarttime.setOnClickListener(new DateTimeOnClickListener(udrestarttime));
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
 //        work_flow.setOnClickListener(approvalBtnOnClickListener);
@@ -449,6 +456,34 @@ public class Work_AddNewActivity extends BaseActivity {
         public void onClick(View view) {
             new DateTimeSelect(Work_AddNewActivity.this, textView).showDialog();
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus&&!udstoptime.getText().toString().equals("")&&!udrestarttime.getText().toString().equals("")
+                &&udjgresult.getText().toString().equals("")){
+            udjgresult.setText(getTime(udstoptime.getText().toString(),udrestarttime.getText().toString()));
+        }
+    }
+
+    //计算时间差
+    private String getTime(String time1,String time2){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date now = null;
+        java.util.Date date = null;
+        try {
+            now = df.parse(time1);
+            date=df.parse(time2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long l=date.getTime()-now.getTime();
+        long day=l/(24*60*60*1000);//天
+        long hour=(l/(60*60*1000)-day*24);//小时
+        long min=((l/(60*1000))-day*24*60-hour*60);//分
+        long s=(l/1000-day*24*60*60-hour*60*60-min*60);//秒
+        return "累积停机"+day+"天"+hour+"小时"+min+"分"+s+"秒";
     }
 
     //按照工单类型修改布局
@@ -620,14 +655,14 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (!workOrder.WORKTYPE.equals(Constants.FR)&&!workOrder.WORKTYPE.equals(Constants.AA)) {
+            if (!workOrder.WORKTYPE.equals(Constants.FR) && !workOrder.WORKTYPE.equals(Constants.AA)) {
                 if (!udjpnum.getText().toString().equals("")) {
-                    if (workOrder.UDJPNUM!=null&&!workOrder.UDJPNUM.equals("")
-                            &&!workOrder.UDJPNUM.equals(udjpnum.getText().toString())){//如果计划编号变动
+                    if (workOrder.UDJPNUM != null && !workOrder.UDJPNUM.equals("")
+                            && !workOrder.UDJPNUM.equals(udjpnum.getText().toString())) {//如果计划编号变动
                         woactivityList = new ArrayList<>();
                     }
                     workOrder.UDJPNUM = udjpnum.getText().toString();
-                }else {
+                } else {
                     Toast.makeText(Work_AddNewActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -717,11 +752,9 @@ public class Work_AddNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        if (isOK()) {
-                            showProgressDialog("数据提交中...");
-                            startAsyncTask();
-                            dialog.dismiss();
-                        }
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
                     }
                 });
     }
@@ -907,45 +940,69 @@ public class Work_AddNewActivity extends BaseActivity {
      * 提交数据*
      */
     private void startAsyncTask() {
-//        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
-//            saveWorkOrder();
-//        } else {
-        String updataInfo = null;
+        if (NetWorkHelper.isNetwork(Work_AddNewActivity.this)) {
+            MessageUtils.showMiddleToast(Work_AddNewActivity.this, "暂无网络,现离线保存数据!");
+            saveWorkOrder();
+        } else {
+            if (isOK()) {
+                String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList,wpmaterialLit);
+                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wpmaterialLit);
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
-        final String finalUpdataInfo = updataInfo;
-        new AsyncTask<String, String, WebResult>() {
-            @Override
-            protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.InsertWO(Work_AddNewActivity.this,
-                        finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(Work_AddNewActivity.this), Constants.WORK_URL);
-                return reviseresult;
-            }
+                final String finalUpdataInfo = updataInfo;
+                new AsyncTask<String, String, WebResult>() {
+                    @Override
+                    protected WebResult doInBackground(String... strings) {
+                        WebResult reviseresult = AndroidClientService.InsertWO(Work_AddNewActivity.this,
+                                finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(Work_AddNewActivity.this), Constants.WORK_URL);
+                        return reviseresult;
+                    }
 
-            @Override
-            protected void onPostExecute(WebResult workResult) {
-                super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
-                    Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Work_AddNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
-                    workOrder.isnew = false;
-                    finish();
-                } else {
-                    Toast.makeText(Work_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
-                }
+                    @Override
+                    protected void onPostExecute(WebResult workResult) {
+                        super.onPostExecute(workResult);
+                        if (workResult.errorMsg == null) {
+                            Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
+                        } else if (workResult.errorMsg.equals("成功")) {
+                            Toast.makeText(Work_AddNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
+                            workOrder.isnew = false;
+                            finish();
+                        } else {
+                            Toast.makeText(Work_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                        }
+                        closeProgressDialog();
+                    }
+
+                }.execute();
+            }else {
                 closeProgressDialog();
             }
-
-        }.execute();
-////        }
-
+        }
     }
 
+    private void saveWorkOrder() {
+        WorkOrder workOrder = getWorkOrder();
+        workOrder.belong = AccountUtils.getpersonId(Work_AddNewActivity.this);
+//        workOrder.ishistory = true;
+        new WorkOrderDao(Work_AddNewActivity.this).update(workOrder);
+        int id = workOrder.id;
+        if (id != 0) {
+            if (woactivityList.size() != 0) {
+                for (Woactivity woactivity : woactivityList) {
+                    woactivity.belongid = id;
+                }
+                new WoactivityDao(Work_AddNewActivity.this).create(woactivityList);
+            }
+            if (wpmaterialLit.size() != 0) {
+                for (Wpmaterial wplabor : wpmaterialLit) {
+                    wplabor.belongid = id;
+                }
+                new WpmaterialDao(Work_AddNewActivity.this).create(wpmaterialLit);
+            }
+        }
+    }
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -1120,8 +1177,8 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.ACTSTART = actstart.getText().toString();
         workOrder.ACTFINISH = actfinish.getText().toString();
         workOrder.ISSTOPED = isstoped.isChecked() ? 1 : 0;
-        workOrder.PMCHGEVALSTART = pmchgevalstart.getText().toString();
-        workOrder.PMCHGEVALEND = pmchgevalend.getText().toString();
+        workOrder.UDSTOPTIME = udstoptime.getText().toString();
+        workOrder.UDRESTARTTIME = udrestarttime.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
             workOrder.UDRPRRSB = udrprrsb.getText().toString();
             workOrder.UDJGRESULT = udjgresult.getText().toString();
