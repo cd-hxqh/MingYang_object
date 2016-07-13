@@ -81,7 +81,7 @@ public class HttpManager {
                 }
             } else {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'}";
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'}";
             }
         } else {
             if (!type.equals(Constants.DC)) {
@@ -96,7 +96,7 @@ public class HttpManager {
                 }
             } else {
                 return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'" +
                         ",'sinorsearch':{'DEBUGWORKORDERNUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
             }
 

@@ -1567,7 +1567,7 @@ public class JsonUtils<E> {
      * @param woactivities
      * @return
      */
-    public static String DebugWorkToJson(DebugWorkOrder workOrder, ArrayList<Woactivity> woactivities, ArrayList<Wpmaterial> wpmaterials) {
+    public static String DebugWorkToJson(DebugWorkOrder workOrder, ArrayList<UddebugWorkOrderLine> woactivities) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {
@@ -1595,7 +1595,7 @@ public class JsonUtils<E> {
             }
             JSONObject object = new JSONObject();
             if (woactivities != null && woactivities.size() != 0) {
-                object.put("WOACTIVITY", "");
+                object.put("UDDEBUGWORKORDERLINE", "");
                 JSONArray woactivityArray = new JSONArray();
                 JSONObject woactivityObj;
                 for (int i = 0; i < woactivities.size(); i++) {
@@ -1622,41 +1622,43 @@ public class JsonUtils<E> {
                     }
                     woactivityArray.put(woactivityObj);
                 }
-                jsonObject.put("WOACTIVITY", woactivityArray);
+                jsonObject.put("UDDEBUGWORKORDERLINE", woactivityArray);
             }
-            if (wpmaterials != null && wpmaterials.size() != 0) {
-                object.put("WPMATERIAL", "");
-                JSONArray wpmaterialsArray = new JSONArray();
-                JSONObject wpmaterialsObj;
-                for (int i = 0; i < wpmaterials.size(); i++) {
-                    wpmaterialsObj = new JSONObject();
-                    Field[] field1 = wpmaterials.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
-                    for (int j = 0; j < field1.length; j++) {
-                        field1[j].setAccessible(true);
-                        String name = field1[j].getName();//获取属性的名字
-                        Method getOrSet = null;
-                        try {
-                            getOrSet = wpmaterials.get(i).getClass().getMethod("get" + name);
-                            Object value = null;
-                            value = getOrSet.invoke(wpmaterials.get(i));
-                            if (value != null) {
-                                wpmaterialsObj.put(name, value + "");
-                            }
-                        } catch (NoSuchMethodException e) {
-                            e.printStackTrace();
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    wpmaterialsArray.put(wpmaterialsObj);
-                }
-                jsonObject.put("WPMATERIAL", wpmaterialsArray);
-            }
+//            if (wpmaterials != null && wpmaterials.size() != 0) {
+//                object.put("WPMATERIAL", "");
+//                JSONArray wpmaterialsArray = new JSONArray();
+//                JSONObject wpmaterialsObj;
+//                for (int i = 0; i < wpmaterials.size(); i++) {
+//                    wpmaterialsObj = new JSONObject();
+//                    Field[] field1 = wpmaterials.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+//                    for (int j = 0; j < field1.length; j++) {
+//                        field1[j].setAccessible(true);
+//                        String name = field1[j].getName();//获取属性的名字
+//                        Method getOrSet = null;
+//                        try {
+//                            getOrSet = wpmaterials.get(i).getClass().getMethod("get" + name);
+//                            Object value = null;
+//                            value = getOrSet.invoke(wpmaterials.get(i));
+//                            if (value != null) {
+//                                wpmaterialsObj.put(name, value + "");
+//                            }
+//                        } catch (NoSuchMethodException e) {
+//                            e.printStackTrace();
+//                        } catch (IllegalAccessException e) {
+//                            e.printStackTrace();
+//                        } catch (InvocationTargetException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    wpmaterialsArray.put(wpmaterialsObj);
+//                }
+//                jsonObject.put("WPMATERIAL", wpmaterialsArray);
+//            }
+
             JSONArray jsonArray = new JSONArray();
             jsonArray.put(object);
             jsonObject.put("relationShip", jsonArray);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

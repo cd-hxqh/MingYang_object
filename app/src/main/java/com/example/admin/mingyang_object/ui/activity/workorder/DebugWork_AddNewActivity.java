@@ -162,14 +162,14 @@ public class DebugWork_AddNewActivity extends BaseActivity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finish();
+                finish();
                 Log.e("调试工单","按下取消按钮");
             }
         });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //submitDataInfo();
+                submitDataInfo();
                 Log.e("调试工单","按下确定按钮");
             }
         });
@@ -348,16 +348,17 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.DebugWorkToJson(getWorkOrder(), woactivityList,wpmaterialLit);
+        updataInfo = JsonUtils.DebugWorkToJson(getWorkOrder(), uddebugWorkOrderLines);
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
         final String finalUpdataInfo = updataInfo;
+        Log.e("调试工单","将要提交的调试工单主表"+finalUpdataInfo);
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult reviseresult = AndroidClientService.InsertWO(DebugWork_AddNewActivity.this,
-                        finalUpdataInfo, "WORKORDER", "WONUM", AccountUtils.getpersonId(DebugWork_AddNewActivity.this), Constants.WORK_URL);
+                        finalUpdataInfo, "DEBUGWORKORDER", "DEBUGWORKORDERNUM", AccountUtils.getpersonId(DebugWork_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }
 
@@ -650,6 +651,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 //                break;
             case 1000:
                 uddebugWorkOrderLines = (ArrayList<UddebugWorkOrderLine>) data.getSerializableExtra("uddebugWorkOrderLines");
+                Log.e("调试工单","拿到了调试工单子表"+uddebugWorkOrderLines.size() );
                 break;
 //            case 2000:
 //                labtransList = (ArrayList<Labtrans>) data.getSerializableExtra("labtransList");

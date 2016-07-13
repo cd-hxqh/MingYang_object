@@ -53,8 +53,6 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
-    private LinearLayout confirmlayout;
-    private Button confirmBtn;
     private String pronum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +81,6 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
-//        confirmlayout = (LinearLayout) findViewById(R.id.confirm_layout);
-//        confirmBtn = (Button) findViewById(R.id.ok);
     }
 
     @Override
@@ -94,14 +90,12 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         menuImageView.setImageResource(R.mipmap.add);
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-//        confirmlayout.setVisibility(View.GONE);
-//        confirmBtn.setOnClickListener(confirmBtnOnClickListener);
         layoutManager = new LinearLayoutManager(DebugWork_UddebugWorkOrderLineActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        woactivityAdapter = new WoactivityAdapter(Work_WoactivityActivity.this);
+        woactivityAdapter = new UddebugWorkOrderLineAdapter(DebugWork_UddebugWorkOrderLineActivity.this,R.layout.list_item,woactivityList);
         recyclerView.setAdapter(woactivityAdapter);
 
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -115,23 +109,26 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
 
-//        if ((workOrder.status != null && workOrder.status.equals(Constants.STATUS25))||workOrder.isnew) {
-//            menuImageView.setVisibility(View.VISIBLE);
-//        }else {
-//            menuImageView.setVisibility(View.GONE);
-//        }
-
         if (!workOrder.isnew && (woactivityList == null || woactivityList.size() == 0)) {
+
             refresh_layout.setRefreshing(true);
+
             getdata();
+
         } else {
+
             if (woactivityList != null && woactivityList.size() != 0) {
-                initAdapter(woactivityList);
-//                woactivityAdapter.addData(woactivityList);
+
+                //
+
+                woactivityAdapter.addData(woactivityList);
+
             }else {
+
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         }
+        initAdapter(woactivityList);
     }
 
     private void getdata() {
@@ -161,7 +158,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                         }
                         nodatalayout.setVisibility(View.GONE);
 
-                        initAdapter(woactivityList);
+                       // initAdapter(woactivityList);
                     }
                 }
 
@@ -184,18 +181,19 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
      * 获取数据*
      */
     private void initAdapter(final List<UddebugWorkOrderLine> list) {
+        Log.e("调试工单","点击事件");
         woactivityAdapter = new UddebugWorkOrderLineAdapter(DebugWork_UddebugWorkOrderLineActivity.this, R.layout.list_item, list);
         recyclerView.setAdapter(woactivityAdapter);
         woactivityAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Log.e("调试工单","点击了一行");
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("uddebugWorkOrderLine", list.get(position));
                 bundle.putSerializable("workOrder", workOrder);
                 bundle.putSerializable("position", position);
                     intent.setClass(DebugWork_UddebugWorkOrderLineActivity.this, UddebugWorkOrderLineDetailsActivity.class);
-
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 2);
             }
@@ -259,6 +257,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
     };
 
     private void setNodataLayout() {
+
         if (woactivityAdapter.getItemCount() == 0) {
             nodatalayout.setVisibility(View.VISIBLE);
         } else {
@@ -292,14 +291,17 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
         switch (resultCode) {
             case 1://新增
                 if (data != null) {
-                    UddebugWorkOrderLine woactivity = (UddebugWorkOrderLine) data.getSerializableExtra("uddebugWorkOrderLine");
+                    UddebugWorkOrderLine uddebugWorkOrderLine = (UddebugWorkOrderLine) data.getSerializableExtra("uddebugWorkOrderLine");
                     Log.e("调试工单","新增调试工单子表成功");
-                    Log.e("调试工单","新增调试工单子表成功，调试责任人"+woactivity.RESPONSIBLEPERSON);
-                    woactivityAdapter.add(woactivity);
+                    Log.e("调试工单","新增调试工单子表成功，调试责任人"+uddebugWorkOrderLine.RESPONSIBLEPERSON);
+                    woactivityAdapter.add(uddebugWorkOrderLine);
                     nodatalayout.setVisibility(View.GONE);
+                    woactivityAdapter.notifyDataSetChanged();
+                    woactivityList.add(uddebugWorkOrderLine);
+                   // initAdapter(woactivityList);
                 }
-                confirmlayout.setVisibility(View.VISIBLE);
-                setNodataLayout();
+//                confirmlayout.setVisibility(View.VISIBLE);
+//                setNodataLayout();
                 break;
             case 2://修改
                 if (data != null) {
@@ -308,7 +310,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                     woactivityAdapter.set(position, woactivity);
                     woactivityAdapter.notifyDataSetChanged();
                 }
-                confirmlayout.setVisibility(View.VISIBLE);
+//                confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
                 break;
             case 3://本地任务删除
@@ -317,7 +319,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                     woactivityAdapter.remove(position);
                     woactivityAdapter.notifyDataSetChanged();
                 }
-                confirmlayout.setVisibility(View.VISIBLE);
+//                confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
                 break;
             case 4://服务器任务删除操作
@@ -328,11 +330,9 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                     woactivityAdapter.remove(position);
                     woactivityAdapter.notifyDataSetChanged();
                 }
-                confirmlayout.setVisibility(View.VISIBLE);
+//                confirmlayout.setVisibility(View.VISIBLE);
                 setNodataLayout();
                 break;
-            //
-            //Divinesword
         }
     }
 
@@ -353,4 +353,15 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
             getdata();
         }
     }
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        Intent intent=getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("uddebugWorkOrderLines", woactivityList);
+        intent.putExtras(bundle);
+        DebugWork_UddebugWorkOrderLineActivity.this.setResult(1000,intent);
+    }
 }
+

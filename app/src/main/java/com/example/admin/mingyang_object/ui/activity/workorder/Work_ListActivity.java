@@ -162,6 +162,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                         }
                     }
                 }else {
+
                     refresh_layout.setRefreshing(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }

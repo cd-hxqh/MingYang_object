@@ -206,23 +206,18 @@ public class UddebugWorkOrderLineAddNewActivity extends BaseActivity {
                 Log.e("调试工单","保存");
                 if (checkData())
                 {
-
-//                uddebugWorkOrderLine uddebugWorkOrderLine = getWoactivity();
-//                if(woactivity.optiontype==null||!woactivity.optiontype.equals("add")) {
-//                    woactivity.optiontype = "update";
-//                }
-//
                     Intent intent = getIntent();
                     UddebugWorkOrderLine tmp_uddebugWorkOrderLine=getWoactivity();
                     intent.putExtra("uddebugWorkOrderLine", tmp_uddebugWorkOrderLine);
                     Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
                     UddebugWorkOrderLineAddNewActivity.this.setResult(1, intent);
+                    finish();
                 }
+                else
+                {
 
-
+                }
 //            intent.putExtra("position", position);
-
-              finish();
             }
         });
 
@@ -276,7 +271,6 @@ public class UddebugWorkOrderLineAddNewActivity extends BaseActivity {
     private UddebugWorkOrderLine getWoactivity() {
 
         UddebugWorkOrderLine uddebugWorkOrderLine = this.uddebugWorkOrderLine;
-
         uddebugWorkOrderLine.WINDDRIVENGENERATORNUM=winddrivengeneratornum.getText().toString();//风机编码
         uddebugWorkOrderLine.FJLOCATION=fjlocation.getText().toString();//机台号
         uddebugWorkOrderLine.DYNAMICDEBUGDATE=dynamicdebugdate.getText().toString();//调试日期
@@ -312,65 +306,62 @@ public class UddebugWorkOrderLineAddNewActivity extends BaseActivity {
         //调试日期
         if ( "".equals(dynamicdebugdate.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请选择调试日期", Toast.LENGTH_SHORT).show();
-            return false;
+            dynamicdebugdate.setText(" ");
+
         }
         //并网运行日期
         if ( "".equals(synchronizationdebugdate.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请并网运行日期", Toast.LENGTH_SHORT).show();
-            return false;
+            synchronizationdebugdate.setText(" ");
+
         }
         //静态调试日期
         if ( "".equals(time1.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请选择动态调试日期", Toast.LENGTH_SHORT).show();
-            return false;
+            time1.setText(" ");
+
         }
         //动态调试日期
         if ( "".equals(time2.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请选择调试日期", Toast.LENGTH_SHORT).show();
-            return false;
+            time2.setText(" ");
         }
         //程序版本号
         if ( "".equals(vesion.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请填写版本号", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this ,"请填写版本号",Toast.LENGTH_SHORT).show();
             return false;
         }
         //调试责任人
         if ( "".equals(responsibleperson.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请选择责任人", Toast.LENGTH_SHORT).show();
-            return false;
+            responsibleperson.setText(" ");
         }
         //调试组长
         if ( "".equals(debugleader.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请选择调试组长", Toast.LENGTH_SHORT).show();
-            return false;
+            debugleader.setText(" ");
         }
         //调试工程师1
         if ( "".equals(crew.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请选择调试工程师", Toast.LENGTH_SHORT).show();
-            return false;
+            crew.setText(" ");
         }
         //问题纪录
         if ( "".equals(question.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请填写问题纪录", Toast.LENGTH_SHORT).show();
-            return false;
+            question.setText(" ");
         }
         //处理过程
         if ( "".equals(dispose.getText().toString()) )
         {
-            Toast.makeText(UddebugWorkOrderLineAddNewActivity.this, "请填写处理过程", Toast.LENGTH_SHORT).show();
-            return false;
+            dispose.setText(" ");
         }
         //备注
-
+        if ( "".equals(remark.getText().toString()) )
+        {
+            remark.setText(" ");
+        }
 
         return true;
     }
