@@ -2,7 +2,9 @@ package com.example.admin.mingyang_object.ui.activity.workorder;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,12 +17,18 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
+import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -57,16 +65,15 @@ public class DebugWork_DetailsActivity extends BaseActivity {
     private TextView pronum;//项目编号
     private TextView status;//状态
     private TextView createby;//创建人
-
-
     private Button delete;
     private Button revise;
     private Button work_flow;
+    private Button save;
+    private Button cancel;
 
     private ArrayList<UddebugWorkOrderLine> uddebugWorkOrderLines = new ArrayList<>();
 //    private ArrayList<Labtrans> labtransList = new ArrayList<>();
 //    private ArrayList<Failurereport> failurereportList = new ArrayList<>();
-
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
@@ -79,7 +86,6 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
-
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
         addudyxjData();
@@ -94,15 +100,17 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
     @Override
     protected void findViewById() {
+
         titlename = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
-
         debugworkordernum = (TextView) findViewById(R.id.debugwork_debugworkordernum);
         description = (EditText) findViewById(R.id.debug_description);
         pronum = (TextView) findViewById(R.id.debug_pronum);
         status = (TextView) findViewById(R.id.debug_status);
         createby = (TextView) findViewById(R.id.debug_createby);
+        save=(Button)findViewById(R.id.work_save);
+        cancel=(Button)findViewById(R.id.work_cancel);
     }
 
     @Override
@@ -130,7 +138,20 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 //        delete.setOnClickListener(deleteOnClickListener);
 //        revise.setOnClickListener(reviseOnClickListener);
 //        work_flow.setOnClickListener(approvalBtnOnClickListener);
-
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("调试工单","调试工单详情 确定");
+                submitDataInfo();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("调试工单","调试工单详情 取消");
+                finish();
+            }
+        });
     }
 
     private View.OnClickListener udyxjOnClickListener = new View.OnClickListener() {
@@ -165,8 +186,6 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
 //        for (int i = 0; i < lctypes.length; i++)
 //            mMenuItems.add(new DialogMenuItem(lctypes[i], 0));
-
-
     }
 
     //时间选择监听
@@ -206,8 +225,6 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 return false;
                 // 这里如果返回true的话，touch事件将被拦截
                 // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
@@ -221,7 +238,6 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
         // 设置好参数之后再show
         popupWindow.showAsDropDown(view);
-
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.debug_uddebugworkorderline);
         planLinearlayout.setOnClickListener(planOnClickListener);
 
@@ -234,6 +250,7 @@ public class DebugWork_DetailsActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putSerializable("debugworkOrder", workOrder);
             bundle.putSerializable("uddebugWorkOrderLines", uddebugWorkOrderLines);
+            intent.putExtra("pronum",pronum.getText().toString());
             intent.putExtras(bundle);
             startActivityForResult(intent,1000);
             popupWindow.dismiss();
@@ -295,33 +312,34 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 //            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "暂无网络,现离线保存数据!");
 //            saveWorkOrder();
 //        } else {
-//            String updataInfo = null;
+            String updataInfo = null;
 ////            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-//                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, labtransList, failurereportList);
+                updataInfo = JsonUtils.DebugWorkToJson(getWorkOrder(), uddebugWorkOrderLines);
 ////            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 ////                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 ////            }
-//            final String finalUpdataInfo = updataInfo;
-//            new AsyncTask<String, String, WebResult>() {
-//                @Override
-//                protected WebResult doInBackground(String... strings) {
-//                    WebResult reviseresult = AndroidClientService.UpdateWO(finalUpdataInfo, AccountUtils.getpersonId(Work_detailsActivity.this), Constants.WORK_URL);
-//                    return reviseresult;
-//                }
-//
-//                @Override
-//                protected void onPostExecute(WebResult workResult) {
-//                    super.onPostExecute(workResult);
-//                    if (workResult==null) {
-//                        Toast.makeText(Work_detailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
-//                    }else if (workResult.errorMsg.equals("成功!")) {
-//                        Toast.makeText(Work_detailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(Work_detailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
-//                    }
-//                    closeProgressDialog();
-//                }
-//            }.execute();
+            final String finalUpdataInfo = updataInfo;
+            final String tmp_prnum= pronum.getText().toString();
+            new AsyncTask<String, String, WebResult>() {
+                @Override
+                protected WebResult doInBackground(String... strings) {
+                    WebResult reviseresult = AndroidClientService.UpdateWO(DebugWork_DetailsActivity.this,finalUpdataInfo,"DEBUGWORKORDER", "DEBUGWORKORDERNUM",tmp_prnum,Constants.WORK_URL);
+                    return reviseresult;
+                }
+
+                @Override
+                protected void onPostExecute(WebResult workResult) {
+                    super.onPostExecute(workResult);
+                    if (workResult==null) {
+                        Toast.makeText(DebugWork_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
+                    }else if (workResult.errorMsg.equals("成功!")) {
+                        Toast.makeText(DebugWork_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(DebugWork_DetailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                    }
+                    closeProgressDialog();
+                }
+            }.execute();
 ////        }
 
     }

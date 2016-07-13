@@ -155,10 +155,11 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                             for (int i = 0; i < woactivities.size(); i++) {
                                 woactivityList.add(woactivities.get(i));
                             }
+                            woactivityAdapter.notifyDataSetChanged();
                         }
                         nodatalayout.setVisibility(View.GONE);
 
-                       // initAdapter(woactivityList);
+                        initAdapter(woactivityList);
                     }
                 }
 
