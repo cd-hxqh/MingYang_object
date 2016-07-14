@@ -90,7 +90,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private WorkOrder workOrder = new WorkOrder();
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
-    private EditText description;//工单描述
+    private TextView description;//工单描述
     private LinearLayout description_layout;
     private TextView branch;//中心
     private TextView udprojectnum;//项目
@@ -182,7 +182,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private Button work_flow;
 
     private ArrayList<Woactivity> woactivityList = new ArrayList<>();
-    private ArrayList<Wpmaterial> wpmaterialLit = new ArrayList<>();
+    private ArrayList<Wpmaterial> wpmaterialList = new ArrayList<>();
 //    private ArrayList<Failurereport> failurereportList = new ArrayList<>();
 
     private BaseAnimatorSet mBasIn;
@@ -218,7 +218,7 @@ public class Work_AddNewActivity extends BaseActivity {
         work_numlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         work_numlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         wonum = (TextView) findViewById(R.id.work_wonum);
-        description = (EditText) findViewById(R.id.work_describe);
+        description = (TextView) findViewById(R.id.work_describe);
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
         branch = (TextView) findViewById(R.id.work_branch);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
@@ -340,12 +340,16 @@ public class Work_AddNewActivity extends BaseActivity {
         udrprrsb.setOnClickListener(new LayoutOnClickListener(11, Constants.PERSONCODE));
         udprojectnum.setOnClickListener(new LayoutOnClickListener(6, Constants.UDPROCODE));
         udlocnum.setOnClickListener(new LayoutOnClickListener(7, Constants.UDLOCNUMCODE));
-        if (workOrder.WORKTYPE.equals(Constants.WS)) {
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
-        } else if (workOrder.WORKTYPE.equals(Constants.SP)) {
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.SP_JOBPLANCODE));
-        } else if (workOrder.WORKTYPE.equals(Constants.TP)) {
-            udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.TP_JOBPLANCODE));
+        switch (workOrder.WORKTYPE) {
+            case Constants.WS:
+                udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.WS_JOBPLANCODE));
+                break;
+            case Constants.SP:
+                udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.SP_JOBPLANCODE));
+                break;
+            case Constants.TP:
+                udjpnum.setOnClickListener(new LayoutOnClickListener(5, Constants.TP_JOBPLANCODE));
+                break;
         }
         wtcode.setOnClickListener(new LayoutOnClickListener(8, Constants.WTCODE));
         udlocation.setOnClickListener(new LayoutOnClickListener(9, Constants.LOCATIONCODE));
@@ -411,8 +415,8 @@ public class Work_AddNewActivity extends BaseActivity {
         } else if (textView == culevel) {
             types = getResources().getStringArray(R.array.culevel_array);
         }
-        for (int i = 0; i < types.length; i++) {
-            mMenuItems.add(new DialogMenuItem(types[i], 0));
+        for (String type : types) {
+            mMenuItems.add(new DialogMenuItem(type, 0));
         }
         final NormalListDialog dialog = new NormalListDialog(Work_AddNewActivity.this, mMenuItems);
         dialog.title("请选择")//
@@ -695,7 +699,7 @@ public class Work_AddNewActivity extends BaseActivity {
             Intent intent = new Intent(Work_AddNewActivity.this, Work_WpmaterialActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
-            bundle.putSerializable("wpmaterialLit", wpmaterialLit);
+            bundle.putSerializable("wpmaterialList", wpmaterialList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 2000);
             popupWindow.dismiss();
@@ -947,7 +951,7 @@ public class Work_AddNewActivity extends BaseActivity {
             if (isOK()) {
                 String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wpmaterialLit);
+                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wpmaterialList);
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -995,11 +999,11 @@ public class Work_AddNewActivity extends BaseActivity {
                 }
                 new WoactivityDao(Work_AddNewActivity.this).create(woactivityList);
             }
-            if (wpmaterialLit.size() != 0) {
-                for (Wpmaterial wplabor : wpmaterialLit) {
+            if (wpmaterialList.size() != 0) {
+                for (Wpmaterial wplabor : wpmaterialList) {
                     wplabor.belongid = id;
                 }
-                new WpmaterialDao(Work_AddNewActivity.this).create(wpmaterialLit);
+                new WpmaterialDao(Work_AddNewActivity.this).create(wpmaterialList);
             }
         }
     }
@@ -1317,7 +1321,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     }
                     break;
                 case 2000:
-                    wpmaterialLit = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
+                    wpmaterialList = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
                     break;
 //            case 3000:
 //                failurereportList = (ArrayList<Failurereport>) data.getSerializableExtra("failurereportList");

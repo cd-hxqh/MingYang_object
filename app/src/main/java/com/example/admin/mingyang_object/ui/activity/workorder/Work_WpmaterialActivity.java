@@ -136,7 +136,7 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
                 }
             } else {//新建工单
                 if (wpmaterialList == null || wpmaterialList.size() == 0) {
-
+                    initAdapter(new ArrayList<Wpmaterial>());
                 } else {
                     if (wpmaterialList != null && wpmaterialList.size() != 0) {
                         initList(wpmaterialList);

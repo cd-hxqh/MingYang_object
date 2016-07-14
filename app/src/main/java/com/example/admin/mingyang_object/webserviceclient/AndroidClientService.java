@@ -90,7 +90,7 @@ public class AndroidClientService {
         SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicewfGoOn");
         soapReq.addProperty("processname", processname);//流程名称
         soapReq.addProperty("mboName", mbo);//工单WORKORDER
-        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送wonum的值
+        soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送WONUM的值
         soapReq.addProperty("key", key);//如工单：wonum
         soapReq.addProperty("zx", zx);//审批的结果，1为审批通过，0为审批不通过
         if (!desc.equals("")) {
@@ -129,11 +129,11 @@ public class AndroidClientService {
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
         SoapObject soapReq = new SoapObject(NAMESPACE, "mobileserviceInsertMbo");
-        soapReq.addProperty("json", json);
-        soapReq.addProperty("flag", 1);
-        soapReq.addProperty("mboObjectName", mboObjectName);
-        soapReq.addProperty("mboKey", mboKey);
-        soapReq.addProperty("personId", personId);
+        soapReq.addProperty("json", json);//新增信息json
+        soapReq.addProperty("flag", 1);//默认为1
+        soapReq.addProperty("mboObjectName", mboObjectName);//表名
+        soapReq.addProperty("mboKey", mboKey);//表主键 如：WONUM
+        soapReq.addProperty("personId", personId);//用户id，登录返回信息得到
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(AccountUtils.getIpAddress(context) + url, timeOut);
         try {
@@ -159,7 +159,6 @@ public class AndroidClientService {
      * 通用修改
      */
     public static WebResult UpdateWO(Context context, String json, String mboObjectName, String mboKey, String mboKeyValue, String url) {
-//        http://192.168.100.17:7001/meaweb/services/MOBILESERVICE
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;

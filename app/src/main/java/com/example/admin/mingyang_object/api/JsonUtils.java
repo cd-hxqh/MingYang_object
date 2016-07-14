@@ -1438,7 +1438,7 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    if (!name.equals("isnew")) {
+                    if (!name.equals("isnew")&&!name.equals("WORKORDERID")&&!name.equals("id")&&!name.equals("isUpdate")) {
                         getOrSet = workOrder.getClass().getMethod("get" + name);
                         Object value = null;
                         value = getOrSet.invoke(workOrder);
@@ -1467,12 +1467,14 @@ public class JsonUtils<E> {
                         String name = field1[j].getName();//获取属性的名字
                         Method getOrSet = null;
                         try {
+                            if (!name.equals("belongid")&&!name.equals("id")&&!name.equals("isUpload")) {
                                 getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
                                 Object value = null;
                                 value = getOrSet.invoke(woactivities.get(i));
                                 if (value != null) {
                                     woactivityObj.put(name, value + "");
                                 }
+                            }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
                         } catch (IllegalAccessException e) {

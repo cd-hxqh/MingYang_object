@@ -91,7 +91,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private WorkOrder workOrder;
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
-    private EditText description;//工单描述
+    private TextView description;//工单描述
     private LinearLayout description_layout;
     private TextView branch;//中心
     private TextView udprojectnum;//项目
@@ -219,7 +219,7 @@ public class Work_DetailsActivity extends BaseActivity {
 
         work_numlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         wonum = (TextView) findViewById(R.id.work_wonum);
-        description = (EditText) findViewById(R.id.work_describe);
+        description = (TextView) findViewById(R.id.work_describe);
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
         branch = (TextView) findViewById(R.id.work_branch);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
@@ -491,8 +491,8 @@ public class Work_DetailsActivity extends BaseActivity {
         } else if (textView == culevel) {
             types = getResources().getStringArray(R.array.culevel_array);
         }
-        for (int i = 0; i < types.length; i++) {
-            mMenuItems.add(new DialogMenuItem(types[i], 0));
+        for (String type : types) {
+            mMenuItems.add(new DialogMenuItem(type, 0));
         }
         final NormalListDialog dialog = new NormalListDialog(Work_DetailsActivity.this, mMenuItems);
         dialog.title("请选择")//
@@ -1066,7 +1066,7 @@ public class Work_DetailsActivity extends BaseActivity {
                         closeProgressDialog();
                     }
                 }.execute();
-            }else {
+            //}else {
                 closeProgressDialog();
             }
         }
