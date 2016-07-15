@@ -142,9 +142,10 @@
 
                         <TextView
                             android:id="@+id/pronum_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />
@@ -201,9 +202,10 @@
 
                         <TextView
                             android:id="@+id/location_code_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />
@@ -232,9 +234,10 @@
 
                         <TextView
                             android:id="@+id/assetloc_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />
@@ -261,9 +264,10 @@
 
                         <TextView
                             android:id="@+id/culevel_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />
@@ -290,12 +294,13 @@
 
                         <TextView
                             android:id="@+id/faulttype_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
-                            android:textSize="@dimen/dimens_16dp" />
+                            android:textSize="@dimen/dimens_16dp"/>
                     </LinearLayout>
 
                     <View
@@ -412,9 +417,10 @@
 
                         <TextView
                             android:id="@+id/statustype_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />
@@ -532,9 +538,10 @@
 
                         <TextView
                             android:id="@+id/fault_codedesc_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />
@@ -561,9 +568,10 @@
 
                         <TextView
                             android:id="@+id/fault_code1_text_id"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_5"
+                            android:drawableRight="@mipmap/item_more"
                             android:hint="@string/have_not_data"
                             android:textColor="@color/light_black"
                             android:textSize="@dimen/dimens_16dp" />

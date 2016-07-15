@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +62,7 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
      * 返回按钮*
      */
     private ImageView backImageView;
-    private TextView choose;
+    private Button choose;
     private String status = "全部";
 
     LinearLayoutManager layoutManager;
@@ -95,7 +96,7 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
-        choose = (TextView) findViewById(R.id.title_choose);
+        choose = (Button) findViewById(R.id.title_choose);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);

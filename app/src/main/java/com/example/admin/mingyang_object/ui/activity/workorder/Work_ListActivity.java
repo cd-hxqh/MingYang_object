@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,7 +60,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     private TextView titlename;
     private ImageView addimg;
-    private TextView choose;
+    private Button choose;
     private RelativeLayout backlayout;
 
     private String status = "全部";
@@ -99,7 +100,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
-        choose = (TextView) findViewById(R.id.title_choose);
+        choose = (Button) findViewById(R.id.title_choose);
         addimg = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);

@@ -259,11 +259,13 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        switch (requestCode) {
-            case 1:
-                option = (Option) data.getSerializableExtra("option");
-                lead.setText(option.getName());
-                break;
+        if (data!=null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    lead.setText(option.getName());
+                    break;
+            }
         }
     }
 }

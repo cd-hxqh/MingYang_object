@@ -29,16 +29,20 @@
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
-    <TextView
+    <Button
         android:id="@+id/title_choose"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dimens_10dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimens_10"
+        android:background="@drawable/action_btn"
         android:gravity="center"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:padding="@dimen/dimen_5"
         android:text="全部"
-        android:textColor="@color/white"/>
+        android:textColor="@color/default_text_color"
+        android:textSize="14sp" />
 
 </RelativeLayout>

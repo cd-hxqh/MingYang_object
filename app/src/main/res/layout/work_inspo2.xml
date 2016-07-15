@@ -40,9 +40,10 @@
 
                 <TextView
                     android:id="@+id/work_lead2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@mipmap/item_more"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
@@ -76,9 +77,10 @@
 
                 <TextView
                     android:id="@+id/work_udinspoby_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@mipmap/item_more"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
@@ -112,9 +114,10 @@
 
                 <TextView
                     android:id="@+id/work_udinspoby2_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@mipmap/item_more"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
@@ -148,9 +151,10 @@
 
                 <TextView
                     android:id="@+id/work_udinspoby3_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_5"
+                    android:drawableRight="@mipmap/item_more"
                     android:hint="@string/have_not_data"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/dimens_16dp" />
