@@ -1,1 +1,1 @@
-include ':app', ':FlycoAnimation_Lib', ':FlycoDialog_Lib', ':photopicker'
+include ':photopicker', ':FlycoAnimation_Lib', ':FlycoDialog_Lib', ':app'
