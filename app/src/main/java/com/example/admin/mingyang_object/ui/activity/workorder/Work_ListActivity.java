@@ -115,7 +115,9 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         titlename.setText(WorkTypeUtils.getTitle(worktype));
         choose.setVisibility(View.VISIBLE);
         choose.setOnClickListener(new NormalListDialogOnClickListener(choose));
-        addimg.setVisibility(View.VISIBLE);
+        if (worktype.equals(Constants.FR)||worktype.equals(Constants.AA)) {
+            addimg.setVisibility(View.VISIBLE);
+        }
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
