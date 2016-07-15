@@ -306,25 +306,25 @@ public class UddebugWorkOrderLineAddNewActivity extends BaseActivity {
         //调试日期
         if ( "".equals(dynamicdebugdate.getText().toString()) )
         {
-            dynamicdebugdate.setText(" ");
+            dynamicdebugdate.setText("");
 
         }
         //并网运行日期
         if ( "".equals(synchronizationdebugdate.getText().toString()) )
         {
-            synchronizationdebugdate.setText(" ");
+            synchronizationdebugdate.setText("");
 
         }
         //静态调试日期
         if ( "".equals(time1.getText().toString()) )
         {
-            time1.setText(" ");
+            time1.setText("");
 
         }
         //动态调试日期
         if ( "".equals(time2.getText().toString()) )
         {
-            time2.setText(" ");
+            time2.setText("");
         }
         //程序版本号
         if ( "".equals(vesion.getText().toString()) )
@@ -335,32 +335,32 @@ public class UddebugWorkOrderLineAddNewActivity extends BaseActivity {
         //调试责任人
         if ( "".equals(responsibleperson.getText().toString()) )
         {
-            responsibleperson.setText(" ");
+            responsibleperson.setText("");
         }
         //调试组长
         if ( "".equals(debugleader.getText().toString()) )
         {
-            debugleader.setText(" ");
+            debugleader.setText("");
         }
         //调试工程师1
         if ( "".equals(crew.getText().toString()) )
         {
-            crew.setText(" ");
+            crew.setText("");
         }
         //问题纪录
         if ( "".equals(question.getText().toString()) )
         {
-            question.setText(" ");
+            question.setText("");
         }
         //处理过程
         if ( "".equals(dispose.getText().toString()) )
         {
-            dispose.setText(" ");
+            dispose.setText("");
         }
         //备注
         if ( "".equals(remark.getText().toString()) )
         {
-            remark.setText(" ");
+            remark.setText("");
         }
 
         return true;
