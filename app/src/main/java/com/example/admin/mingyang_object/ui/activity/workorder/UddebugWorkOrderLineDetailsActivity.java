@@ -1,19 +1,25 @@
 package com.example.admin.mingyang_object.ui.activity.workorder;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.DateSelect;
 
 
 /**
@@ -33,7 +39,6 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
     private UddebugWorkOrderLine uddebugWorkOrderLine = new UddebugWorkOrderLine();
     private DebugWorkOrder workOrder;
     private int position;
-
     private TextView winddrivengeneratornum;//风机编码
     private EditText fjlocation;//机台号
     private TextView dynamicdebugdate;//调试日期
@@ -52,7 +57,11 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button delete;//删除
+    private String pronum;
 
+
+    private Button cancel;//取消
+    private Button save;//保存
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +102,8 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
 //        confirm = (Button) findViewById(R.id.confirm);
 //        delete = (Button) findViewById(R.id.work_delete);
+        cancel=(Button)findViewById(R.id.work_cancel);
+        save=(Button)findViewById(R.id.work_save);
     }
 
     @Override
@@ -122,14 +133,205 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
         remark.setText(uddebugWorkOrderLine.REMARK);
 //        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
+        //风机编码
+        winddrivengeneratornum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.e("调试工单","选择风机编码");
+                Intent intent = new Intent(UddebugWorkOrderLineDetailsActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.UDLOCNUMCODE);
+                intent.putExtra("udprojectnum", pronum);
+                startActivityForResult(intent, 6);
+
+            }
+        });
+        //调试日期
+        dynamicdebugdate.setOnClickListener(new DateChecked(dynamicdebugdate));
+        //并网运行日期
+        synchronizationdebugdate.setOnClickListener(new DateChecked(synchronizationdebugdate));
+        //静态调试日期
+        time1.setOnClickListener(new DateChecked(time1));
+        //动态调试日期
+        time2.setOnClickListener(new DateChecked(time2));
+        //调试责任人
+        responsibleperson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","选择调试责任人");
+                Intent intent = new Intent(UddebugWorkOrderLineDetailsActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 7);
+            }
+        });
+        //调试组长
+        debugleader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","选择调试组长");
+                Intent intent = new Intent(UddebugWorkOrderLineDetailsActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 8);
+            }
+        });
+        //调试工程师1
+        crew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","选择调试工程师1");
+                Intent intent = new Intent(UddebugWorkOrderLineDetailsActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 9);
+            }
+        });
+
+        //调试工程师2
+        crew2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","选择调试工程师2");
+                Intent intent = new Intent(UddebugWorkOrderLineDetailsActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 10);
+            }
+        });
+        //调试工程师3
+        crew3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","选择调试工程师3");
+                Intent intent = new Intent(UddebugWorkOrderLineDetailsActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 11);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","取消");
+                finish();
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("调试工单","保存");
+                if (checkData())
+                {
+                    Intent intent = getIntent();
+                    UddebugWorkOrderLine tmp_uddebugWorkOrderLine=getWoactivity();
+                    intent.putExtra("uddebugWorkOrderLine", tmp_uddebugWorkOrderLine);
+                    Toast.makeText(UddebugWorkOrderLineDetailsActivity.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+                    UddebugWorkOrderLineDetailsActivity.this.setResult(1, intent);
+                    finish();
+                }
+                else
+                {
+
+                }
+//            intent.putExtra("position", position);
+            }
+        });
     }
 
     private UddebugWorkOrderLine getWoactivity() {
+
         UddebugWorkOrderLine uddebugWorkOrderLine = this.uddebugWorkOrderLine;
+        uddebugWorkOrderLine.WINDDRIVENGENERATORNUM=winddrivengeneratornum.getText().toString();//风机编码
+        uddebugWorkOrderLine.FJLOCATION=fjlocation.getText().toString();//机台号
+        uddebugWorkOrderLine.DYNAMICDEBUGDATE=dynamicdebugdate.getText().toString();//调试日期
+        uddebugWorkOrderLine.SYNCHRONIZATIONDEBUGDATE=synchronizationdebugdate.getText().toString();//并网运行日期
+        uddebugWorkOrderLine.TIME1=time1.getText().toString();//静态调试日期
+        uddebugWorkOrderLine.TIME2=time2.getText().toString();//动态调试日期
+        uddebugWorkOrderLine.VESION=vesion.getText().toString();//程序版本号
+        uddebugWorkOrderLine.RESPONSIBLEPERSON=responsibleperson.getText().toString();//调试责任人
+        uddebugWorkOrderLine.DEBUGLEADER=debugleader.getText().toString();//调试组长
+        uddebugWorkOrderLine.CREW=crew.getText().toString();//调试工程师1
+        uddebugWorkOrderLine.CREW2=crew2.getText().toString();//调试工程师2
+        uddebugWorkOrderLine.CREW3=crew3.getText().toString();//调试工程师3
+        uddebugWorkOrderLine.QUESTION=question.getText().toString();//问题记录
+        uddebugWorkOrderLine.DISPOSE=dispose.getText().toString();//处理过程
+        uddebugWorkOrderLine.REMARK=remark.getText().toString();//备注
 
         return uddebugWorkOrderLine;
-    }
 
+    }
+    private boolean checkData()
+    {
+        //风机编码
+        if ( "".equals(winddrivengeneratornum.getText().toString()) )
+        {
+            Toast.makeText(UddebugWorkOrderLineDetailsActivity.this, "请选择风机编码", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //机台号
+        if ( "".equals(fjlocation.getText().toString()) )
+        {
+            Toast.makeText(UddebugWorkOrderLineDetailsActivity.this, "请填写机台号", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //调试日期
+        if ( "".equals(dynamicdebugdate.getText().toString()) )
+        {
+            dynamicdebugdate.setText("");
+
+        }
+        //并网运行日期
+        if ( "".equals(synchronizationdebugdate.getText().toString()) )
+        {
+            synchronizationdebugdate.setText("");
+
+        }
+        //静态调试日期
+        if ( "".equals(time1.getText().toString()) )
+        {
+            time1.setText("");
+
+        }
+        //动态调试日期
+        if ( "".equals(time2.getText().toString()) )
+        {
+            time2.setText("");
+        }
+        //程序版本号
+        if ( "".equals(vesion.getText().toString()) )
+        {
+            Toast.makeText(UddebugWorkOrderLineDetailsActivity.this ,"请填写版本号",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //调试责任人
+        if ( "".equals(responsibleperson.getText().toString()) )
+        {
+            responsibleperson.setText("");
+        }
+        //调试组长
+        if ( "".equals(debugleader.getText().toString()) )
+        {
+            debugleader.setText("");
+        }
+        //调试工程师1
+        if ( "".equals(crew.getText().toString()) )
+        {
+            crew.setText("");
+        }
+        //问题纪录
+        if ( "".equals(question.getText().toString()) )
+        {
+            question.setText("");
+        }
+        //处理过程
+        if ( "".equals(dispose.getText().toString()) )
+        {
+            dispose.setText("");
+        }
+        //备注
+        if ( "".equals(remark.getText().toString()) )
+        {
+            remark.setText("");
+        }
+
+        return true;
+    }
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -156,7 +358,18 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
 //            finish();
         }
     };
+    class DateChecked implements View.OnClickListener {
+        TextView textView;
 
+        public DateChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateSelect(UddebugWorkOrderLineDetailsActivity.this, textView).showDialog();
+        }
+    }
     private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

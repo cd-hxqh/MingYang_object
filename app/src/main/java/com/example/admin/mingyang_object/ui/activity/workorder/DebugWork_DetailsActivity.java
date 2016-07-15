@@ -58,6 +58,8 @@ public class DebugWork_DetailsActivity extends BaseActivity {
      * 工作计划*
      */
     private LinearLayout planLinearlayout;
+    private LinearLayout workfloatLinearlayout;
+    private LinearLayout pictureLinearlayout;
 
     private DebugWorkOrder workOrder;
     private TextView debugworkordernum;//工单号
@@ -65,6 +67,8 @@ public class DebugWork_DetailsActivity extends BaseActivity {
     private TextView pronum;//项目编号
     private TextView status;//状态
     private TextView createby;//创建人
+    private TextView planstart;//计划开始时间
+    private TextView planend;//计划结束时间
     private Button delete;
     private Button revise;
     private Button work_flow;
@@ -238,9 +242,27 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
         // 设置好参数之后再show
         popupWindow.showAsDropDown(view);
+        //子表
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.debug_uddebugworkorderline);
         planLinearlayout.setOnClickListener(planOnClickListener);
-
+        //发送工作流
+        workfloatLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        workfloatLinearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("调试工单","发送工作流");
+                popupWindow.dismiss();
+            }
+        });
+        //图片上传
+        pictureLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
+        pictureLinearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("调试工单","上传图片");
+                popupWindow.dismiss();
+            }
+        });
     }
 
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
