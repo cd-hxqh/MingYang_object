@@ -371,15 +371,14 @@ public class Udreport_DetailActivity extends BaseActivity {
         public void onClick(View v) {
             if (fault_codedescText.getText().equals("")){
                 Toast.makeText(Udreport_DetailActivity.this,"请选择故障类",Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
             }else if (fault_code1Text.getText().equals("")){
                 Toast.makeText(Udreport_DetailActivity.this,"请选择故障代码",Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
             }else {
                 Intent intent = new Intent(Udreport_DetailActivity.this, Failurelist1Activity.class);
                 intent.putExtra("failurecode", udreport.getFAULT_CODE1());
                 startActivityForResult(intent, 0);
             }
+            popupWindow.dismiss();
         }
     };
 

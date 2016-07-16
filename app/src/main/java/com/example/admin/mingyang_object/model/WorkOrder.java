@@ -47,6 +47,10 @@ public class WorkOrder implements Serializable {
     public String GZWTDESC;//问题原因描述
     @DatabaseField(columnName = "CULEVEL")
     public String CULEVEL;//故障等级
+    @DatabaseField(columnName = "UDGZDJ")
+    public String UDGZDJ;//故障等级
+    @DatabaseField(columnName = "UDGZTYPE")
+    public String UDGZTYPE;//故障类型
     @DatabaseField(columnName = "UDZGLIMIT")
     public String UDZGLIMIT;//提报时间
     @DatabaseField(columnName = "UDPLANNUM")
@@ -668,5 +672,21 @@ public class WorkOrder implements Serializable {
 
     public void setNAME3(String NAME3) {
         this.NAME3 = NAME3;
+    }
+
+    public String getUDGZDJ() {
+        return UDGZDJ;
+    }
+
+    public void setUDGZDJ(String UDGZDJ) {
+        this.UDGZDJ = UDGZDJ;
+    }
+
+    public String getUDGZTYPE() {
+        return UDGZTYPE;
+    }
+
+    public void setUDGZTYPE(String UDGZTYPE) {
+        this.UDGZTYPE = UDGZTYPE;
     }
 }

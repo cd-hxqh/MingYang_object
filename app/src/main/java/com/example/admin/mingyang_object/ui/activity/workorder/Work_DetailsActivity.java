@@ -118,7 +118,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout defultlayout;
     private TextView failurecode;//故障类
     private TextView problemcode;//问题原因
-    private TextView culevel;//故障等级
+    private TextView udgzdj;//故障等级
+    private TextView udgztype;//故障类型
     private TextView udrprrsb;//提报人
     private TextView udzglimit;//提报时间
     private LinearLayout udplannumlayout;
@@ -247,7 +248,8 @@ public class Work_DetailsActivity extends BaseActivity {
         defultlayout = (LinearLayout) findViewById(R.id.work_defultlayout);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
         problemcode = (TextView) findViewById(R.id.work_problemcode);
-        culevel = (TextView) findViewById(R.id.work_culevel);
+        udgzdj = (TextView) findViewById(R.id.work_culevel);
+        udgztype = (TextView) findViewById(R.id.work_udgztype);
         udrprrsb = (TextView) findViewById(R.id.work_udrprrsb);
         udzglimit = (TextView) findViewById(R.id.work_udzglimit);
         udplannumlayout = (LinearLayout) findViewById(R.id.work_udplannum_layout);
@@ -349,7 +351,8 @@ public class Work_DetailsActivity extends BaseActivity {
         createdate.setText(workOrder.CREATEDATE);
         failurecode.setText(workOrder.GZLDESC);
         problemcode.setText(workOrder.GZWTDESC);
-        culevel.setText(workOrder.CULEVEL);
+        udgzdj.setText(workOrder.UDGZDJ);
+        udgztype.setText(workOrder.UDGZTYPE);
 
         udzglimit.setText(workOrder.UDZGLIMIT);
         udplannum.setText(workOrder.UDPLANNUM);
@@ -409,7 +412,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
         djtype.setOnClickListener(new NormalListDialogOnClickListener(djtype));
         udjgtype.setOnClickListener(new NormalListDialogOnClickListener(udjgtype));
-        culevel.setOnClickListener(new NormalListDialogOnClickListener(culevel));
+//        culevel.setOnClickListener(new NormalListDialogOnClickListener(culevel));
         lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         udinspoby2.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
@@ -501,9 +504,10 @@ public class Work_DetailsActivity extends BaseActivity {
             types = getResources().getStringArray(R.array.pctype_array);
         } else if (textView == udjgtype) {
             types = getResources().getStringArray(R.array.udjgtype_array);
-        } else if (textView == culevel) {
-            types = getResources().getStringArray(R.array.culevel_array);
         }
+//        else if (textView == culevel) {
+//            types = getResources().getStringArray(R.array.culevel_array);
+//        }
         for (String type : types) {
             mMenuItems.add(new DialogMenuItem(type, 0));
         }
@@ -836,15 +840,14 @@ public class Work_DetailsActivity extends BaseActivity {
         public void onClick(View v) {
             if (failurecode.getText().equals("")){
                 Toast.makeText(Work_DetailsActivity.this,"请选择故障类",Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
             }else if (problemcode.getText().equals("")){
                 Toast.makeText(Work_DetailsActivity.this,"请选择问题原因",Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
             }else {
                 Intent intent = new Intent(Work_DetailsActivity.this, Failurelist1Activity.class);
                 intent.putExtra("failurecode", workOrder.PROBLEMCODE);
                 startActivityForResult(intent, 0);
             }
+            popupWindow.dismiss();
         }
     };
 
@@ -907,10 +910,10 @@ public class Work_DetailsActivity extends BaseActivity {
                     Toast.makeText(Work_DetailsActivity.this, "请输入故障问题", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (culevel.getText().toString().equals("")) {
-                    Toast.makeText(Work_DetailsActivity.this, "请选择故障等级", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (culevel.getText().toString().equals("")) {
+//                    Toast.makeText(Work_DetailsActivity.this, "请选择故障等级", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (udrprrsb.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请输入提报人", Toast.LENGTH_SHORT).show();
                     return false;
@@ -1421,7 +1424,7 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.CREATEDATE = createdate.getText().toString();
 //        workOrder.FAILURECODE = failurecode.getText().toString();
 //        workOrder.PROBLEMCODE = problemcode.getText().toString();
-        workOrder.CULEVEL = culevel.getText().toString();
+//        workOrder.CULEVEL = culevel.getText().toString();
         workOrder.UDZGLIMIT = udzglimit.getText().toString();
         workOrder.UDPLANNUM = udplannum.getText().toString();
         workOrder.SCHEDSTART = schedstart.getText().toString();
