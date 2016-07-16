@@ -11,6 +11,9 @@ public class DebugWorkOrder implements Serializable {
     public String PRONUM;//项目编号
     public String STATUS;//状态
     public String CREATEBY;//创建人
+    public String PLANSTART;//计划开始时间
+    public String PLANEND;//计划结束时间
+
 
     public boolean isnew;
 
@@ -18,9 +21,7 @@ public class DebugWorkOrder implements Serializable {
         return DEBUGWORKORDERNUM;
     }
 
-    public void setDEBUGWORKORDERNUM(String DEBUGWORKORDERNUM) {
-        this.DEBUGWORKORDERNUM = DEBUGWORKORDERNUM;
-    }
+    public void setDEBUGWORKORDERNUM(String DEBUGWORKORDERNUM) {this.DEBUGWORKORDERNUM = DEBUGWORKORDERNUM;}
 
     public String getDESCRIPTION() {
         return DESCRIPTION;
@@ -53,4 +54,12 @@ public class DebugWorkOrder implements Serializable {
     public void setCREATEBY(String CREATEBY) {
         this.CREATEBY = CREATEBY;
     }
+
+    public String getPLANSTART() {return PLANSTART;}
+
+    public void setPLANSTART(String PLANSTART) {this.PLANSTART = PLANSTART;}
+
+    public String getPLANEND() {return PLANEND;}
+
+    public void setPLANEND(String PLANEND) {this.PLANEND = PLANEND;}
 }
