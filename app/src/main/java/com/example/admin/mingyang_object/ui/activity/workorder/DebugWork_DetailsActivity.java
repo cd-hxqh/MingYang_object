@@ -27,6 +27,7 @@ import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -115,6 +116,8 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         createby = (TextView) findViewById(R.id.debug_createby);
         save=(Button)findViewById(R.id.work_save);
         cancel=(Button)findViewById(R.id.work_cancel);
+        planstart = (TextView) findViewById(R.id.debug_planstart);
+        planend = (TextView) findViewById(R.id.debug_planend);
     }
 
     @Override
@@ -156,6 +159,8 @@ public class DebugWork_DetailsActivity extends BaseActivity {
                 finish();
             }
         });
+        planstart.setOnClickListener(new DateChecked(planstart));
+        planend.setOnClickListener(new DateChecked(planend));
     }
 
     private View.OnClickListener udyxjOnClickListener = new View.OnClickListener() {
@@ -623,6 +628,18 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 //                break;
 //            default:
 //                break;
+        }
+    }
+    class DateChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateSelect(DebugWork_DetailsActivity.this, textView).showDialog();
         }
     }
 }
