@@ -102,8 +102,7 @@
                     android:layout_alignParentRight="true"
                     android:text="服务器地址"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

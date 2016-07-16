@@ -489,7 +489,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     pronumText.setText(option.getName());
                     pronumDesc = option.getName() + option.getDesc();
-                    branchText.setText(option.getValue1());
+                    branchText.setText(option.getValue6());
                     udprorescText.setText(option.getValue4());
                     contractsText.setText(option.getValue4());
                     udprorunlog.CONTRACTS = option.getValue2();

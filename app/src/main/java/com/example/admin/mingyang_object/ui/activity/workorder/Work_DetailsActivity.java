@@ -21,17 +21,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.dao.WoactivityDao;
 import com.example.admin.mingyang_object.dao.WorkOrderDao;
 import com.example.admin.mingyang_object.dao.WpmaterialDao;
+import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.ui.activity.Failurelist1Activity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.ui.activity.PhotoActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
@@ -88,6 +93,11 @@ public class Work_DetailsActivity extends BaseActivity {
      * 上传附件*
      */
     private LinearLayout commitLinearLayout;
+    /**
+     * 查看故障原因措施*
+     */
+    private LinearLayout failureLinearLayout;
+
     private WorkOrder workOrder;
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
@@ -170,6 +180,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView jgplannum;//技改计划编号
     private TextView udjgtype;//技改类型
     private EditText udfjappnum;//主控程序版本号
+    private LinearLayout udrprrsb1layout;
     private TextView udrprrsb1;//负责人
     private LinearLayout inspo2layout;//故障工单人员信息
     private TextView lead2;//维护/运行组长
@@ -298,6 +309,7 @@ public class Work_DetailsActivity extends BaseActivity {
         jgplannum = (TextView) findViewById(R.id.work_jgplannum);
         udjgtype = (TextView) findViewById(R.id.work_udjgtype);
         udfjappnum = (EditText) findViewById(R.id.work_udfjappnum);
+        udrprrsb1layout = (LinearLayout) findViewById(R.id.work_udrprrsb1_layout);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
         inspo2layout = (LinearLayout) findViewById(R.id.work_inspo2layout);
         lead2 = (TextView) findViewById(R.id.work_lead2);
@@ -333,10 +345,10 @@ public class Work_DetailsActivity extends BaseActivity {
         udlocnum.setText(workOrder.UDLOCNUM);
         udlocation.setText(workOrder.UDLOCATION);
         udstatus.setText(workOrder.UDSTATUS);
-        createby.setText(workOrder.CREATEBY);
+        createby.setText(workOrder.CREATENAME);
         createdate.setText(workOrder.CREATEDATE);
-        failurecode.setText(workOrder.FAILURECODE);
-        problemcode.setText(workOrder.PROBLEMCODE);
+        failurecode.setText(workOrder.GZLDESC);
+        problemcode.setText(workOrder.GZWTDESC);
         culevel.setText(workOrder.CULEVEL);
 
         udzglimit.setText(workOrder.UDZGLIMIT);
@@ -349,18 +361,18 @@ public class Work_DetailsActivity extends BaseActivity {
         udstoptime.setText(workOrder.UDSTOPTIME);
         udrestarttime.setText(workOrder.UDRESTARTTIME);
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
-            lead2.setText(workOrder.LEAD);
-            udinspoby_2.setText(workOrder.UDINSPOBY);
-            udinspoby2_2.setText(workOrder.UDINSPOBY2);
-            udinspoby3_2.setText(workOrder.UDINSPOBY3);
-            udrprrsb.setText(workOrder.UDRPRRSB);
+            lead2.setText(workOrder.LEADNAME);
+            udinspoby_2.setText(workOrder.NAME1);
+            udinspoby2_2.setText(workOrder.NAME2);
+            udinspoby3_2.setText(workOrder.NAME3);
+            udrprrsb.setText(workOrder.UDRPRRSBNAME);
             udjgresult.setText(workOrder.UDJGRESULT);
         } else {
-            lead.setText(workOrder.LEAD);
-            udinspoby.setText(workOrder.UDINSPOBY);
-            udinspoby2.setText(workOrder.UDINSPOBY2);
-            udinspoby3.setText(workOrder.UDINSPOBY3);
-            udrprrsb1.setText(workOrder.UDRPRRSB);
+            lead.setText(workOrder.LEADNAME);
+            udinspoby.setText(workOrder.NAME1);
+            udinspoby2.setText(workOrder.NAME2);
+            udinspoby3.setText(workOrder.NAME3);
+            udrprrsb1.setText(workOrder.UDRPRRSBNAME);
             udjgresult1.setText(workOrder.UDJGRESULT);
         }
         udprobdesc.setText(workOrder.UDPROBDESC);
@@ -450,6 +462,7 @@ public class Work_DetailsActivity extends BaseActivity {
         if(workOrder.id!=0){
             getLocationData(workOrder.id);
         }
+        getFailureList();
     }
 
 //    private View.OnClickListener djtypeOnClickListener = new View.OnClickListener() {
@@ -652,6 +665,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udlocationlayout.setVisibility(View.GONE);
                 udlocnumlayout.setVisibility(View.GONE);
                 udjpnumtext.setText(R.string.work_udjpnum3);
+                udrprrsb1layout.setVisibility(View.GONE);
                 break;
             case "WS"://定检工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -681,18 +695,22 @@ public class Work_DetailsActivity extends BaseActivity {
                 break;
             case "AA"://终验收工单
                 wpmaterialLinearLayout.setVisibility(View.GONE);
+                failureLinearLayout.setVisibility(View.GONE);
                 break;
 //            case "DC"://调试工单
 //
 //                break;
             case "SP"://排查工单
                 wpmaterialLinearLayout.setVisibility(View.GONE);
+                failureLinearLayout.setVisibility(View.GONE);
                 break;
             case "TP"://技改工单
                 wpmaterialLinearLayout.setVisibility(View.GONE);
+                failureLinearLayout.setVisibility(View.GONE);
                 break;
             case "WS"://定检工单
                 wpmaterialLinearLayout.setVisibility(View.GONE);
+                failureLinearLayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -746,10 +764,12 @@ public class Work_DetailsActivity extends BaseActivity {
 //        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
         flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
         commitLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
+        failureLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_failure_id);
         planLinearlayout.setOnClickListener(planOnClickListener);
         flowerLinearLayout.setOnClickListener(flowerOnClickListener);
         wpmaterialLinearLayout.setOnClickListener(wpmaterialOnClickListener);
         commitLinearLayout.setOnClickListener(commitOnClickListener);
+        failureLinearLayout.setOnClickListener(failureOnClickListener);
         decisionLayout();
 
     }
@@ -808,6 +828,23 @@ public class Work_DetailsActivity extends BaseActivity {
             intent.putExtra("ownertable", "WORKORDER");
             intent.putExtra("ownerid", workOrder.getWORKORDERID()+"");
             startActivityForResult(intent, 0);
+        }
+    };
+
+    private View.OnClickListener failureOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (failurecode.getText().equals("")){
+                Toast.makeText(Work_DetailsActivity.this,"请选择故障类",Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }else if (problemcode.getText().equals("")){
+                Toast.makeText(Work_DetailsActivity.this,"请选择问题原因",Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }else {
+                Intent intent = new Intent(Work_DetailsActivity.this, Failurelist1Activity.class);
+                intent.putExtra("failurecode", workOrder.PROBLEMCODE);
+                startActivityForResult(intent, 0);
+            }
         }
     };
 
@@ -1380,10 +1417,10 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.UDLOCNUM = udlocnum.getText().toString();
         workOrder.UDLOCATION = udlocation.getText().toString();
         workOrder.UDSTATUS = udstatus.getText().toString();
-        workOrder.CREATEBY = createby.getText().toString();
+//        workOrder.CREATEBY = createby.getText().toString();
         workOrder.CREATEDATE = createdate.getText().toString();
-        workOrder.FAILURECODE = failurecode.getText().toString();
-        workOrder.PROBLEMCODE = problemcode.getText().toString();
+//        workOrder.FAILURECODE = failurecode.getText().toString();
+//        workOrder.PROBLEMCODE = problemcode.getText().toString();
         workOrder.CULEVEL = culevel.getText().toString();
         workOrder.UDZGLIMIT = udzglimit.getText().toString();
         workOrder.UDPLANNUM = udplannum.getText().toString();
@@ -1395,18 +1432,18 @@ public class Work_DetailsActivity extends BaseActivity {
         workOrder.UDSTOPTIME = udstoptime.getText().toString();
         workOrder.UDRESTARTTIME = udrestarttime.getText().toString();
         if (workOrder.WORKTYPE.equals(Constants.FR)) {
-            workOrder.UDRPRRSB = udrprrsb.getText().toString();
+//            workOrder.UDRPRRSB = udrprrsb.getText().toString();
             workOrder.UDJGRESULT = udjgresult.getText().toString();
-            workOrder.LEAD = lead2.getText().toString();
-            workOrder.UDINSPOBY = udinspoby_2.getText().toString();
-            workOrder.UDINSPOBY2 = udinspoby2_2.getText().toString();
-            workOrder.UDINSPOBY3 = udinspoby3_2.getText().toString();
+//            workOrder.LEAD = lead2.getText().toString();
+//            workOrder.UDINSPOBY = udinspoby_2.getText().toString();
+//            workOrder.UDINSPOBY2 = udinspoby2_2.getText().toString();
+//            workOrder.UDINSPOBY3 = udinspoby3_2.getText().toString();
         } else {
-            workOrder.LEAD = lead.getText().toString();
-            workOrder.UDINSPOBY = udinspoby.getText().toString();
-            workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
-            workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
-            workOrder.UDRPRRSB = udrprrsb1.getText().toString();
+//            workOrder.LEAD = lead.getText().toString();
+//            workOrder.UDINSPOBY = udinspoby.getText().toString();
+//            workOrder.UDINSPOBY2 = udinspoby2.getText().toString();
+//            workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
+//            workOrder.UDRPRRSB = udrprrsb1.getText().toString();
             workOrder.UDJGRESULT = udjgresult1.getText().toString();
         }
         workOrder.UDPROBDESC = udprobdesc.getText().toString();
@@ -1458,6 +1495,29 @@ public class Work_DetailsActivity extends BaseActivity {
         return wpmaterials;
     }
 
+    private void getFailureList(){//得到故障问题failurelist
+        HttpManager.getDataPagingInfo(this, HttpManager.getFailurelist3Url(1, 20,workOrder.FAILURECODE), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                if (results.getResultlist() != null) {
+                    ArrayList<Failurelist> items = JsonUtils.parsingFailurelist(results.getResultlist());
+                    if (items!=null&&items.size() == 1) {//问题原因
+                        failurelist = items.get(0).FAILURELIST+"";
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+            }
+        });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
@@ -1465,19 +1525,27 @@ public class Work_DetailsActivity extends BaseActivity {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
-                    lead.setText(option.getName());
+                    lead.setText(option.getDesc());
+                    workOrder.LEADNAME = option.getDesc();
+                    workOrder.LEAD = option.getName();
                     break;
                 case 2:
                     option = (Option) data.getSerializableExtra("option");
-                    udinspoby.setText(option.getName());
+                    udinspoby.setText(option.getDesc());
+                    workOrder.NAME1 = option.getDesc();
+                    workOrder.UDINSPOBY = option.getName();
                     break;
                 case 3:
                     option = (Option) data.getSerializableExtra("option");
-                    udinspoby2.setText(option.getName());
+                    udinspoby2.setText(option.getDesc());
+                    workOrder.NAME2 = option.getDesc();
+                    workOrder.UDINSPOBY2 = option.getName();
                     break;
                 case 4:
                     option = (Option) data.getSerializableExtra("option");
-                    udinspoby3.setText(option.getName());
+                    udinspoby3.setText(option.getDesc());
+                    workOrder.NAME3 = option.getDesc();
+                    workOrder.UDINSPOBY3 = option.getName();
                     break;
                 case 5:
                     option = (Option) data.getSerializableExtra("option");
@@ -1507,33 +1575,47 @@ public class Work_DetailsActivity extends BaseActivity {
                     break;
                 case 11:
                     option = (Option) data.getSerializableExtra("option");
-                    udrprrsb.setText(option.getName());
+                    udrprrsb.setText(option.getDesc());
+                    workOrder.UDRPRRSBNAME = option.getDesc();
+                    workOrder.UDRPRRSB = option.getName();
                     break;
                 case 12:
                     option = (Option) data.getSerializableExtra("option");
-                    failurecode.setText(option.getName());
+                    failurecode.setText(option.getDesc());
+                    workOrder.GZLDESC = option.getDesc();
+                    workOrder.FAILURECODE = option.getName();
                     failurelist = option.getValue1();
                     problemcode.setText("");
                     break;
                 case 13:
                     option = (Option) data.getSerializableExtra("option");
-                    problemcode.setText(option.getName());
+                    problemcode.setText(option.getDesc());
+                    workOrder.GZWTDESC = option.getDesc();
+                    workOrder.PROBLEMCODE = option.getName();
                     break;
                 case 14:
                     option = (Option) data.getSerializableExtra("option");
-                    lead2.setText(option.getName());
+                    lead2.setText(option.getDesc());
+                    workOrder.LEADNAME = option.getDesc();
+                    workOrder.LEAD = option.getName();
                     break;
                 case 15:
                     option = (Option) data.getSerializableExtra("option");
-                    udinspoby_2.setText(option.getName());
+                    udinspoby_2.setText(option.getDesc());
+                    workOrder.NAME1 = option.getDesc();
+                    workOrder.UDINSPOBY2 = option.getName();
                     break;
                 case 16:
                     option = (Option) data.getSerializableExtra("option");
-                    udinspoby2_2.setText(option.getName());
+                    udinspoby2_2.setText(option.getDesc());
+                    workOrder.NAME2 = option.getDesc();
+                    workOrder.UDINSPOBY2 = option.getName();
                     break;
                 case 17:
                     option = (Option) data.getSerializableExtra("option");
-                    udinspoby3_2.setText(option.getName());
+                    udinspoby3_2.setText(option.getDesc());
+                    workOrder.NAME3 = option.getDesc();
+                    workOrder.UDINSPOBY3 = option.getName();
                     break;
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {

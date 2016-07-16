@@ -173,6 +173,7 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option.setValue3(data.get(i).getPROSTAGE());//项目当前阶段
                 option.setValue4(data.get(i).getRESPONSNAME());//责任人描述
                 option.setValue5(data.get(i).getRESPONSPHONE());//电话号码
+                option.setValue6(data.get(i).getBRANCHDESC());//中心描述
                 optionList.add(option);
             }
         }

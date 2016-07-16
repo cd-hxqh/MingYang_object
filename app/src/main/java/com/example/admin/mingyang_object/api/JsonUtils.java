@@ -1992,11 +1992,13 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    getOrSet = udinspo.getClass().getMethod("get" + name);
-                    Object value = null;
-                    value = getOrSet.invoke(udinspo);
-                    if (value != null) {
-                        jsonObject.put(name, value + "");
+                    if (!name.equals("id")&&!name.equals("isUpdate")&&!name.equals("belong")) {
+                        getOrSet = udinspo.getClass().getMethod("get" + name);
+                        Object value = null;
+                        value = getOrSet.invoke(udinspo);
+                        if (value != null) {
+                            jsonObject.put(name, value + "");
+                        }
                     }
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();

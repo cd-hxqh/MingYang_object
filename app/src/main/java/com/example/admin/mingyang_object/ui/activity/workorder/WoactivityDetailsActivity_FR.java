@@ -47,6 +47,8 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
     private Button confirm;//确定
     private Button delete;//删除
 
+    private boolean isChange;//选项选择后是否改变
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
 
         taskid.setText(woactivity.TASKID);
         description.setText(woactivity.DESCRIPTION);
-        owner.setText(woactivity.OWNER);
+        owner.setText(woactivity.OWNERNAME);
         udacstarttime.setText(woactivity.UDACSTARTTIME);
         udacstoptime.setText(woactivity.UDACSTOPTIME);
         owner.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
@@ -106,7 +108,7 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
         woactivity.DESCRIPTION = description.getText().toString();
-        woactivity.OWNER = owner.getText().toString();
+//        woactivity.OWNER = owner.getText().toString();
         woactivity.UDACSTARTTIME = udacstarttime.getText().toString();
         woactivity.UDACSTOPTIME = udacstoptime.getText().toString();
         return woactivity;
@@ -131,14 +133,14 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         public void onClick(View view) {
             if (isOK()) {
                 Intent intent = getIntent();
-                if (((woactivity.DESCRIPTION == null && description.getText().toString().equals(""))
+                if ((!(woactivity.DESCRIPTION == null && description.getText().toString().equals(""))
                         || woactivity.DESCRIPTION.equals(description.getText().toString()))
-                        && ((woactivity.OWNER == null && owner.getText().toString().equals(""))
-                        || woactivity.OWNER.equals(owner.getText().toString()))
+//                        && ((woactivity.OWNER == null && owner.getText().toString().equals(""))
+//                        || woactivity.OWNER.equals(owner.getText().toString()))
                         && ((woactivity.UDACSTARTTIME == null && udacstarttime.getText().toString().equals(""))
                         || woactivity.UDACSTARTTIME.equals(udacstarttime.getText().toString()))
                         && ((woactivity.UDACSTOPTIME == null && udacstoptime.getText().toString().equals(""))
-                        || woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString()))) {//如果内容没有修改
+                        || woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString()))&&!isChange) {//如果内容没有修改
                     intent.putExtra("woactivity", woactivity);
                 } else {
                     Woactivity woactivity = getWoactivity();
@@ -209,7 +211,12 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
-                    owner.setText(option.getName());
+                    owner.setText(option.getDesc());
+                    if (woactivity.OWNER!=null&&!woactivity.OWNER.equals(option.getName())) {
+                        woactivity.OWNERNAME = option.getDesc();
+                        woactivity.OWNER = option.getName();
+                        isChange = true;
+                    }
                     break;
             }
         }

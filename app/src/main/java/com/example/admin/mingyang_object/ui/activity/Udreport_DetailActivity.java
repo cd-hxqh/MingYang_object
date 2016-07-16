@@ -3,6 +3,7 @@ package com.example.admin.mingyang_object.ui.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,8 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udqtyform;
@@ -71,6 +76,10 @@ public class Udreport_DetailActivity extends BaseActivity {
      * 生成附件
      */
     private LinearLayout commitLinearLayout;
+    /**
+     * 查看故障原因措施*
+     */
+    private LinearLayout failureLinearLayout;
 
     /**
      * 界面信息*
@@ -205,7 +214,7 @@ public class Udreport_DetailActivity extends BaseActivity {
             createbyText.setText(udreport.getCREATEBY());
             reporttimeText.setText(udreport.getREPORTTIME());
             fault_codedescText.setText(udreport.getFAULT_CODEDESC());
-            fault_code1Text.setText(udreport.getFAULT_CODE1());
+            fault_code1Text.setText(udreport.getFAULT_CODE1DESC());
             cudescribeText.setText(udreport.getCUDESCRIBE());
             resultText.setText(udreport.getRESULT());
             remarkText.setText(udreport.getREMARK());
@@ -243,6 +252,8 @@ public class Udreport_DetailActivity extends BaseActivity {
             remarkText.setFocusable(false);
         }
         statustypeText.setOnClickListener(new NormalListDialogOnClickListener(statustypeText));
+
+        getFailureList();
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,10 +313,11 @@ public class Udreport_DetailActivity extends BaseActivity {
         workorderLayout = (LinearLayout) contentView.findViewById(R.id.workorder_id);
         udpbforLayout = (LinearLayout) contentView.findViewById(R.id.udpbfor_id);
         commitLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
+        failureLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_failure_id);
         workorderLayout.setOnClickListener(workorderOnClickListener);
         udpbforLayout.setOnClickListener(udpbforOnClickListener);
         commitLinearLayout.setOnClickListener(commitOnClickListener);
-
+        failureLinearLayout.setOnClickListener(failureOnClickListener);
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -350,6 +362,23 @@ public class Udreport_DetailActivity extends BaseActivity {
             } else {
                 popupWindow.dismiss();
                 Toast.makeText(Udreport_DetailActivity.this, "仅当已提报状态可以生成质量问题反馈单!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private View.OnClickListener failureOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (fault_codedescText.getText().equals("")){
+                Toast.makeText(Udreport_DetailActivity.this,"请选择故障类",Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }else if (fault_code1Text.getText().equals("")){
+                Toast.makeText(Udreport_DetailActivity.this,"请选择故障代码",Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }else {
+                Intent intent = new Intent(Udreport_DetailActivity.this, Failurelist1Activity.class);
+                intent.putExtra("failurecode", udreport.getFAULT_CODE1());
+                startActivityForResult(intent, 0);
             }
         }
     };
@@ -701,6 +730,29 @@ public class Udreport_DetailActivity extends BaseActivity {
             Toast.makeText(Udreport_DetailActivity.this, "无效时间格式", Toast.LENGTH_SHORT).show();
         }
         return out;
+    }
+
+    private void getFailureList(){//得到故障问题failurelist
+        HttpManager.getDataPagingInfo(this, HttpManager.getFailurelist3Url(1, 20, udreport.getFAULT_CODE()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                if (results.getResultlist() != null) {
+                    ArrayList<Failurelist> items = JsonUtils.parsingFailurelist(results.getResultlist());
+                    if (items != null && items.size() == 1) {//问题原因
+                        failurelist = items.get(0).FAILURELIST + "";
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+            }
+        });
     }
 
     @Override

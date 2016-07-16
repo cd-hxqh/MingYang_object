@@ -10,6 +10,9 @@ public class Failurelist {
     public int PARENT;
     public String TYPE;
     public int FAILURELIST;
+    public String LOCDESC;//位置描述
+    public String UDDESCRIPTION;//触发条件
+    public String LOCATION;//位置编号
 
     public String getFAILURECODE() {
         return FAILURECODE;
@@ -49,5 +52,29 @@ public class Failurelist {
 
     public void setFAILURELIST(int FAILURELIST) {
         this.FAILURELIST = FAILURELIST;
+    }
+
+    public String getLOCDESC() {
+        return LOCDESC;
+    }
+
+    public void setLOCDESC(String LOCDESC) {
+        this.LOCDESC = LOCDESC;
+    }
+
+    public String getUDDESCRIPTION() {
+        return UDDESCRIPTION;
+    }
+
+    public void setUDDESCRIPTION(String UDDESCRIPTION) {
+        this.UDDESCRIPTION = UDDESCRIPTION;
+    }
+
+    public String getLOCATION() {
+        return LOCATION;
+    }
+
+    public void setLOCATION(String LOCATION) {
+        this.LOCATION = LOCATION;
     }
 }

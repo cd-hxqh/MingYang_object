@@ -236,7 +236,7 @@
     <string name="woactivity_udacstoptime">计划完成时间:</string>
     <string name="woactivity_udzyscorn">工作任务:</string>
     <string name="woactivity_udzysbasic">执行标准:</string>
-    <string name="woactivity_perinspr1">终验收结果:</string>
+    <string name="woactivity_perinspr1">已完成?:</string>
     <string name="woactivity_perinspr2">排查结果:</string>
     <string name="woactivity_perinspr3">定检结果:</string>
     <string name="woactivity_udprobdesc">问题描述:</string>
@@ -589,5 +589,6 @@
     <string name="xcjlxj_text">行驶记录新建</string>
     <string name="eidt_text">编辑</string>
     <string name="title_activity_photo">PhotoActivity</string>
+    <string name="title_activity_failurelist1">failurelist1</string>
 
 </resources>

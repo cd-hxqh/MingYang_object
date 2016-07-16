@@ -38,6 +38,8 @@ public class Woactivity extends Entity implements Serializable {
     public String UDINSUNIT;//排查部位
     @DatabaseField(columnName = "UDRPRRSB")
     public String UDRPRRSB;//整改责任人
+    @DatabaseField(columnName = "UDRPRRSBNAME")
+    public String UDRPRRSBNAME;//整改责任人名称
     @DatabaseField(columnName = "ALLPOWER")
     public String ALLPOWER;//人员数量
     @DatabaseField(columnName = "ALLOPTIME")
@@ -54,6 +56,8 @@ public class Woactivity extends Entity implements Serializable {
     public int ESTDUR;//估计持续时间
     @DatabaseField(columnName = "OWNER")
     public String OWNER;//负责人
+    @DatabaseField(columnName = "OWNERNAME")
+    public String OWNERNAME;//负责人描述
     @DatabaseField(columnName = "ACTSTART")
     public String ACTSTART;//实际开始时间
     @DatabaseField(columnName = "ACTFINISH")
@@ -84,6 +88,10 @@ public class Woactivity extends Entity implements Serializable {
     public String UDACSTARTTIME;//计划开始时间
     @DatabaseField(columnName = "UDACSTOPTIME")
     public String UDACSTOPTIME;//计划完成时间
+    @DatabaseField(columnName = "UDINSPOBY")
+    public String UDINSPOBY;//负责人
+    @DatabaseField(columnName = "UDINSPOBYNAME")
+    public String UDINSPOBYNAME;//负责人
 
     @DatabaseField(columnName = "belongid")
     public int belongid;//所属工单本地存储id
@@ -388,5 +396,37 @@ public class Woactivity extends Entity implements Serializable {
 
     public void setIsUpload(boolean isUpload) {
         this.isUpload = isUpload;
+    }
+
+    public String getUDRPRRSBNAME() {
+        return UDRPRRSBNAME;
+    }
+
+    public void setUDRPRRSBNAME(String UDRPRRSBNAME) {
+        this.UDRPRRSBNAME = UDRPRRSBNAME;
+    }
+
+    public String getOWNERNAME() {
+        return OWNERNAME;
+    }
+
+    public void setOWNERNAME(String OWNERNAME) {
+        this.OWNERNAME = OWNERNAME;
+    }
+
+    public String getUDINSPOBY() {
+        return UDINSPOBY;
+    }
+
+    public void setUDINSPOBY(String UDINSPOBY) {
+        this.UDINSPOBY = UDINSPOBY;
+    }
+
+    public String getUDINSPOBYNAME() {
+        return UDINSPOBYNAME;
+    }
+
+    public void setUDINSPOBYNAME(String UDINSPOBYNAME) {
+        this.UDINSPOBYNAME = UDINSPOBYNAME;
     }
 }

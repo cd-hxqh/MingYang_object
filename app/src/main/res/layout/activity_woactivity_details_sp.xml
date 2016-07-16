@@ -14,8 +14,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/button_layout">
+            android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -219,7 +218,7 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="@string/woactivity_perinspr2"
+                android:text="@string/woactivity_perinspr1"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
 
@@ -269,37 +268,37 @@
             android:layout_height="1dp"
             android:background="@mipmap/line" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dimen_40dp"-->
+            <!--android:layout_marginLeft="@dimen/dimen_5"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_udrprrsb"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/woactivity_udrprrsb"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
-            <TextView
-                android:id="@+id/woactivity_udrprrsb"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:drawableRight="@mipmap/item_more"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<TextView-->
+                <!--android:id="@+id/woactivity_udrprrsb"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                <!--android:drawableRight="@mipmap/item_more"-->
+                <!--android:hint="@string/have_not_data"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@mipmap/line" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@mipmap/line" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -333,133 +332,133 @@
             android:layout_height="1dp"
             android:background="@mipmap/line" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dimen_40dp"-->
+            <!--android:layout_marginLeft="@dimen/dimen_5"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_udzgmeasure2"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/woactivity_udzgmeasure2"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
-            <EditText
-                android:id="@+id/woactivity_udzgmeasure"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:inputType="textMultiLine"
-                android:gravity="center_vertical"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@mipmap/line" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_udzglimit"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <TextView
-                android:id="@+id/woactivity_udzglimit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:drawableRight="@mipmap/item_more"
-                android:hint="@string/have_not_data"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<EditText-->
+                <!--android:id="@+id/woactivity_udzgmeasure"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@mipmap/line" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@mipmap/line" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dimen_40dp"-->
+            <!--android:layout_marginLeft="@dimen/dimen_5"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_udzgstu"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/woactivity_udzglimit"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
-            <EditText
-                android:id="@+id/woactivity_udzgstu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:inputType="textMultiLine"
-                android:gravity="center_vertical"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@mipmap/line" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
-            android:layout_marginLeft="@dimen/dimen_5"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/woactivity_udzgresult2"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
-
-            <EditText
-                android:id="@+id/woactivity_udzgresult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_5"
-                android:inputType="textMultiLine"
-                android:gravity="center_vertical"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+            <!--<TextView-->
+                <!--android:id="@+id/woactivity_udzglimit"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                <!--android:drawableRight="@mipmap/item_more"-->
+                <!--android:hint="@string/have_not_data"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
 
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@mipmap/line" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@mipmap/line" />-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dimen_40dp"-->
+            <!--android:layout_marginLeft="@dimen/dimen_5"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/woactivity_udzgstu"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/woactivity_udzgstu"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
+
+
+        <!--</LinearLayout>-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@mipmap/line" />-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/dimen_40dp"-->
+            <!--android:layout_marginLeft="@dimen/dimen_5"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/woactivity_udzgresult2"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/woactivity_udzgresult"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/dimen_5"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:textColor="@color/light_black"-->
+                <!--android:textSize="@dimen/dimens_16dp" />-->
+
+
+        <!--</LinearLayout>-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@mipmap/line" />-->
         </LinearLayout>
         </ScrollView>
 

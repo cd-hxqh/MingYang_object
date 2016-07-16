@@ -196,7 +196,9 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
-                    owner.setText(option.getName());
+                    owner.setText(option.getDesc());
+                    woactivity.OWNERNAME = option.getDesc();
+                    woactivity.OWNER = option.getName();
                     break;
             }
         }

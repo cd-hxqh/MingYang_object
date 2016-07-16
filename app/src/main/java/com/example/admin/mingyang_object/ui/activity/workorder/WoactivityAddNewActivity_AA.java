@@ -41,14 +41,15 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
     private int position;
 
     private TextView taskid;//任务
-    private EditText wojo1;//工作任务
+    private EditText udzyscorn;//工作任务
+    private TextView udinspoby;//负责人
     private TextView udstarttime;//开始时间
     private TextView udendtime;//结束时间
     private EditText udzysbasic;//执行标准
-    private CheckBox perinspr;//终验收结果
+    private CheckBox perinspr;//已完成?
     private EditText udprobdesc;//问题描述
     private TextView udzglimit;//整改期限
-    private TextView lead;//整改责任人
+    private TextView udrprrsb;//整改责任人
     private EditText udzgmeasure;//整改方案
     private EditText udzgresult;//整改完成情况
     private EditText udremark;//备注
@@ -79,14 +80,15 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
 
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
-        wojo1 = (EditText) findViewById(R.id.work_woactivity_wojo1);
+        udzyscorn = (EditText) findViewById(R.id.work_woactivity_wojo1);
+        udinspoby = (TextView) findViewById(R.id.woactivity_udinspoby);
         udstarttime = (TextView) findViewById(R.id.woactivity_udstarttime);
         udendtime = (TextView) findViewById(R.id.woactivity_udendtime);
         udzysbasic = (EditText) findViewById(R.id.woactivity_udzysbasic);
         perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
         udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
-        lead = (TextView) findViewById(R.id.woactivity_lead);
+        udrprrsb = (TextView) findViewById(R.id.woactivity_lead);
         udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
         udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
         udremark = (EditText) findViewById(R.id.woactivity_udremark);
@@ -110,7 +112,8 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
         udstarttime.setOnClickListener(new DateChecked(udstarttime));
         udendtime.setOnClickListener(new DateChecked(udendtime));
         udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
-        lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        udinspoby.setOnClickListener(new LayoutOnClickListener(2,Constants.PERSONCODE));
 
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
@@ -119,14 +122,14 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
     private Woactivity getWoactivity() {
         Woactivity woactivity = this.woactivity;
         woactivity.TASKID = taskid.getText().toString();
-        woactivity.WOJO1 = wojo1.getText().toString();
+        woactivity.UDZYSCORN = udzyscorn.getText().toString();
         woactivity.UDSTARTTIME = udstarttime.getText().toString();
         woactivity.UDENDTIME = udendtime.getText().toString();
         woactivity.UDZYSBASIC = udzysbasic.getText().toString();
         woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
         woactivity.UDZGLIMIT = udzglimit.getText().toString();
-        woactivity.LEAD = lead.getText().toString();
+//        woactivity.LEAD = udrprrsb.getText().toString();
         woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
         woactivity.UDZGRESULT = udzgresult.getText().toString();
         woactivity.UDREMARK = udremark.getText().toString();
@@ -141,13 +144,13 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
         }else if (udendtime.getText().toString().equals("")){
             Toast.makeText(WoactivityAddNewActivity_AA.this,"结束时间不能为空",Toast.LENGTH_SHORT).show();
             return false;
-        }else if (wojo1.getText().toString().equals("")){
+        }else if (udzyscorn.getText().toString().equals("")){
             Toast.makeText(WoactivityAddNewActivity_AA.this,"工作任务不能为空",Toast.LENGTH_SHORT).show();
             return false;
         }else if (udzglimit.getText().toString().equals("")){
             Toast.makeText(WoactivityAddNewActivity_AA.this,"整改期限不能为空",Toast.LENGTH_SHORT).show();
             return false;
-        }else if (lead.getText().toString().equals("")){
+        }else if (udrprrsb.getText().toString().equals("")){
             Toast.makeText(WoactivityAddNewActivity_AA.this,"整改责任人不能为空",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -224,7 +227,15 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
-                    lead.setText(option.getName());
+                    udrprrsb.setText(option.getDesc());
+                    woactivity.UDRPRRSBNAME = option.getDesc();
+                    woactivity.UDRPRRSB = option.getName();
+                    break;
+                case 2:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby.setText(option.getDesc());
+                    woactivity.UDINSPOBYNAME = option.getDesc();
+                    woactivity.UDINSPOBY = option.getName();
                     break;
             }
         }

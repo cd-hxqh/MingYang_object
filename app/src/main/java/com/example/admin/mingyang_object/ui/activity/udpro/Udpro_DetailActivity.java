@@ -117,7 +117,7 @@ public class Udpro_DetailActivity extends BaseActivity {
         if (udpro != null) {
             pronumText.setText(udpro.getPRONUM());
             prDescText.setText(udpro.getDESCRIPTION());
-            branchText.setText(udpro.getBRANCH());
+            branchText.setText(udpro.getBRANCHDESC());
             responsText.setText(udpro.getRESPONSNAME());
             ownerText.setText(udpro.getOWNER());
             signdateText.setText(udpro.getSIGNDATE());

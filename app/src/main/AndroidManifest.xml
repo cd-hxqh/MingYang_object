@@ -247,7 +247,8 @@
             android:label="@string/udstock_detail_text" />
         <activity
             android:name=".ui.activity.Udstockline_DetailActivity"
-            android:label="@string/udstockline_text" />
+            android:label="@string/udstockline_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udreport_ListActivity"
             android:label="@string/udreport_text" />
@@ -264,7 +265,8 @@
             android:label="@string/udinspo_text" />
         <activity
             android:name=".ui.activity.Udinspo_DetailActivity"
-            android:label="@string/udinspo_detail_text" />
+            android:label="@string/udinspo_detail_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udinsproject_ListActivity"
             android:label="@string/udinsproject_text" />
@@ -277,28 +279,34 @@
             android:label="@string/udcardrivelog_text" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Detailactivity"
-            android:label="@string/udcarddrivelog_details_text" />
+            android:label="@string/udcarddrivelog_details_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udcardrivelog_Addactivity"
-            android:label="@string/xcjlxj_text" />
+            android:label="@string/xcjlxj_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Listactivity"
             android:label="@string/udcarfuelcharge_text" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Addactivity"
-            android:label="@string/udcarfuelcharge_text" />
+            android:label="@string/udcarfuelcharge_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Detailactivity"
-            android:label="@string/udcarfuelcharge_detail_text" />
+            android:label="@string/udcarfuelcharge_detail_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udcarmainlog_Listactivity"
             android:label="@string/udcarmainlog_text" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Detailactivity"
-            android:label="@string/wxjlxq_text" />
+            android:label="@string/wxjlxq_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Udcarmainlog_Addactivity"
-            android:label="@string/wxjlxq_text" />
+            android:label="@string/wxjlxq_text"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/wfm_detail_title" />
@@ -308,6 +316,14 @@
         <activity
             android:name=".ui.activity.PhotoActivity"
             android:label="@string/title_activity_photo" >
+        </activity>
+        <activity
+            android:name=".ui.activity.Failurelist1Activity"
+            android:label="@string/title_activity_failurelist1" >
+        </activity>
+        <activity
+            android:name=".ui.activity.Failurelist2Activity"
+            android:label="@string/title_activity_failurelist1" >
         </activity>
     </application>
 

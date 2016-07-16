@@ -38,9 +38,9 @@ public class WoactivityAddNewActivity_TP extends BaseActivity {
     private TextView wojo2;//子系统/子项目
     private TextView wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
-    private EditText invcontent;//排查结果
-    private EditText udprobdesc;//排查部位
-    private TextView udsaftydesc;//整改责任人
+    private EditText invcontent;//技改完成情况
+    private EditText udprobdesc;//问题描述
+    private TextView udsaftydesc;//安全缺失(隐患)描述
     private TextView udzglimit;//整改期限
     private EditText udzgmeasure;//整改措施及建议
     private EditText udzgstu;//整改情况回复

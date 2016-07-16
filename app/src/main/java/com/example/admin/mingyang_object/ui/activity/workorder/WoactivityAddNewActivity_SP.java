@@ -41,12 +41,12 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
     private TextView wojo4;//kks编码
     private CheckBox perinspr;//排查结果
     private EditText udinsunit;//排查部位
-    private TextView udrprrsb;//整改责任人
+//    private TextView udrprrsb;//整改责任人
     private EditText udprobdesc;//问题描述
-    private EditText udzgmeasure;//整改措施及建议
-    private TextView udzglimit;//整改期限
-    private EditText udzgstu;//整改情况回复
-    private EditText udzgresult;//整改结果验证
+//    private EditText udzgmeasure;//整改措施及建议
+//    private TextView udzglimit;//整改期限
+//    private EditText udzgstu;//整改情况回复
+//    private EditText udzgresult;//整改结果验证
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button delete;//删除
@@ -81,12 +81,12 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udinsunit = (EditText) findViewById(R.id.woactivity_udinsunit);
-        udrprrsb = (TextView) findViewById(R.id.woactivity_udrprrsb);
+//        udrprrsb = (TextView) findViewById(R.id.woactivity_udrprrsb);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
-        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
-        udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
-        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
-        udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
+//        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
+//        udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
+//        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
+//        udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
 
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
 //        confirm = (Button) findViewById(R.id.confirm);
@@ -111,12 +111,12 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
         wojo4.setText(woactivity.WOJO4);
         perinspr.setChecked(woactivity.PERINSPR.equals("Y"));
         udinsunit.setText(woactivity.UDINSUNIT);
-        udrprrsb.setText(woactivity.UDRPRRSB);
+//        udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);
-        udzgmeasure.setText(woactivity.UDZGMEASURE);
-        udzglimit.setText(woactivity.UDZGLIMIT);
-        udzgstu.setText(woactivity.UDZGSTU);
-        udzgresult.setText(woactivity.UDZGRESULT);
+//        udzgmeasure.setText(woactivity.UDZGMEASURE);
+//        udzglimit.setText(woactivity.UDZGLIMIT);
+//        udzgstu.setText(woactivity.UDZGSTU);
+//        udzgresult.setText(woactivity.UDZGRESULT);
 //        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
     }

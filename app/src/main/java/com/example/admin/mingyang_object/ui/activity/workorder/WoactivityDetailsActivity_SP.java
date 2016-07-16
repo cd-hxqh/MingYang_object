@@ -48,12 +48,12 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
     private TextView wojo4;//kks编码
     private CheckBox perinspr;//排查结果
     private EditText udinsunit;//排查部位
-    private TextView udrprrsb;//整改责任人
+//    private TextView udrprrsb;//整改责任人
     private EditText udprobdesc;//问题描述
-    private EditText udzgmeasure;//整改措施及建议
-    private TextView udzglimit;//整改期限
-    private EditText udzgstu;//整改情况回复
-    private EditText udzgresult;//整改结果验证
+//    private EditText udzgmeasure;//整改措施及建议
+//    private TextView udzglimit;//整改期限
+//    private EditText udzgstu;//整改情况回复
+//    private EditText udzgresult;//整改结果验证
     private LinearLayout buttonlayout;
     private Button confirm;//确定
 
@@ -87,12 +87,12 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
         udinsunit = (EditText) findViewById(R.id.woactivity_udinsunit);
-        udrprrsb = (TextView) findViewById(R.id.woactivity_udrprrsb);
+//        udrprrsb = (TextView) findViewById(R.id.woactivity_udrprrsb);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
-        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
-        udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
-        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
-        udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
+//        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
+//        udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
+//        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
+//        udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
 
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
         confirm = (Button) findViewById(R.id.confirm);
@@ -116,15 +116,15 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         wojo4.setText(woactivity.WOJO4);
         perinspr.setChecked(woactivity.PERINSPR.equals("Y"));
         udinsunit.setText(woactivity.UDINSUNIT);
-        udrprrsb.setText(woactivity.UDRPRRSB);
+//        udrprrsb.setText(woactivity.UDRPRRSB);
         udprobdesc.setText(woactivity.UDPROBDESC);
-        udzgmeasure.setText(woactivity.UDZGMEASURE);
-        udzglimit.setText(woactivity.UDZGLIMIT);
-        udzgstu.setText(woactivity.UDZGSTU);
-        udzgresult.setText(woactivity.UDZGRESULT);
-
-        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
-        udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+//        udzgmeasure.setText(woactivity.UDZGMEASURE);
+//        udzglimit.setText(woactivity.UDZGLIMIT);
+//        udzgstu.setText(woactivity.UDZGSTU);
+//        udzgresult.setText(woactivity.UDZGRESULT);
+//
+//        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
+//        udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
 
         confirm.setOnClickListener(confirmOnClickListener);
     }
@@ -133,12 +133,12 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         Woactivity woactivity = this.woactivity;
         woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
         woactivity.UDINSUNIT = udinsunit.getText().toString();
-        woactivity.UDRPRRSB = udrprrsb.getText().toString();
+//        woactivity.UDRPRRSB = udrprrsb.getText().toString();
         woactivity.UDPROBDESC = udprobdesc.getText().toString();
-        woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
-        woactivity.UDZGSTU = udzgstu.getText().toString();
-        woactivity.UDZGRESULT = udzgresult.getText().toString();
-        woactivity.UDZGLIMIT = udzglimit.getText().toString();
+//        woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
+//        woactivity.UDZGSTU = udzgstu.getText().toString();
+//        woactivity.UDZGRESULT = udzgresult.getText().toString();
+//        woactivity.UDZGLIMIT = udzglimit.getText().toString();
         return woactivity;
     }
 
@@ -148,12 +148,13 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
             Intent intent = getIntent();
             if((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
                     &&(woactivity.UDINSUNIT==null||woactivity.UDINSUNIT.equals(udinsunit.getText().toString()))
-                    &&(woactivity.UDRPRRSB==null||woactivity.UDRPRRSB.equals(udrprrsb.getText().toString()))
+//                    &&(woactivity.UDRPRRSB==null||woactivity.UDRPRRSB.equals(udrprrsb.getText().toString()))
                     &&(woactivity.UDPROBDESC==null||woactivity.UDPROBDESC.equals(udprobdesc.getText().toString()))
-                    &&(woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
-                    &&(woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
-                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString()))
-                    &&(woactivity.UDZGLIMIT==null||woactivity.UDZGLIMIT.equals(udzglimit.getText().toString()))) {//如果内容没有修改
+//                    &&(woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
+//                    &&(woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
+//                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString()))
+//                    &&(woactivity.UDZGLIMIT==null||woactivity.UDZGLIMIT.equals(udzglimit.getText().toString()))
+                    ) {//如果内容没有修改
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();
@@ -223,7 +224,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
-                    udrprrsb.setText(option.getName());
+//                    udrprrsb.setText(option.getName());
                     break;
             }
         }

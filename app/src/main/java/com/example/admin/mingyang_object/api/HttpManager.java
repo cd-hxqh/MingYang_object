@@ -490,6 +490,13 @@ public class HttpManager {
     }
 
     /**
+     * 设置问题代码的接口
+     */
+    public static String getFailurelist3Url(int curpage, int showcount, String failurecode) {
+        return "{'appid':'" + Constants.FAILURELIST_APPID + "','objectname':'" + Constants.FAILURELIST_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'FAILURECODE':'=" + failurecode + "'}}";
+    }
+
+    /**
      * 设置物资编码的接口
      */
     public static String getItemUrl(String serch, int curpage, int showcount) {

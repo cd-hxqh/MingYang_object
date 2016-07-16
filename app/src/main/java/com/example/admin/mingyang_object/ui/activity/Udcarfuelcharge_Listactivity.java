@@ -176,6 +176,10 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
                 } else {
 
                     if (item != null || item.size() != 0) {
+                        if (page == 1) {
+                            items = new ArrayList<Udcarfuelcharge>();
+                            initAdapter(new ArrayList<Udcarfuelcharge>());
+                        }
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }

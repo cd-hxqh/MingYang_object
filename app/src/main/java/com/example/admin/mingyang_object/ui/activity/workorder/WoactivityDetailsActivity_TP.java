@@ -41,9 +41,9 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
     private TextView wojo2;//子系统/子项目
     private TextView wojo3;//检查/检修方法
     private TextView wojo4;//kks编码
-    private EditText invcontent;//
-    private EditText udprobdesc;//
-    private TextView udsaftydesc;//
+    private EditText invcontent;//技改完成情况
+    private EditText udprobdesc;//问题描述
+    private EditText udsaftydesc;//安全缺失(隐患)描述
     private TextView udzglimit;//整改期限
     private EditText udzgmeasure;//
     private EditText udzgstu;//
@@ -82,7 +82,7 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
         wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
         invcontent = (EditText) findViewById(R.id.woactivity_invcontent);
         udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
-        udsaftydesc = (TextView) findViewById(R.id.woactivity_udsaftydesc);
+        udsaftydesc = (EditText) findViewById(R.id.woactivity_udsaftydesc);
         udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
         udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
         udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);

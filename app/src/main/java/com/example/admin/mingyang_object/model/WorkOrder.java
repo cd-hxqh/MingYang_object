@@ -35,10 +35,16 @@ public class WorkOrder implements Serializable {
     public String UDLOCATION;//位置
     @DatabaseField(columnName = "LEAD")
     public String LEAD;//运行组/维护组工程师
+    @DatabaseField(columnName = "LEADNAME")
+    public String LEADNAME;//运行组/维护组工程师名称
     @DatabaseField(columnName = "FAILURECODE")
     public String FAILURECODE;//故障类
+    @DatabaseField(columnName = "GZLDESC")
+    public String GZLDESC;//故障类描述
     @DatabaseField(columnName = "PROBLEMCODE")
     public String PROBLEMCODE;//问题原因
+    @DatabaseField(columnName = "GZWTDESC")
+    public String GZWTDESC;//问题原因描述
     @DatabaseField(columnName = "CULEVEL")
     public String CULEVEL;//故障等级
     @DatabaseField(columnName = "UDZGLIMIT")
@@ -72,6 +78,8 @@ public class WorkOrder implements Serializable {
     public String CREATEDATE;//创建时间
     @DatabaseField(columnName = "CREATEBY")
     public String CREATEBY;//创建人
+    @DatabaseField(columnName = "CREATENAME")
+    public String CREATENAME;//创建人名称
     @DatabaseField(columnName = "UDJPNUM")
     public String UDJPNUM;//定检标准编号/排查标准/技改标准
     @DatabaseField(columnName = "UDPLSTARTDATE")
@@ -84,10 +92,16 @@ public class WorkOrder implements Serializable {
     public String UDRLSTOPDATE;//实际完成时间
     @DatabaseField(columnName = "UDINSPOBY")
     public String UDINSPOBY;//定检人员1
+    @DatabaseField(columnName = "NAME1")
+    public String NAME1;//定检人员1名称
     @DatabaseField(columnName = "UDINSPOBY2")
     public String UDINSPOBY2;//定检人员2
+    @DatabaseField(columnName = "NAME2")
+    public String NAME2;//定检人员2名称
     @DatabaseField(columnName = "UDINSPOBY3")
     public String UDINSPOBY3;//定检人员3
+    @DatabaseField(columnName = "NAME3")
+    public String NAME3;//定检人员3名称
     @DatabaseField(columnName = "DJPLANNUM")
     public String DJPLANNUM;//定检计划编号
     @DatabaseField(columnName = "DJTYPE")
@@ -124,6 +138,8 @@ public class WorkOrder implements Serializable {
     public String UDFJAPPNUM;//主控程序版本号
     @DatabaseField(columnName = "UDRPRRSB")
     public String UDRPRRSB;//负责人/提报人
+    @DatabaseField(columnName = "UDRPRRSBNAME")
+    public String UDRPRRSBNAME;//负责人/提报人
     @DatabaseField(columnName = "UDREPORTNUM")
     public String UDREPORTNUM;//故障提报单号
 
@@ -220,6 +236,22 @@ public class WorkOrder implements Serializable {
 
     public void setFAILURECODE(String FAILURECODE) {
         this.FAILURECODE = FAILURECODE;
+    }
+
+    public String getGZLDESC() {
+        return GZLDESC;
+    }
+
+    public void setGZLDESC(String GZLDESC) {
+        this.GZLDESC = GZLDESC;
+    }
+
+    public String getGZWTDESC() {
+        return GZWTDESC;
+    }
+
+    public void setGZWTDESC(String GZWTDESC) {
+        this.GZWTDESC = GZWTDESC;
     }
 
     public String getCULEVEL() {
@@ -348,6 +380,14 @@ public class WorkOrder implements Serializable {
 
     public void setCREATEBY(String CREATEBY) {
         this.CREATEBY = CREATEBY;
+    }
+
+    public String getCREATENAME() {
+        return CREATENAME;
+    }
+
+    public void setCREATENAME(String CREATENAME) {
+        this.CREATENAME = CREATENAME;
     }
 
     public String getUDJPNUM() {
@@ -558,6 +598,22 @@ public class WorkOrder implements Serializable {
         this.UDRPRRSB = UDRPRRSB;
     }
 
+    public String getUDRPRRSBNAME() {
+        return UDRPRRSBNAME;
+    }
+
+    public void setUDRPRRSBNAME(String UDRPRRSBNAME) {
+        this.UDRPRRSBNAME = UDRPRRSBNAME;
+    }
+
+    public String getLEADNAME() {
+        return LEADNAME;
+    }
+
+    public void setLEADNAME(String LEADNAME) {
+        this.LEADNAME = LEADNAME;
+    }
+
     public String getUDREPORTNUM() {
         return UDREPORTNUM;
     }
@@ -590,4 +646,27 @@ public class WorkOrder implements Serializable {
         this.belong = belong;
     }
 
+    public String getNAME1() {
+        return NAME1;
+    }
+
+    public void setNAME1(String NAME1) {
+        this.NAME1 = NAME1;
+    }
+
+    public String getNAME2() {
+        return NAME2;
+    }
+
+    public void setNAME2(String NAME2) {
+        this.NAME2 = NAME2;
+    }
+
+    public String getNAME3() {
+        return NAME3;
+    }
+
+    public void setNAME3(String NAME3) {
+        this.NAME3 = NAME3;
+    }
 }
