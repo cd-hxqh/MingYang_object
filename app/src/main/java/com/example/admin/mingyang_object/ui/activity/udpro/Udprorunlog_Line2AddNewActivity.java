@@ -143,6 +143,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
 
     private UdprorunlogLine2 getUdprorunlogLine2() {
         UdprorunlogLine2 udprorunlogLine2 = this.udprorunlogLine2;
+        udprorunlogLine2.PRORUNLOGNUM = udprorunlog.PRORUNLOGNUM;
         udprorunlogLine2.CREATEDATE = createdate.getText().toString();
         udprorunlogLine2.PERSONID = personid.getText().toString();
         udprorunlogLine2.CREATEBY = person.getText().toString();
@@ -164,14 +165,29 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         return udprorunlogLine2;
     }
 
+    private boolean isOK(){
+        if (createdate.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_Line2AddNewActivity.this,"请选择日期",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (personid.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_Line2AddNewActivity.this,"请选择项目负责人",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            intent.putExtra("udprorunlogLine2", getUdprorunlogLine2());
-            Udprorunlog_Line2AddNewActivity.this.setResult(1, intent);
-            Toast.makeText(Udprorunlog_Line2AddNewActivity.this, "吊装调试日报本地新增成功", Toast.LENGTH_SHORT).show();
-            finish();
+            if (isOK()) {
+                Intent intent = getIntent();
+                intent.putExtra("udprorunlogLine2", getUdprorunlogLine2());
+                Udprorunlog_Line2AddNewActivity.this.setResult(1, intent);
+                Toast.makeText(Udprorunlog_Line2AddNewActivity.this, "吊装调试日报本地新增成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
         }
     };
 

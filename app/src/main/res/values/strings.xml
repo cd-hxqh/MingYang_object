@@ -453,6 +453,8 @@
     <string name="zpdnum_text">盘点凭证号:</string>
     <string name="location_text">仓库:</string>
     <string name="locdesc_text">仓库名称:</string>
+    <string name="isopen_text">明盘:</string>
+    <string name="isclose_text">暗盘:</string>
     <string name="createdby_text">创建人:</string>
     <string name="createdate_1_text">创建时间:</string>
     <string name="udstock_detail_text">盘点详情</string>
@@ -461,6 +463,7 @@
     <string name="matnr_text">物料编码:</string>
     <string name="maktx_text">物料描述:</string>
     <string name="msehl_text">单位:</string>
+    <string name="numexist_text">账存数量:</string>
     <string name="actualqty_text">实盘数量:</string>
     <string name="diffqty_text">差异数量:</string>
     <string name="diffreason_text">差异原因:</string>

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 工作日报
  */
 public class UdprorunlogLine3 implements Serializable{
-    public int UDPRORUNLOGLINEID;
+    public int UDPRORUNLOGCID;
 
     public String RUNLOGDATE;//日期
     public String DESCRIPTION;//描述
@@ -26,12 +26,12 @@ public class UdprorunlogLine3 implements Serializable{
     public String PRORUNLOGNUM;
     public boolean isUpload;
 
-    public int getUDPRORUNLOGLINEID() {
-        return UDPRORUNLOGLINEID;
+    public int getUDPRORUNLOGCID() {
+        return UDPRORUNLOGCID;
     }
 
-    public void setUDPRORUNLOGLINEID(int UDPRORUNLOGLINEID) {
-        this.UDPRORUNLOGLINEID = UDPRORUNLOGLINEID;
+    public void setUDPRORUNLOGCID(int UDPRORUNLOGCID) {
+        this.UDPRORUNLOGCID = UDPRORUNLOGCID;
     }
 
     public String getRUNLOGDATE() {

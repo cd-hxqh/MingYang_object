@@ -135,6 +135,16 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
         prophase.setText(udprorunlogLine2.PROPHASE);
         workjob.setText(udprorunlogLine2.WORKJOB);
         remark.setText(udprorunlogLine2.REMARK);
+        funnum.setText(udprorunlogLine2.FUNNUM);
+        string1.setText(udprorunlogLine2.STRING1);
+        string2.setText(udprorunlogLine2.STRING2);
+        string3.setText(udprorunlogLine2.STRING3);
+        string4.setText(udprorunlogLine2.STRING4);
+        string5.setText(udprorunlogLine2.STRING5);
+        string6.setText(udprorunlogLine2.STRING6);
+        string7.setText(udprorunlogLine2.STRING7);
+        string8.setText(udprorunlogLine2.STRING8);
+        string9.setText(udprorunlogLine2.STRING9);
         createdate.setOnClickListener(new DateChecked(createdate));
         personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
@@ -163,27 +173,41 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
         return udprorunlogLine2;
     }
 
+    private boolean isOK(){
+        if (createdate.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_Line2DetailsActivity.this,"请选择日期",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (personid.getText().toString().equals("")){
+            Toast.makeText(Udprorunlog_Line2DetailsActivity.this,"请选择项目负责人",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if (udprorunlogLine2.CREATEDATE.equals(createdate.getText().toString())
-                    && udprorunlogLine2.PERSONID.equals(personid.getText().toString())
-                    && udprorunlogLine2.PROPHASE.equals(prophase.getText().toString())
-                    && udprorunlogLine2.WORKJOB.equals(workjob.getText().toString())
-                    && udprorunlogLine2.REMARK.equals(remark.getText().toString())) {//如果内容没有修改
-                intent.putExtra("udprorunlogLine2", udprorunlogLine2);
-            } else {
-                UdprorunlogLine2 udprorunlogLine2 = getUdprorunlogLine2();
-                if (udprorunlogLine2.TYPE == null || !udprorunlogLine2.TYPE.equals("add")) {
-                    udprorunlogLine2.TYPE = "update";
+            if (isOK()) {
+                Intent intent = getIntent();
+                if (udprorunlogLine2.CREATEDATE.equals(createdate.getText().toString())
+                        && udprorunlogLine2.PERSONID.equals(personid.getText().toString())
+                        && udprorunlogLine2.PROPHASE.equals(prophase.getText().toString())
+                        && udprorunlogLine2.WORKJOB.equals(workjob.getText().toString())
+                        && udprorunlogLine2.REMARK.equals(remark.getText().toString())) {//如果内容没有修改
+                    intent.putExtra("udprorunlogLine2", udprorunlogLine2);
+                } else {
+                    UdprorunlogLine2 udprorunlogLine2 = getUdprorunlogLine2();
+                    if (udprorunlogLine2.TYPE == null || !udprorunlogLine2.TYPE.equals("add")) {
+                        udprorunlogLine2.TYPE = "update";
+                    }
+                    intent.putExtra("udprorunlogLine2", udprorunlogLine2);
+                    Toast.makeText(Udprorunlog_Line2DetailsActivity.this, "吊装调试日报本地修改成功", Toast.LENGTH_SHORT).show();
                 }
-                intent.putExtra("udprorunlogLine2", udprorunlogLine2);
-                Toast.makeText(Udprorunlog_Line2DetailsActivity.this, "吊装调试日报本地修改成功", Toast.LENGTH_SHORT).show();
+                intent.putExtra("position", position);
+                Udprorunlog_Line2DetailsActivity.this.setResult(2, intent);
+                finish();
             }
-            intent.putExtra("position", position);
-            Udprorunlog_Line2DetailsActivity.this.setResult(2, intent);
-            finish();
         }
     };
 

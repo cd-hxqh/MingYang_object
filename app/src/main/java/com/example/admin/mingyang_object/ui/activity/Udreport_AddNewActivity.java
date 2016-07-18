@@ -378,8 +378,8 @@ public class Udreport_AddNewActivity extends BaseActivity {
         udreport.setBRANCH(branchText.getText().toString());
         udreport.setPRONUM(pronumText.getText().toString());
         udreport.setLOCATION_CODE(location_codeText.getText().toString());
-        udreport.setCULEVEL(culevelText.getText().toString());
-        udreport.setFAULTTYPE(faulttypeText.getText().toString());
+//        udreport.setUDGZDJ(culevelText.getText().toString());
+//        udreport.setUDGZTYPE(faulttypeText.getText().toString());
         udreport.setHAPPEN_TIME(happen_timeText.getText().toString());
         udreport.setEND_TIME(end_timeText.getText().toString());
         udreport.setSTATUSTYPE(statustypeText.getText().toString());

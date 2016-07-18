@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -67,6 +68,10 @@ public class Udstock_DetailActivity extends BaseActivity {
     private TextView locationText; //仓库
 
     private TextView locdescText; //仓库名称
+
+    private CheckBox isopen;//明盘
+
+    private CheckBox isclose;//暗盘
 
     private TextView createdbyText; //创建人
 
@@ -131,6 +136,8 @@ public class Udstock_DetailActivity extends BaseActivity {
         zpdnumText = (TextView) findViewById(R.id.zpdnum_text_id);
         locationText = (TextView) findViewById(R.id.location_text_id);
         locdescText = (TextView) findViewById(R.id.locdesc_text_id);
+        isopen = (CheckBox) findViewById(R.id.isopen_text_id);
+        isclose = (CheckBox) findViewById(R.id.isclose_text_id);
         createdbyText = (TextView) findViewById(R.id.createdby_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
 
@@ -140,8 +147,13 @@ public class Udstock_DetailActivity extends BaseActivity {
             zpdnumText.setText(udstock.getZPDNUM());
             locationText.setText(udstock.getLOCATION());
             locdescText.setText(udstock.getLOCDESC());
+            isopen.setChecked(udstock.getISOPEN().equals("Y"));
+            isclose.setChecked(udstock.getISCLOSE().equals("Y"));
             createdbyText.setText(udstock.getCREATEDBY());
             createdateText.setText(udstock.getCREATEDATE());
+
+            isopen.setClickable(false);
+            isclose.setClickable(false);
         }
 
 

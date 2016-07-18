@@ -1,6 +1,7 @@
 package com.example.admin.mingyang_object.api;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.admin.mingyang_object.bean.LoginResults;
@@ -1262,7 +1263,7 @@ public class JsonUtils<E> {
                             // 调用getter方法获取属性值
                             Method getOrSet = udprorunlogLine3.getClass().getMethod("get" + name);
                             Object value = getOrSet.invoke(udprorunlogLine3);
-                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                            if (value == null || name.equals("UDPRORUNLOGCID")|| name.equals("TEM")|| name.equals("WINDSPEED")) {
                                 //调用setter方法设属性值
                                 Class[] parameterTypes = new Class[1];
                                 parameterTypes[0] = field[j].getType();
@@ -1776,8 +1777,8 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
-                    if (udprorunlogline2Obj.get("TYPE").equals("add") && udprorunlogline2Obj.has("UDPRORUNLOGLINE2ID") && udprorunlogline2Obj.get("UDPRORUNLOGLINE2ID").equals("0")) {
-                        udprorunlogline2Obj.remove("UDPRORUNLOGLINE2ID");
+                    if (udprorunlogline2Obj.get("TYPE").equals("add") && udprorunlogline2Obj.has("UDPRORUNLOGLINE2DZID") && udprorunlogline2Obj.get("UDPRORUNLOGLINE2DZID").equals("0")) {
+                        udprorunlogline2Obj.remove("UDPRORUNLOGLINE2DZID");
                     }
                     udprorunlogline2Array.put(udprorunlogline2Obj);
                 }
@@ -1808,6 +1809,9 @@ public class JsonUtils<E> {
                         } catch (InvocationTargetException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if (udprorunlogline3Obj.get("TYPE").equals("add") && udprorunlogline3Obj.has("UDPRORUNLOGCID") && udprorunlogline3Obj.get("UDPRORUNLOGCID").equals("0")) {
+                        udprorunlogline3Obj.remove("UDPRORUNLOGCID");
                     }
                     udprorunlogline3Array.put(udprorunlogline3Obj);
                 }

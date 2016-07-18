@@ -120,6 +120,12 @@ public class Udprorunlog_Line3DetailsActivity extends BaseActivity {
         weather.setText(udprorunlogLine3.WEATHER);
         tem.setText(Double.toString(udprorunlogLine3.TEM));
         windspeed.setText(Double.toString(udprorunlogLine3.WINDSPEED));
+        worktype.setText(udprorunlogLine3.WORKTYPE);
+        workpg.setText(udprorunlogLine3.WORKPG);
+        workcron.setText(udprorunlogLine3.WORKCRON);
+        compsta.setText(udprorunlogLine3.COMPSTA);
+        situation.setText(udprorunlogLine3.SITUATION);
+        remark.setText(udprorunlogLine3.REMARK);
         runlogdate.setOnClickListener(new DateChecked(runlogdate));
         weather.setOnClickListener(new NormalListDialogOnClickListener(weather));
         worktype.setOnClickListener(new NormalListDialogOnClickListener(worktype));
@@ -147,24 +153,28 @@ public class Udprorunlog_Line3DetailsActivity extends BaseActivity {
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            if (udprorunlogLine3.RUNLOGDATE.equals(runlogdate.getText().toString())
-                    && udprorunlogLine3.DESCRIPTION.equals(description.getText().toString())
-                    && udprorunlogLine3.WEATHER.equals(weather.getText().toString())
-                    && udprorunlogLine3.TEM == Double.parseDouble(tem.getText().toString())
-                    && udprorunlogLine3.WINDSPEED == Double.parseDouble(windspeed.getText().toString())) {//如果内容没有修改
-                intent.putExtra("udprorunlogLine3", udprorunlogLine3);
-            } else {
-                UdprorunlogLine3 udprorunlogLine3 = getUdprorunlogLine3();
-                if (udprorunlogLine3.TYPE == null || !udprorunlogLine3.TYPE.equals("add")) {
-                    udprorunlogLine3.TYPE = "update";
+            if (!runlogdate.getText().toString().equals("")) {
+                Intent intent = getIntent();
+                if (udprorunlogLine3.RUNLOGDATE.equals(runlogdate.getText().toString())
+                        && udprorunlogLine3.DESCRIPTION.equals(description.getText().toString())
+                        && udprorunlogLine3.WEATHER.equals(weather.getText().toString())
+                        && udprorunlogLine3.TEM == Double.parseDouble(tem.getText().toString())
+                        && udprorunlogLine3.WINDSPEED == Double.parseDouble(windspeed.getText().toString())) {//如果内容没有修改
+                    intent.putExtra("udprorunlogLine3", udprorunlogLine3);
+                } else {
+                    UdprorunlogLine3 udprorunlogLine3 = getUdprorunlogLine3();
+                    if (udprorunlogLine3.TYPE == null || !udprorunlogLine3.TYPE.equals("add")) {
+                        udprorunlogLine3.TYPE = "update";
+                    }
+                    intent.putExtra("udprorunlogLine3", udprorunlogLine3);
+                    Toast.makeText(Udprorunlog_Line3DetailsActivity.this, "工作日报本地修改成功", Toast.LENGTH_SHORT).show();
                 }
-                intent.putExtra("udprorunlogLine3", udprorunlogLine3);
-                Toast.makeText(Udprorunlog_Line3DetailsActivity.this, "工作日报本地修改成功", Toast.LENGTH_SHORT).show();
+                intent.putExtra("position", position);
+                Udprorunlog_Line3DetailsActivity.this.setResult(2, intent);
+                finish();
+            }else {
+                Toast.makeText(Udprorunlog_Line3DetailsActivity.this,"请选择日期",Toast.LENGTH_SHORT).show();
             }
-            intent.putExtra("position", position);
-            Udprorunlog_Line3DetailsActivity.this.setResult(2, intent);
-            finish();
         }
     };
 

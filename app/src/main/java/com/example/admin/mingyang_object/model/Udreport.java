@@ -15,10 +15,10 @@ public class Udreport extends Entity implements Serializable {
     private String CREATEBY;//提报人编号
     private String CUDESCRIBE; //故障描述
     private String CUISPLAN; //是否由集控生成？
-    private String CULEVEL; //故障等级
+    private String UDGZDJ; //故障等级
     private String DESCRIPTION; //描述
     private String END_TIME; //结束时间
-    private String FAULTTYPE; //故障类型
+    private String UDGZTYPE; //故障类型
     private String FAULT_CODE; //故障类
     private String FAULT_CODE1; //故障代码
     private String FAULT_CODE1DESC; //故障代码描述
@@ -102,12 +102,12 @@ public class Udreport extends Entity implements Serializable {
         this.CUISPLAN = CUISPLAN;
     }
 
-    public String getCULEVEL() {
-        return CULEVEL;
+    public String getUDGZDJ() {
+        return UDGZDJ;
     }
 
-    public void setCULEVEL(String CULEVEL) {
-        this.CULEVEL = CULEVEL;
+    public void setUDGZDJ(String UDGZDJ) {
+        this.UDGZDJ = UDGZDJ;
     }
 
     public String getDESCRIPTION() {
@@ -126,12 +126,12 @@ public class Udreport extends Entity implements Serializable {
         this.END_TIME = END_TIME;
     }
 
-    public String getFAULTTYPE() {
-        return FAULTTYPE;
+    public String getUDGZTYPE() {
+        return UDGZTYPE;
     }
 
-    public void setFAULTTYPE(String FAULTTYPE) {
-        this.FAULTTYPE = FAULTTYPE;
+    public void setUDGZTYPE(String UDGZTYPE) {
+        this.UDGZTYPE = UDGZTYPE;
     }
 
     public String getFAULT_CODE() {

@@ -126,6 +126,7 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
 
     private UdprorunlogLine3 getUdprorunlogLine3() {
         UdprorunlogLine3 udprorunlogLine3 = this.udprorunlogLine3;
+        udprorunlogLine3.PRORUNLOGNUM = udprorunlog.PRORUNLOGNUM;
         udprorunlogLine3.RUNLOGDATE = runlogdate.getText().toString();
         udprorunlogLine3.DESCRIPTION = description.getText().toString();
         udprorunlogLine3.WEATHER = weather.getText().toString();
@@ -144,11 +145,15 @@ public class Udprorunlog_Line3AddNewActivity extends BaseActivity {
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = getIntent();
-            intent.putExtra("udprorunlogLine3", getUdprorunlogLine3());
-            Udprorunlog_Line3AddNewActivity.this.setResult(1, intent);
-            Toast.makeText(Udprorunlog_Line3AddNewActivity.this, "工作日报本地新增成功", Toast.LENGTH_SHORT).show();
-            finish();
+            if (!runlogdate.getText().toString().equals("")) {
+                Intent intent = getIntent();
+                intent.putExtra("udprorunlogLine3", getUdprorunlogLine3());
+                Udprorunlog_Line3AddNewActivity.this.setResult(1, intent);
+                Toast.makeText(Udprorunlog_Line3AddNewActivity.this, "工作日报本地新增成功", Toast.LENGTH_SHORT).show();
+                finish();
+            }else {
+                Toast.makeText(Udprorunlog_Line3AddNewActivity.this,"请选择日期",Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

@@ -98,9 +98,9 @@ public class Udreport_DetailActivity extends BaseActivity {
 
     private TextView assetlocText; //设备位置
 
-    private TextView culevelText; //故障等级
+    private TextView udgzdjText; //故障等级
 
-    private TextView faulttypeText; //故障类型
+    private TextView udgztypeText; //故障类型
 
     private TextView happen_timeText; //报障时间
 
@@ -168,8 +168,8 @@ public class Udreport_DetailActivity extends BaseActivity {
         prdescText = (TextView) findViewById(R.id.prdesc_text_id);
         location_codeText = (TextView) findViewById(R.id.location_code_text_id);
         assetlocText = (TextView) findViewById(R.id.assetloc_text_id);
-        culevelText = (TextView) findViewById(R.id.culevel_text_id);
-        faulttypeText = (TextView) findViewById(R.id.faulttype_text_id);
+        udgzdjText = (TextView) findViewById(R.id.culevel_text_id);
+        udgztypeText = (TextView) findViewById(R.id.faulttype_text_id);
         happen_timeText = (TextView) findViewById(R.id.capacity_text_id);
         is_endCheckBox = (CheckBox) findViewById(R.id.is_end_text_id);
         end_timeText = (TextView) findViewById(R.id.end_time_text_id);
@@ -196,8 +196,8 @@ public class Udreport_DetailActivity extends BaseActivity {
             prdescText.setText(udreport.getPRODESC());
             location_codeText.setText(udreport.getLOCATION_CODE());
             assetlocText.setText(udreport.getASSETLOC());
-            culevelText.setText(udreport.getCULEVEL());
-            faulttypeText.setText(udreport.getFAULTTYPE());
+            udgzdjText.setText(udreport.getUDGZDJ());
+            udgztypeText.setText(udreport.getUDGZTYPE());
             happen_timeText.setText(udreport.getHAPPEN_TIME());
             if (udreport.getIS_END().equals("Y")) {
                 is_endCheckBox.setChecked(true);
@@ -236,8 +236,8 @@ public class Udreport_DetailActivity extends BaseActivity {
             pronumText.setOnClickListener(new LayoutOnClickListener(1, Constants.UDPROCODE));
             location_codeText.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
             assetlocText.setOnClickListener(new LayoutOnClickListener(3, Constants.LOCATIONCODE));
-            culevelText.setOnClickListener(new NormalListDialogOnClickListener(culevelText));
-            faulttypeText.setOnClickListener(new NormalListDialogOnClickListener(faulttypeText));
+//            udgzdjText.setOnClickListener(new NormalListDialogOnClickListener(udgzdjText));
+//            udgztypeText.setOnClickListener(new NormalListDialogOnClickListener(udgztypeText));
             happen_timeText.setOnClickListener(new DateTimeOnClickListener(happen_timeText));
             end_timeText.setOnClickListener(new DateTimeOnClickListener(end_timeText));
             fault_codedescText.setOnClickListener(new LayoutOnClickListener(4, Constants.FAILURECODE));
@@ -445,11 +445,12 @@ public class Udreport_DetailActivity extends BaseActivity {
     private void NormalListDialog(final TextView textView) {
         String[] types = new String[0];
         mMenuItems = new ArrayList<>();
-        if (textView == culevelText) {
-            types = getResources().getStringArray(R.array.culevel_array);
-        } else if (textView == faulttypeText) {
-            types = getResources().getStringArray(R.array.faulttype_array);
-        } else if (textView == statustypeText) {
+//        if (textView == udgzdjText) {
+//            types = getResources().getStringArray(R.array.culevel_array);
+//        } else if (textView == faulttypeText) {
+//            types = getResources().getStringArray(R.array.faulttype_array);
+//        } else
+        if (textView == statustypeText) {
             types = getResources().getStringArray(R.array.status_array);
         }
         for (int i = 0; i < types.length; i++) {
@@ -490,8 +491,8 @@ public class Udreport_DetailActivity extends BaseActivity {
         udreport.setBRANCH(branchText.getText().toString());
         udreport.setPRONUM(pronumText.getText().toString());
         udreport.setLOCATION_CODE(location_codeText.getText().toString());
-        udreport.setCULEVEL(culevelText.getText().toString());
-        udreport.setFAULTTYPE(faulttypeText.getText().toString());
+//        udreport.setCULEVEL(udgzdjText.getText().toString());
+//        udreport.setFAULTTYPE(faulttypeText.getText().toString());
         udreport.setHAPPEN_TIME(happen_timeText.getText().toString());
         udreport.setIS_END(is_endCheckBox.isChecked() ? "Y" : "N");
         udreport.setEND_TIME(end_timeText.getText().toString());
@@ -641,7 +642,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         workOrder.UDREPORTNUM = udreport.getREPORTNUM();
         workOrder.FAILURECODE = udreport.getFAULT_CODE();
         workOrder.PROBLEMCODE = udreport.getFAULT_CODE1();
-        workOrder.CULEVEL = culevelText.getText().toString();
+//        workOrder.CULEVEL = udgzdjText.getText().toString();
         workOrder.UDSTATUS = "新建";
         workOrder.UDRPRRSB = AccountUtils.getpersonId(Udreport_DetailActivity.this);
         workOrder.UDZGLIMIT = udreport.getREPORTTIME();

@@ -15,6 +15,7 @@ public class Udstockline implements Serializable {
     private String MAKTX;//物料描述
     private String MATNR;//物料编码
     private String MSEHL;//单位
+    private String NUMEXIST;//账存数量
     private String STOCKNUM;//盘点编号
     private int ACTUALQTY;//实盘数量
     private int DIFFQTY;//差异数量
@@ -68,6 +69,14 @@ public class Udstockline implements Serializable {
 
     public void setMSEHL(String MSEHL) {
         this.MSEHL = MSEHL;
+    }
+
+    public String getNUMEXIST() {
+        return NUMEXIST;
+    }
+
+    public void setNUMEXIST(String NUMEXIST) {
+        this.NUMEXIST = NUMEXIST;
     }
 
     public String getSTOCKNUM() {

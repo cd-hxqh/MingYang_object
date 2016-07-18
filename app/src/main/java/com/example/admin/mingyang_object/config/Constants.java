@@ -154,13 +154,13 @@ public class Constants {
     //土建阶段日报表名
     public static final String UDPRORUNLOGLINE1_NAME = "UDPRORUNLOGLINE1";
     //吊装调试日报appid
-    public static final String UDPRORUNLOGLINE2_APPID = "UDPRORUNLOGLINE2";
+    public static final String UDPRORUNLOGLINE2_APPID = "UDPRORUNLOGLINE2DZ";
     //吊装调试日报表名
-    public static final String UDPRORUNLOGLINE2_NAME = "UDPRORUNLOGLINE2";
+    public static final String UDPRORUNLOGLINE2_NAME = "UDPRORUNLOGLINE2DZ";
     //工作日报appid
-    public static final String UDPRORUNLOGLINE3_APPID = "UDPRORUNLOGLINE";
+    public static final String UDPRORUNLOGLINE3_APPID = "UDPRORUNLOGC";
     //工作日报表名
-    public static final String UDPRORUNLOGLINE3_NAME = "UDPRORUNLOGLINE";
+    public static final String UDPRORUNLOGLINE3_NAME = "UDPRORUNLOGC";
     //工装管理appid
     public static final String UDPRORUNLOGLINE4_APPID = "UDPRORUNLOGLINE4";
     //工装管理表名

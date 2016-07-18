@@ -152,6 +152,9 @@ public class PhotoPickerActivity extends Activity implements PhotoAdapter.PhotoC
         mPhotoNumTV.setText(OtherUtils.formatResourceString(getApplicationContext(),
                 R.string.photos_num, mPhotoLists.size()));
 
+//        if (mPhotoLists.size()==0){
+//            mPhotoLists.add(new Photo(""));
+//        }
         mPhotoAdapter = new PhotoAdapter(this.getApplicationContext(), mPhotoLists);
         mPhotoAdapter.setIsShowCamera(mIsShowCamera);
         mPhotoAdapter.setSelectMode(mSelectMode);
@@ -359,7 +362,15 @@ public class PhotoPickerActivity extends Activity implements PhotoAdapter.PhotoC
 
         @Override
         protected void onPostExecute(Object o) {
-            getPhotosSuccess();
+            if (mFloderMap==null||mFloderMap.size()==0){
+                mPhotoAdapter = new PhotoAdapter(getApplicationContext(),mPhotoLists);
+                mPhotoAdapter.setIsShowCamera(mIsShowCamera);
+                mPhotoAdapter.setSelectMode(mSelectMode);
+                mPhotoAdapter.setMaxNum(mMaxNum);
+                mGridView.setAdapter(mPhotoAdapter);
+            }else {
+                getPhotosSuccess();
+            }
         }
     };
 

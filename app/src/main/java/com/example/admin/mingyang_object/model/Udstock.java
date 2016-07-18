@@ -15,6 +15,8 @@ public class Udstock implements Serializable {
     private String DESCRIPTION;//描述
     private String LOCATION;//仓库编号
     private String LOCDESC;//仓库名称
+    private String ISOPEN;//明盘
+    private String ISCLOSE;//暗盘
     private String STATUS;//状态
     private String CREATEDBY;//创建人
     private String CREATEDATE;//创建时间
@@ -58,6 +60,22 @@ public class Udstock implements Serializable {
 
     public void setLOCDESC(String LOCDESC) {
         this.LOCDESC = LOCDESC;
+    }
+
+    public String getISOPEN() {
+        return ISOPEN;
+    }
+
+    public void setISOPEN(String ISOPEN) {
+        this.ISOPEN = ISOPEN;
+    }
+
+    public String getISCLOSE() {
+        return ISCLOSE;
+    }
+
+    public void setISCLOSE(String ISCLOSE) {
+        this.ISCLOSE = ISCLOSE;
     }
 
     public String getSTATUS() {

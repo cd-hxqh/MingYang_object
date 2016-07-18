@@ -148,7 +148,6 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-
         page = 1;
         getData(searchText);
     }
@@ -209,7 +208,8 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
                     if (item != null || item.size() != 0) {
                         if (page == 1){
                             items = new ArrayList<Udstock>();
-                            initAdapter(new ArrayList<Udstock>());
+                            udstockAdapter = new UdstockAdapter(getActivity(), R.layout.list_item, items);
+                            recyclerView.setAdapter(udstockAdapter);
                         }
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
