@@ -62,6 +62,10 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
      * 返回*
      */
     private ImageView backImage;
+    /**
+     * 清空
+     */
+    private Button clear;
 
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
@@ -103,6 +107,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImage = (ImageView) findViewById(R.id.title_back_id);
+        clear = (Button) findViewById(R.id.submit_btn);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
         freshbtn = (Button) findViewById(R.id.fresh_btn);
@@ -120,6 +125,9 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                 finish();
             }
         });
+        clear.setVisibility(View.VISIBLE);
+        clear.setText("清空");
+        clear.setOnClickListener(clearOnClickListener);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
@@ -150,6 +158,13 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
 //            Intent intent = new Intent();
 //            intent.setClass(OptionActivity.this, DownloadActivity.class);
 //            startActivityForResult(intent, 1000);
+        }
+    };
+
+    private View.OnClickListener clearOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ClearResponseData();
         }
     };
 
@@ -366,6 +381,23 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
 
     public void responseData(Option option) {
         Intent intent = getIntent();
+        intent.putExtra("option", option);
+        Log.i(TAG,"optiontype="+optiontype);
+        OptionActivity.this.setResult(optiontype, intent);
+        finish();
+    }
+
+    public void ClearResponseData() {
+        Intent intent = getIntent();
+        Option option = new Option();
+        option.setName("");
+        option.setDesc("");
+        option.setValue1("");
+        option.setValue2("");
+        option.setValue3("");
+        option.setValue4("");
+        option.setValue5("");
+        option.setValue6("");
         intent.putExtra("option", option);
         Log.i(TAG,"optiontype="+optiontype);
         OptionActivity.this.setResult(optiontype, intent);
