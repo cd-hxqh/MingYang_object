@@ -106,6 +106,11 @@ public class WpmaterialDetailsActivity extends BaseActivity {
         location.setOnClickListener(new LayoutOnClickListener(2,Constants.LOCATIONCODE2));
         confirm.setOnClickListener(confirmOnClickListener);
         delete.setOnClickListener(deleteOnClickListener);
+        if (!workOrder.UDSTATUS.equals("新建")){
+            itemnum.setEnabled(false);
+            itemqty.setEnabled(false);
+            location.setEnabled(false);
+        }
     }
 
     private Wpmaterial getWpmaterial() {
