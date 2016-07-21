@@ -71,6 +71,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String[] idadresss;
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
+    private String adress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         ipText.setOnClickListener(this);
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+        adress = AccountUtils.getIpAddress(LoginActivity.this);
         addIpData();
     }
 
@@ -128,14 +130,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 } else if (mPassword.getText().length() == 0) {
                     mPassword.setError(getString(R.string.login_error_empty_passwd));
                     mPassword.requestFocus();
-                } else if (NetWorkHelper.isNetwork(LoginActivity.this)){
+                } else if (NetWorkHelper.isNetwork(LoginActivity.this)) {
                     LoginOffline();
-                }else {
+                } else {
                     login();
                 }
                 break;
 
             case R.id.ip_address_id:
+                mMenuItems = new ArrayList<>();
+                addIpData();
                 NormalListDialog();
                 break;
 
@@ -159,8 +163,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         MessageUtils.showMiddleToast(LoginActivity.this, "登录成功");
                         mProgressDialog.dismiss();
+                        AccountUtils.setIpAddress(LoginActivity.this,adress);
                         if (isRemember) {
-                            AccountUtils.setChecked(LoginActivity.this, isRemember);
+                            AccountUtils.setChecked(LoginActivity.this, true);
                             //记住密码
                             AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
                         }
@@ -173,7 +178,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        AccountUtils.setIsOffLine(LoginActivity.this,false);
+                        AccountUtils.setIsOffLine(LoginActivity.this, false);
                         startIntent();
 
                     }
@@ -219,9 +224,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        AccountUtils.setIsOffLine(LoginActivity.this,true);
+                        AccountUtils.setIsOffLine(LoginActivity.this, true);
                         startIntent();
-                        Toast.makeText(LoginActivity.this,"离线登录成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "离线登录成功", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
@@ -278,8 +283,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(TAG, "ip=" + idadresss[position]);
-                AccountUtils.setIpAddress(LoginActivity.this, idadresss[position]);
-
+                String ip = idadresss[position];
+                if (ip.contains("√")) {
+                    ip.replace("√", "");
+                }
+//                AccountUtils.setIpAddress(LoginActivity.this, ip.trim());
+                adress = ip.trim();
                 dialog.dismiss();
             }
         });
@@ -294,8 +303,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         idadresss = getResources().getStringArray(R.array.address_text);
 
         for (int i = 0; i < inspotypes.length; i++)
-            mMenuItems.add(new DialogMenuItem(inspotypes[i], 0));
-
-
+            if (adress != null && adress.equals(inspotypes[i])) {
+                mMenuItems.add(new DialogMenuItem("√  " + inspotypes[i], 0));
+            } else {
+                mMenuItems.add(new DialogMenuItem("    " + inspotypes[i], 0));
+            }
     }
 }

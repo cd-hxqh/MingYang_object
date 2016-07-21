@@ -64,7 +64,7 @@ public class WoactivityAddNewActivity_WS extends BaseActivity {
 
     private void geiIntentData() {
 //        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
-//        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
 //        position = getIntent().getIntExtra("position", 0);
     }
 
@@ -118,6 +118,7 @@ public class WoactivityAddNewActivity_WS extends BaseActivity {
         udremark.setText(woactivity.UDREMARK);
 //        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
+        udremark.setEnabled(false);
     }
 
     private Woactivity getWoactivity() {

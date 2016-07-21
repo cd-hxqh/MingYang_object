@@ -43,8 +43,8 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
     private TextView taskid;//任务
     private EditText description;//描述
     private TextView owner;//负责人
-    private TextView udacstarttime;//计划开始时间
-    private TextView udacstoptime;//计划完成时间
+    private TextView udacstarttime2;//实际开始时间
+    private TextView udacstoptime2;//实际完成时间
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button cancel;//取消
@@ -62,7 +62,7 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
 
     private void geiIntentData() {
 //        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
-//        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
 //        position = getIntent().getIntExtra("position",0);
     }
 
@@ -74,8 +74,8 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
         description = (EditText) findViewById(R.id.woactivity_description);
         owner = (TextView) findViewById(R.id.woactivity_owner);
-        udacstarttime = (TextView) findViewById(R.id.woactivity_udacstarttime);
-        udacstoptime = (TextView) findViewById(R.id.woactivity_udacstoptime);
+        udacstarttime2 = (TextView) findViewById(R.id.woactivity_udacstarttime2);
+        udacstoptime2 = (TextView) findViewById(R.id.woactivity_udacstoptime2);
 
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
         confirm = (Button) findViewById(R.id.work_save);
@@ -95,8 +95,8 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
         taskid.setText(getIntent().getIntExtra("taskid", 0) + "");
 
         owner.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
-        udacstarttime.setOnClickListener(new DateTimeChecked(udacstarttime));
-        udacstoptime.setOnClickListener(new DateTimeChecked(udacstoptime));
+//        udacstarttime2.setOnClickListener(new DateTimeChecked(udacstarttime2));
+//        udacstoptime2.setOnClickListener(new DateTimeChecked(udacstoptime2));
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
     }
@@ -106,8 +106,8 @@ public class WoactivityAddNewActivity_FR extends BaseActivity {
         woactivity.TASKID = taskid.getText().toString();
         woactivity.DESCRIPTION = description.getText().toString();
         woactivity.OWNER = owner.getText().toString();
-        woactivity.UDACSTARTTIME = udacstarttime.getText().toString();
-        woactivity.UDACSTOPTIME = udacstoptime.getText().toString();
+//        woactivity.UDACSTARTTIME = udacstarttime2.getText().toString();
+//        woactivity.UDACSTOPTIME = udacstoptime2.getText().toString();
         woactivity.TYPE = "add";
         return woactivity;
     }

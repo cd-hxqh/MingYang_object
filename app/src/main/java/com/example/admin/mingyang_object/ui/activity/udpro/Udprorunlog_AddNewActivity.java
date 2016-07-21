@@ -367,7 +367,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
 
     private Udprorunlog getUdprorunlog() {
         Udprorunlog udprorunlog = this.udprorunlog;
-        udprorunlog.PRORUNLOGNUM = prorunlognumText.getText().toString();
+//        udprorunlog.PRORUNLOGNUM = prorunlognumText.getText().toString();
         udprorunlog.DESCRIPTION = descriptionText.getText().toString();
         udprorunlog.PRONUM = pronumText.getText().toString();
 //        udprorunlog.BRANCH = branchText.getText().toString();

@@ -73,7 +73,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
     private void geiIntentData() {
         woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
         workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
-        position = getIntent().getIntExtra("position",0);
+        position = getIntent().getIntExtra("position", 0);
     }
 
     @Override
@@ -128,9 +128,67 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         udendtime.setOnClickListener(new DateChecked(udendtime));
         udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
         udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
-        udinspoby.setOnClickListener(new LayoutOnClickListener(2,Constants.PERSONCODE));
+        udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         confirm.setOnClickListener(confirmOnClickListener);
         delete.setOnClickListener(deleteOnClickListener);
+
+        setEnabled();
+    }
+
+    private void setEnabled() {
+        switch (workOrder.UDSTATUS) {
+            case "新建":
+//            case "驳回":
+                udzgresult.setEnabled(false);
+                udprobdesc.setEnabled(false);
+                udremark.setEnabled(false);
+                break;
+            case "待整改":
+                udstarttime.setEnabled(false);
+                udendtime.setEnabled(false);
+                udzyscorn.setEnabled(false);
+                udzysbasic.setEnabled(false);
+                udzglimit.setEnabled(false);
+                udrprrsb.setEnabled(false);
+                udinspoby.setEnabled(false);
+                perinspr.setEnabled(false);
+                udzgmeasure.setEnabled(false);
+                udprobdesc.setEnabled(false);
+                udremark.setEnabled(false);
+                break;
+            case "驳回":
+                udprobdesc.setEnabled(false);
+                udremark.setEnabled(false);
+                udzglimit.setEnabled(false);
+                udrprrsb.setEnabled(false);
+                udinspoby.setEnabled(false);
+                perinspr.setEnabled(false);
+                udzgmeasure.setEnabled(false);
+                udprobdesc.setEnabled(false);
+                udremark.setEnabled(false);
+                break;
+            case "已完成":
+                udstarttime.setEnabled(false);
+                udendtime.setEnabled(false);
+                udzyscorn.setEnabled(false);
+                udzysbasic.setEnabled(false);
+                udzgresult.setEnabled(false);
+                udprobdesc.setEnabled(false);
+                udremark.setEnabled(false);
+                break;
+            case "待验收":
+                udstarttime.setEnabled(false);
+                udendtime.setEnabled(false);
+                udzyscorn.setEnabled(false);
+                udzysbasic.setEnabled(false);
+                udzglimit.setEnabled(false);
+                udrprrsb.setEnabled(false);
+                udinspoby.setEnabled(false);
+                udzgresult.setEnabled(false);
+                perinspr.setEnabled(false);
+                udzgmeasure.setEnabled(false);
+                break;
+        }
     }
 
     private Woactivity getWoactivity() {
@@ -150,24 +208,24 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         return woactivity;
     }
 
-    private boolean isOK(){
-        if (udstarttime.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_AA.this,"开始时间不能为空",Toast.LENGTH_SHORT).show();
+    private boolean isOK() {
+        if (udstarttime.getText().toString().equals("")) {
+            Toast.makeText(WoactivityDetailsActivity_AA.this, "开始时间不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (udendtime.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_AA.this,"结束时间不能为空",Toast.LENGTH_SHORT).show();
+        } else if (udendtime.getText().toString().equals("")) {
+            Toast.makeText(WoactivityDetailsActivity_AA.this, "结束时间不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (udzyscorn.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_AA.this,"工作任务不能为空",Toast.LENGTH_SHORT).show();
+        } else if (udzyscorn.getText().toString().equals("")) {
+            Toast.makeText(WoactivityDetailsActivity_AA.this, "工作任务不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (udzglimit.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_AA.this,"整改期限不能为空",Toast.LENGTH_SHORT).show();
+        } else if (udzglimit.getText().toString().equals("")) {
+            Toast.makeText(WoactivityDetailsActivity_AA.this, "整改期限不能为空", Toast.LENGTH_SHORT).show();
             return false;
-        }else if (udrprrsb.getText().toString().equals("")){
-            Toast.makeText(WoactivityDetailsActivity_AA.this,"整改责任人不能为空",Toast.LENGTH_SHORT).show();
+        } else if (udrprrsb.getText().toString().equals("")) {
+            Toast.makeText(WoactivityDetailsActivity_AA.this, "整改责任人不能为空", Toast.LENGTH_SHORT).show();
             return false;
         }
-        return  true;
+        return true;
     }
 
     private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
@@ -175,7 +233,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         public void onClick(View view) {
             if (isOK()) {
                 Intent intent = getIntent();
-                if ((woactivity.UDZYSCORN.equals(udzyscorn.getText().toString())
+                if (((woactivity.UDZYSCORN.equals(udzyscorn.getText().toString())
 //                        &&woactivity.UDINSPOBYNAME.equals(udinspoby.getText().toString())
                         && woactivity.UDSTARTTIME.equals(udstarttime.getText().toString())
                         && woactivity.UDENDTIME.equals(udendtime.getText().toString())
@@ -186,7 +244,8 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
 //                        && woactivity.UDRPRRSBNAME.equals(udrprrsb.getText().toString())
                         && woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString())
                         && woactivity.UDZGRESULT.equals(udzgresult.getText().toString())
-                        && woactivity.UDREMARK.equals(udremark.getText().toString()))&&!isChange) {//如果内容没有修改
+                        && woactivity.UDREMARK.equals(udremark.getText().toString())) && !isChange)
+                        || workOrder.UDSTATUS.equals("已关闭") || workOrder.UDSTATUS.equals("已取消")) {//如果内容没有修改
                     intent.putExtra("woactivity", woactivity);
                 } else {
                     Woactivity woactivity = getWoactivity();
@@ -208,9 +267,9 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
         public void onClick(View v) {
             Intent intent = getIntent();
             intent.putExtra("position", position);
-            if (!woactivity.isUpload){
+            if (!woactivity.isUpload) {
                 WoactivityDetailsActivity_AA.this.setResult(3, intent);
-            }else {
+            } else {
                 Woactivity woactivity = getWoactivity();
                 woactivity.TYPE = "delete";
                 intent.putExtra("woactivity", woactivity);
@@ -266,12 +325,12 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Option option;
-        if (data!=null) {
+        if (data != null) {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
                     udrprrsb.setText(option.getDesc());
-                    if (woactivity.UDRPRRSB!=null&&!woactivity.UDRPRRSB.equals(option.getName())) {
+                    if (woactivity.UDRPRRSB != null && !woactivity.UDRPRRSB.equals(option.getName())) {
                         woactivity.UDRPRRSBNAME = option.getDesc();
                         woactivity.UDRPRRSB = option.getName();
                         isChange = true;
@@ -280,7 +339,7 @@ public class WoactivityDetailsActivity_AA extends BaseActivity {
                 case 2:
                     option = (Option) data.getSerializableExtra("option");
                     udinspoby.setText(option.getDesc());
-                    if (woactivity.UDINSPOBY!=null&&!woactivity.UDINSPOBY.equals(option.getName())) {
+                    if (woactivity.UDINSPOBY != null && !woactivity.UDINSPOBY.equals(option.getName())) {
                         woactivity.UDINSPOBYNAME = option.getDesc();
                         woactivity.UDINSPOBY = option.getName();
                         isChange = true;

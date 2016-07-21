@@ -64,7 +64,7 @@ public class WoactivityAddNewActivity_SP extends BaseActivity {
 
     private void geiIntentData() {
 //        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
-//        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
 //        position = getIntent().getIntExtra("position",0);
     }
 

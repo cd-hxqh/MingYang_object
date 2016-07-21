@@ -115,6 +115,9 @@ public class WoactivityAddNewActivity_TP extends BaseActivity {
         udzgresult.setText(woactivity.UDZGRESULT);
 //        confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
+        invcontent.setEnabled(false);
+        udsaftydesc.setEnabled(false);
+        udprobdesc.setEnabled(false);
     }
 
     private Woactivity getWoactivity() {

@@ -125,6 +125,11 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
 //
 //        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
 //        udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        if (workOrder.UDSTATUS.equals("已汇报")){
+            perinspr.setEnabled(false);
+            udinsunit.setEnabled(false);
+            udprobdesc.setEnabled(false);
+        }
 
         confirm.setOnClickListener(confirmOnClickListener);
     }
@@ -146,7 +151,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
+            if(((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
                     &&(woactivity.UDINSUNIT==null||woactivity.UDINSUNIT.equals(udinsunit.getText().toString()))
 //                    &&(woactivity.UDRPRRSB==null||woactivity.UDRPRRSB.equals(udrprrsb.getText().toString()))
                     &&(woactivity.UDPROBDESC==null||woactivity.UDPROBDESC.equals(udprobdesc.getText().toString()))
@@ -154,7 +159,7 @@ public class WoactivityDetailsActivity_SP extends BaseActivity {
 //                    &&(woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
 //                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString()))
 //                    &&(woactivity.UDZGLIMIT==null||woactivity.UDZGLIMIT.equals(udzglimit.getText().toString()))
-                    ) {//如果内容没有修改
+            )||workOrder.UDSTATUS.equals("已关闭")||workOrder.UDSTATUS.equals("已取消")) {//如果内容没有修改
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();

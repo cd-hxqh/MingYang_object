@@ -92,7 +92,9 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
         backImageView.setOnClickListener(backOnClickListener);
         titleTextView.setText(getResources().getString(R.string.title_activity_wpmaterial));
         menuImageView.setImageResource(R.mipmap.add);
-        menuImageView.setVisibility(View.VISIBLE);
+        if (workOrder.UDSTATUS.equals("新建")) {
+            menuImageView.setVisibility(View.VISIBLE);
+        }
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         confirmlayout.setVisibility(View.GONE);
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);

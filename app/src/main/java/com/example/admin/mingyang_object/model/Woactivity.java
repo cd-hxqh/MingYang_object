@@ -92,6 +92,10 @@ public class Woactivity extends Entity implements Serializable {
     public String UDINSPOBY;//负责人
     @DatabaseField(columnName = "UDINSPOBYNAME")
     public String UDINSPOBYNAME;//负责人
+    @DatabaseField(columnName = "UDACSTARTTIME2")
+    public String UDACSTARTTIME2;//实际开始时间
+    @DatabaseField(columnName = "UDACSTOPTIME2")
+    public String UDACSTOPTIME2;//实际完成时间
 
     @DatabaseField(columnName = "belongid")
     public int belongid;//所属工单本地存储id
@@ -428,5 +432,21 @@ public class Woactivity extends Entity implements Serializable {
 
     public void setUDINSPOBYNAME(String UDINSPOBYNAME) {
         this.UDINSPOBYNAME = UDINSPOBYNAME;
+    }
+
+    public String getUDACSTARTTIME2() {
+        return UDACSTARTTIME2;
+    }
+
+    public void setUDACSTARTTIME2(String UDACSTARTTIME2) {
+        this.UDACSTARTTIME2 = UDACSTARTTIME2;
+    }
+
+    public String getUDACSTOPTIME2() {
+        return UDACSTOPTIME2;
+    }
+
+    public void setUDACSTOPTIME2(String UDACSTOPTIME2) {
+        this.UDACSTOPTIME2 = UDACSTOPTIME2;
     }
 }

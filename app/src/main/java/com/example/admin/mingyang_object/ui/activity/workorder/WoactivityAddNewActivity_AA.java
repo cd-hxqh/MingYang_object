@@ -114,6 +114,9 @@ public class WoactivityAddNewActivity_AA extends BaseActivity {
         udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
         udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         udinspoby.setOnClickListener(new LayoutOnClickListener(2,Constants.PERSONCODE));
+        udzgresult.setEnabled(false);
+        udprobdesc.setEnabled(false);
+        udremark.setEnabled(false);
 
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);

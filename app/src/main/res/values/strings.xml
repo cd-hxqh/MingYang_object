@@ -146,7 +146,7 @@
     <string name="work_udlocation">设备位置:</string>
     <string name="work_lead">运行组/维护组工程师:</string>
     <string name="work_lead1">定检组长:</string>
-    <string name="work_lead2">负责人:</string>
+    <string name="work_lead2">终验收负责人:</string>
     <string name="work_lead3">项目负责人:</string>
     <string name="work_lead4">技改负责人:</string>
     <string name="work_failurecode">故障类:</string>
@@ -155,10 +155,11 @@
     <string name="work_udrprrsb">提报人:</string>
     <string name="work_udzglimit">提报时间:</string>
     <string name="work_udplannum">终验收计划号:</string>
+    <string name="work_udprores">项目负责人:</string>
     <string name="work_schedstart">计划开始时间:</string>
     <string name="work_schedfinish">计划完成时间:</string>
     <string name="work_actstart">实际开始时间:</string>
-    <string name="work_actfinish">实际结束时间:</string>
+    <string name="work_actfinish">实际完成时间:</string>
     <string name="work_isstoped">是否停机:</string>
     <string name="work_pmchgevalstart">故障开始时间:</string>
     <string name="work_pmchgevalend">故障恢复时间:</string>
@@ -192,7 +193,8 @@
     <string name="work_isbigpar">大部件发放:</string>
     <string name="work_udzgmeasure">故障处理方案:</string>
     <string name="work_plannum">排查计划编号:</string>
-    <string name="work_pccompnum">排查完成台数:</string>
+    <string name="work_pccompnum">计划完成台数:</string>
+    <string name="work_realcomp">实际完成台数:</string>
     <!--风机台数-->
     <string name="work_pccompnum2">风机台数</string>
     <string name="work_pctype">排查类型</string>
@@ -232,8 +234,10 @@
     <string name="woactivity_actfinish">实际完成时间:</string>
     <string name="woactivity_udstarttime">开始时间:</string>
     <string name="woactivity_udendtime">结束时间:</string>
-    <string name="woactivity_udacstarttime">计划开始时间</string>
+    <string name="woactivity_udacstarttime">计划开始时间:</string>
     <string name="woactivity_udacstoptime">计划完成时间:</string>
+    <string name="woactivity_udacstarttime2">实际开始时间:</string>
+    <string name="woactivity_udacstoptime2">实际完成时间:</string>
     <string name="woactivity_udzyscorn">工作任务:</string>
     <string name="woactivity_udzysbasic">执行标准:</string>
     <string name="woactivity_perinspr1">已完成?:</string>

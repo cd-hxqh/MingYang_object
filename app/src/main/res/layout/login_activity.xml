@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@mipmap/ic_top"
                 android:gravity="center"
-                android:text="智能风电场管理系统"
+                android:text="智能风场管理系统"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 

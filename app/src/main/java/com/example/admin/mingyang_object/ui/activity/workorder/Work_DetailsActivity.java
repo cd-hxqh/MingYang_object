@@ -40,6 +40,7 @@ import com.example.admin.mingyang_object.ui.activity.Failurelist1Activity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.ui.activity.PhotoActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.utils.ChildClickableLinearLayout;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.MessageUtils;
@@ -61,6 +62,7 @@ import com.flyco.dialog.widget.NormalListDialog;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -98,7 +100,10 @@ public class Work_DetailsActivity extends BaseActivity {
      */
     private LinearLayout failureLinearLayout;
 
+    private List<View> views;
+
     private WorkOrder workOrder;
+    private ChildClickableLinearLayout childClickableLinearLayout;
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
     private TextView description;//工单描述
@@ -112,6 +117,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout leadlayout;
     private TextView leadText;
     private TextView lead;//运行组/维护组工程师
+    private TextView udprores;//终验收工单 项目负责人
     private TextView udstatus;//状态
     private TextView createby;//创建人
     private TextView createdate;//创建时间
@@ -168,6 +174,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout pccompnumlayout;
     private TextView pccompnumtext;
     private EditText pccompnum;//排查完成台数/风机台数
+    private EditText realcomp;//实际完成台数
     private LinearLayout pctypelayout;
     private TextView pctype;//排查类型
     private LinearLayout udfjfollayout;
@@ -229,6 +236,7 @@ public class Work_DetailsActivity extends BaseActivity {
         menuImageView = (ImageView) findViewById(R.id.title_add);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
 
+        childClickableLinearLayout = (ChildClickableLinearLayout) findViewById(R.id.custom_layout);
         work_numlayout = (LinearLayout) findViewById(R.id.work_wonum_layout);
         wonum = (TextView) findViewById(R.id.work_wonum);
         description = (TextView) findViewById(R.id.work_describe);
@@ -242,6 +250,7 @@ public class Work_DetailsActivity extends BaseActivity {
         leadlayout = (LinearLayout) findViewById(R.id.work_lead_layout);
         leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
+        udprores = (TextView) findViewById(R.id.work_udprores);
         udstatus = (TextView) findViewById(R.id.work_status);
         createby = (TextView) findViewById(R.id.work_createby);
         createdate = (TextView) findViewById(R.id.work_createdate);
@@ -298,6 +307,7 @@ public class Work_DetailsActivity extends BaseActivity {
         pccompnumlayout = (LinearLayout) findViewById(R.id.work_pccompnum_layout);
         pccompnumtext = (TextView) findViewById(R.id.work_pccompnum_text);
         pccompnum = (EditText) findViewById(R.id.work_pccompnum);
+        realcomp = (EditText) findViewById(R.id.work_realcomp);
         pctypelayout = (LinearLayout) findViewById(R.id.work_pctype_layout);
         pctype = (TextView) findViewById(R.id.work_pctype);
         udfjfollayout = (LinearLayout) findViewById(R.id.work_udfjfol_layout);
@@ -372,6 +382,7 @@ public class Work_DetailsActivity extends BaseActivity {
             udjgresult.setText(workOrder.UDJGRESULT);
         } else {
             lead.setText(workOrder.LEADNAME);
+            udprores.setText(workOrder.UDPRORESNAME);
             udinspoby.setText(workOrder.NAME1);
             udinspoby2.setText(workOrder.NAME2);
             udinspoby3.setText(workOrder.NAME3);
@@ -391,6 +402,7 @@ public class Work_DetailsActivity extends BaseActivity {
         } else {
             pccompnum.setText(workOrder.PCCOMPNUM);
         }
+        realcomp.setText(workOrder.REALCOMP);
         wtcode.setText(workOrder.WTCODE);
         assettype.setText(workOrder.ASSETTYPE);
         perinspr.setChecked(workOrder.PERINSPR != 0);
@@ -405,7 +417,6 @@ public class Work_DetailsActivity extends BaseActivity {
         jgplannum.setText(workOrder.JGPLANNUM);
         udjgtype.setText(workOrder.UDJGTYPE);
         udfjappnum.setText(workOrder.UDFJAPPNUM);
-
 
         if (workOrder.UDSTATUS.equals(Constants.STATUS1)) {
             pctype.setOnClickListener(new NormalListDialogOnClickListener(pctype));
@@ -436,6 +447,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udinspoby_2.setOnClickListener(new LayoutOnClickListener(15, Constants.PERSONCODE));
         udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16, Constants.PERSONCODE));
         udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17, Constants.PERSONCODE));
+        udprores.setOnClickListener(new LayoutOnClickListener(18,Constants.PERSONCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -616,6 +628,8 @@ public class Work_DetailsActivity extends BaseActivity {
                 timelayout.setVisibility(View.GONE);
                 inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
+
+                SetClick_FR();
                 break;
             case "AA"://终验收工单
                 defultlayout.setVisibility(View.GONE);
@@ -638,6 +652,8 @@ public class Work_DetailsActivity extends BaseActivity {
                 udplstopdatelayout.setVisibility(View.GONE);
                 udjpnumlayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
+
+                SetClick_AA();
                 break;
             case "SP"://排查工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -651,6 +667,8 @@ public class Work_DetailsActivity extends BaseActivity {
                 udlocnumlayout.setVisibility(View.GONE);
                 udjpnumtext.setText(R.string.work_udjpnum2);
                 udlocationlayout.setVisibility(View.GONE);
+
+                SetClick_SP();
                 break;
             case "TP"://技改工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -670,6 +688,8 @@ public class Work_DetailsActivity extends BaseActivity {
                 udlocnumlayout.setVisibility(View.GONE);
                 udjpnumtext.setText(R.string.work_udjpnum3);
                 udrprrsb1layout.setVisibility(View.GONE);
+
+                SetClick_TP();
                 break;
             case "WS"://定检工单
                 udplannumlayout.setVisibility(View.GONE);
@@ -685,8 +705,176 @@ public class Work_DetailsActivity extends BaseActivity {
                 udjgwolayout.setVisibility(View.GONE);
                 leadText.setText(R.string.work_lead1);
                 udlocationlayout.setVisibility(View.GONE);
+
+                SetClick_WS();
                 break;
             default:
+                break;
+        }
+    }
+
+    private void SetClick_FR(){//故障工单
+        switch (workOrder.UDSTATUS) {
+            case "新建":
+                udprobdesc.setEnabled(false);
+                udrestarttime.setEnabled(false);
+                actstart.setEnabled(false);
+                actfinish.setEnabled(false);
+                break;
+            case "进行中":
+            case "已反馈":
+            case "物料已申请":
+            case "驳回":
+                udstoptime.setEnabled(false);
+                udprojectnum.setEnabled(false);
+                udlocnum.setEnabled(false);
+                udlocation.setEnabled(false);
+                udplannum.setEnabled(false);
+                failurecode.setEnabled(false);
+                problemcode.setEnabled(false);
+//            culevel.setClickable(false);
+                udrprrsb.setEnabled(false);
+                udzglimit.setEnabled(false);
+                lead2.setEnabled(false);
+                udinspoby_2.setEnabled(false);
+                udinspoby2_2.setEnabled(false);
+                udinspoby3_2.setEnabled(false);
+                schedstart.setEnabled(false);
+                schedfinish.setEnabled(false);
+                udremark.setEnabled(false);
+                break;
+            default:
+                childClickableLinearLayout.setChildClickable(false);
+                break;
+        }
+    }
+
+    private void SetClick_AA(){//终验收工单
+        switch (workOrder.UDSTATUS) {
+            case "新建":
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                break;
+            case "已完成":
+                udprojectnum.setEnabled(false);
+                lead.setEnabled(false);
+                udlocnum.setEnabled(false);
+                udplannum.setEnabled(false);
+                udprores.setEnabled(false);
+                break;
+            default:
+                childClickableLinearLayout.setChildClickable(false);
+                break;
+        }
+    }
+
+    private void SetClick_SP(){//排查
+        switch (workOrder.UDSTATUS) {
+            case "新建":
+                udjgresult1.setEnabled(false);
+                perinspr.setClickable(false);
+                realcomp.setEnabled(false);
+                udzgmeasure.setEnabled(false);
+                udremark.setEnabled(false);
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                plannum.setEnabled(false);
+                break;
+            case "待汇报":
+            case "驳回":
+                udprojectnum.setEnabled(false);
+                udjpnum.setEnabled(false);
+                udplstartdate.setEnabled(false);
+                udplstopdate.setEnabled(false);
+                lead.setEnabled(false);
+                pccompnum.setEnabled(false);
+                wtcode.setEnabled(false);
+                pctype.setEnabled(false);
+                pcreson.setEnabled(false);
+                udzgmeasure.setEnabled(false);
+                udremark.setEnabled(false);
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                break;
+            case "已汇报":
+                udprojectnum.setEnabled(false);
+                udjpnum.setEnabled(false);
+                udplstartdate.setEnabled(false);
+                udplstopdate.setEnabled(false);
+                lead.setEnabled(false);
+                pccompnum.setEnabled(false);
+                wtcode.setEnabled(false);
+                pctype.setEnabled(false);
+                pcreson.setEnabled(false);
+                udjgresult1.setEnabled(false);
+                perinspr.setClickable(false);
+                realcomp.setEnabled(false);
+                udzgmeasure.setEnabled(false);
+                udremark.setEnabled(false);
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                break;
+            default:
+                childClickableLinearLayout.setChildClickable(false);
+                break;
+        }
+    }
+
+    private void SetClick_TP(){//技改工单
+        switch (workOrder.UDSTATUS) {
+            case "新建":
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                perinspr.setClickable(false);
+                break;
+            case "驳回":
+            case "进行中":
+                udprojectnum.setEnabled(false);
+                udjpnum.setEnabled(false);
+                pcreson.setEnabled(false);
+                lead.setEnabled(false);
+                udplstartdate.setEnabled(false);
+                udplstopdate.setEnabled(false);
+                jgplannum.setEnabled(false);
+                perinspr.setClickable(false);
+                udjgtype.setEnabled(false);
+                wtcode.setEnabled(false);
+                pccompnum.setEnabled(false);
+                break;
+            default:
+                childClickableLinearLayout.setChildClickable(false);
+                break;
+        }
+    }
+
+    private void SetClick_WS(){//定检工单
+        switch (workOrder.UDSTATUS) {
+            case "新建":
+                udrlstartdate.setEnabled(false);
+                udrlstopdate.setEnabled(false);
+                perinspr.setClickable(false);
+                break;
+            case "进行中":
+            case "已反馈":
+            case "物料已申请":
+            case "驳回":
+                udprojectnum.setEnabled(false);
+                udjpnum.setEnabled(false);
+                djplannum.setEnabled(false);
+                udinspoby.setEnabled(false);
+                udplstartdate.setEnabled(false);
+                udplstopdate.setEnabled(false);
+                djtype.setEnabled(false);
+                lead.setEnabled(false);
+                pccompnum1.setEnabled(false);
+                perinspr.setClickable(false);
+                wtcode.setEnabled(false);
+                udremark.setEnabled(false);
+                break;
+            default:
+                childClickableLinearLayout.setChildClickable(false);
                 break;
         }
     }
@@ -1619,6 +1807,12 @@ public class Work_DetailsActivity extends BaseActivity {
                     udinspoby3_2.setText(option.getDesc());
                     workOrder.NAME3 = option.getDesc();
                     workOrder.UDINSPOBY3 = option.getName();
+                    break;
+                case 18:
+                    option = (Option) data.getSerializableExtra("option");
+                    udprores.setText(option.getDesc());
+                    workOrder.UDPRORES = option.getName();
+                    workOrder.UDPRORESNAME = option.getDesc();
                     break;
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {

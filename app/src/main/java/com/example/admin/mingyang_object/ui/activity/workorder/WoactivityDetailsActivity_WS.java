@@ -122,6 +122,18 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         udrlstopdate.setOnClickListener(new DateChecked(udrlstopdate));
         confirm.setOnClickListener(confirmOnClickListener);
 //        delete.setOnClickListener(deleteOnClickListener);
+        if (workOrder.UDSTATUS.equals("新建")||workOrder.UDSTATUS.equals("待审批")){
+            udremark.setEnabled(false);
+            allpower.setEnabled(false);
+            alloptime.setEnabled(false);
+            perinspr.setClickable(false);
+            invcontent.setEnabled(false);
+            udzgstu.setEnabled(false);
+            udzgmeasure.setEnabled(false);
+        }else if (workOrder.UDSTATUS.equals("进行中")||workOrder.UDSTATUS.equals("已反馈")
+                ||workOrder.UDSTATUS.equals("物料已申请")||workOrder.UDSTATUS.equals("驳回")){
+            perinspr.setClickable(false);
+        }
     }
 
     class DateChecked implements View.OnClickListener {
@@ -154,14 +166,15 @@ public class WoactivityDetailsActivity_WS extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if ((woactivity.ALLPOWER==null||woactivity.ALLPOWER.equals(allpower.getText().toString()))
+            if (((woactivity.ALLPOWER==null||woactivity.ALLPOWER.equals(allpower.getText().toString()))
                     && (woactivity.ALLOPTIME==null||woactivity.ALLOPTIME.equals(alloptime.getText().toString()))
                     && (woactivity.INVCONTENT==null||woactivity.INVCONTENT.equals(invcontent.getText().toString()))
                     && (woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
                     && (woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
                     && (woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
                     && (woactivity.UDRLSTOPDATE==null||woactivity.UDRLSTOPDATE.equals(udrlstopdate.getText().toString()))
-                    &&(woactivity.UDREMARK==null||woactivity.UDREMARK.equals(udremark.getText().toString()))) {//如果内容没有修改
+                    &&(woactivity.UDREMARK==null||woactivity.UDREMARK.equals(udremark.getText().toString())))
+                    ||workOrder.UDSTATUS.equals("已关闭")||workOrder.UDSTATUS.equals("已取消")) {//如果内容没有修改
                 intent.putExtra("woactivity", woactivity);
             } else {
                 Woactivity woactivity = getWoactivity();

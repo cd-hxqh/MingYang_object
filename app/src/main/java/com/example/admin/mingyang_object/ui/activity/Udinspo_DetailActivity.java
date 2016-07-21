@@ -1,8 +1,10 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,12 +35,16 @@ import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.utils.NetWorkHelper;
+import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
@@ -145,6 +151,10 @@ public class Udinspo_DetailActivity extends BaseActivity {
      */
     private LinearLayout udinsprojectLinear;
     /**
+     * 发送工作流*
+     */
+    private LinearLayout flowerLinearLayout;
+    /**
      * 图片上传*
      */
     private LinearLayout uploadLinearLayout;
@@ -152,6 +162,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private ProgressDialog mProgressDialog;
 
     private ArrayList<Udinsproject> udinsprojectList = new ArrayList<>();
 
@@ -256,7 +267,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         if (udinspo.getSTATUS().equals("待执行")) {
             buttonlayout.setVisibility(View.VISIBLE);
-            weatherText.setOnClickListener(new NormalListDialogOnClickListener(weatherText));
+//            weatherText.setOnClickListener(new NormalListDialogOnClickListener(weatherText));
             inspodateText.setOnClickListener(new DateChecked(inspodateText));
             stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
             oktimeText.setOnClickListener(new DateAndTimeChecked(oktimeText));
@@ -344,9 +355,11 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         popupWindow.showAsDropDown(view);
         udinsprojectLinear = (LinearLayout) contentView.findViewById(R.id.udinproject_id);
+        flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
         uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.upload_data_id);
 
         udinsprojectLinear.setOnClickListener(udinsprojectLinearOnClickListener);
+        flowerLinearLayout.setOnClickListener(flowerOnClickListener);
         uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
 
     }
@@ -365,6 +378,19 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         }
     };
+
+    private View.OnClickListener flowerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (statusText.getText().toString().equals("待执行")) {
+                MaterialDialogOneBtn();
+            }else {
+                Toast.makeText(Udinspo_DetailActivity.this,"仅当状态为待执行时才能发送工作流",Toast.LENGTH_SHORT).show();
+            }
+            popupWindow.dismiss();
+        }
+    };
+
     private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -556,6 +582,104 @@ public class Udinspo_DetailActivity extends BaseActivity {
         if (udinsprojectList == null || udinsprojectList.size() == 0) {//如果没有修过记录，则查找默认保存记录
             udinsprojectList = (ArrayList<Udinsproject>) new UdinsprojectDao(Udinspo_DetailActivity.this).queryByInsponum(udinspo.getINSPONUM());
         }
+    }
+
+    private void MaterialDialogOneBtn() {//审批工作流
+        final MaterialDialog dialog = new MaterialDialog(Udinspo_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否填写输入意见")//
+                .btnText("是", "否，直接提交")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        EditDialog(true);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        wfgoon("1", "");
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    /**
+     * 审批工作流
+     *
+     * @param zx
+     */
+    private void wfgoon(final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(Udinspo_DetailActivity.this, null,
+                getString(R.string.approve), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.approve(Udinspo_DetailActivity.this,
+                        "UDINSPO", "UDINSPO", udinspo.getINSPONUM(), "UDINSPOID", zx, desc);
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s == null || s.wonum == null || s.errorMsg == null) {
+                    Toast.makeText(Udinspo_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.wonum.equals(udinspo.getINSPONUM()) && s.errorMsg != null) {
+                    statusText.setText(s.errorMsg);
+                    udinspo.setSTATUS(s.errorMsg);
+                    Toast.makeText(Udinspo_DetailActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udinspo_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
+
+
+    private void EditDialog(final boolean isok) {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Udinspo_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content(isok ? "通过" : "不通过")//
+                .btnText("提交", "取消")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("1", text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+
+                        dialog.dismiss();
+                    }
+                }
+        );
     }
 
     @Override

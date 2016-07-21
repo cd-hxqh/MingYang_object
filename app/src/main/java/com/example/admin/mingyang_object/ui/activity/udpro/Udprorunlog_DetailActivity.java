@@ -507,7 +507,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
                     break;
                 case 2:
                     option = (Option) data.getSerializableExtra("option");
-                    contractsText.setText(option.getName());
+                    contractsText.setText(option.getDesc());
+                    udprorunlog.CONTRACTS = option.getName();
                     break;
                 case 1000:
                     UdprorunlogLine1List = (ArrayList<UdprorunlogLine1>) data.getSerializableExtra("UdprorunlogLine1List");

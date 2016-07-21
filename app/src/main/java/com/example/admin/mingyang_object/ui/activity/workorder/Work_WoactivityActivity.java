@@ -91,7 +91,6 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
         backImageView.setOnClickListener(backOnClickListener);
         titleTextView.setText(getResources().getString(R.string.title_activity_workwoactivity));
         menuImageView.setImageResource(R.mipmap.add);
-        menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         confirmlayout.setVisibility(View.GONE);
         confirmBtn.setOnClickListener(confirmBtnOnClickListener);
@@ -120,7 +119,7 @@ public class Work_WoactivityActivity extends BaseActivity implements SwipeRefres
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
-        if (workOrder.WORKTYPE.equals(Constants.AA)||workOrder.WORKTYPE.equals(Constants.FR)){
+        if ((workOrder.WORKTYPE.equals(Constants.AA)||workOrder.WORKTYPE.equals(Constants.FR))&&workOrder.UDSTATUS.equals("新建")){
             menuImageView.setVisibility(View.VISIBLE);
         }else {
             menuImageView.setVisibility(View.GONE);

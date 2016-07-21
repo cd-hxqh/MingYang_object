@@ -1572,7 +1572,7 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    if (!name.equals("isnew")) {
+                    if (!name.equals("isnew")&&!name.equals("WORKORDERID")) {
                         getOrSet = workOrder.getClass().getMethod("get" + name);
                         Object value = null;
                         value = getOrSet.invoke(workOrder);

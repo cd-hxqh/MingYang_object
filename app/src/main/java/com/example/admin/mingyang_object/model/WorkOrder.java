@@ -37,6 +37,10 @@ public class WorkOrder implements Serializable {
     public String LEAD;//运行组/维护组工程师
     @DatabaseField(columnName = "LEADNAME")
     public String LEADNAME;//运行组/维护组工程师名称
+    @DatabaseField(columnName = "UDPRORES")
+    public String UDPRORES;//项目负责人
+    @DatabaseField(columnName = "UDPRORESNAME")
+    public String UDPRORESNAME;//项目负责人名称
     @DatabaseField(columnName = "FAILURECODE")
     public String FAILURECODE;//故障类
     @DatabaseField(columnName = "GZLDESC")
@@ -126,6 +130,8 @@ public class WorkOrder implements Serializable {
     public String PLANNUM;//排查计划编号
     @DatabaseField(columnName = "PCCOMPNUM")
     public String PCCOMPNUM;//排查完成台数/计划定检风机台数
+    @DatabaseField(columnName = "REALCOMP")
+    public String REALCOMP;//排查完成台数/计划定检风机台数
     @DatabaseField(columnName = "PCTYPE")
     public String PCTYPE;//排查类型
     @DatabaseField(columnName = "UDFJFOL")
@@ -538,6 +544,14 @@ public class WorkOrder implements Serializable {
         this.PCCOMPNUM = PCCOMPNUM;
     }
 
+    public String getREALCOMP() {
+        return REALCOMP;
+    }
+
+    public void setREALCOMP(String REALCOMP) {
+        this.REALCOMP = REALCOMP;
+    }
+
     public String getPCTYPE() {
         return PCTYPE;
     }
@@ -616,6 +630,22 @@ public class WorkOrder implements Serializable {
 
     public void setLEADNAME(String LEADNAME) {
         this.LEADNAME = LEADNAME;
+    }
+
+    public String getUDPRORES() {
+        return UDPRORES;
+    }
+
+    public void setUDPRORES(String UDPRORES) {
+        this.UDPRORES = UDPRORES;
+    }
+
+    public String getUDPRORESNAME() {
+        return UDPRORESNAME;
+    }
+
+    public void setUDPRORESNAME(String UDPRORESNAME) {
+        this.UDPRORESNAME = UDPRORESNAME;
     }
 
     public String getUDREPORTNUM() {

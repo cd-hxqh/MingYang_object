@@ -41,8 +41,8 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
     private TextView taskid;//任务
     private EditText description;//描述
     private TextView owner;//负责人
-    private TextView udacstarttime;//计划开始时间
-    private TextView udacstoptime;//计划完成时间
+    private TextView udacstarttime2;//实际开始时间
+    private TextView udacstoptime2;//实际完成时间
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button delete;//删除
@@ -74,8 +74,8 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
         description = (EditText) findViewById(R.id.woactivity_description);
         owner = (TextView) findViewById(R.id.woactivity_owner);
-        udacstarttime = (TextView) findViewById(R.id.woactivity_udacstarttime);
-        udacstoptime = (TextView) findViewById(R.id.woactivity_udacstoptime);
+        udacstarttime2 = (TextView) findViewById(R.id.woactivity_udacstarttime2);
+        udacstoptime2 = (TextView) findViewById(R.id.woactivity_udacstoptime2);
 
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
         confirm = (Button) findViewById(R.id.work_save);
@@ -96,11 +96,16 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         taskid.setText(woactivity.TASKID);
         description.setText(woactivity.DESCRIPTION);
         owner.setText(woactivity.OWNERNAME);
-        udacstarttime.setText(woactivity.UDACSTARTTIME);
-        udacstoptime.setText(woactivity.UDACSTOPTIME);
-        owner.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
-        udacstarttime.setOnClickListener(new DateTimeChecked(udacstarttime));
-        udacstoptime.setOnClickListener(new DateTimeChecked(udacstoptime));
+        udacstarttime2.setText(woactivity.UDACSTARTTIME);
+        udacstoptime2.setText(woactivity.UDACSTOPTIME);
+        if (workOrder.UDSTATUS.equals("新建")||workOrder.UDSTATUS.equals("待审批")) {
+            owner.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        }
+        if (workOrder.UDSTATUS.equals("进行中")||workOrder.UDSTATUS.equals("已反馈")||
+                workOrder.UDSTATUS.equals("物料已申请")||workOrder.UDSTATUS.equals("驳回")) {
+            udacstarttime2.setOnClickListener(new DateTimeChecked(udacstarttime2));
+            udacstoptime2.setOnClickListener(new DateTimeChecked(udacstoptime2));
+        }
         confirm.setOnClickListener(confirmOnClickListener);
         delete.setOnClickListener(deleteOnClickListener);
     }
@@ -109,8 +114,8 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         Woactivity woactivity = this.woactivity;
         woactivity.DESCRIPTION = description.getText().toString();
 //        woactivity.OWNER = owner.getText().toString();
-        woactivity.UDACSTARTTIME = udacstarttime.getText().toString();
-        woactivity.UDACSTOPTIME = udacstoptime.getText().toString();
+        woactivity.UDACSTARTTIME2 = udacstarttime2.getText().toString();
+        woactivity.UDACSTOPTIME2 = udacstoptime2.getText().toString();
         return woactivity;
     }
 
@@ -133,14 +138,15 @@ public class WoactivityDetailsActivity_FR extends BaseActivity {
         public void onClick(View view) {
             if (isOK()) {
                 Intent intent = getIntent();
-                if ((!(woactivity.DESCRIPTION == null && description.getText().toString().equals(""))
+                if (((!(woactivity.DESCRIPTION == null && description.getText().toString().equals(""))
                         || woactivity.DESCRIPTION.equals(description.getText().toString()))
 //                        && ((woactivity.OWNER == null && owner.getText().toString().equals(""))
 //                        || woactivity.OWNER.equals(owner.getText().toString()))
-                        && ((woactivity.UDACSTARTTIME == null && udacstarttime.getText().toString().equals(""))
-                        || woactivity.UDACSTARTTIME.equals(udacstarttime.getText().toString()))
-                        && ((woactivity.UDACSTOPTIME == null && udacstoptime.getText().toString().equals(""))
-                        || woactivity.UDACSTOPTIME.equals(udacstoptime.getText().toString()))&&!isChange) {//如果内容没有修改
+                        && ((woactivity.UDACSTARTTIME2 == null && udacstarttime2.getText().toString().equals(""))
+                        || woactivity.UDACSTARTTIME2.equals(udacstarttime2.getText().toString()))
+                        && ((woactivity.UDACSTOPTIME2 == null && udacstoptime2.getText().toString().equals(""))
+                        || woactivity.UDACSTOPTIME2.equals(udacstoptime2.getText().toString()))&&!isChange)
+                        ||workOrder.UDSTATUS.equals("已关闭")||workOrder.UDSTATUS.equals("已取消")) {//如果内容没有修改
                     intent.putExtra("woactivity", woactivity);
                 } else {
                     Woactivity woactivity = getWoactivity();

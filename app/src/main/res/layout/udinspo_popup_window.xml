@@ -32,6 +32,33 @@
         android:background="@mipmap/line"></View>
 
     <LinearLayout
+        android:id="@+id/work_flower_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimens_10">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_flower" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:text="@string/work_flower"
+            android:textSize="@dimen/dimens_16dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@mipmap/line"></View>
+
+    <LinearLayout
         android:id="@+id/upload_data_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

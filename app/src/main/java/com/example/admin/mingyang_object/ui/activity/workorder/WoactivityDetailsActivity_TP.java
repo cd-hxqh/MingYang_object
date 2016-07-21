@@ -116,6 +116,14 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
         udzglimit.setText(woactivity.UDZGLIMIT);
         udzgstu.setText(woactivity.UDZGSTU);
         udzgresult.setText(woactivity.UDZGRESULT);
+        if (workOrder.UDSTATUS.equals("新建")){
+            invcontent.setEnabled(false);
+            udsaftydesc.setEnabled(false);
+            udprobdesc.setEnabled(false);
+        }else if (workOrder.UDSTATUS.equals("进行中")){
+            udzglimit.setEnabled(false);
+            udzgmeasure.setEnabled(false);
+        }
 
         udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
         confirm.setOnClickListener(confirmOnClickListener);
@@ -138,13 +146,14 @@ public class WoactivityDetailsActivity_TP extends BaseActivity {
         @Override
         public void onClick(View view) {
             Intent intent = getIntent();
-            if((woactivity.INVCONTENT==null||woactivity.INVCONTENT.equals(invcontent.getText().toString()))
+            if(((woactivity.INVCONTENT==null||woactivity.INVCONTENT.equals(invcontent.getText().toString()))
                     &&(woactivity.UDPROBDESC==null||woactivity.UDPROBDESC.equals(udprobdesc.getText().toString()))
                     &&(woactivity.UDSAFTYDESC==null||woactivity.UDSAFTYDESC.equals(udsaftydesc.getText().toString()))
                     &&(woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
                     &&(woactivity.UDZGLIMIT==null||woactivity.UDZGLIMIT.equals(udzglimit.getText().toString()))
                     &&(woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
-                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString()))) {//如果内容没有修改
+                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString())))
+                    ||workOrder.UDSTATUS.equals("已关闭")||workOrder.UDSTATUS.equals("已取消")) {//如果内容没有修改
                 intent.putExtra("woactivity",woactivity);
             }else {
                 Woactivity woactivity = getWoactivity();
