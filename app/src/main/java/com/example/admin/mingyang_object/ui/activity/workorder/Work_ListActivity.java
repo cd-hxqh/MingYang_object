@@ -77,6 +77,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
+
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

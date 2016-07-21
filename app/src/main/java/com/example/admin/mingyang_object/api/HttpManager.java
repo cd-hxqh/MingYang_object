@@ -73,31 +73,54 @@ public class HttpManager {
         if (search.equals("")) {
             if (!type.equals(Constants.DC)) {
                 if (status.equals("全部")) {
+
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                             "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "'}}";
                 }else {
+
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                             "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
                 }
             } else {
-                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'}";
+                if (status.equals("全部")) {
+
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'}";
+                }else {
+
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc','condition':{'STATUS':'" + status + "'}}";
+                }
+
             }
         } else {
             if (!type.equals(Constants.DC)) {
                 if (status.equals("全部")) {
+
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                             "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
                             ",'condition':{'WORKTYPE':'" + type + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
                 }else {
+
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
                             "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
                             ",'condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
                 }
             } else {
-                return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                        "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'" +
-                        ",'sinorsearch':{'DEBUGWORKORDERNUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+
+                if (status.equals("全部")) {
+
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'" +
+                            ",'sinorsearch':{'DEBUGWORKORDERNUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
+                }else{
+
+                    return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'" +
+                            ",'sinorsearch':{'DEBUGWORKORDERNUM':'" + search + "','DESCRIPTION':'" + search + "'},'condition':{'STATUS':'" + status + "'}}";
+                }
+
+
             }
 
         }

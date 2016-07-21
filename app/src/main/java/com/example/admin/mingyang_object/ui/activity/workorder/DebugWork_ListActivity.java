@@ -15,6 +15,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,11 +28,19 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.DebugWorkListAdapter;
+import com.example.admin.mingyang_object.ui.adapter.WorkListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
 
@@ -44,6 +54,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
 
     private TextView titlename;
     private ImageView addimg;
+    private Button choose;
     private RelativeLayout backlayout;
     private String worktype;
     LinearLayoutManager layoutManager;
@@ -54,10 +65,18 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     private EditText search;
     private String searchText = "";
     private int page = 1;
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private String status = "全部";
+
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
 
         setContentView(R.layout.activity_worklist);
 
@@ -76,6 +95,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         addimg = (ImageView) findViewById(R.id.title_add);
+        choose = (Button) findViewById(R.id.title_choose);
         backlayout = (RelativeLayout) findViewById(R.id.title_back);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -86,6 +106,8 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     @Override
     protected void initView() {
         setSearchEdit();
+        choose.setVisibility(View.VISIBLE);
+        choose.setOnClickListener(new NormalListDialogOnClickListener(choose));
         titlename.setText(WorkTypeUtils.getTitle(worktype));
         addimg.setVisibility(View.VISIBLE);
         addimg.setOnClickListener(new View.OnClickListener() {
@@ -114,13 +136,14 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        getData(searchText);
+        getData(searchText,status);
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
     }
 
-    private void getData(String search){
-        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype,"全部", search, page, 20), new HttpRequestHandler<Results>() {
+    private void getData(String search,String status){
+
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderUrl(worktype,status, search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                // Log.i(TAG, "data=" + results);
@@ -176,24 +199,62 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
                     searchText = search.getText().toString().trim();
                     workListAdapter = new DebugWorkListAdapter(DebugWork_ListActivity.this);
                     recyclerView.setAdapter(workListAdapter);
-                    getData(searchText);
+                    getData(searchText,status);
                     return true;
                 }
                 return false;
             }
         });
     }
+    private class NormalListDialogOnClickListener implements View.OnClickListener {
+        TextView textView;
 
+        public NormalListDialogOnClickListener(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            NormalListDialog(textView);
+        }
+    }
+    private void NormalListDialog(final TextView textView) {
+        String[] types = new String[0];
+        mMenuItems = new ArrayList<>();
+
+            types = getResources().getStringArray(R.array.dc_status_array);
+
+        for (int i = 0; i < types.length; i++) {
+            mMenuItems.add(new DialogMenuItem(types[i], 0));
+        }
+        final NormalListDialog dialog = new NormalListDialog(DebugWork_ListActivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                textView.setText(mMenuItems.get(position).mOperName);
+                workListAdapter = new DebugWorkListAdapter(DebugWork_ListActivity.this);
+                recyclerView.setAdapter(workListAdapter);
+                status = mMenuItems.get(position).mOperName;
+                choose.setText(status);
+                getData(search.getText().toString(), status);
+                dialog.dismiss();
+            }
+        });
+    }
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
         page = 1;
-        getData(search.getText().toString());
+        getData(search.getText().toString(),status);
     }
 
     @Override
     public void onLoad(){
         page++;
-        getData(searchText);
+        getData(searchText,status);
     }
 }
