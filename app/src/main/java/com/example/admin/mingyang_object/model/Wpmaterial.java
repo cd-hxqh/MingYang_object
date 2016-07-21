@@ -28,7 +28,6 @@ public class Wpmaterial implements Serializable{
     public String LOCATION;//库房
     @DatabaseField(columnName = "LOCDESC")
     public String LOCDESC;//库房描述
-
     @DatabaseField(columnName = "TYPE")
     public String TYPE;
     @DatabaseField(columnName = "WONUM")

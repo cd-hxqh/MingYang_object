@@ -26,9 +26,10 @@ import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
-import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.ui.activity.PhotoActivity;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
@@ -255,7 +256,15 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         workfloatLinearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("调试工单","发送工作流");
+
+                if (workOrder.getSTATUS().equals("新建")) {
+                    MaterialDialogOneBtn();
+                    Log.e("调试工单","启动工作流");
+                } else {
+                    MaterialDialogOneBtn1();
+                    Log.e("调试工单","发送工作流");
+                }
+
                 popupWindow.dismiss();
             }
         });
@@ -265,7 +274,12 @@ public class DebugWork_DetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Log.e("调试工单","上传图片");
+
                 popupWindow.dismiss();
+                Intent intent = new Intent(DebugWork_DetailsActivity.this, PhotoActivity.class);
+                intent.putExtra("ownertable", "WORKORDER");
+                intent.putExtra("ownerid", workOrder.getDEBUGWORKORDERID()+"");
+                startActivityForResult(intent, 0);
             }
         });
     }
@@ -346,11 +360,11 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 ////                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 ////            }
             final String finalUpdataInfo = updataInfo;
-            final String tmp_prnum= pronum.getText().toString();
+
             new AsyncTask<String, String, WebResult>() {
                 @Override
                 protected WebResult doInBackground(String... strings) {
-                    WebResult reviseresult = AndroidClientService.UpdateWO(DebugWork_DetailsActivity.this,finalUpdataInfo,"DEBUGWORKORDER", "DEBUGWORKORDERNUM",tmp_prnum,Constants.WORK_URL);
+                    WebResult reviseresult = AndroidClientService.UpdateWO(DebugWork_DetailsActivity.this,finalUpdataInfo,"DEBUGWORKORDER", "DEBUGWORKORDERNUM",workOrder.getDEBUGWORKORDERNUM(),Constants.WORK_URL);
                     return reviseresult;
                 }
 
@@ -456,7 +470,34 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         }
     };
 
+    private void MaterialDialogOneBtn() {//开始工作流
+        final MaterialDialog dialog = new MaterialDialog(DebugWork_DetailsActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否启动工作流")//
+                .btnText("是", "否")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
 
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        startWF();
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
     private void MaterialDialogOneBtn1() {//审批工作流
         final MaterialDialog dialog = new MaterialDialog(DebugWork_DetailsActivity.this);
         dialog.setCancelable(false);
@@ -552,7 +593,35 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 //            }
 //        }.execute();
     }
+    /**
+     * 开始工作流
+     */
+    private void startWF() {
+        mProgressDialog = ProgressDialog.show(DebugWork_DetailsActivity.this, null,
+                getString(R.string.start), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.startwf(DebugWork_DetailsActivity.this, WorkTypeUtils.getProcessname("DC"), "WORKORDER", workOrder.DEBUGWORKORDERNUM, "WONUM");
 
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s != null && s.errorMsg != null && s.errorMsg.equals("工作流启动成功")) {
+                    Toast.makeText(DebugWork_DetailsActivity.this, s.errorMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DebugWork_DetailsActivity.this, "工作流启动失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
     private DebugWorkOrder getWorkOrder() {
         DebugWorkOrder workOrder = this.workOrder;
         return workOrder;

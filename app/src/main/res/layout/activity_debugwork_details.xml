@@ -77,7 +77,8 @@
                 android:inputType="textMultiLine"
                 android:gravity="center_vertical"
                 android:textColor="@color/light_black"
-                android:textSize="@dimen/dimens_16dp" />
+                android:textSize="@dimen/dimens_16dp"
+                android:background="@null"/>
         </LinearLayout>
 
         <View
@@ -230,8 +231,6 @@
                 android:hint="@string/have_not_data"
                 android:textColor="@color/light_black"
                 android:textSize="@dimen/dimens_16dp" />
-
-
         </LinearLayout>
 
         <View

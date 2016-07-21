@@ -114,9 +114,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         refresh_layout.setRefreshing(true);
-        Log.e("调试工单","调试工单21");
         getData(searchText);
-        Log.e("调试工单","调试工单22");
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
     }
@@ -127,45 +125,29 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
             public void onSuccess(Results results) {
                // Log.i(TAG, "data=" + results);
             }
-
             @Override
             public void onSuccess(Results results, int totalPages, int currentPage) {
-                Log.e("调试工单","调试工单11");
                 if (results.getResultlist()!=null) {
-                    Log.e("调试工单","调试工单12");
                     ArrayList<DebugWorkOrder> items = JsonUtils.parsingDebugWorkOrder(DebugWork_ListActivity.this, results.getResultlist());
-                    Log.e("调试工单","调试工单13");
                     refresh_layout.setRefreshing(false);
-                    Log.e("调试工单","调试工单14");
                     refresh_layout.setLoading(false);
-                    Log.e("调试工单","调试工单15");
                     if (items == null || items.isEmpty()) {
-                        Log.e("调试工单","调试工单16");
                         nodatalayout.setVisibility(View.VISIBLE);
-                        Log.e("调试工单","调试工单17");
                     } else {
-                        Log.e("调试工单","调试工单18");
                         if (page == 1) {
-                            Log.e("调试工单","调试工单19");
                             workListAdapter = new DebugWorkListAdapter(DebugWork_ListActivity.this);
-                            Log.e("调试工单","调试工单20");
                             recyclerView.setAdapter(workListAdapter);
-                            Log.e("调试工单","调试工单21");
                         }
                         if (totalPages == page) {
-                            Log.e("调试工单","调试工单11");
                             workListAdapter.adddate(items);
                         }
                     }
-
                 }else {
-                    Log.e("调试工单","调试工单11");
                     refresh_layout.setRefreshing(false);
                     nodatalayout.setVisibility(View.VISIBLE);
 
                 }
             }
-
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);

@@ -243,7 +243,7 @@ public class DebugWork_AddNewActivity extends BaseActivity {
 
         // 一个自定义的布局，作为显示的内容
         View contentView = LayoutInflater.from(DebugWork_AddNewActivity.this).inflate(
-                R.layout.debugwork_popup_window, null);
+                R.layout.debugwork_popup_window_new, null);
 
 
         popupWindow = new PopupWindow(contentView,
@@ -261,7 +261,6 @@ public class DebugWork_AddNewActivity extends BaseActivity {
                 // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
             }
         });
-
         // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         // 我觉得这里是API的一个bug
         popupWindow.setBackgroundDrawable(getResources().getDrawable(

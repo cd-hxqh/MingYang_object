@@ -6,6 +6,9 @@ import java.io.Serializable;
  * Created by think on 2016/6/23.
  */
 public class DebugWorkOrder implements Serializable {
+
+
+    public String DEBUGWORKORDERID;//工单ID
     public String DEBUGWORKORDERNUM;//工单编号
     public String DESCRIPTION;//描述
     public String PRONUM;//项目编号
@@ -16,6 +19,10 @@ public class DebugWorkOrder implements Serializable {
 
 
     public boolean isnew;
+
+    public String getDEBUGWORKORDERID() {return DEBUGWORKORDERID;}
+
+    public void setDEBUGWORKORDERID(String DEBUGWORKORDERID) {this.DEBUGWORKORDERID = DEBUGWORKORDERID;}
 
     public String getDEBUGWORKORDERNUM() {
         return DEBUGWORKORDERNUM;

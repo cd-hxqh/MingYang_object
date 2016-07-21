@@ -924,19 +924,32 @@ public class JsonUtils<E> {
      */
     public static ArrayList<DebugWorkOrder> parsingDebugWorkOrder(Context ctx, String data) {
         Log.i(TAG, "WorkOrder data=" + data);
+
+
+
         ArrayList<DebugWorkOrder> list = null;
+
         DebugWorkOrder workOrder = null;
+
         try {
             JSONArray jsonArray = new JSONArray(data);
             JSONObject jsonObject;
             list = new ArrayList<DebugWorkOrder>();
+
             for (int i = 0; i < jsonArray.length(); i++) {
+
                 workOrder = new DebugWorkOrder();
                 jsonObject = jsonArray.getJSONObject(i);
-                Field[] field = workOrder.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+
+                Log.e("调试工单","数据"+jsonObject);
+
+                Field[] field = workOrder.getClass().getDeclaredFields();//获取实体类的所有属性，返回Field数组
+
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
+
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
+
                     if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
                         try {
                             // 调用getter方法获取属性值
@@ -967,7 +980,11 @@ public class JsonUtils<E> {
      * 解析调试工单子表信息
      */
     public static ArrayList<UddebugWorkOrderLine> parsingUddebugWorkOrderLine(Context ctx, String data, String wonum) {
-        Log.i(TAG, "WorkOrder data=" + data);
+
+
+
+
+
         ArrayList<UddebugWorkOrderLine> list = null;
         UddebugWorkOrderLine uddebugWorkOrderLine = null;
         try {
@@ -977,6 +994,9 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 uddebugWorkOrderLine = new UddebugWorkOrderLine();
                 jsonObject = jsonArray.getJSONObject(i);
+
+                Log.e("调试工单","子表数据"+jsonObject);
+
                 Field[] field = uddebugWorkOrderLine.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
