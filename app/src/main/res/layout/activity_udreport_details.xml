@@ -133,8 +133,15 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
                             android:id="@+id/inventory_location_name_title"
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/pronum_text"
                             android:textColor="@color/light_black"
@@ -194,7 +201,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/location_code_text"
                             android:textColor="@color/light_black"
@@ -225,8 +239,15 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
                             android:id="@+id/inventory_curbaltotal_title"
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/assetloc_text"
                             android:textColor="@color/light_black"
@@ -314,7 +335,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/happen_time_text"
                             android:textColor="@color/light_black"
@@ -528,7 +556,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/fault_codedesc_text"
                             android:textColor="@color/light_black"
@@ -556,9 +591,15 @@
                         android:layout_marginLeft="@dimen/dimen_5"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
-
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/fault_code1_text"
                             android:textColor="@color/light_black"

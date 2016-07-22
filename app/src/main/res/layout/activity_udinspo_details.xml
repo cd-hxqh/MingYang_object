@@ -128,8 +128,15 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
                             android:id="@+id/inventory_location_name_title"
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/pronum_text"
                             android:textColor="@color/light_black"
@@ -188,7 +195,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/modeltype_1_text"
                             android:textColor="@color/light_black"
@@ -218,8 +232,15 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
                             android:id="@+id/inventory_curbaltotal_title"
-                            android:layout_width="100dp"
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/jpnum_text"
                             android:textColor="@color/light_black"
@@ -248,7 +269,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/udlocnum_text"
                             android:textColor="@color/light_black"
@@ -365,7 +393,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/resby_text"
                             android:textColor="@color/light_black"
@@ -394,7 +429,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/inspoby_text"
                             android:textColor="@color/light_black"
@@ -773,7 +815,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/starttime_text"
                             android:textColor="@color/light_black"
@@ -802,7 +851,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="*"
+                            android:textColor="@color/color4"
+                            android:textSize="18sp" />
+                        <TextView
+                            android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:text="@string/comptime_1_text"
                             android:textColor="@color/light_black"

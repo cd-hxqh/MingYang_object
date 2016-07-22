@@ -425,7 +425,7 @@
     <string name="problemtype_text">问题类型:</string>
     <string name="emergency_text">紧急程度:</string>
     <string name="workordernum_text">相关故障工单:</string>
-    <string name="problemsituation_text">现场问题及进展情况描述:</string>
+    <string name="problemsituation_text">现场问题及进展描述:</string>
     <string name="prodesc_text">项目描述:</string>
     <string name="prores_text">项目负责人:</string>
     <string name="phone1_text">负责人电话:</string>

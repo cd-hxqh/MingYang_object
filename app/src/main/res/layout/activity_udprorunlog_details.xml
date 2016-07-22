@@ -90,7 +90,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/pronum_text"
                     android:textColor="@color/light_black"
@@ -180,7 +187,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/contdesc_text"
                     android:textColor="@color/light_black"
@@ -211,8 +225,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
                     android:id="@+id/inventory_curbaltotal_title"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/year_text"
                     android:textColor="@color/light_black"
@@ -242,8 +263,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
                     android:id="@+id/month_text_title"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/month_text"
                     android:textColor="@color/light_black"

@@ -37,7 +37,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/udprorunlog_line3_runlogdate"
                         android:textColor="@color/light_black"
@@ -99,7 +106,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="@dimen/dimen_40dp"
                         android:gravity="center_vertical"
                         android:text="@string/udprorunlog_line3_weather"
@@ -130,7 +144,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/udprorunlog_line3_tem"
                         android:textColor="@color/light_black"
@@ -162,7 +183,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/udprorunlog_line3_windspeed"
                         android:textColor="@color/light_black"

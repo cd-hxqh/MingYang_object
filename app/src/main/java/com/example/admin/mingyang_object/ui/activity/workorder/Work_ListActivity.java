@@ -152,14 +152,14 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         refresh_layout.setOnLoadListener(this);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        page = 1;
-        refresh_layout.setRefreshing(true);
-        getData(search.getText().toString(),status);
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//
+//        page = 1;
+//        refresh_layout.setRefreshing(true);
+//        getData(search.getText().toString(),status);
+//    }
 
     private void getData(String search,String status){
         if (!AccountUtils.getIsOffLine(Work_ListActivity.this)&&!status.equals("本地记录")) {
