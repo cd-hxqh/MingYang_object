@@ -645,7 +645,7 @@ public class JsonUtils<E> {
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
                     Log.i(TAG, "name=" + name);
-                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null) {
                         try {
                             // 调用getter方法获取属性值
                             Method getOrSet = udprorunlog.getClass().getMethod("get" + name);
@@ -691,7 +691,7 @@ public class JsonUtils<E> {
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
                     String name = field[j].getName();    //获取属性的名字
-                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null) {
                         try {
                             // 调用getter方法获取属性值
                             Method getOrSet = udfeedback.getClass().getMethod("get" + name);

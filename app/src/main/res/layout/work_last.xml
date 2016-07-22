@@ -31,7 +31,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_wtcode"
                     android:textColor="@color/light_black"
@@ -68,7 +75,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_assettype"
                     android:textColor="@color/light_black"
@@ -281,8 +295,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
                     android:id="@+id/work_pccompnum_text"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_pccompnum"
                     android:textColor="@color/light_black"
@@ -350,7 +371,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_pctype"
                     android:textColor="@color/light_black"
@@ -424,8 +452,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
                     android:id="@+id/work_pcreson_text"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_pcreson"
                     android:textColor="@color/light_black"
@@ -541,7 +576,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_udjgtype"
                     android:textColor="@color/light_black"

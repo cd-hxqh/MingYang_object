@@ -124,7 +124,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             public void onClick(View view) {
                 Intent intent = new Intent(Work_ListActivity.this, Work_AddNewActivity.class);
                 intent.putExtra("worktype", worktype);
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
         backlayout.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +150,15 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
 
         refresh_layout.setOnRefreshListener(this);
         refresh_layout.setOnLoadListener(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        page = 1;
+        refresh_layout.setRefreshing(true);
+        getData(search.getText().toString(),status);
     }
 
     private void getData(String search,String status){
@@ -298,12 +307,24 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         page = 1;
-        getData(search.getText().toString(),status);
+        getData(search.getText().toString(), status);
     }
 
     @Override
     public void onLoad(){
         page++;
         getData(searchText,status);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                getData(search.getText().toString(), status);
+                break;
+        }
     }
 }

@@ -249,6 +249,24 @@ public class Udinsproject_ListActivity extends BaseActivity implements SwipeRefr
         });
     }
 
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udinsproject> list) {
+        udinsprojectAdapter.addData(list);
+        udinsprojectAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udinsproject_ListActivity.this, Udinsproject_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udinsproject", udinsprojectList.get(position));
+                bundle.putSerializable("udinspo", udinspo);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 2);
+            }
+        });
+    }
+
     private View.OnClickListener confirmBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

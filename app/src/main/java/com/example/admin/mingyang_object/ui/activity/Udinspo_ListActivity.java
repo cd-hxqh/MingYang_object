@@ -313,12 +313,24 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
     @Override
     public void onRefresh() {
 //        page = 1;
-        getData(search.getText().toString(),status,1);
+        getData(search.getText().toString(), status, 1);
     }
 
     @Override
     public void onLoad() {
         page++;
         getData(searchText,status,page);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 100:
+                refresh_layout.setRefreshing(true);
+                getData(search.getText().toString(), status, 1);
+                break;
+        }
     }
 }

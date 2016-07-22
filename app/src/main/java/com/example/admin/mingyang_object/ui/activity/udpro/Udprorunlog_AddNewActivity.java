@@ -469,6 +469,7 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udprorunlog_AddNewActivity.this, "项目日报" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
                     udprorunlog.isnew = false;
+                    setResult(100);
                     finish();
                 } else {
                     Toast.makeText(Udprorunlog_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();

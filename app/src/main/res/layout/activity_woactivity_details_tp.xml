@@ -313,9 +313,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/woactivity_udzglimit"
+                        android:text="技改期限:"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
@@ -345,9 +352,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/woactivity_udzgmeasure2"
+                        android:text="技改措施及建议:"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
@@ -379,7 +393,7 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/woactivity_udzgstu"
+                        android:text="技改情况回复:"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 
@@ -411,7 +425,7 @@
                     <TextView
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/woactivity_udzgresult2"
+                        android:text="技改结果验证:"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp" />
 

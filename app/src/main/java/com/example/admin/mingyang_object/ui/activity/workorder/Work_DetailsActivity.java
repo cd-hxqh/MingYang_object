@@ -117,6 +117,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout leadlayout;
     private TextView leadText;
     private TextView lead;//运行组/维护组工程师
+    private LinearLayout udproreslayout;
     private TextView udprores;//终验收工单 项目负责人
     private TextView udstatus;//状态
     private TextView createby;//创建人
@@ -250,6 +251,7 @@ public class Work_DetailsActivity extends BaseActivity {
         leadlayout = (LinearLayout) findViewById(R.id.work_lead_layout);
         leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
+        udproreslayout = (LinearLayout) findViewById(R.id.work_udprores_layout);
         udprores = (TextView) findViewById(R.id.work_udprores);
         udstatus = (TextView) findViewById(R.id.work_status);
         createby = (TextView) findViewById(R.id.work_createby);
@@ -628,6 +630,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 timelayout.setVisibility(View.GONE);
                 inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
+                udproreslayout.setVisibility(View.GONE);
 
                 SetClick_FR();
                 break;
@@ -667,6 +670,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udlocnumlayout.setVisibility(View.GONE);
                 udjpnumtext.setText(R.string.work_udjpnum2);
                 udlocationlayout.setVisibility(View.GONE);
+                udproreslayout.setVisibility(View.GONE);
 
                 SetClick_SP();
                 break;
@@ -688,6 +692,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udlocnumlayout.setVisibility(View.GONE);
                 udjpnumtext.setText(R.string.work_udjpnum3);
                 udrprrsb1layout.setVisibility(View.GONE);
+                udproreslayout.setVisibility(View.GONE);
 
                 SetClick_TP();
                 break;
@@ -705,6 +710,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udjgwolayout.setVisibility(View.GONE);
                 leadText.setText(R.string.work_lead1);
                 udlocationlayout.setVisibility(View.GONE);
+                udproreslayout.setVisibility(View.GONE);
 
                 SetClick_WS();
                 break;
@@ -717,9 +723,13 @@ public class Work_DetailsActivity extends BaseActivity {
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udprobdesc.setEnabled(false);
+//                udprobdesc.setBackgroundColor(getResources().getColor(R.color.light_gray2));
                 udrestarttime.setEnabled(false);
+//                udrestarttime.setBackgroundColor(getResources().getColor(R.color.light_gray2));
                 actstart.setEnabled(false);
+//                actstart.setBackgroundColor(getResources().getColor(R.color.light_gray2));
                 actfinish.setEnabled(false);
+//                actfinish.setBackgroundColor(getResources().getColor(R.color.light_gray2));
                 break;
             case "进行中":
             case "已反馈":
@@ -1288,6 +1298,8 @@ public class Work_DetailsActivity extends BaseActivity {
                             Toast.makeText(Work_DetailsActivity.this, "修改工单失败", Toast.LENGTH_SHORT).show();
                         } else if (workResult.errorMsg.equals("成功")) {
                             Toast.makeText(Work_DetailsActivity.this, "修改工单成功", Toast.LENGTH_SHORT).show();
+                            setResult(100);
+                            finish();
                         } else {
                             Toast.makeText(Work_DetailsActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
                         }

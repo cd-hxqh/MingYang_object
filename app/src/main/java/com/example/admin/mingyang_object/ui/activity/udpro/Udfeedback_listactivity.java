@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * Created by think on 2015/10/27.
- * 项目台账界面
+ * 问题联络单界面
  */
 public class Udfeedback_listactivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
     private static String TAG = "Udfeedback_listactivity";
@@ -100,9 +100,6 @@ public class Udfeedback_listactivity extends BaseActivity implements SwipeRefres
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
 
-        udfeedbackAdapter = new UdfeedbackAdapter(Udfeedback_listactivity.this, R.layout.list_item, items);
-        recyclerView.setAdapter(udfeedbackAdapter);
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         refresh_layout.setColor(android.R.color.holo_blue_bright,
@@ -159,20 +156,17 @@ public class Udfeedback_listactivity extends BaseActivity implements SwipeRefres
                     showcount = results.getShowcount() + "";
 
                     if (item != null || item.size() != 0) {
-                        if (page == 1){
-                            initAdapter(new ArrayList<Udfeedback>());
-                            items = new ArrayList<Udfeedback>();
-                        }
                         for (int i = 0; i < item.size(); i++) {
-                            Log.i(TAG, "FEEDBACKNUM=" + item.get(i).getFEEDBACKNUM());
                             items.add(item.get(i));
                         }
+                        if (page == 1) {
+                            initAdapter(items);
+                        }else {
+                            addList(item);
+                        }
+
                     }
                     nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(item);
-
-
                 }
             }
 
@@ -217,10 +211,25 @@ public class Udfeedback_listactivity extends BaseActivity implements SwipeRefres
      * 获取数据*
      */
     private void initAdapter(final List<Udfeedback> list) {
-        Log.i(TAG, "list=" + list.size());
+        udfeedbackAdapter = new UdfeedbackAdapter(Udfeedback_listactivity.this, R.layout.list_item, items);
+        recyclerView.setAdapter(udfeedbackAdapter);
+        udfeedbackAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udfeedback_listactivity.this, Udfeedback_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udfeedback", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
 
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udfeedback> list) {
         udfeedbackAdapter.addData(list);
-        udfeedbackAdapter.notifyDataSetChanged();
         udfeedbackAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -237,6 +246,8 @@ public class Udfeedback_listactivity extends BaseActivity implements SwipeRefres
     @Override
     public void onRefresh() {
         page = 1;
+        items = new ArrayList<>();
+        initAdapter(new ArrayList<Udfeedback>());
         getData(search.getText().toString());
     }
 
@@ -248,6 +259,21 @@ public class Udfeedback_listactivity extends BaseActivity implements SwipeRefres
             refresh_layout.setLoading(false);
         } else {
             getData(searchText);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                udfeedbackAdapter.removeAll(items);
+                items = new ArrayList<>();
+                refresh_layout.setRefreshing(true);
+                getData(search.getText().toString());
+                break;
         }
     }
 }

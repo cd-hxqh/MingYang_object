@@ -182,7 +182,6 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
                         }
                     }
                     nodatalayout.setVisibility(View.GONE);
-
                     initAdapter(items);
                 }
             }
@@ -320,8 +319,8 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
             case 100:
                 page = 1;
                 udcardrivelogAdapter.removeAll(items);
+                refresh_layout.setRefreshing(true);
                 getData(search.getText().toString());
-
                 break;
         }
     }

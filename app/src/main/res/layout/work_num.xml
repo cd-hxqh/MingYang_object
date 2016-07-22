@@ -96,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_40dp"
                 android:layout_marginLeft="@dimen/dimen_5"
+
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -137,7 +138,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_udprojectnum"
                     android:textColor="@color/light_black"
@@ -175,7 +183,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_udlocnum"
                     android:textColor="@color/light_black"
@@ -213,7 +228,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_udlocation"
                     android:textColor="@color/light_black"
@@ -251,8 +273,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
                     android:id="@+id/work_lead_text"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_lead"
                     android:textColor="@color/light_black"
@@ -328,7 +357,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/work_udprores"
                     android:textColor="@color/light_black"

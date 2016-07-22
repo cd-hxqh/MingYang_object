@@ -64,7 +64,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/woactivity_udzyscorn"
                         android:textColor="@color/light_black"
@@ -127,7 +134,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="@dimen/dimen_40dp"
                         android:gravity="center_vertical"
                         android:text="@string/woactivity_udstarttime"
@@ -158,7 +172,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/woactivity_udendtime"
                         android:textColor="@color/light_black"
@@ -282,7 +303,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/woactivity_udzglimit"
                         android:textColor="@color/light_black"
@@ -314,7 +342,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/woactivity_lead"
                         android:textColor="@color/light_black"

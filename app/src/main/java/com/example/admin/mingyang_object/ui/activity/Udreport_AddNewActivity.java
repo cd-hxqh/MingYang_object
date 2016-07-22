@@ -362,6 +362,7 @@ public class Udreport_AddNewActivity extends BaseActivity {
                     Toast.makeText(Udreport_AddNewActivity.this, "新增故障提报单失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udreport_AddNewActivity.this, "故障提报单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
+                    setResult(100);
                     finish();
                 } else {
                     Toast.makeText(Udreport_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();

@@ -15,6 +15,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
+import com.example.admin.mingyang_object.ui.activity.workorder.Work_ListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,10 @@ import java.util.List;
  * Created by think on 2015/8/17.
  */
 public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHolder> {
-    Context mContext;
+    Work_ListActivity mContext;
     String worktype;
     List<WorkOrder>workOrderList = new ArrayList<>();
-    public WorkListAdapter(Context context,String worktype) {
+    public WorkListAdapter(Work_ListActivity context,String worktype) {
         this.mContext = context;
         this.worktype = worktype;
     }
@@ -55,7 +56,7 @@ public class WorkListAdapter extends RecyclerView.Adapter<WorkListAdapter.ViewHo
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("workOrder", workOrder);
                     intent.putExtras(bundle);
-                    mContext.startActivity(intent);
+                    mContext.startActivityForResult(intent,0);
                 }
             }
         });

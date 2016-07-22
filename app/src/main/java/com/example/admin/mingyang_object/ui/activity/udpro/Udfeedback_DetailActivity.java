@@ -309,6 +309,8 @@ public class Udfeedback_DetailActivity extends BaseActivity {
                 remarkText.setFocusable(true);
                 remarkText.setFocusableInTouchMode(true);
                 break;
+            default:
+                break;
         }
     }
 
@@ -454,6 +456,8 @@ public class Udfeedback_DetailActivity extends BaseActivity {
                     Toast.makeText(Udfeedback_DetailActivity.this, "修改问题联络单失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udfeedback_DetailActivity.this, "修改问题联络单成功", Toast.LENGTH_SHORT).show();
+                    setResult(100);
+                    finish();
                 } else {
                     Toast.makeText(Udfeedback_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
                 }

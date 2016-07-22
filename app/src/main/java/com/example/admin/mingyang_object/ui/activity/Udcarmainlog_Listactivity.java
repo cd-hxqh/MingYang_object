@@ -322,6 +322,7 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
             case 100:
                 page = 1;
                 udcarmainlogAdapter.removeAll(items);
+                refresh_layout.setRefreshing(true);
                 items = new ArrayList<Udcarmainlog>();
                 getData(search.getText().toString());
                 break;

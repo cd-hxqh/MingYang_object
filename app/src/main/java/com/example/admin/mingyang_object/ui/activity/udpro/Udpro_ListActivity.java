@@ -138,10 +138,13 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }
+                        if (page == 1) {
+                            initAdapter(items);
+                        }else {
+                            addList(item);
+                        }
                     }
                     nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(items);
                 }
             }
 
@@ -200,10 +203,29 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
         });
     }
 
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udpro> list) {
+        udproAdapter.addData(list);
+        udproAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udpro_ListActivity.this, Udpro_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udpro", items.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
         page = 1;
+        items = new ArrayList<>();
+        initAdapter(new ArrayList<Udpro>());
         getData(search.getText().toString());
     }
 

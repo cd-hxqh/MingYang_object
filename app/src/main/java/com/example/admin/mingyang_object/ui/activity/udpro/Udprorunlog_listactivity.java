@@ -124,7 +124,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
         public void onClick(View v) {
             Intent intent = new Intent(Udprorunlog_listactivity.this,Udprorunlog_AddNewActivity.class);
 //            intent.putExtra("worktype",worktype);
-            startActivity(intent);
+            startActivityForResult(intent,100);
         }
     };
 
@@ -144,15 +144,17 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
-
                     if (item != null || item.size() != 0) {
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }
+                        if (page == 1) {
+                            initAdapter(items);
+                        }else {
+                            addList(item);
+                        }
                     }
                     nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(items);
                 }
             }
 
@@ -211,6 +213,23 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
         });
     }
 
+    /**
+     * 获取数据*
+     */
+    private void addList(final List<Udprorunlog> list) {
+        udprorunlogAdapter.addData(list);
+        udprorunlogAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udprorunlog_listactivity.this, Udprorunlog_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udprorunlog", items.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
     //下拉刷新触发事件
     @Override
     public void onRefresh() {
@@ -224,5 +243,20 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
     public void onLoad() {
         page++;
         getData(searchText);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                udprorunlogAdapter.removeAll(items);
+                items = new ArrayList<>();
+                refresh_layout.setRefreshing(true);
+                getData(search.getText().toString());
+                break;
+        }
     }
 }

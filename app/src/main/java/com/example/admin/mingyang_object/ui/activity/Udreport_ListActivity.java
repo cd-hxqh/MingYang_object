@@ -98,7 +98,7 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Udreport_ListActivity.this,Udreport_AddNewActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
         layoutManager = new LinearLayoutManager(this);
@@ -148,17 +148,16 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
                 } else {
 
                     if (item != null || item.size() != 0) {
-                        if (page==1){
-                            initAdapter(new ArrayList<Udreport>());
-                            items = new ArrayList<Udreport>();
-                        }
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }
+                        if (page == 1) {
+                            initAdapter(items);
+                        }else {
+                            addList(item);
+                        }
                     }
                     nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(items);
                 }
             }
 
@@ -210,6 +209,23 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(Udreport_ListActivity.this, Udreport_DetailActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putSerializable("udreport", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udreport> list) {
+        udreportAdapter.addData(list);
+        udreportAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udreport_ListActivity.this, Udreport_DetailActivity.class);
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("udreport", items.get(position));
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
@@ -221,6 +237,8 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
     @Override
     public void onRefresh() {
         page = 1;
+        initAdapter(new ArrayList<Udreport>());
+        items = new ArrayList<Udreport>();
         getData(search.getText().toString());
     }
 
@@ -228,5 +246,20 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
     public void onLoad() {
         page++;
         getData(searchText);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                udreportAdapter.removeAll(items);
+                items = new ArrayList<>();
+                refresh_layout.setRefreshing(true);
+                getData(search.getText().toString());
+                break;
+        }
     }
 }

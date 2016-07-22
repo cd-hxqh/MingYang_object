@@ -322,6 +322,7 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
             case 100:
                 page = 1;
                 udcarfuelchargeAdapter.removeAll(items);
+                refresh_layout.setRefreshing(true);
                 getData(search.getText().toString());
 
                 break;

@@ -548,6 +548,8 @@ public class Udinspo_DetailActivity extends BaseActivity {
                         Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单失败", Toast.LENGTH_SHORT).show();
                     } else if (workResult.errorMsg.equals("成功")) {
                         Toast.makeText(Udinspo_DetailActivity.this, "修改巡检单成功", Toast.LENGTH_SHORT).show();
+                        setResult(100);
+                        finish();
                     } else {
                         Toast.makeText(Udinspo_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
                     }

@@ -472,6 +472,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
                     Toast.makeText(Udprorunlog_DetailActivity.this, "修改日报失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udprorunlog_DetailActivity.this, "修改日报成功", Toast.LENGTH_SHORT).show();
+                    setResult(100);
+                    finish();
                 } else {
                     Toast.makeText(Udprorunlog_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
                 }
