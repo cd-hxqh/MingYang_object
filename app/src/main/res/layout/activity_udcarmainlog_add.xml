@@ -49,7 +49,15 @@
                 android:padding="@dimen/dimens_10">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/licensenum_text"
                     android:textColor="@color/light_black"
@@ -122,8 +130,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/dimens_5">
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -134,7 +141,15 @@
                     android:padding="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/startdate_1_text"
                         android:textColor="@color/light_black"
@@ -152,7 +167,6 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/view_1_id"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:background="@mipmap/line"></View>
@@ -165,7 +179,15 @@
                     android:padding="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/enddate_1_text"
                         android:textColor="@color/light_black"
@@ -264,7 +286,15 @@
                     android:paddingRight="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/totalprice_text"
                         android:textColor="@color/light_black"
@@ -325,8 +355,17 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dimens_10">
 
+
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/servicetype_text"
                         android:textColor="@color/light_black"
@@ -336,7 +375,7 @@
                         android:id="@+id/servicetype_text_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:layout_marginLeft="@dimen/dimens_8dp"
                         android:drawableRight="@mipmap/item_more"
                         android:hint="@string/have_not_data"
                         android:textColor="@color/light_black"

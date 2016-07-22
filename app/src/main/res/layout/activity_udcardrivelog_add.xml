@@ -49,7 +49,15 @@
                 android:padding="@dimen/dimens_10">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="*"
+                    android:textColor="@color/color4"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="@string/licensenum_text"
                     android:textColor="@color/light_black"
@@ -122,8 +130,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/dimens_5">
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -134,7 +141,16 @@
                     android:padding="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/startdate_text"
                         android:textColor="@color/light_black"
@@ -167,7 +183,15 @@
                     android:padding="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/starttime_1_text"
                         android:textColor="@color/light_black"
@@ -200,7 +224,15 @@
                     android:paddingRight="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/departure_text"
                         android:textColor="@color/light_black"
@@ -263,7 +295,15 @@
                     android:paddingRight="@dimen/dimens_10">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:text="@string/goreason_text"
                         android:textColor="@color/light_black"
@@ -312,6 +352,14 @@
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/dimens_10"
                     android:paddingRight="@dimen/dimens_10">
+
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="*"
+                        android:textColor="@color/color4"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
