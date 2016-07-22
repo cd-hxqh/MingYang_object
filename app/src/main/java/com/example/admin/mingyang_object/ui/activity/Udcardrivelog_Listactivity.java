@@ -173,7 +173,7 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
                 } else {
 
                     if (item != null || item.size() != 0) {
-                        if (page == 1){
+                        if (page == 1) {
                             items = new ArrayList<Udcardrivelog>();
                             initAdapter(new ArrayList<Udcardrivelog>());
                         }
@@ -311,4 +311,18 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
         }
     };
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                udcardrivelogAdapter.removeAll(items);
+                getData(search.getText().toString());
+
+                break;
+        }
+    }
 }

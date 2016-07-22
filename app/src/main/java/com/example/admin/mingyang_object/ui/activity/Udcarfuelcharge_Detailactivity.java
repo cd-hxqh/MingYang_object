@@ -81,7 +81,11 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
 
     private TextView driverid1Text; //司机
 
+    private TextView drivernameText; //司机名称
+
     private TextView respnameText; //责任人
+
+    private TextView resp_nameText;//责任人名称
 
     private TextView prodescText; //所属项目
 
@@ -182,7 +186,9 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         licensenumText = (TextView) findViewById(R.id.licensenum_text_id);
         carnameText = (TextView) findViewById(R.id.carname_text_id);
         driverid1Text = (TextView) findViewById(R.id.driverid1_text_id);
+        drivernameText = (TextView) findViewById(R.id.driverid_name_id);
         respnameText = (TextView) findViewById(R.id.respons_text_id);
+        resp_nameText = (TextView) findViewById(R.id.respname_text_id);
         prodescText = (TextView) findViewById(R.id.prodesc_text_id);
         branchdescText = (TextView) findViewById(R.id.branchdesc_text_id);
 
@@ -215,7 +221,9 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
             licensenumText.setText(udcarfuelcharge.getLICENSENUM());
             carnameText.setText(udcarfuelcharge.getVEHICLENAME());
             driverid1Text.setText(udcarfuelcharge.getDRIVERID1());
-            respnameText.setText(udcarfuelcharge.getRESPNAME());
+            drivernameText.setText(udcarfuelcharge.getDRIVERNAME());
+            respnameText.setText(udcarfuelcharge.getRESPONSID());
+            resp_nameText.setText(udcarfuelcharge.getRESPNAME());
             prodescText.setText(udcarfuelcharge.getPRODESC());
             branchdescText.setText(udcarfuelcharge.getBRACHDESC());
 
@@ -407,6 +415,9 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
      * 编辑状态*
      */
     private void isEdit(boolean isshow) {
+        //是否提交
+        comisornoText.setEnabled(isshow);
+
         //加油日期
         chargedateText.setEnabled(isshow);
         //上次加油里程表读数
@@ -477,6 +488,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
                     MessageUtils.showMiddleToast(Udcarfuelcharge_Detailactivity.this, "更新失败");
                 } else if (workResult.errorMsg.equals("成功")) {
                     MessageUtils.showMiddleToast(Udcarfuelcharge_Detailactivity.this, "行驶记录" + workResult.wonum + "更新成功");
+                    setResult(100);
                     finish();
                 } else {
                     MessageUtils.showMiddleToast(Udcarfuelcharge_Detailactivity.this, workResult.errorMsg);

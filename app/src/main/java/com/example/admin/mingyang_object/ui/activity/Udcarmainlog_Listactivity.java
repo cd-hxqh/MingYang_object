@@ -315,4 +315,16 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     };
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                udcarmainlogAdapter.removeAll(items);
+                items = new ArrayList<Udcarmainlog>();
+                getData(search.getText().toString());
+                break;
+        }
+    }
 }

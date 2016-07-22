@@ -551,11 +551,11 @@
     <string name="clxsxxxx_text">车辆行驶详细信息</string>
     <string name="wonum_1_text">业务单号:</string>
     <string name="wtypedesc_text">任务类型:</string>
-    <string name="startnumber_text">起始里程:</string>
-    <string name="endnumber_text">结束里程:</string>
-    <string name="lastfuelconsumption_text">上次油耗:</string>
-    <string name="standardfuelconsumption_text">标准油耗:</string>
-    <string name="fee_text">路桥费:</string>
+    <string name="startnumber_text">起始里程(公里):</string>
+    <string name="endnumber_text">结束里程(公里):</string>
+    <string name="lastfuelconsumption_text">上次油耗(升):</string>
+    <string name="standardfuelconsumption_text">标准油耗(升):</string>
+    <string name="fee_text">路桥费(元):</string>
     <string name="udcarddrivelog_details_text">行驶记录详情</string>
     <!--加油记录-->
     <string name="driverid_1_text">录入人编号:</string>
@@ -567,9 +567,9 @@
     <string name="number1_text">本次加油里程表读数:</string>
     <string name="number3_text">里程差:</string>
     <string name="number4_text">油品号:</string>
-    <string name="number5_text">本次加油量:</string>
-    <string name="price_text">单价:</string>
-    <string name="fuelcost_text">加油费:</string>
+    <string name="number5_text">本次加油量(升):</string>
+    <string name="price_text">单价(元):</string>
+    <string name="fuelcost_text">加油费(元):</string>
     <string name="lastfuelconsumption_1_text">油耗:</string>
     <string name="invoicenum_text">发票号:</string>
     <string name="place_text">加油地点:</string>
@@ -583,7 +583,7 @@
     <string name="enddate_1_text">维修结束日期:</string>
     <string name="price_1_text">维修单价:</string>
     <string name="mainnumber_text">维修数量:</string>
-    <string name="totalprice_text">维修总额:</string>
+    <string name="totalprice_text">维修总额(元):</string>
     <string name="invoicenum_1_text">维修发票号:</string>
     <string name="servicetype_text">维修类型:</string>
     <string name="mainplace_text">维修地点:</string>
@@ -597,5 +597,8 @@
     <string name="eidt_text">编辑</string>
     <string name="title_activity_photo">PhotoActivity</string>
     <string name="title_activity_failurelist1">failurelist1</string>
+    <string name="driverid_name">司机名称:</string>
+    <string name="createby_name_text">创建人名称:</string>
+    <string name="respname_text">责任人名称:</string>
 
 </resources>

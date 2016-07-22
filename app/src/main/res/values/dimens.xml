@@ -28,4 +28,5 @@
 
     <dimen name="tab_top_fontsize">15sp</dimen>
     <dimen name="dimens_10dp">10dp</dimen>
+    <dimen name="dimens_8dp">8dp</dimen>
 </resources>

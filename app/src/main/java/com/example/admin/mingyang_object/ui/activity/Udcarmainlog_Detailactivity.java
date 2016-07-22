@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -32,6 +33,8 @@ import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
 
@@ -79,7 +82,11 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
 
     private TextView driverid1Text; //司机
 
+    private TextView driveridNameText; //司机名称
+
     private TextView respnameText; //责任人
+
+    private TextView respname_Text;// 责任人名称
 
     private TextView prodescText; //所属项目
 
@@ -155,6 +162,11 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
     private Button cancelButton;
 
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +174,9 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
 
 
     }
@@ -183,7 +198,9 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         licensenumText = (TextView) findViewById(R.id.licensenum_text_id);
         carnameText = (TextView) findViewById(R.id.carname_text_id);
         driverid1Text = (TextView) findViewById(R.id.driverid1_text_id);
+        driveridNameText = (TextView) findViewById(R.id.driverid_name_text_id);
         respnameText = (TextView) findViewById(R.id.respons_text_id);
+        respname_Text = (TextView) findViewById(R.id.respname_text_id);
         prodescText = (TextView) findViewById(R.id.prodesc_text_id);
         branchdescText = (TextView) findViewById(R.id.branchdesc_text_id);
         createbyText = (TextView) findViewById(R.id.createby_text_id);
@@ -216,7 +233,9 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
             licensenumText.setText(udcarmainlog.getLICENSENUM());
             carnameText.setText(udcarmainlog.getVEHICLENAME());
             driverid1Text.setText(udcarmainlog.getDRIVERID1());
-            respnameText.setText(udcarmainlog.getRESPNAME());
+            driveridNameText.setText(udcarmainlog.getDRIVERNAME());
+            respnameText.setText(udcarmainlog.getRESPONSID());
+            respname_Text.setText(udcarmainlog.getRESPNAME());
             prodescText.setText(udcarmainlog.getPRODESC());
             branchdescText.setText(udcarmainlog.getBRANCHDESC());
             createbyText.setText(udcarmainlog.getCREATEBY());
@@ -263,10 +282,43 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
         enddateText.setOnClickListener(new DateTimeOnClickListener(enddateText));
 
         comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
+        servicetypeText.setOnClickListener(servicetypeTextOnClickListener);
 
         isEdit(isEdit);
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
+    }
+
+    private View.OnClickListener servicetypeTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            NormalListDialog();
+        }
+    };
+
+
+    private void NormalListDialog() {
+        String[] types = new String[0];
+        mMenuItems = new ArrayList<>();
+        types = getResources().getStringArray(R.array.servicetype_array);
+        for (int i = 0; i < types.length; i++) {
+            mMenuItems.add(new DialogMenuItem(types[i], 0));
+        }
+        final NormalListDialog dialog = new NormalListDialog(Udcarmainlog_Detailactivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                servicetypeText.setText(mMenuItems.get(position).mOperName);
+
+                dialog.dismiss();
+            }
+        });
+
     }
 
 
@@ -356,6 +408,7 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
 
         editLinearLayouut.setOnClickListener(editLinearLayouutOnClickListener);
         uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
+
 
     }
 
@@ -463,6 +516,7 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
                     MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, "更新失败");
                 } else if (workResult.errorMsg.equals("成功")) {
                     MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, "维修记录" + workResult.wonum + "更新成功");
+                    setResult(100);
                     finish();
                 } else {
                     MessageUtils.showMiddleToast(Udcarmainlog_Detailactivity.this, workResult.errorMsg);

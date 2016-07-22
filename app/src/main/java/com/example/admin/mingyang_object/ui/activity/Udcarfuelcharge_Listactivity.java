@@ -314,5 +314,17 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        switch (resultCode) {
+            case 100:
+                page = 1;
+                udcarfuelchargeAdapter.removeAll(items);
+                getData(search.getText().toString());
+
+                break;
+        }
+    }
 }

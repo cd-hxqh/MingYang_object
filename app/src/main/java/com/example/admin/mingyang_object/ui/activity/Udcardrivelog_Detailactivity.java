@@ -75,6 +75,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
 
     private TextView driverid1Text; //司机
 
+    private TextView driveridNameText; //司机名称
+
     private TextView prodescText; //所属项目
 
     private TextView branchdescText; //所属中心
@@ -84,6 +86,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
      */
 
     private TextView driveridText; //创建人
+
+    private TextView createbyText; //创建人名称
 
     private TextView createdateText; //创建时间
 
@@ -170,10 +174,12 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         licensenumText = (TextView) findViewById(R.id.licensenum_text_id);
         carnameText = (TextView) findViewById(R.id.carname_text_id);
         driverid1Text = (TextView) findViewById(R.id.driverid1_text_id);
+        driveridNameText = (TextView) findViewById(R.id.driverid_name_text_id);
         prodescText = (TextView) findViewById(R.id.prodesc_text_id);
         branchdescText = (TextView) findViewById(R.id.branchdesc_text_id);
 
         driveridText = (TextView) findViewById(R.id.driverid_text_id);
+        createbyText = (TextView) findViewById(R.id.createby_name_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
         comisornoText = (CheckBox) findViewById(R.id.comisorno_text_id);
 
@@ -202,12 +208,16 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
             licensenumText.setText(udcardrivelog.getLICENSENUM());
             carnameText.setText(udcardrivelog.getCARNAME());
             driverid1Text.setText(udcardrivelog.getDRIVERID1());
+            driveridNameText.setText(udcardrivelog.getDRIVERNAME());
             prodescText.setText(udcardrivelog.getPRODESC());
             branchdescText.setText(udcardrivelog.getBRANCHDESC());
             driveridText.setText(udcardrivelog.getDRIVERID());
+            createbyText.setText(udcardrivelog.getCREATEBY());
+
             createdateText.setText(udcardrivelog.getCREATEDATE());
             if (udcardrivelog.getCOMISORNO() == null || udcardrivelog.getCOMISORNO().equals("")) {
                 comisornoText.setChecked(false);
+
             } else {
                 comisornoText.setChecked(true);
             }
@@ -244,6 +254,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
     }
+
     private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -384,6 +395,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
      * 编辑状态*
      */
     private void isEdit(boolean isshow) {
+        comisornoText.setEnabled(isshow);
         //出车日期
         startdateText.setEnabled(isshow);
         //出车时间
@@ -428,6 +440,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
                     MessageUtils.showMiddleToast(Udcardrivelog_Detailactivity.this, "更新失败");
                 } else if (workResult.errorMsg.equals("成功")) {
                     MessageUtils.showMiddleToast(Udcardrivelog_Detailactivity.this, "行驶记录" + workResult.wonum + "更新成功");
+                    setResult(100);
                     finish();
                 } else {
                     MessageUtils.showMiddleToast(Udcardrivelog_Detailactivity.this, workResult.errorMsg);

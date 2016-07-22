@@ -126,7 +126,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_5"
             android:focusable="true"
             android:focusableInTouchMode="true"
