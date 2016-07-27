@@ -1,22 +1,34 @@
 package com.example.admin.mingyang_object.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
 /**
  * Created by think on 2016/6/23.
  */
+@DatabaseTable(tableName = "DebugWorkOrder")
 public class DebugWorkOrder implements Serializable {
 
-
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(columnName = "DEBUGWORKORDERID")
     public String DEBUGWORKORDERID;//工单ID
+    @DatabaseField(columnName = "DEBUGWORKORDERNUM")
     public String DEBUGWORKORDERNUM;//工单编号
+    @DatabaseField(columnName = "DESCRIPTION")
     public String DESCRIPTION;//描述
+    @DatabaseField(columnName = "PRONUM")
     public String PRONUM;//项目编号
+    @DatabaseField(columnName = "STATUS")
     public String STATUS;//状态
+    @DatabaseField(columnName = "CREATEBY")
     public String CREATEBY;//创建人
+    @DatabaseField(columnName = "PLANSTART")
     public String PLANSTART;//计划开始时间
+    @DatabaseField(columnName = "PLANEND")
     public String PLANEND;//计划结束时间
-
 
     public boolean isnew;
 

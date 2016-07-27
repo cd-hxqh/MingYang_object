@@ -118,6 +118,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
                 startActivity(intent);
             }
         });
+        addimg.setVisibility(View.GONE);
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

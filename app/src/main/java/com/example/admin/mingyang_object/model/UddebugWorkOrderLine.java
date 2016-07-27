@@ -1,26 +1,47 @@
 package com.example.admin.mingyang_object.model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
 /**
  * Created by think on 2016/6/23.
  * 调试工单子表
  */
+@DatabaseTable(tableName = "UddebugWorkOrderLine")
 public class UddebugWorkOrderLine implements Serializable{
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(columnName = "WINDDRIVENGENERATORNUM")
     public String WINDDRIVENGENERATORNUM;//风机编码
+    @DatabaseField(columnName = "FJLOCATION")
     public String FJLOCATION;//机台号
+    @DatabaseField(columnName = "DYNAMICDEBUGDATE")
     public String DYNAMICDEBUGDATE;//调试日期
+    @DatabaseField(columnName = "SYNCHRONIZATIONDEBUGDATE")
     public String SYNCHRONIZATIONDEBUGDATE;//并网运行日期
+    @DatabaseField(columnName = "TIME1")
     public String TIME1;//静态调试日期
+    @DatabaseField(columnName = "TIME2")
     public String TIME2;//动态调试日期
+    @DatabaseField(columnName = "VESION")
     public String VESION;//程序版本号
+    @DatabaseField(columnName = "RESPONSIBLEPERSON")
     public String RESPONSIBLEPERSON;//调试责任人
+    @DatabaseField(columnName = "DEBUGLEADER")
     public String DEBUGLEADER;//调试组长
+    @DatabaseField(columnName = "CREW")
     public String CREW;//调试工程师1
+    @DatabaseField(columnName = "CREW2")
     public String CREW2;//调试工程师2
+    @DatabaseField(columnName = "CREW3")
     public String CREW3;//调试工程师3
+    @DatabaseField(columnName = "QUESTION")
     public String QUESTION;//问题记录
+    @DatabaseField(columnName = "DISPOSE")
     public String DISPOSE;//处理过程
+    @DatabaseField(columnName = "REMARK")
     public String REMARK;//备注
 
     public String DEBUGWORKORDERNUM;//所属工单号

@@ -15,6 +15,7 @@ import java.io.Serializable;
  * Created by think on 2015/10/28.
  */
 @DatabaseTable(tableName = "WorkOrder")
+
 public class WorkOrder implements Serializable {
 
     @DatabaseField(generatedId = true)

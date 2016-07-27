@@ -8,6 +8,8 @@ import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Wpmaterial;
+import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.utils.Utils;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -22,7 +24,7 @@ import java.util.Map;
  * Created by think on 2016/7/12.
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
     private Map<String, Dao> daos = new HashMap<String, Dao>();
 
     private DatabaseHelper(Context context) {
@@ -38,10 +40,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Wpmaterial.class);
             TableUtils.createTable(connectionSource, Udinspo.class);
             TableUtils.createTable(connectionSource, Udinsproject.class);
+            TableUtils.createTable(connectionSource, DebugWorkOrder.class);
+            TableUtils.createTable(connectionSource, UddebugWorkOrderLine.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
 
     }
@@ -55,6 +58,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Wpmaterial.class, true);
             TableUtils.dropTable(connectionSource, Udinspo.class, true);
             TableUtils.dropTable(connectionSource, Udinsproject.class, true);
+            TableUtils.dropTable(connectionSource, DebugWorkOrder.class, true);
+            TableUtils.dropTable(connectionSource, UddebugWorkOrderLine.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();
