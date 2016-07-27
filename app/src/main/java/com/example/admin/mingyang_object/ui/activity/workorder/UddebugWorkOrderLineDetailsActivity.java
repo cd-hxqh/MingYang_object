@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
@@ -233,7 +234,52 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
             }
         });
     }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.e("调试工单","选择返回结果");
+        Option option;
+        if (requestCode==6)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            winddrivengeneratornum.setText(option.getName());
 
+        }
+        //调试责任人
+        if (requestCode==7)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            responsibleperson.setText(option.getName());
+
+        }
+        //调试组长
+        if (requestCode==8)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            debugleader.setText(option.getName());
+
+        }
+        //调试工程师1
+        if (requestCode==9)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            crew.setText(option.getName());
+
+        }
+        //调试工程师2
+        if (requestCode==10)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            crew2.setText(option.getName());
+
+        }
+        //调试工程师3
+        if (requestCode==11)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            crew3.setText(option.getName());
+
+        }
+    }
     private UddebugWorkOrderLine getWoactivity() {
 
         UddebugWorkOrderLine uddebugWorkOrderLine = this.uddebugWorkOrderLine;
