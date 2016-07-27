@@ -196,6 +196,7 @@ public class DebugWork_UddebugWorkOrderLineActivity extends BaseActivity impleme
                 bundle.putSerializable("position", position);
                     intent.setClass(DebugWork_UddebugWorkOrderLineActivity.this, UddebugWorkOrderLineDetailsActivity.class);
                 intent.putExtras(bundle);
+                intent.putExtra("pronum",pronum);
                 startActivityForResult(intent, 2);
             }
         });

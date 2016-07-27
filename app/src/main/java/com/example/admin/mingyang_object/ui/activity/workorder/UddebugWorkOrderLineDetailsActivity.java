@@ -72,6 +72,9 @@ public class UddebugWorkOrderLineDetailsActivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
+        Intent intent=getIntent();
+        pronum=intent.getStringExtra("pronum");
+        Log.e("调试工单","调试工单子表详情"+pronum);
     }
 
     private void geiIntentData() {
