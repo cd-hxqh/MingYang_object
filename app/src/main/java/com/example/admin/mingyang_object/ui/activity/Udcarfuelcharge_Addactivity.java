@@ -157,6 +157,7 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.jyjlxj_text));
 
+        chargedateText.setText(GetDateAndTime.GetDate());
         licensenumText.setOnClickListener(licensenumTextOnClickListener);
         chargedateText.setOnClickListener(new DateTimeOnClickListener(chargedateText));
 
@@ -227,6 +228,7 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     licensenumText.setText(option.getName());
                     carnameText.setText(option.getDesc());
+                    number2Text.setText(option.getValue6());
                     break;
 
                 default:

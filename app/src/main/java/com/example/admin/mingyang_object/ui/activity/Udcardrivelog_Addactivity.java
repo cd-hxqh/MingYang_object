@@ -65,6 +65,18 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
 
     private TextView carnameText; //车辆名称
 
+    private TextView driverText;//司机
+
+    private TextView prodescText;//所属项目
+
+    private TextView branchdescText;//所属中心
+
+    /**
+     * 录入信息
+     */
+    private TextView driveridText;//创建人
+
+    private TextView createdateText;//创建日期
 
     /**
      * 出车信息*
@@ -79,6 +91,8 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
     private EditText destinationText; //目的地
 
     private EditText goreasonText; //出车事由
+
+    private TextView startnumberText;//起始里程
 
     private EditText endnumberText; //结束里程
 
@@ -124,13 +138,19 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
 
         licensenumText = (TextView) findViewById(R.id.licensenum_text_id);
         carnameText = (TextView) findViewById(R.id.carname_text_id);
+        driverText = (TextView) findViewById(R.id.driverid1_text_id);
+        prodescText = (TextView) findViewById(R.id.prodesc_text_id);
+        branchdescText = (TextView) findViewById(R.id.branchdesc_text_id);
 
+        driveridText = (TextView) findViewById(R.id.driverid_text_id);
+        createdateText = (TextView) findViewById(R.id.createdate_text_id);
 
         startdateText = (TextView) findViewById(R.id.startdate_text_id);
         starttimeText = (TextView) findViewById(R.id.starttime_text_id);
         departureText = (EditText) findViewById(R.id.departure_text_id);
         destinationText = (EditText) findViewById(R.id.destination_text_id);
         goreasonText = (EditText) findViewById(R.id.goreason_text_id);
+        startnumberText = (TextView) findViewById(R.id.startnumber_text_id);
         endnumberText = (EditText) findViewById(R.id.endnumber_text_id);
         standardfuelconsumptionText = (EditText) findViewById(R.id.standardfuelconsumption_text_id);
 
@@ -146,6 +166,9 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.xcjlxj_text));
 
+        startdateText.setText(GetDateAndTime.GetDate());
+        driveridText.setText(AccountUtils.getdisplayName(Udcardrivelog_Addactivity.this));
+        createdateText.setText(GetDateAndTime.GetDate());
         licensenumText.setOnClickListener(licensenumTextOnClickListener);
         startdateText.setOnClickListener(startdateTextOnClickListener);
         starttimeText.setOnClickListener(starttimeTextOnClickListener);
@@ -210,6 +233,10 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     licensenumText.setText(option.getName());
                     carnameText.setText(option.getDesc());
+                    driverText.setText(option.getValue4());
+                    prodescText.setText(option.getValue2());
+                    branchdescText.setText(option.getValue3());
+                    startnumberText.setText(option.getValue5());
                     break;
 
                 default:

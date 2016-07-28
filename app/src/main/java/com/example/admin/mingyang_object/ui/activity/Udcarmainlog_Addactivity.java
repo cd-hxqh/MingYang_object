@@ -238,6 +238,7 @@ public class Udcarmainlog_Addactivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     licensenumText.setText(option.getName());
                     carnameText.setText(option.getDesc());
+                    number2Text.setText(option.getValue8());
                     break;
 
                 default:

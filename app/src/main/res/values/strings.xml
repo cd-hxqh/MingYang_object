@@ -541,6 +541,7 @@
     <string name="branchdesc_1_text">所属中心:</string>
     <string name="lrxx_text">录入信息</string>
     <string name="driverid_text">创建人:</string>
+    <string name="createdate1_text">创建日期:</string>
     <string name="comisorno_text">是否提交:</string>
     <string name="ccxx_text">出车信息</string>
     <string name="startdate_text">出车日期:</string>

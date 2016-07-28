@@ -14,6 +14,8 @@ public class Option implements Serializable {
     String Value4;
     String Value5;
     String Value6;
+    String Value7;
+    String Value8;
 
     public String getName() {
         return Name;
@@ -77,5 +79,21 @@ public class Option implements Serializable {
 
     public void setValue6(String value6) {
         Value6 = value6;
+    }
+
+    public String getValue7() {
+        return Value7;
+    }
+
+    public void setValue7(String value7) {
+        Value7 = value7;
+    }
+
+    public String getValue8() {
+        return Value8;
+    }
+
+    public void setValue8(String value8) {
+        Value8 = value8;
     }
 }

@@ -254,6 +254,13 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option.setName(data.get(i).getLICENSENUM());
                 option.setDesc(data.get(i).getDRIVER());
                 option.setValue1(data.get(i).getPRONUM());
+                option.setValue2(data.get(i).getPRODESC());
+                option.setValue3(data.get(i).getBRANCHDESC());
+                option.setValue4(data.get(i).getDRIVER());
+                option.setValue5(data.get(i).getENDNUMBER());
+                option.setValue6(data.get(i).getNUMBER1());//加油
+                option.setValue7(data.get(i).getNUMBER2());//行驶
+                option.setValue8(data.get(i).getNUMBER3());//维修
                 optionList.add(option);
             }
         }
