@@ -244,6 +244,10 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             return HttpManager.getworkorderUrl("FR","全部", searchText, page, 20);
         }else if (optiontype == Constants.UDDEPTCODE){//部门
             return HttpManager.getUddepturl(searchText, page, 20);
+        }else if (optiontype == Constants.WONUMCODE){//业务单号
+            if (getIntent().getStringExtra("wonumtype").equals("工单跟踪")) {
+                return HttpManager.getWorkorderAll(page, 20);
+            }
         }
         return "";
     }

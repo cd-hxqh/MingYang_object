@@ -232,4 +232,14 @@
         <item>全部</item>
         <item>本地记录</item>
     </string-array>
+
+    <string-array name="udcardrivelog_wonum_array">
+        <item>工单跟踪</item>
+        <item>7_备件维修单</item>
+        <item>定检工单</item>
+        <item>排查工单</item>
+        <item>技改工单</item>
+        <item>故障工单</item>
+        <item>终验收工单</item>
+    </string-array>
 </resources>

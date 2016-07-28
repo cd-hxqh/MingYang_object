@@ -530,6 +530,13 @@ public class HttpManager {
     }
 
     /**
+     *
+     */
+    public static String getWorkorderAll(int curpage, int showcount){
+        return "{'appid':'','objectname':'WORKORDER','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+    }
+
+    /**
      * 使用用户名密码登录
      *
      * @param cxt

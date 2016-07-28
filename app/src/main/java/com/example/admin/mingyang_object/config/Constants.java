@@ -356,4 +356,6 @@ public class Constants {
 
     public static final int UDDEPTCODE = 260;//部门
 
+    public static final int WONUMCODE = 270;//业务单号
+
 }

@@ -133,12 +133,14 @@ public class Failurelist1Activity extends BaseActivity implements SwipeRefreshLa
                         ArrayList<Failurelist> items = JsonUtils.parsingFailurelist(results.getResultlist());
                         if (items==null){
                             refresh_layout.setRefreshing(false);
+                            refresh_layout.setLoading(false);
                             nodatalayout.setVisibility(View.VISIBLE);
                         }else if(items.size()==1){//问题原因
                             getData2(items.get(0).FAILURELIST+"");
                         }
                     } else {
                         refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
                         nodatalayout.setVisibility(View.VISIBLE);
                     }
                 }
@@ -146,6 +148,7 @@ public class Failurelist1Activity extends BaseActivity implements SwipeRefreshLa
                 @Override
                 public void onFailure(String error) {
                     refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             });
@@ -168,10 +171,12 @@ public class Failurelist1Activity extends BaseActivity implements SwipeRefreshLa
                     }else{//问题原因
                         failurelist1Adapter.adddate(items);
                         refresh_layout.setRefreshing(false);
+                        refresh_layout.setLoading(false);
                         nodatalayout.setVisibility(View.GONE);
                     }
                 } else {
                     refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -179,6 +184,7 @@ public class Failurelist1Activity extends BaseActivity implements SwipeRefreshLa
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });

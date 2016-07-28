@@ -92,6 +92,10 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
 
     private EditText goreasonText; //出车事由
 
+    private TextView wonumText;//业务单号
+
+    private TextView wtypedescText;//任务类型
+
     private TextView startnumberText;//起始里程
 
     private EditText endnumberText; //结束里程
@@ -118,6 +122,10 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
      * 取消保存*
      */
     private Button canleButton;
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
 
 
     @Override
@@ -150,6 +158,8 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         departureText = (EditText) findViewById(R.id.departure_text_id);
         destinationText = (EditText) findViewById(R.id.destination_text_id);
         goreasonText = (EditText) findViewById(R.id.goreason_text_id);
+        wonumText = (TextView) findViewById(R.id.wonum_text_id);
+        wtypedescText = (TextView) findViewById(R.id.wtypedesc_text_id);
         startnumberText = (TextView) findViewById(R.id.startnumber_text_id);
         endnumberText = (EditText) findViewById(R.id.endnumber_text_id);
         standardfuelconsumptionText = (EditText) findViewById(R.id.standardfuelconsumption_text_id);
@@ -223,6 +233,50 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         }
     };
 
+    private class NormalListDialogOnClickListener implements View.OnClickListener {
+        TextView textView;
+
+        public NormalListDialogOnClickListener(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            NormalListDialog(textView);
+        }
+    }
+
+    private void NormalListDialog(final TextView textView) {
+        String[] types = new String[0];
+        mMenuItems = new ArrayList<>();
+        if (textView == wonumText) {
+            types = getResources().getStringArray(R.array.udcardrivelog_wonum_array);
+        }
+//        else if (textView == culevel) {
+//            types = getResources().getStringArray(R.array.culevel_array);
+//        }
+        for (String type : types) {
+            mMenuItems.add(new DialogMenuItem(type, 0));
+        }
+        final NormalListDialog dialog = new NormalListDialog(Udcardrivelog_Addactivity.this, mMenuItems);
+        dialog.title("请选择")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+//                textView.setText(mMenuItems.get(position).mOperName);
+                Intent intent = new Intent(Udcardrivelog_Addactivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.WONUMCODE);
+                intent.putExtra("wonumtype", mMenuItems.get(position).mOperName);
+                startActivityForResult(intent, Constants.WONUMCODE);
+                dialog.dismiss();
+            }
+        });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -238,7 +292,9 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
                     branchdescText.setText(option.getValue3());
                     startnumberText.setText(option.getValue5());
                     break;
-
+                case Constants.WONUMCODE:
+                    option = (Option) data.getSerializableExtra("option");
+                    break;
                 default:
                     break;
             }
