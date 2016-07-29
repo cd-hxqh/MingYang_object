@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.admin.mingyang_object" >
+    package="com.example.admin.mingyang_object">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -23,15 +23,19 @@
     <!-- Permission for Unit Test -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <application
         android:name=".application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/SampleTheme" >
+        android:theme="@style/SampleTheme">
         <activity
             android:name=".ui.activity.LoadActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -248,7 +252,7 @@
         <activity
             android:name=".ui.activity.Udstockline_DetailActivity"
             android:label="@string/udstockline_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udreport_ListActivity"
             android:label="@string/udreport_text" />
@@ -266,7 +270,7 @@
         <activity
             android:name=".ui.activity.Udinspo_DetailActivity"
             android:label="@string/udinspo_detail_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udinsproject_ListActivity"
             android:label="@string/udinsproject_text" />
@@ -280,33 +284,33 @@
         <activity
             android:name=".ui.activity.Udcardrivelog_Detailactivity"
             android:label="@string/udcarddrivelog_details_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Addactivity"
             android:label="@string/xcjlxj_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Listactivity"
             android:label="@string/udcarfuelcharge_text" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Addactivity"
             android:label="@string/udcarfuelcharge_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Detailactivity"
             android:label="@string/udcarfuelcharge_detail_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Listactivity"
             android:label="@string/udcarmainlog_text" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Detailactivity"
             android:label="@string/wxjlxq_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Addactivity"
             android:label="@string/wxjlxq_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Wfm_Details_Activity"
             android:label="@string/wfm_detail_title" />
@@ -315,16 +319,41 @@
             android:label="@string/title_activity_option" />
         <activity
             android:name=".ui.activity.PhotoActivity"
-            android:label="@string/title_activity_photo" >
-        </activity>
+            android:label="@string/title_activity_photo"></activity>
         <activity
             android:name=".ui.activity.Failurelist1Activity"
-            android:label="@string/title_activity_failurelist1" >
-        </activity>
+            android:label="@string/title_activity_failurelist1"></activity>
         <activity
             android:name=".ui.activity.Failurelist2Activity"
-            android:label="@string/title_activity_failurelist1" >
-        </activity>
+            android:label="@string/title_activity_failurelist1"></activity>
+
+        <!--百度自动更新设置-->
+        <meta-data
+            android:name="BDAPPID"
+            android:value="8437947" />
+        <meta-data
+            android:name="BDAPPKEY"
+            android:value="UT3mZKEpcZdTQvgW4qT6WTFqWG20ZDNj" />
+
+
+        <activity
+            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
+            android:exported="false"
+            android:screenOrientation="sensor"
+            android:theme="@style/bdp_update_dialog_style_fullscreen" />
+
+        <receiver
+            android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
+import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
@@ -77,6 +79,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
         if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
         }
@@ -308,5 +311,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             } else {
                 mMenuItems.add(new DialogMenuItem("    " + inspotypes[i], 0));
             }
+    }
+
+
+    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
+        @Override
+        public void onCheckComplete() {
+            Log.i(TAG, "onCheckComplete");
+        }
+
     }
 }
