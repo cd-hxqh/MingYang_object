@@ -29,7 +29,8 @@ public class DebugWorkOrder implements Serializable {
     public String PLANSTART;//计划开始时间
     @DatabaseField(columnName = "PLANEND")
     public String PLANEND;//计划结束时间
-
+    @DatabaseField(columnName = "belong")
+    public String  belong;//工单所属用户
     public boolean isnew;
 
     public String getDEBUGWORKORDERID() {return DEBUGWORKORDERID;}
