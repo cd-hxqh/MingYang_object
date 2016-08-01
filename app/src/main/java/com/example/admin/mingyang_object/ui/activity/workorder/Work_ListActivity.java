@@ -214,6 +214,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         }else if (status.equals("本地记录")){//本地修改保存的记录
+
             refresh_layout.setRefreshing(false);
             refresh_layout.setLoading(false);
             workListAdapter = new WorkListAdapter(Work_ListActivity.this, worktype);
@@ -223,6 +224,7 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
             if (workListAdapter.getItemCount()==0){
                 nodatalayout.setVisibility(View.VISIBLE);
             }
+
         }
     }
 

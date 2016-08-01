@@ -43,8 +43,10 @@ public class UddebugWorkOrderLine implements Serializable{
     public String DISPOSE;//处理过程
     @DatabaseField(columnName = "REMARK")
     public String REMARK;//备注
-
+    @DatabaseField(columnName = "DEBUGWORKORDERNUM")
     public String DEBUGWORKORDERNUM;//所属工单号
+    @DatabaseField(columnName = "UDDEBUGWORKORDERLINEID")
+    public String UDDEBUGWORKORDERLINEID;//任务
 
     public String getWINDDRIVENGENERATORNUM() {
         return WINDDRIVENGENERATORNUM;

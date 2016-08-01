@@ -148,7 +148,8 @@ public class Work_WpmaterialActivity extends BaseActivity implements SwipeRefres
                     }
                 }
             }
-        }else {//本地历史工单
+        }else {
+            //本地历史工单
             if (wpmaterialList != null && wpmaterialList.size() != 0) {
                 initList(wpmaterialList);
 //                woactivityAdapter.addData(woactivityList);
