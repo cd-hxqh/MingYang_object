@@ -37,8 +37,8 @@ public class Udfandetails_DetailActivity extends BaseActivity {
     private TextView jddate3;//全年检完成日期
     private TextView djdate2;//半年检完成日期
     private TextView bwdate;//并网运行日期
-    private TextView djdate4;//下次半年检日期
-    private TextView djdate5;//下次全年检日期
+    private TextView djdate4;//下次定检日期
+//    private TextView djdate5;//下次全年检日期
     private TextView xjdate;//上次巡检日期
     private TextView xjdate2;//下次巡检日期
     private TextView zyydate;//终验收完成日期
@@ -77,7 +77,7 @@ public class Udfandetails_DetailActivity extends BaseActivity {
         djdate2 = (TextView) findViewById(R.id.udfandetails_djdate2);
         bwdate = (TextView) findViewById(R.id.udfandetails_bwdate);
         djdate4 = (TextView) findViewById(R.id.udfandetails_djdate4);
-        djdate5 = (TextView) findViewById(R.id.udfandetails_djdate5);
+//        djdate5 = (TextView) findViewById(R.id.udfandetails_djdate5);
         xjdate = (TextView) findViewById(R.id.udfandetails_xjdate);
         xjdate2 = (TextView) findViewById(R.id.udfandetails_xjdate2);
         zyydate = (TextView) findViewById(R.id.udfandetails_zyydate);
@@ -108,7 +108,7 @@ public class Udfandetails_DetailActivity extends BaseActivity {
         djdate2.setText(udfandetails.DJDATE2);
         bwdate.setText(udfandetails.BWDATE);
         djdate4.setText(udfandetails.DJDATE4);
-        djdate5.setText(udfandetails.DJDATE5);
+//        djdate5.setText(udfandetails.DJDATE5);
         xjdate.setText(udfandetails.XJDATE);
         xjdate2.setText(udfandetails.XJDATE2);
         zyydate.setText(udfandetails.ZYYDATE);

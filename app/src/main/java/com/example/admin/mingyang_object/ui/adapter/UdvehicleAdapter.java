@@ -35,7 +35,7 @@ public class UdvehicleAdapter extends BaseQuickAdapter<Udvehicle> {
         helper.setText(R.id.primaryphone_id, "累计行驶里程数:");
         helper.setVisible(R.id.udjbdescription_id, false);
         helper.setText(R.id.displayname_text_id, item.getLICENSENUM());
-        helper.setText(R.id.personid_text_id, item.getDRIVER().equals("null")?"":item.getDRIVER());
+        helper.setText(R.id.personid_text_id, item.getDRIVER() == null || item.getDRIVER().equals("null") ? "" : item.getDRIVER());
         helper.setText(R.id.primaryphone_text_id, item.getTOTALMILEAGE());
         helper.setVisible(R.id.udjbdescription_text_id, false);
     }

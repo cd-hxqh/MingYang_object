@@ -268,10 +268,10 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 //                textView.setText(mMenuItems.get(position).mOperName);
-                Intent intent = new Intent(Udcardrivelog_Addactivity.this, OptionActivity.class);
-                intent.putExtra("optiontype", Constants.WONUMCODE);
-                intent.putExtra("wonumtype", mMenuItems.get(position).mOperName);
-                startActivityForResult(intent, Constants.WONUMCODE);
+//                Intent intent = new Intent(Udcardrivelog_Addactivity.this, OptionActivity.class);
+//                intent.putExtra("optiontype", Constants.WONUMCODE);
+//                intent.putExtra("wonumtype", mMenuItems.get(position).mOperName);
+//                startActivityForResult(intent, Constants.WONUMCODE);
                 dialog.dismiss();
             }
         });
@@ -290,7 +290,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
                     driverText.setText(option.getValue4());
                     prodescText.setText(option.getValue2());
                     branchdescText.setText(option.getValue3());
-                    startnumberText.setText(option.getValue5());
+                    startnumberText.setText(option.getValue7());
                     break;
                 case Constants.WONUMCODE:
                     option = (Option) data.getSerializableExtra("option");

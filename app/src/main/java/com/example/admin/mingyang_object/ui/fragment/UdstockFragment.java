@@ -142,14 +142,15 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
     @Override
     public void onLoad() {
         page++;
-
         getData(searchText);
     }
 
     @Override
     public void onRefresh() {
         page = 1;
-        getData(searchText);
+        initAdapter(new ArrayList<Udstock>());
+        items = new ArrayList<Udstock>();
+        getData(search.getText().toString());
     }
 
 
@@ -204,22 +205,19 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
-
-                    if (item != null || item.size() != 0) {
-                        if (page == 1){
-                            items = new ArrayList<Udstock>();
-                            udstockAdapter = new UdstockAdapter(getActivity(), R.layout.list_item, items);
-                            recyclerView.setAdapter(udstockAdapter);
+                    if (totalPages == page) {
+                        if (item != null || item.size() != 0) {
+                            for (int i = 0; i < item.size(); i++) {
+                                items.add(item.get(i));
+                            }
+                            if (page == 1) {
+                                initAdapter(items);
+                            } else {
+                                addList(item);
+                            }
                         }
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
-                        }
-
                         nodatalayout.setVisibility(View.GONE);
-
-                        initAdapter(item);
                     }
-
                 }
             }
 
@@ -236,6 +234,24 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
      * 获取数据*
      */
     private void initAdapter(final List<Udstock> list) {
+        udstockAdapter = new UdstockAdapter(getActivity(), R.layout.list_item, list);
+        recyclerView.setAdapter(udstockAdapter);
+        udstockAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), Udstock_DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udstock", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udstock> list) {
         udstockAdapter.addData(list);
         udstockAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -248,6 +264,5 @@ public class UdstockFragment extends BaseFragment implements SwipeRefreshLayout.
             }
         });
     }
-
 
 }

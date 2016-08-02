@@ -149,7 +149,7 @@ public class Udstock_DetailActivity extends BaseActivity {
             locdescText.setText(udstock.getLOCDESC());
             isopen.setChecked(udstock.getISOPEN().equals("Y"));
             isclose.setChecked(udstock.getISCLOSE().equals("Y"));
-            createdbyText.setText(udstock.getCREATEDBY());
+            createdbyText.setText(udstock.getCREATENAME());
             createdateText.setText(udstock.getCREATEDATE());
 
             isopen.setClickable(false);

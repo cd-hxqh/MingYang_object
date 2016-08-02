@@ -19,6 +19,7 @@ public class Udstock implements Serializable {
     private String ISCLOSE;//暗盘
     private String STATUS;//状态
     private String CREATEDBY;//创建人
+    private String CREATENAME;//创建人名称
     private String CREATEDATE;//创建时间
     private String ZPDNUM;//过账时间
 
@@ -108,5 +109,13 @@ public class Udstock implements Serializable {
 
     public void setZPDNUM(String ZPDNUM) {
         this.ZPDNUM = ZPDNUM;
+    }
+
+    public String getCREATENAME() {
+        return CREATENAME;
+    }
+
+    public void setCREATENAME(String CREATENAME) {
+        this.CREATENAME = CREATENAME;
     }
 }

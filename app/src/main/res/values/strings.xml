@@ -142,8 +142,10 @@
     <string name="work_describe">描述:</string>
     <string name="work_branch">中心:</string>
     <string name="work_udprojectnum">项目编号:</string>
+    <string name="work_udprojectdesc">项目描述:</string>
     <string name="work_udlocnum">机位号:</string>
     <string name="work_udlocation">设备位置:</string>
+    <string name="work_locdesc">位置描述:</string>
     <string name="work_lead">运行组/维护组工程师:</string>
     <string name="work_lead1">定检组长:</string>
     <string name="work_lead2">终验收负责人:</string>
@@ -151,10 +153,12 @@
     <string name="work_lead4">技改负责人:</string>
     <string name="work_failurecode">故障类:</string>
     <string name="work_problemcode">故障问题:</string>
+    <string name="work_gzwtdesc">故障问题描述:</string>
     <string name="work_culevel">故障等级:</string>
     <string name="work_udrprrsb">提报人:</string>
     <string name="work_udzglimit">提报时间:</string>
     <string name="work_udplannum">终验收计划号:</string>
+    <string name="work_udreportnum">故障提报单号:</string>
     <string name="work_udprores">项目负责人:</string>
     <string name="work_schedstart">计划开始时间:</string>
     <string name="work_schedfinish">计划完成时间:</string>
@@ -164,6 +168,7 @@
     <string name="work_pmchgevalstart">故障开始时间:</string>
     <string name="work_pmchgevalend">故障恢复时间:</string>
     <string name="work_udjgresult">累计停机时间:</string>
+    <string name="work_udremark2">没有编码的物料:</string>
     <string name="work_udprobdesc">故障隐患描述:</string>
     <string name="work_worktype">工单类型:</string>
     <string name="work_status">状态:</string>
@@ -305,12 +310,12 @@
     <string name="capacity_text">总厂容量(MW):</string>
     <string name="period_text">保质期(年):</string>
     <!--popup-->
-    <string name="udfandetails_text">风机型号</string>
+    <string name="udfandetails_text">风机子表</string>
     <string name="person_text">项目人员</string>
     <string name="udvehicle_text">项目车辆</string>
 
     <!--风机型号-->
-    <string name="udfandetails_details_title">风机型号详情</string>
+    <string name="udfandetails_details_title">风机子表详情</string>
     <string name="udfandetails_details">风机详情信息</string>
     <string name="udfandetails_locnum">机位号:</string>
     <string name="udfandetails_modeltype">型号:</string>
@@ -326,12 +331,13 @@
     <string name="udfandetails_jddate3">全年检完成日期:</string>
     <string name="udfandetails_djdate2">半年检完成日期:</string>
     <string name="udfandetails_bwdate">并网运行日期:</string>
-    <string name="udfandetails_djdate4">下次半年检日期:</string>
+    <!--<string name="udfandetails_djdate4">下次半年检日期:</string>-->
     <string name="udfandetails_djdate5">下次全年检日期:</string>
     <string name="udfandetails_xjdate">上次巡检日期:</string>
     <string name="udfandetails_xjdate2">下次巡检日期:</string>
     <string name="udfandetails_zyydate">终验收完成日期:</string>
     <string name="udfandetails_yysdate">预验收完成日期:</string>
+    <string name="udfandetails_djdate4">下次定检日期:</string>
 
     <string name="udfandetails_pronum">項目台账编号</string>
     <string name="udfandetails_siteid">站点</string>
@@ -455,7 +461,7 @@
     <!-- 库存盘点-->
     <string name="udstick_text">盘点单号:</string>
     <string name="zpdnum_text">盘点凭证号:</string>
-    <string name="location_text">仓库:</string>
+    <string name="location_text">仓库编号:</string>
     <string name="locdesc_text">仓库名称:</string>
     <string name="isopen_text">明盘:</string>
     <string name="isclose_text">暗盘:</string>

@@ -177,15 +177,19 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
-
-                    if (item != null || item.size() != 0) {
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
+                    if (totalPages == page) {
+                        if (item != null || item.size() != 0) {
+                            for (int i = 0; i < item.size(); i++) {
+                                items.add(item.get(i));
+                            }
+                            if (page == 1) {
+                                initAdapter(items);
+                            } else {
+                                addList(item);
+                            }
                         }
+                        nodatalayout.setVisibility(View.GONE);
                     }
-                    nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(items);
                 }
             }
 
@@ -237,6 +241,23 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(Udcarmainlog_Listactivity.this, Udcarmainlog_Detailactivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putSerializable("udcarmainlog", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udcarmainlog> list) {
+        udcarmainlogAdapter.addData(list);
+        udcarmainlogAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udcarmainlog_Listactivity.this, Udcarmainlog_Detailactivity.class);
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("udcarmainlog", items.get(position));
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
@@ -248,7 +269,7 @@ public class Udcarmainlog_Listactivity extends BaseActivity implements SwipeRefr
     @Override
     public void onRefresh() {
         page = 1;
-        udcarmainlogAdapter.removeAll(items);
+        initAdapter(new ArrayList<Udcarmainlog>());
         items = new ArrayList<Udcarmainlog>();
         getData(search.getText().toString());
     }

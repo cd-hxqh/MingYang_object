@@ -249,9 +249,9 @@ public class Udcarmainlog_Detailactivity extends BaseActivity {
             invoicenumText.setText(udcarmainlog.getINVOICENUM());
 
 
-            if (udcarmainlog.getSERVICETYPE().equals("normal")) {
+            if (udcarmainlog.getSERVICETYPE() != null && udcarmainlog.getSERVICETYPE().equals("normal")) {
                 servicetypeText.setText("正常维修");
-            } else {
+            } else if (udcarmainlog.getSERVICETYPE() != null && !udcarmainlog.getSERVICETYPE().equals("normal")){
                 servicetypeText.setText("事故维修");
             }
             mainplaceText.setText(udcarmainlog.getMAINPLACE());

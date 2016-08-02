@@ -287,7 +287,7 @@ public class Udfeedback_DetailActivity extends BaseActivity {
                 pronumText.setOnClickListener(new LayoutOnClickListener(2, Constants.UDPROCODE));
                 createnameText.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
                 problemsituationText.setFocusable(true);
-                problemsituationText.setFocusableInTouchMode(false);
+                problemsituationText.setFocusableInTouchMode(true);
                 break;
             case "待审批":
                 dept2Text.setOnClickListener(new LayoutOnClickListener(4,Constants.UDDEPTCODE));

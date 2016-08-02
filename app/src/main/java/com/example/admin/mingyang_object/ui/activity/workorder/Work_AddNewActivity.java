@@ -99,10 +99,12 @@ public class Work_AddNewActivity extends BaseActivity {
     private LinearLayout description_layout;
     private TextView branch;//中心
     private TextView udprojectnum;//项目
+    private TextView proname;//项目名称
     private LinearLayout udlocnumlayout;
     private TextView udlocnum;//机位号
     private LinearLayout udlocationlayout;
     private TextView udlocation;//位置
+    private TextView locdesc;//位置描述
     private LinearLayout leadlayout;
     private TextView leadText;
     private TextView lead;//运行组/维护组工程师
@@ -114,12 +116,15 @@ public class Work_AddNewActivity extends BaseActivity {
     private LinearLayout defultlayout;
     private TextView failurecode;//故障类
     private TextView problemcode;//问题原因
+    private TextView gzwtdesc;//问题原因描述
     private TextView udgzdj;//故障等级
     private TextView udgztype;//故障类型
     private TextView udrprrsb;//提报人
     private TextView udzglimit;//提报时间
     private LinearLayout udplannumlayout;
     private TextView udplannum;//终验收计划号
+    private LinearLayout udreportnumlayout;
+    private TextView udreportnum;//故障提报单号
     private TextView schedstart;//故障开始时间
     private TextView schedfinish;//故障结束时间
     private TextView actstart;//实际开始时间
@@ -128,6 +133,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView udstoptime;//故障开始时间
     private TextView udrestarttime;//故障恢复时间
     private TextView udjgresult;//累计时间
+    private EditText udremark2;//没有编码的物料
     private EditText udprobdesc;//故障隐患描述
     private LinearLayout timelayout;
     private LinearLayout udjpnumlayout;
@@ -232,10 +238,12 @@ public class Work_AddNewActivity extends BaseActivity {
         description_layout = (LinearLayout) findViewById(R.id.work_describe_layout);
         branch = (TextView) findViewById(R.id.work_branch);
         udprojectnum = (TextView) findViewById(R.id.work_udprojectnum);
+        proname = (TextView) findViewById(R.id.work_udprojectdesc);
         udlocnumlayout = (LinearLayout) findViewById(R.id.work_udlocnum_layout);
         udlocnum = (TextView) findViewById(R.id.work_udlocnum);
         udlocationlayout = (LinearLayout) findViewById(R.id.work_udlocation_layout);
         udlocation = (TextView) findViewById(R.id.work_udlocation);
+        locdesc = (TextView) findViewById(R.id.work_locdesc);
         leadlayout = (LinearLayout) findViewById(R.id.work_lead_layout);
         leadText = (TextView) findViewById(R.id.work_lead_text);
         lead = (TextView) findViewById(R.id.work_lead);
@@ -247,11 +255,14 @@ public class Work_AddNewActivity extends BaseActivity {
         defultlayout = (LinearLayout) findViewById(R.id.work_defultlayout);
         failurecode = (TextView) findViewById(R.id.work_failurecode);
         problemcode = (TextView) findViewById(R.id.work_problemcode);
+        gzwtdesc = (TextView) findViewById(R.id.work_gzwtdesc);
         udgzdj = (TextView) findViewById(R.id.work_culevel);
         udrprrsb = (TextView) findViewById(R.id.work_udrprrsb);
         udzglimit = (TextView) findViewById(R.id.work_udzglimit);
         udplannumlayout = (LinearLayout) findViewById(R.id.work_udplannum_layout);
         udplannum = (TextView) findViewById(R.id.work_udplannum);
+        udreportnumlayout = (LinearLayout) findViewById(R.id.work_udreportnum_layout);
+        udreportnum = (TextView) findViewById(R.id.work_udreportnum);
         schedstart = (TextView) findViewById(R.id.work_schedstart);
         schedfinish = (TextView) findViewById(R.id.work_schedfinish);
         actstart = (TextView) findViewById(R.id.work_actstart);
@@ -260,6 +271,7 @@ public class Work_AddNewActivity extends BaseActivity {
         udstoptime = (TextView) findViewById(R.id.work_pmchgevalstart);
         udrestarttime = (TextView) findViewById(R.id.work_pmchgevalend);
         udjgresult = (TextView) findViewById(R.id.work_udjgresult);
+        udremark2 = (EditText) findViewById(R.id.work_udremark2);
         udprobdesc = (EditText) findViewById(R.id.work_udprobdesc);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
         udjpnumlayout = (LinearLayout) findViewById(R.id.work_udjpnum_layout);
@@ -540,6 +552,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 udplstopdatelayout.setVisibility(View.GONE);
                 udjpnumlayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
+                udreportnumlayout.setVisibility(View.GONE);
 
                 SetClick_AA();
                 break;
@@ -556,6 +569,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 udjpnumtext.setText(R.string.work_udjpnum2);
                 udlocationlayout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
+                udreportnumlayout.setVisibility(View.GONE);
 
                 SetClick_SP();
                 break;
@@ -578,6 +592,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 udjpnumtext.setText(R.string.work_udjpnum3);
                 udrprrsb1layout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
+                udreportnumlayout.setVisibility(View.GONE);
 
                 SetClick_TP();
                 break;
@@ -596,6 +611,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 leadText.setText(R.string.work_lead1);
                 udlocationlayout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
+                udreportnumlayout.setVisibility(View.GONE);
 
                 SetClick_WS();
                 break;
@@ -607,7 +623,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private void SetClick_FR(){//故障工单
         switch (workOrder.UDSTATUS) {
             case "新建":
-                udprobdesc.setEnabled(false);
+//                udprobdesc.setEnabled(false);
                 udrestarttime.setEnabled(false);
                 actstart.setEnabled(false);
                 actfinish.setEnabled(false);
@@ -1257,8 +1273,10 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.DESCRIPTION = description.getText().toString();
         workOrder.BRANCH = branch.getText().toString();
         workOrder.UDPROJECTNUM = udprojectnum.getText().toString();
+        workOrder.PRONAME = proname.getText().toString();
         workOrder.UDLOCNUM = udlocnum.getText().toString();
         workOrder.UDLOCATION = udlocation.getText().toString();
+        workOrder.LOCDESC = locdesc.getText().toString();
         workOrder.UDSTATUS = udstatus.getText().toString();
         workOrder.CREATEBY = AccountUtils.getpersonId(Work_AddNewActivity.this);
         workOrder.CREATEDATE = createdate.getText().toString();
@@ -1281,6 +1299,7 @@ public class Work_AddNewActivity extends BaseActivity {
 //            workOrder.UDINSPOBY = udinspoby_2.getText().toString();
 //            workOrder.UDINSPOBY2 = udinspoby2_2.getText().toString();
 //            workOrder.UDINSPOBY3 = udinspoby3_2.getText().toString();
+            workOrder.UDREMARK = udremark2.getText().toString();
         } else {
 //            workOrder.LEAD = lead.getText().toString();
 //            workOrder.UDINSPOBY = udinspoby.getText().toString();
@@ -1288,6 +1307,7 @@ public class Work_AddNewActivity extends BaseActivity {
 //            workOrder.UDINSPOBY3 = udinspoby3.getText().toString();
 //            workOrder.UDRPRRSB = udrprrsb1.getText().toString();
             workOrder.UDJGRESULT = udjgresult1.getText().toString();
+            workOrder.UDREMARK = udremark.getText().toString();
         }
         workOrder.UDPROBDESC = udprobdesc.getText().toString();
         workOrder.UDJPNUM = udjpnum.getText().toString();
@@ -1305,7 +1325,7 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.WTCODE = wtcode.getText().toString();
         workOrder.ASSETTYPE = assettype.getText().toString();
         workOrder.PERINSPR = perinspr.isChecked() ? 1 : 0;
-        workOrder.UDREMARK = udremark.getText().toString();
+
         workOrder.ISBIGPAR = isbigpar.isChecked() ? 1 : 0;
         workOrder.UDZGMEASURE = udzgmeasure.getText().toString();
         workOrder.PLANNUM = plannum.getText().toString();
@@ -1365,6 +1385,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 case 6:
                     option = (Option) data.getSerializableExtra("option");
                     udprojectnum.setText(option.getName());
+                    proname.setText(option.getDesc());
                     branch.setText(option.getValue1());
                     udlocnum.setText("");
                     break;
@@ -1379,6 +1400,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 case 9:
                     option = (Option) data.getSerializableExtra("option");
                     udlocation.setText(option.getName());
+                    locdesc.setText(option.getDesc());
                     break;
                 case 10:
                     option = (Option) data.getSerializableExtra("option");
@@ -1397,10 +1419,12 @@ public class Work_AddNewActivity extends BaseActivity {
                     workOrder.FAILURECODE = option.getName();
                     failurelist = option.getValue1();
                     problemcode.setText("");
+                    gzwtdesc.setText("");
                     break;
                 case 13:
                     option = (Option) data.getSerializableExtra("option");
                     problemcode.setText(option.getDesc());
+                    gzwtdesc.setText(option.getDesc());
                     workOrder.GZWTDESC = option.getDesc();
                     workOrder.PROBLEMCODE = option.getName();
                     break;

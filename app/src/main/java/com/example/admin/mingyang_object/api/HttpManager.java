@@ -75,11 +75,11 @@ public class HttpManager {
                 if (status.equals("全部")) {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "'}}";
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc','condition':{'WORKTYPE':'" + type + "'}}";
                 }else {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
                 }
             } else {
                 if (status.equals("全部")) {
@@ -98,12 +98,12 @@ public class HttpManager {
                 if (status.equals("全部")) {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc'" +
                             ",'condition':{'WORKTYPE':'" + type + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
                 }else {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc'" +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc'" +
                             ",'condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
                 }
             } else {
@@ -250,9 +250,9 @@ public class HttpManager {
      */
     public static String getUdfandetailsurl(String value, String pronum, String siteid, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
+            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'LOCNUM','condition':{'PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
         }
-        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'LOCNUM','condition':{'PRONUM':'" + value + "','PRONUM':'=" + pronum + "','siteid':'=" + siteid + "'}}";
     }
 
     /**

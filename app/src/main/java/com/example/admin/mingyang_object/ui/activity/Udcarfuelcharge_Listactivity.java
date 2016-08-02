@@ -174,19 +174,19 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
-
-                    if (item != null || item.size() != 0) {
-                        if (page == 1) {
-                            items = new ArrayList<Udcarfuelcharge>();
-                            initAdapter(new ArrayList<Udcarfuelcharge>());
+                    if (totalPages == page) {
+                        if (item != null || item.size() != 0) {
+                            for (int i = 0; i < item.size(); i++) {
+                                items.add(item.get(i));
+                            }
+                            if (page == 1) {
+                                initAdapter(items);
+                            } else {
+                                addList(item);
+                            }
                         }
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
-                        }
+                        nodatalayout.setVisibility(View.GONE);
                     }
-                    nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(items);
                 }
             }
 
@@ -238,6 +238,23 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(Udcarfuelcharge_Listactivity.this, Udcarfuelcharge_Detailactivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putSerializable("udcarfuelcharge", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    /**
+     * 获取数据*
+     */
+    private void addList(final List<Udcarfuelcharge> list) {
+        udcarfuelchargeAdapter.addData(list);
+        udcarfuelchargeAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udcarfuelcharge_Listactivity.this, Udcarfuelcharge_Detailactivity.class);
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("udcarfuelcharge", items.get(position));
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
@@ -249,7 +266,8 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
     @Override
     public void onRefresh() {
         page = 1;
-        udcarfuelchargeAdapter.removeAll(items);
+        initAdapter(new ArrayList<Udcarfuelcharge>());
+        items = new ArrayList<Udcarfuelcharge>();
         getData(search.getText().toString());
     }
 

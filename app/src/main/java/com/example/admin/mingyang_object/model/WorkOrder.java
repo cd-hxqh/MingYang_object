@@ -30,10 +30,14 @@ public class WorkOrder implements Serializable {
     public String BRANCH;//中心
     @DatabaseField(columnName = "UDPROJECTNUM")
     public String UDPROJECTNUM;//项目
+    @DatabaseField(columnName = "PRONAME")
+    public String PRONAME;//项目名称
     @DatabaseField(columnName = "UDLOCNUM")
     public String UDLOCNUM;//机位号
     @DatabaseField(columnName = "UDLOCATION")
     public String UDLOCATION;//位置
+    @DatabaseField(columnName = "LOCDESC")
+    public String LOCDESC;//位置描述
     @DatabaseField(columnName = "LEAD")
     public String LEAD;//运行组/维护组工程师
     @DatabaseField(columnName = "LEADNAME")
@@ -153,6 +157,8 @@ public class WorkOrder implements Serializable {
     public String UDRPRRSBNAME;//负责人/提报人
     @DatabaseField(columnName = "UDREPORTNUM")
     public String UDREPORTNUM;//故障提报单号
+    @DatabaseField(columnName = "UDDESCRIP")
+    public String UDDESCRIP;//处理过程
 
     @DatabaseField(columnName = "isnew")
     public boolean isnew;//是否是新增工单
@@ -719,5 +725,29 @@ public class WorkOrder implements Serializable {
 
     public void setUDGZTYPE(String UDGZTYPE) {
         this.UDGZTYPE = UDGZTYPE;
+    }
+
+    public String getUDDESCRIP() {
+        return UDDESCRIP;
+    }
+
+    public void setUDDESCRIP(String UDDESCRIP) {
+        this.UDDESCRIP = UDDESCRIP;
+    }
+
+    public String getPRONAME() {
+        return PRONAME;
+    }
+
+    public void setPRONAME(String PRONAME) {
+        this.PRONAME = PRONAME;
+    }
+
+    public String getLOCDESC() {
+        return LOCDESC;
+    }
+
+    public void setLOCDESC(String LOCDESC) {
+        this.LOCDESC = LOCDESC;
     }
 }

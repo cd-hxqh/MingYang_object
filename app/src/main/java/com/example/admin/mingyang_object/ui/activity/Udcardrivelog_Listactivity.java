@@ -171,18 +171,19 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
-
-                    if (item != null || item.size() != 0) {
-                        if (page == 1) {
-                            items = new ArrayList<Udcardrivelog>();
-                            initAdapter(new ArrayList<Udcardrivelog>());
+                    if (totalPages == page) {
+                        if (item != null || item.size() != 0) {
+                            for (int i = 0; i < item.size(); i++) {
+                                items.add(item.get(i));
+                            }
+                            if (page == 1) {
+                                initAdapter(items);
+                            } else {
+                                addList(item);
+                            }
                         }
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
-                        }
+                        nodatalayout.setVisibility(View.GONE);
                     }
-                    nodatalayout.setVisibility(View.GONE);
-                    initAdapter(items);
                 }
             }
 
@@ -234,6 +235,23 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Detailactivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putSerializable("udcardrivelog", list.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addList(final List<Udcardrivelog> list) {
+        udcardrivelogAdapter.addData(list);
+        udcardrivelogAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(Udcardrivelog_Listactivity.this, Udcardrivelog_Detailactivity.class);
+                Bundle bundle = new Bundle();
                 bundle.putSerializable("udcardrivelog", items.get(position));
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
@@ -245,7 +263,8 @@ public class Udcardrivelog_Listactivity extends BaseActivity implements SwipeRef
     @Override
     public void onRefresh() {
         page = 1;
-        udcardrivelogAdapter.removeAll(items);
+        initAdapter(new ArrayList<Udcardrivelog>());
+        items = new ArrayList<Udcardrivelog>();
         getData(search.getText().toString());
     }
 

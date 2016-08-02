@@ -30,7 +30,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected SharedPreferences myshared;
     protected BaseApplication baseApplication;
 
-    private ProgressDialog progressDialog;
+    public ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
