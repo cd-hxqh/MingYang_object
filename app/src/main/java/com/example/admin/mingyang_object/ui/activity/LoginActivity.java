@@ -290,7 +290,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (ip.contains("√")) {
                     ip.replace("√", "");
                 }
-//                AccountUtils.setIpAddress(LoginActivity.this, ip.trim());
+                AccountUtils.setIpAddress(LoginActivity.this, ip.trim());
                 adress = ip.trim();
                 dialog.dismiss();
             }
