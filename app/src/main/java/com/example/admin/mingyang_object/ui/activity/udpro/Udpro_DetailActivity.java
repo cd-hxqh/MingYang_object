@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -56,7 +57,7 @@ public class Udpro_DetailActivity extends BaseActivity {
 
     private TextView contractstatusText; //合同状态
 
-    private TextView testproText; //试点项目？
+    private CheckBox testproText; //试点项目？
 
     private TextView prostageText; //项目当前阶段
 
@@ -109,7 +110,7 @@ public class Udpro_DetailActivity extends BaseActivity {
         ownerText = (TextView) findViewById(R.id.owner_text_id);
         signdateText = (TextView) findViewById(R.id.signdate_text＿);
         contractstatusText = (TextView) findViewById(R.id.contractstatus_text_id);
-        testproText = (TextView) findViewById(R.id.testpro_text_id);
+        testproText = (CheckBox) findViewById(R.id.testpro_text_id);
         prostageText = (TextView) findViewById(R.id.prostage_text_id);
         capacityText = (TextView) findViewById(R.id.capacity_text_id);
         periodText = (TextView) findViewById(R.id.period_text_id);
@@ -122,7 +123,7 @@ public class Udpro_DetailActivity extends BaseActivity {
             ownerText.setText(udpro.getOWNER());
             signdateText.setText(udpro.getSIGNDATE());
             contractstatusText.setText(udpro.getCONTRACTSTATUS());
-//            testproText.setText(udpro.t);
+            testproText.setChecked(udpro.getTESTPRO() != null && udpro.getTESTPRO().equals("Y"));
             prostageText.setText(udpro.getPROSTAGE());
             capacityText.setText(udpro.getCAPACITY());
             periodText.setText(udpro.getPERIOD());
@@ -136,6 +137,8 @@ public class Udpro_DetailActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+
+        testproText.setClickable(false);
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {

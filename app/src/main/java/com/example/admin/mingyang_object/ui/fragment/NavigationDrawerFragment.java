@@ -63,6 +63,7 @@ public class NavigationDrawerFragment extends BaseFragment {
     private LinearLayout mProfileLayout;
     private ImageView mUserImgView;
     private TextView mUserTextView;
+    private TextView mAdressTextView;
 
     /**
      * 设置按钮*
@@ -113,6 +114,7 @@ public class NavigationDrawerFragment extends BaseFragment {
         mProfileLayout = (LinearLayout) rootView.findViewById(R.id.profile_layout);
         mUserImgView = (ImageView) rootView.findViewById(R.id.img_member);
         mUserTextView = (TextView) rootView.findViewById(R.id.txt_member);
+        mAdressTextView = (TextView) rootView.findViewById(R.id.txt_adress);
         mDrawerListView = (ListView) rootView.findViewById(R.id.listView);
 
 
@@ -125,6 +127,12 @@ public class NavigationDrawerFragment extends BaseFragment {
         mDrawerListView.setAdapter(new DrawerAdapter(getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         mUserTextView.setText(AccountUtils.getdisplayName(getActivity()));
+        String[] inspotypes = getResources().getStringArray(R.array.address_text);
+        for (int i = 0; i < inspotypes.length; i++) {
+            if (AccountUtils.getIpAddress(getActivity()).equals(inspotypes[i].split(" ")[1])){
+                mAdressTextView.setText(inspotypes[i].split(" ")[0]+"环境");
+            }
+        }
 //        exitImageView.setOnClickListener(exitOnClickListener);
         return rootView;
     }

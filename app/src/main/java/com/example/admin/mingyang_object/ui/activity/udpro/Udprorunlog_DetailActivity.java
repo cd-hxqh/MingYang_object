@@ -68,6 +68,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
 
     private TextView pronumText; //项目编号
 
+    private TextView prdescText;//项目名称
+
     private TextView branchText; //所属中心
 
     private TextView udprorescText; //现场负责人
@@ -140,6 +142,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         prorunlognumText = (TextView) findViewById(R.id.prorunlognum_text_id);
         descriptionText = (TextView) findViewById(R.id.desction_text_id);
         pronumText = (TextView) findViewById(R.id.pronum_text_id);
+        prdescText = (TextView) findViewById(R.id.prdesc_text);
         branchText = (TextView) findViewById(R.id.branch_text_id);
         udprorescText = (TextView) findViewById(R.id.udproresc_text_id);
         contractsText = (TextView) findViewById(R.id.contdesc_text_id);
@@ -154,6 +157,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             prorunlognumText.setText(udprorunlog.getPRORUNLOGNUM());
             descriptionText.setText(udprorunlog.getDESCRIPTION());
             pronumText.setText(udprorunlog.getPRONUM());
+            prdescText.setText(udprorunlog.getPRODESC());
             branchText.setText(udprorunlog.getBRANCH());
             udprorescText.setText(udprorunlog.getUDPRORESC());
             contractsText.setText(udprorunlog.getCONTDESC());
@@ -492,6 +496,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
                     pronumText.setText(option.getName());
+                    prdescText.setText(option.getDesc());
                     pronumDesc = option.getName() + option.getDesc();
                     branchText.setText(option.getValue1());
                     udprorescText.setText(option.getValue4());

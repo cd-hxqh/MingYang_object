@@ -50,6 +50,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
     private TextView createdate;//日期
     private TextView personid;//项目负责人
     private TextView person;//
+    private TextView phonenum;//电话号码
     private TextView prophase;//当前项目阶段
     private EditText workjob;//当日工作内容
     private EditText remark;//备注
@@ -98,6 +99,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
         createdate = (TextView) findViewById(R.id.udprorunlog_line2_createdate);
         personid = (TextView) findViewById(R.id.udprorunlog_line2_personid);
         person = (TextView) findViewById(R.id.udprorunlog_line2_person);
+        phonenum = (TextView) findViewById(R.id.udprorunlog_line2_phononum);
         prophase = (TextView) findViewById(R.id.udprorunlog_line2_prophase);
         workjob = (EditText) findViewById(R.id.udprorunlog_line2_workjob);
 //        remark = (EditText) findViewById(R.id.udprorunlog_line2_remark);
@@ -132,6 +134,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
         createdate.setText(udprorunlogLine2.CREATEDATE);
         personid.setText(udprorunlogLine2.PERSONID);
         person.setText(udprorunlogLine2.CREATEBY);
+        phonenum.setText(udprorunlogLine2.PHONENUN);
         prophase.setText(udprorunlogLine2.PROPHASE);
         workjob.setText(udprorunlogLine2.WORKJOB);
         remark.setText(udprorunlogLine2.REMARK);
@@ -311,6 +314,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     personid.setText(option.getName());
                     person.setText(option.getDesc());
+                    phonenum.setText(option.getValue1());
                     break;
 //            case 2:
 //                if (data!=null) {

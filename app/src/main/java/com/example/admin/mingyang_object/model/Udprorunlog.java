@@ -12,12 +12,14 @@ public class Udprorunlog extends Entity implements Serializable {
     public String DESCRIPTION; //描述
     public String BRANCH; //所属中心
     public String PRONUM; //项目编号
+    public String PRODESC;//项目描述
     public String CONTRACTS; //现场联系人编号
     public String CONTDESC; //现场联系人名称
     public String PROSTAGE; //项目阶段
     public String STATUS; //状态
     public String UDPRORESC; //现场负责人描述
     public String RESPONSID;//现场负责人编号  子表用
+    public String PHONENUM;//电话号码
     public String YEAR; //年
     public String MONTH; //月
 
@@ -125,5 +127,21 @@ public class Udprorunlog extends Entity implements Serializable {
 
     public void setMONTH(String MONTH) {
         this.MONTH = MONTH;
+    }
+
+    public String getPHONENUM() {
+        return PHONENUM;
+    }
+
+    public void setPHONENUM(String PHONENUM) {
+        this.PHONENUM = PHONENUM;
+    }
+
+    public String getPRODESC() {
+        return PRODESC;
+    }
+
+    public void setPRODESC(String PRODESC) {
+        this.PRODESC = PRODESC;
     }
 }

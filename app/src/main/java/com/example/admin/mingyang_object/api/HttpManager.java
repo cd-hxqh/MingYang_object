@@ -260,9 +260,9 @@ public class HttpManager {
      */
     public static String getUdfandetailsurl(String value, String pronum, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'PRONUM':'=" + pronum + "'}}";
+            return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'LOCNUM','condition':{'PRONUM':'=" + pronum + "'}}";
         }
-        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'LOCNUM':'" + value + "','MODELTYPE':'" + value + "'},'condition':{'PRONUM':'=" + pronum + "'}}";
+        return "{'appid':'" + Constants.UDFANDETAILS_APPID + "','objectname':'" + Constants.UDFANDETAILS_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'LOCNUM','sinorsearch':{'LOCNUM':'" + value + "','MODELTYPE':'" + value + "'},'condition':{'PRONUM':'=" + pronum + "'}}";
     }
 
     /**
@@ -549,6 +549,8 @@ public class HttpManager {
                                          final HttpRequestHandler<String> handler) {
 
         String ip_adress = AccountUtils.getIpAddress(cxt) + Constants.SIGN_IN_URL;
+
+        Log.i(TAG,"ip_adress="+ip_adress);
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("loginid", username);

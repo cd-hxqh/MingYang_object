@@ -11,6 +11,7 @@ public class UdprorunlogLine2 implements Serializable{
     public String CREATEDATE;//日期
     public String PERSONID;//项目负责人
     public String CREATEBY;//负责人描述
+    public String PHONENUN;//电话
     public String PROPHASE;//当前项目阶段
     public String WORKJOB;//当日工作内容
     public String REMARK;//备注
@@ -189,5 +190,13 @@ public class UdprorunlogLine2 implements Serializable{
 
     public void setisUpload(boolean isUpload) {
         this.isUpload = isUpload;
+    }
+
+    public String getPHONENUN() {
+        return PHONENUN;
+    }
+
+    public void setPHONENUN(String PHONENUN) {
+        this.PHONENUN = PHONENUN;
     }
 }

@@ -78,6 +78,15 @@ public class AccountUtils {
     }
 
     /**
+     * 注销密码
+     */
+
+    public static void ClearPassWord(Context cxt) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(cxt);
+        sharedPreferences.edit().putString(cxt.getString(R.string.logined_member_password),"").commit();
+    }
+
+    /**
      * 记录登录返回信息
      * @param cxt
      * @param insertSite

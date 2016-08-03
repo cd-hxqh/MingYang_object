@@ -48,6 +48,8 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
 
     private TextView createdate;//创建日期
     private TextView personid;//项目负责人
+    private TextView persondesc;//负责人描述
+    private TextView phonenum;//联系电话
     private TextView funnum;//风机号
     private TextView prophase;//当前项目阶段
     private EditText land;//征地
@@ -60,7 +62,7 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
     private TextView baseplacing;//基础浇筑
     private TextView baseaog;//基础环到货
     private TextView tameraog;//塔筒到货
-    private TextView vehiclerecords;//现场押车记录
+    private EditText vehiclerecords;//现场押车记录
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button delete;//删除
@@ -92,6 +94,8 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
 
         createdate = (TextView) findViewById(R.id.udprorunlogline1_createdate);
         personid = (TextView) findViewById(R.id.udprorunlogline1_personid);
+        persondesc = (TextView) findViewById(R.id.udprorunlogline1_persondesc);
+        phonenum = (TextView) findViewById(R.id.udprorunlogline1_phonenum);
         funnum = (TextView) findViewById(R.id.udprorunlogline1_funnum);
         prophase = (TextView) findViewById(R.id.udprorunlogline1_prophase);
         land = (EditText) findViewById(R.id.udprorunlogline1_land);
@@ -104,7 +108,7 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
         baseplacing = (TextView) findViewById(R.id.udprorunlogline1_baseplacing);
         baseaog = (TextView) findViewById(R.id.udprorunlogline1_baseaog);
         tameraog = (TextView) findViewById(R.id.udprorunlogline1_tameraog);
-        vehiclerecords = (TextView) findViewById(R.id.udprorunlogline1_vehiclerecords);
+        vehiclerecords = (EditText) findViewById(R.id.udprorunlogline1_vehiclerecords);
 //        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
         confirm = (Button) findViewById(R.id.work_save);
         delete = (Button) findViewById(R.id.work_cancel);
@@ -123,6 +127,8 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
 
         createdate.setText(udprorunlogLine1.CREATEDATE);
         personid.setText(udprorunlogLine1.PERSONID);
+        persondesc.setText(udprorunlogLine1.PERSONDESC);
+        phonenum.setText(udprorunlogLine1.PHONE);
         funnum.setText(udprorunlogLine1.FUNNUM);
         prophase.setText(udprorunlogLine1.PROPHASE);
         land.setText(udprorunlogLine1.LAND);
@@ -303,6 +309,8 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
                     if (data != null) {
                         option = (Option) data.getSerializableExtra("option");
                         personid.setText(option.getName());
+                        persondesc.setText(option.getDesc());
+                        phonenum.setText(option.getValue1());
                         udprorunlogLine1.PERSONDESC = option.getDesc();
                     }
                     break;

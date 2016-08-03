@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.example.admin.mingyang_object.dao.UdinsprojectDao;
 import com.example.admin.mingyang_object.dao.WoactivityDao;
 import com.example.admin.mingyang_object.dao.WorkOrderDao;
 import com.example.admin.mingyang_object.dao.WpmaterialDao;
+import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.Utils;
 
@@ -57,6 +59,8 @@ public class SettingFragment extends Fragment {
      */
     TextView cacheSize;
 
+    private Button logout;//注销
+
 
     /**
      * 自定义进度条 *
@@ -87,7 +91,7 @@ public class SettingFragment extends Fragment {
 
 
         cacheSize = (TextView) view.findViewById(R.id.cache_size_id);
-
+        logout = (Button) view.findViewById(R.id.user_logout);
     }
 
     @Override
@@ -103,6 +107,7 @@ public class SettingFragment extends Fragment {
 //        dataRelativeLayout.setOnClickListener(dataRelativeLayoutOnClickListener);
 
         clearRelativeLayout.setOnClickListener(clearRelativeLayoutOnClickListener);
+        logout.setOnClickListener(logoutOnClickListener);
 
         cacheSize.setText(getDataFileSize() + "/M");
         cacheSize.setVisibility(View.VISIBLE);
@@ -118,6 +123,13 @@ public class SettingFragment extends Fragment {
         }
     };
 
+    private View.OnClickListener logoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AccountUtils.ClearPassWord(getActivity());
+            AppManager.AppExit(getActivity());
+        }
+    };
 
     private View.OnClickListener clearRelativeLayoutOnClickListener = new View.OnClickListener() {
         @Override

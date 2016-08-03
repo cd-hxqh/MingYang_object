@@ -10,6 +10,7 @@ public class UdprorunlogLine1 implements Serializable{
     public int UDPRORUNLOGLINE1ID;
     public String CREATEDATE;//创建日期
     public String PERSONID;//项目负责人
+    public String PHONE;//联系电话
     public String PERSONDESC;//
     public String FUNNUM;//风机号
     public String PROPHASE;//当前项目阶段
@@ -179,5 +180,13 @@ public class UdprorunlogLine1 implements Serializable{
 
     public void setPRORUNLOGNUM(String PRORUNLOGNUM) {
         this.PRORUNLOGNUM = PRORUNLOGNUM;
+    }
+
+    public String getPHONE() {
+        return PHONE;
+    }
+
+    public void setPHONE(String PHONE) {
+        this.PHONE = PHONE;
     }
 }

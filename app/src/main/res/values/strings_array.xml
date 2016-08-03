@@ -11,10 +11,10 @@
     </string-array>
 
     <string-array name="address_text">
-        <item>http://deveam.mywind.com.cn:7001</item>
-        <item>http://192.168.100.17:7001</item>
-        <item>http://eam.mywind.com.cn</item>
-        <item>http://qaseam.mywind.com.cn</item>
+        <item>正式 http://eam.mywind.com.cn</item>
+        <item>测试 http://qaseam.mywind.com.cn</item>
+        <item>开发 http://deveam.mywind.com.cn:7001</item>
+        <!--<item>http://192.168.100.17:7001</item>-->
     </string-array>
 
     <string-array name="djtype_array">

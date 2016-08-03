@@ -2,6 +2,8 @@ package com.example.admin.mingyang_object.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -38,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -53,6 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private ProgressDialog mProgressDialog;
     //    private MemberModel mProfile;
     private CheckBox checkBox; //记住密码
+    private TextView versionName;//版本号
 
     private boolean isRemember; //是否记住密码
 
@@ -97,6 +101,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         checkBox = (CheckBox) findViewById(R.id.isremenber_password);
         mLogin = (Button) findViewById(R.id.user_login);
         ipText = (TextView) findViewById(R.id.ip_address_id);
+        versionName = (TextView) findViewById(R.id.versionName);
     }
 
     @Override
@@ -114,6 +119,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mBasOut = new SlideBottomExit();
         adress = AccountUtils.getIpAddress(LoginActivity.this);
         addIpData();
+
+        versionName.setText(getVersion());
+
+        if (!mUsername.getText().toString().equals("")&&!mPassword.getText().toString().equals("")){
+            mLogin.performClick();
+        }
     }
 
     private CompoundButton.OnCheckedChangeListener cheBoxOnCheckedChangListener = new CompoundButton.OnCheckedChangeListener() {
@@ -290,8 +301,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (ip.contains("√")) {
                     ip.replace("√", "");
                 }
-                AccountUtils.setIpAddress(LoginActivity.this, ip.trim());
-                adress = ip.trim();
+                AccountUtils.setIpAddress(LoginActivity.this, getResources().getStringArray(R.array.address_text)[position].split(" ")[1].trim());
+                adress = getResources().getStringArray(R.array.address_text)[position].split(" ")[1].trim();
                 dialog.dismiss();
             }
         });
@@ -305,12 +316,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String[] inspotypes = getResources().getStringArray(R.array.address_text);
         idadresss = getResources().getStringArray(R.array.address_text);
 
-        for (int i = 0; i < inspotypes.length; i++)
-            if (adress != null && adress.equals(inspotypes[i])) {
+        for (int i = 0; i < inspotypes.length; i++) {
+            if (adress != null && adress.equals(inspotypes[i].split(" ")[1])) {
                 mMenuItems.add(new DialogMenuItem("√  " + inspotypes[i], 0));
             } else {
                 mMenuItems.add(new DialogMenuItem("    " + inspotypes[i], 0));
             }
+        }
     }
 
 
@@ -321,4 +333,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
 
     }
+
+    public String getVersion() {
+             try {
+                     PackageManager manager = this.getPackageManager();
+                     PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+                     String version = info.versionName;
+                     return version;
+                 } catch (Exception e) {
+                     e.printStackTrace();
+                     return this.getString(R.string.can_not_find_version_name);
+                 }
+         }
 }
