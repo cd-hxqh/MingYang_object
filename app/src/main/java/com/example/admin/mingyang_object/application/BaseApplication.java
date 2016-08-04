@@ -2,12 +2,13 @@ package com.example.admin.mingyang_object.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 
 /**
  * Created by think on 2015/8/11.
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
     private String username;
     private static BaseApplication mContext;
 

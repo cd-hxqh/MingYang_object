@@ -557,16 +557,20 @@ public class HttpManager {
         params.put("password", password);
         params.put("imei", imei);
         client.setTimeout(20000);
+        Log.e("登录","参数"+ip_adress+"参数"+params);
         client.post(ip_adress, params, new TextHttpResponseHandler() {
 
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.e("登录","返回"+responseString);
                 SafeHandler.onFailure(handler, IMErrorType.errorMessage(cxt, IMErrorType.ErrorLoginFailure));
+
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                Log.e("登录","返回"+responseString);
                 Log.i(TAG, "SstatusCode=" + statusCode + "responseString=" + responseString);
                 if (statusCode == 200) {
                     LoginResults loginResults = JsonUtils.parsingAuthStr(cxt, responseString);
