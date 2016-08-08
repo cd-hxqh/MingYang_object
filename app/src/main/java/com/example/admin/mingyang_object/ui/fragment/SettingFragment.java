@@ -32,6 +32,7 @@ import com.example.admin.mingyang_object.dao.WoactivityDao;
 import com.example.admin.mingyang_object.dao.WorkOrderDao;
 import com.example.admin.mingyang_object.dao.WpmaterialDao;
 import com.example.admin.mingyang_object.manager.AppManager;
+import com.example.admin.mingyang_object.ui.activity.LoginActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.utils.Utils;
@@ -146,7 +147,8 @@ public class SettingFragment extends Fragment {
         @Override
         public void onClick(View v) {
             AccountUtils.ClearPassWord(getActivity());
-            AppManager.AppExit(getActivity());
+            AppManager.killAllActivity();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
         }
     };
 
