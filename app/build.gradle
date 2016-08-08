@@ -8,8 +8,22 @@ android {
         applicationId "com.example.admin.mingyang_object"
         minSdkVersion 19
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.2"
+        multiDexEnabled true
+    }
+    afterEvaluate {
+        tasks.matching {
+            it.name.startsWith('dex')
+        }.each { dx ->
+            if (dx.additionalParameters == null) {
+                dx.additionalParameters = []
+            }
+            dx.additionalParameters += '--multi-dex' // enable multidex
+
+            // optional
+            // dx.additionalParameters += "--main-dex-list=$projectDir/<filename>".toString() // enable the main-dex-list
+        }
     }
     buildTypes {
         release {
@@ -20,7 +34,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.google.android.gms:play-services:7.3.0'
@@ -35,6 +49,6 @@ dependencies {
     compile files('libs/org.apache.http.legacy.jar')
     compile project(':FlycoAnimation_Lib')
     compile project(':FlycoDialog_Lib')
-    compile project(':photopicker')
     compile project(':bDIntegrationSDK_LibProject')
+    compile project(':photopicker')
 }
