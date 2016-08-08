@@ -49,7 +49,15 @@ public class Udpro_DetailActivity extends BaseActivity {
 
     private TextView branchText; //所属中心
 
+    private TextView branchdesc;//中心描述
+
     private TextView responsText; //责任人
+
+    private TextView responsname;//责任人描述
+
+    private TextView responsphoneText;//责任人电话
+
+    private TextView deptText;//责任人部门
 
     private TextView ownerText; //业主单位
 
@@ -64,6 +72,34 @@ public class Udpro_DetailActivity extends BaseActivity {
     private TextView capacityText; //总厂容量
 
     private TextView periodText; //质保期
+
+    private TextView windspeed3;//额定风速(m/s)
+
+    private TextView windspeed1;//切入风速(m/s)
+
+    private TextView windspeed2;//切出风速(m/s)
+
+    private TextView temperature1;//环境温度区间(℃)
+
+    private TextView temperature2;//运行温度区间(℃)
+
+    private TextView bond;//安全保证金
+
+    private TextView transport;//运输方式
+
+    private TextView tpop;//付款比例
+
+    private TextView req2;//预验收要求
+
+    private TextView req1;//试运行要求
+
+    private TextView utilization;//可利用率要求
+
+    private TextView specialcon;//特殊配置
+
+    private TextView cycle;//调试周期
+
+    private TextView remarks;//备注
 
     private Udpro udpro;
 
@@ -106,7 +142,11 @@ public class Udpro_DetailActivity extends BaseActivity {
         pronumText = (TextView) findViewById(R.id.pronum_text_id);
         prDescText = (TextView) findViewById(R.id.prdesc_text_id);
         branchText = (TextView) findViewById(R.id.branch_text_id);
+        branchdesc = (TextView) findViewById(R.id.branchdesc_text);
         responsText = (TextView) findViewById(R.id.respons_text_id);
+        responsname = (TextView) findViewById(R.id.responsname_text);
+        responsphoneText = (TextView) findViewById(R.id.responsphone_text_id);
+        deptText = (TextView) findViewById(R.id.dept_text_id);
         ownerText = (TextView) findViewById(R.id.owner_text_id);
         signdateText = (TextView) findViewById(R.id.signdate_text＿);
         contractstatusText = (TextView) findViewById(R.id.contractstatus_text_id);
@@ -114,12 +154,30 @@ public class Udpro_DetailActivity extends BaseActivity {
         prostageText = (TextView) findViewById(R.id.prostage_text_id);
         capacityText = (TextView) findViewById(R.id.capacity_text_id);
         periodText = (TextView) findViewById(R.id.period_text_id);
+        windspeed3 = (TextView) findViewById(R.id.windspeed3_text);
+        windspeed1 = (TextView) findViewById(R.id.windspeed1_text);
+        windspeed2 = (TextView) findViewById(R.id.windspeed2_text);
+        temperature1 = (TextView) findViewById(R.id.temperature1_text);
+        temperature2 = (TextView) findViewById(R.id.temperature2_text);
+        bond = (TextView) findViewById(R.id.bond_text);
+        transport = (TextView) findViewById(R.id.transport_text);
+        tpop = (TextView) findViewById(R.id.tpop_text);
+        req2 = (TextView) findViewById(R.id.req2_text);
+        req1 = (TextView) findViewById(R.id.req1_text);
+        utilization = (TextView) findViewById(R.id.utilization_text);
+        specialcon = (TextView) findViewById(R.id.specialcon_text);
+        cycle = (TextView) findViewById(R.id.cycle_text);
+        remarks = (TextView) findViewById(R.id.remarks_text);
 
         if (udpro != null) {
             pronumText.setText(udpro.getPRONUM());
             prDescText.setText(udpro.getDESCRIPTION());
-            branchText.setText(udpro.getBRANCHDESC());
-            responsText.setText(udpro.getRESPONSNAME());
+            branchText.setText(udpro.getBRANCH());
+            branchdesc.setText(udpro.getBRANCHDESC());
+            responsText.setText(udpro.getRESPONS());
+            responsname.setText(udpro.getRESPONSNAME());
+            responsphoneText.setText(udpro.getRESPONSPHONE());
+            deptText.setText(udpro.getDEPT());
             ownerText.setText(udpro.getOWNER());
             signdateText.setText(udpro.getSIGNDATE());
             contractstatusText.setText(udpro.getCONTRACTSTATUS());
@@ -127,6 +185,20 @@ public class Udpro_DetailActivity extends BaseActivity {
             prostageText.setText(udpro.getPROSTAGE());
             capacityText.setText(udpro.getCAPACITY());
             periodText.setText(udpro.getPERIOD());
+            windspeed3.setText(udpro.getWINDSPEED3());
+            windspeed1.setText(udpro.getWINDSPEED1());
+            windspeed2.setText(udpro.getWINDSPEED2());
+            temperature1.setText(udpro.getTEMPERATURE1());
+            temperature2.setText(udpro.getTEMPERATURE2());
+            bond.setText(udpro.getBOND());
+            transport.setText(udpro.getTRANSPORT());
+            tpop.setText(udpro.getTPOP());
+            req2.setText(udpro.getREQ2());
+            req1.setText(udpro.getREQ1());
+            utilization.setText(udpro.getUTILIZATION());
+            specialcon.setText(udpro.getSPECIALCON());
+            cycle.setText(udpro.getCYCLE());
+            remarks.setText(udpro.getREMARKS());
         }
     }
 

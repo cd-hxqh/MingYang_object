@@ -78,7 +78,9 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
     private TextView descriptionText; //描述
 
-    private TextView branchdescText; //中心
+    private TextView branchText;//中心
+
+    private TextView branchdescText; //中心描述
 
     private TextView pronumText; //项目编号
 
@@ -90,7 +92,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
     private TextView udlocnumText; //机位号
 
-    private TextView fjdescText; //设备位置
+//    private TextView fjdescText; //设备位置
 
     private TextView statusText; //状态
 
@@ -132,6 +134,8 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private TextView lastrundateText; //上次巡检时间
 
     private TextView nextrundateText; //下次巡检时间
+
+    private TextView wonumText;//故障工单
 
     private Udinspo udinspo;
 
@@ -188,13 +192,14 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         reportnumText = (TextView) findViewById(R.id.reportnum_text_id);
         descriptionText = (TextView) findViewById(R.id.description_text_id);
+        branchText = (TextView) findViewById(R.id.branch_text);
         branchdescText = (TextView) findViewById(R.id.branchdesc_text_id);
         pronumText = (TextView) findViewById(R.id.pronum_text_id);
         prdescText = (TextView) findViewById(R.id.prdesc_text_id);
         modeltypeText = (TextView) findViewById(R.id.modeltype_text_id);
         jpnumText = (TextView) findViewById(R.id.jpnum_text_id);
         udlocnumText = (TextView) findViewById(R.id.udlocnum_text_id);
-        fjdescText = (TextView) findViewById(R.id.fjdesc_text_id);
+//        fjdescText = (TextView) findViewById(R.id.fjdesc_text_id);
         statusText = (TextView) findViewById(R.id.status_text_id);
         inspplannumText = (TextView) findViewById(R.id.inspplannum_text_id);
         resbyText = (TextView) findViewById(R.id.resby_text_id);
@@ -215,6 +220,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
         comptimeText = (TextView) findViewById(R.id.comptime_1_text_id);
         lastrundateText = (TextView) findViewById(R.id.lastrundate_text_id);
         nextrundateText = (TextView) findViewById(R.id.nextrundate_text_id);
+        wonumText = (TextView) findViewById(R.id.wonum_text);
 
         buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
         cancel = (Button) findViewById(R.id.work_cancel);
@@ -223,13 +229,14 @@ public class Udinspo_DetailActivity extends BaseActivity {
         if (udinspo != null) {
             reportnumText.setText(udinspo.getINSPONUM());
             descriptionText.setText(udinspo.getDESCRIPTION());
-            branchdescText.setText(udinspo.getBRANCH());
+            branchText.setText(udinspo.getBRANCH());
+            branchdescText.setText(udinspo.getBRANCHDESC());
             pronumText.setText(udinspo.getPRONUM());
             prdescText.setText(udinspo.getPRODESC());
             modeltypeText.setText(udinspo.getMODELTYPE());
             jpnumText.setText(udinspo.getJPDESC());
             udlocnumText.setText(udinspo.getUDLOCNUM());
-            fjdescText.setText(udinspo.getFJDESC());
+//            fjdescText.setText(udinspo.getFJDESC());
             statusText.setText(udinspo.getSTATUS());
             inspplannumText.setText(udinspo.getINSPPLANNUM());
             resbyText.setText(udinspo.getNAME());
@@ -254,6 +261,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
             comptimeText.setText(udinspo.getCOMPTIME());
             lastrundateText.setText(udinspo.getLASTRUNDATE());
             nextrundateText.setText(udinspo.getNEXTRUNDATE());
+            wonumText.setText(udinspo.getWONUM());
         }
     }
 

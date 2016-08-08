@@ -30,6 +30,21 @@ public class Udpro extends Entity implements Serializable {
     private String SITEID; //站点
     private String TESTPRO; //试点项目
     private String RESPONSPHONE;//电话号码
+    private String DEPT;//责任人部门
+    private String WINDSPEED3;//额定风速（m/s）
+    private String WINDSPEED1;//切入风速（m/s）
+    private String WINDSPEED2;// 	切出风速（m/s）
+    private String TEMPERATURE1;// 	环境温度区间（℃）
+    private String TEMPERATURE2;//运行温度区间（℃）
+    private String BOND;//安全保证金
+    private String TRANSPORT;//运输方式
+    private String TPOP;//付款比例
+    private String REQ2;//预验收要求
+    private String REQ1;//试运行要求
+    private String UTILIZATION;//可利用率要求
+    private String SPECIALCON;// 特殊配置
+    private String CYCLE;//调试周期
+    private String REMARKS;//备注
 
 
     public String getPRONUM() {
@@ -150,5 +165,125 @@ public class Udpro extends Entity implements Serializable {
 
     public void setRESPONSPHONE(String RESPONSPHONE) {
         this.RESPONSPHONE = RESPONSPHONE;
+    }
+
+    public String getDEPT() {
+        return DEPT;
+    }
+
+    public void setDEPT(String DEPT) {
+        this.DEPT = DEPT;
+    }
+
+    public String getWINDSPEED3() {
+        return WINDSPEED3;
+    }
+
+    public void setWINDSPEED3(String WINDSPEED3) {
+        this.WINDSPEED3 = WINDSPEED3;
+    }
+
+    public String getWINDSPEED1() {
+        return WINDSPEED1;
+    }
+
+    public void setWINDSPEED1(String WINDSPEED1) {
+        this.WINDSPEED1 = WINDSPEED1;
+    }
+
+    public String getWINDSPEED2() {
+        return WINDSPEED2;
+    }
+
+    public void setWINDSPEED2(String WINDSPEED2) {
+        this.WINDSPEED2 = WINDSPEED2;
+    }
+
+    public String getTEMPERATURE1() {
+        return TEMPERATURE1;
+    }
+
+    public void setTEMPERATURE1(String TEMPERATURE1) {
+        this.TEMPERATURE1 = TEMPERATURE1;
+    }
+
+    public String getTEMPERATURE2() {
+        return TEMPERATURE2;
+    }
+
+    public void setTEMPERATURE2(String TEMPERATURE2) {
+        this.TEMPERATURE2 = TEMPERATURE2;
+    }
+
+    public String getBOND() {
+        return BOND;
+    }
+
+    public void setBOND(String BOND) {
+        this.BOND = BOND;
+    }
+
+    public String getTRANSPORT() {
+        return TRANSPORT;
+    }
+
+    public void setTRANSPORT(String TRANSPORT) {
+        this.TRANSPORT = TRANSPORT;
+    }
+
+    public String getTPOP() {
+        return TPOP;
+    }
+
+    public void setTPOP(String TPOP) {
+        this.TPOP = TPOP;
+    }
+
+    public String getREQ2() {
+        return REQ2;
+    }
+
+    public void setREQ2(String REQ2) {
+        this.REQ2 = REQ2;
+    }
+
+    public String getREQ1() {
+        return REQ1;
+    }
+
+    public void setREQ1(String REQ1) {
+        this.REQ1 = REQ1;
+    }
+
+    public String getUTILIZATION() {
+        return UTILIZATION;
+    }
+
+    public void setUTILIZATION(String UTILIZATION) {
+        this.UTILIZATION = UTILIZATION;
+    }
+
+    public String getSPECIALCON() {
+        return SPECIALCON;
+    }
+
+    public void setSPECIALCON(String SPECIALCON) {
+        this.SPECIALCON = SPECIALCON;
+    }
+
+    public String getCYCLE() {
+        return CYCLE;
+    }
+
+    public void setCYCLE(String CYCLE) {
+        this.CYCLE = CYCLE;
+    }
+
+    public String getREMARKS() {
+        return REMARKS;
+    }
+
+    public void setREMARKS(String REMARKS) {
+        this.REMARKS = REMARKS;
     }
 }

@@ -303,7 +303,11 @@
     <string name="pronum_text">项目编号:</string>
     <string name="prdesc_text">项目名称:</string>
     <string name="branch_text">所属中心:</string>
+    <string name="branchdesc2_text">中心描述:</string>
     <string name="respons_text">责任人:</string>
+    <string name="responsname_text">责任人描述:</string>
+    <string name="responsphone_text">责任人电话:</string>
+    <string name="dept_text">责任人部门:</string>
     <string name="owner_text">业主单位:</string>
     <string name="signdate_text">签订时间:</string>
     <string name="contractstatus_text">合同状态:</string>
@@ -311,6 +315,21 @@
     <string name="prostage_text">项目当前阶段:</string>
     <string name="capacity_text">总厂容量(MW):</string>
     <string name="period_text">保质期(年):</string>
+    <string name="windspeed3_text">额定风速(m/s):</string>
+    <string name="windspeed1_text">切入风速(m/s):</string>
+    <string name="windspeed2_text">切出风速(m/s):</string>
+    <string name="temperature1_text">环境温度区间(℃):</string>
+    <string name="temperature2_text">运行温度区间(℃):</string>
+    <string name="bond_text">安全保证金:</string>
+    <string name="transport_text">运输方式;</string>
+    <string name="tpop_text">付款比例:</string>
+    <string name="req2_text">预验收要求:</string>
+    <string name="req1_text">试运行要求:</string>
+    <string name="utilization_text">可利用率要求:</string>
+    <string name="specialcon_text">特殊配置:</string>
+    <string name="cycle_text">调试周期:</string>
+    <string name="remarks_text">备注:</string>
+
     <!--popup-->
     <string name="udfandetails_text">风机子表</string>
     <string name="person_text">项目人员</string>
@@ -489,12 +508,14 @@
     <string name="udcarmainlog_text">维修记录</string>
     <!--故障提报单-->
     <string name="reportnum_text">编号:</string>
-    <string name="branchdesc_text">中心:</string>
+    <string name="branch2_text">中心:</string>
+    <string name="branchdesc_text">中心描述:</string>
     <string name="location_code_text">机位号:</string>
     <string name="assetloc_text">设备位置:</string>
+    <string name="assetlocdesc_text">设备位置描述:</string>
     <string name="culevel_text">故障等级:</string>
     <string name="faulttype_text">故障类型:</string>
-    <string name="happen_time_text">报障时间:</string>
+    <string name="happen_time_text">故障发生时间:</string>
     <string name="is_end_text">故障是否结束:</string>
     <string name="end_time_text">故障结束时间:</string>
     <string name="statustype_text">状态:</string>
@@ -503,6 +524,7 @@
     <string name="reporttime_text">提报时间:</string>
     <string name="fault_codedesc_text">故障类:</string>
     <string name="fault_code1_text">故障代码:</string>
+    <string name="fault_code1desc_text">故障代码描述:</string>
     <string name="cudescribe_text">故障描述:</string>
     <string name="result_text">处理结果:</string>
     <string name="udreport_wonum">故障工单号:</string>
@@ -528,6 +550,7 @@
     <string name="comptime_1_text">计划完成时间:</string>
     <string name="lastrundate_text">上次巡检时间:</string>
     <string name="nextrundate_text">下次巡检时间:</string>
+    <string name="wonum_text">故障工单:</string>
     <string name="udinspo_detail_text">巡检单详情</string>
     <string name="jptask_text">任务:</string>
     <string name="udinsproject_text">巡检项目</string>

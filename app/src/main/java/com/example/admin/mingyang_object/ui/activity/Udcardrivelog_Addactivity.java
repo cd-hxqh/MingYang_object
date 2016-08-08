@@ -377,7 +377,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
             @Override
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
+                if (workResult == null || workResult.errorMsg == null) {
                     MessageUtils.showMiddleToast(Udcardrivelog_Addactivity.this, "新增失败");
                 } else if (workResult.errorMsg.equals("成功")) {
                     MessageUtils.showMiddleToast(Udcardrivelog_Addactivity.this, "行驶记录" + workResult.wonum + "新增成功");

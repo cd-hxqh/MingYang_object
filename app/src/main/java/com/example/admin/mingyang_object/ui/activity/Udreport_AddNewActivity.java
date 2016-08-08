@@ -61,6 +61,8 @@ public class Udreport_AddNewActivity extends BaseActivity {
 
     private TextView branchText; //中心
 
+    private TextView branchdescText;//中心描述
+
     private TextView pronumText; //项目中心
 
     private TextView prdescText; //项目名称
@@ -68,6 +70,8 @@ public class Udreport_AddNewActivity extends BaseActivity {
     private TextView location_codeText; //机位号
 
     private TextView assetlocText; //设备位置
+
+    private TextView assetlocdescText;//设备位置描述
 
     private TextView culevelText; //故障等级
 
@@ -93,6 +97,8 @@ public class Udreport_AddNewActivity extends BaseActivity {
 
 
     private TextView fault_code1Text; //故障代码
+
+    private TextView fault_code1descText;//故障代码描述
 
     private EditText cudescribeText; //故障描述
 
@@ -131,11 +137,13 @@ public class Udreport_AddNewActivity extends BaseActivity {
         numLayout = (LinearLayout) findViewById(R.id.num_layout);
         reportnumText = (TextView) findViewById(R.id.reportnum_text_id);
         descriptionText = (TextView) findViewById(R.id.description_text_id);
-        branchText = (TextView) findViewById(R.id.branchdesc_text_id);
+        branchText = (TextView) findViewById(R.id.branch_text);
+        branchdescText = (TextView) findViewById(R.id.branchdesc_text_id);
         pronumText = (TextView) findViewById(R.id.pronum_text_id);
         prdescText = (TextView) findViewById(R.id.prdesc_text_id);
         location_codeText = (TextView) findViewById(R.id.location_code_text_id);
         assetlocText = (TextView) findViewById(R.id.assetloc_text_id);
+        assetlocdescText = (TextView) findViewById(R.id.assetlocdesc_text);
         culevelText = (TextView) findViewById(R.id.culevel_text_id);
         faulttypeText = (TextView) findViewById(R.id.faulttype_text_id);
         happen_timeText = (TextView) findViewById(R.id.capacity_text_id);
@@ -149,6 +157,7 @@ public class Udreport_AddNewActivity extends BaseActivity {
         reporttimeText = (TextView) findViewById(R.id.reporttime_text_id);
         fault_codedescText = (TextView) findViewById(R.id.fault_codedesc_text_id);
         fault_code1Text = (TextView) findViewById(R.id.fault_code1_text_id);
+        fault_code1descText = (TextView) findViewById(R.id.fault_code1desc_text);
         cudescribeText = (EditText) findViewById(R.id.cudescribe_text_id);
         resultText = (EditText) findViewById(R.id.result_text_id);
         remarkText = (EditText) findViewById(R.id.remark_text_id);
@@ -172,10 +181,10 @@ public class Udreport_AddNewActivity extends BaseActivity {
         pronumText.setOnClickListener(new LayoutOnClickListener(1, Constants.UDPROCODE));
         location_codeText.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
         assetlocText.setOnClickListener(new LayoutOnClickListener(3,Constants.LOCATIONCODE));
-        culevelText.setOnClickListener(new NormalListDialogOnClickListener(culevelText));
-        faulttypeText.setOnClickListener(new NormalListDialogOnClickListener(faulttypeText));
+//        culevelText.setOnClickListener(new NormalListDialogOnClickListener(culevelText));
+//        faulttypeText.setOnClickListener(new NormalListDialogOnClickListener(faulttypeText));
         happen_timeText.setOnClickListener(new DateTimeOnClickListener(happen_timeText));
-        end_timeText.setOnClickListener(new DateTimeOnClickListener(end_timeText));
+//        end_timeText.setOnClickListener(new DateTimeOnClickListener(end_timeText));
         statustypeText.setText("新建");
         fault_codedescText.setOnClickListener(new LayoutOnClickListener(4, Constants.FAILURECODE));
         fault_code1Text.setOnClickListener(new LayoutOnClickListener(5, Constants.PROBLEMCODE));
@@ -325,10 +334,42 @@ public class Udreport_AddNewActivity extends BaseActivity {
                     @Override
                     public void onBtnClick() {
                         showProgressDialog("数据提交中...");
-                        startAsyncTask();
+                        if (isOK()) {
+                            startAsyncTask();
+                        }else {
+                            closeProgressDialog();
+                        }
                         dialog.dismiss();
                     }
                 });
+    }
+
+    private boolean isOK(){
+        if (pronumText.getText().toString().equals("")){
+            Toast.makeText(Udreport_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (location_codeText.getText().toString().equals("")) {
+            Toast.makeText(Udreport_AddNewActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (assetlocText.getText().toString().equals("")){
+            Toast.makeText(Udreport_AddNewActivity.this, "请输入设备位置", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (happen_timeText.getText().toString().equals("")){
+            Toast.makeText(Udreport_AddNewActivity.this, "请输入故障发生时间", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (fault_codedescText.getText().toString().equals("")){
+            Toast.makeText(Udreport_AddNewActivity.this, "请输入故障类", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (fault_code1Text.getText().toString().equals("")){
+            Toast.makeText(Udreport_AddNewActivity.this, "请输入故障代码", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
 
@@ -358,7 +399,7 @@ public class Udreport_AddNewActivity extends BaseActivity {
             @Override
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
+                if (workResult == null || workResult.errorMsg == null) {
                     Toast.makeText(Udreport_AddNewActivity.this, "新增故障提报单失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udreport_AddNewActivity.this, "故障提报单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
@@ -379,6 +420,7 @@ public class Udreport_AddNewActivity extends BaseActivity {
         udreport.setBRANCH(branchText.getText().toString());
         udreport.setPRONUM(pronumText.getText().toString());
         udreport.setLOCATION_CODE(location_codeText.getText().toString());
+        udreport.setLOCATION(assetlocText.getText().toString());
 //        udreport.setUDGZDJ(culevelText.getText().toString());
 //        udreport.setUDGZTYPE(faulttypeText.getText().toString());
         udreport.setHAPPEN_TIME(happen_timeText.getText().toString());
@@ -402,6 +444,7 @@ public class Udreport_AddNewActivity extends BaseActivity {
                     pronumText.setText(option.getName());
                     prdescText.setText(option.getDesc());
                     branchText.setText(option.getValue1());
+                    branchdescText.setText(option.getValue6());
                     location_codeText.setText("");
                     break;
                 case 2:
@@ -410,8 +453,9 @@ public class Udreport_AddNewActivity extends BaseActivity {
                     break;
                 case 3:
                     option = (Option) data.getSerializableExtra("option");
-                    assetlocText.setText(option.getDesc());
-                    udreport.setLOCATION(option.getName());
+                    assetlocText.setText(option.getName());
+                    assetlocdescText.setText(option.getDesc());
+//                    udreport.setLOCATION(option.getName());
                     break;
                 case 4:
                     option = (Option) data.getSerializableExtra("option");
@@ -419,10 +463,12 @@ public class Udreport_AddNewActivity extends BaseActivity {
                     udreport.setFAULT_CODE(option.getName());
                     failurelist = option.getValue1();
                     fault_code1Text.setText("");
+                    fault_code1descText.setText("");
                     break;
                 case 5:
                     option = (Option) data.getSerializableExtra("option");
-                    fault_code1Text.setText(option.getDesc());
+                    fault_code1Text.setText(option.getName());
+                    fault_code1descText.setText(option.getDesc());
                     udreport.setFAULT_CODE1(option.getName());
                     break;
             }

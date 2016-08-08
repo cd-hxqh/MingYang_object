@@ -1073,7 +1073,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     @Override
                     protected void onPostExecute(WebResult workResult) {
                         super.onPostExecute(workResult);
-                        if (workResult.errorMsg == null) {
+                        if (workResult == null || workResult.errorMsg == null) {
                             Toast.makeText(Work_AddNewActivity.this, "新增工单失败", Toast.LENGTH_SHORT).show();
                         } else if (workResult.errorMsg.equals("成功")) {
                             Toast.makeText(Work_AddNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();

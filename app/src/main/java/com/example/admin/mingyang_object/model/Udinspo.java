@@ -20,6 +20,8 @@ public class Udinspo extends Entity implements Serializable {
     private String ALLTIME; //累计停机时间
     @DatabaseField(columnName = "BRANCH")
     private String BRANCH; //中心编号
+    @DatabaseField(columnName = "BRANCHDESC")
+    private String BRANCHDESC; //编号描述
     @DatabaseField(columnName = "CHANGEBY")
     private String CHANGEBY; //更改人编号
     @DatabaseField(columnName = "CHANGEDATE")
@@ -86,6 +88,8 @@ public class Udinspo extends Entity implements Serializable {
     private String NAME2; //巡检人员名称
     @DatabaseField(columnName = "NAME3")
     private String NAME3; //巡检人员名称
+    @DatabaseField(columnName = "WONUM")
+    private String WONUM; //故障工单号
 
     @DatabaseField(columnName = "isUpdate")
     public boolean isUpdate;//是否是本地已修改巡检单
@@ -387,5 +391,21 @@ public class Udinspo extends Entity implements Serializable {
 
     public void setWEATHER(String WEATHER) {
         this.WEATHER = WEATHER;
+    }
+
+    public String getWONUM() {
+        return WONUM;
+    }
+
+    public void setWONUM(String WONUM) {
+        this.WONUM = WONUM;
+    }
+
+    public String getBRANCHDESC() {
+        return BRANCHDESC;
+    }
+
+    public void setBRANCHDESC(String BRANCHDESC) {
+        this.BRANCHDESC = BRANCHDESC;
     }
 }
