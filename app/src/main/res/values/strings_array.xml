@@ -11,8 +11,8 @@
     </string-array>
 
     <string-array name="address_text">
-        <item>正式 http://eam.mywind.com.cn:9080</item>
-        <item>测试 http://qaseam.mywind.com.cn:9080</item>
+        <item>正式 http://eamapp.mywind.com.cn:9080</item>
+        <item>测试 http://qaseamapp.mywind.com.cn:9080</item>
         <item>开发 http://deveam.mywind.com.cn:7001</item>
         <!--<item>调试 http://192.168.100.220</item>-->
         <!--<item>调试 http://qaseamapp.mywind.com.cn</item>-->

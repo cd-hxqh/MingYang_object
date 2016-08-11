@@ -1024,7 +1024,7 @@ public class Work_DetailsActivity extends BaseActivity {
             if (workOrder.UDSTATUS.equals("新建")) {
                 MaterialDialogOneBtn();
             } else {
-                MaterialDialogOneBtn1();
+                EditDialog();
             }
             popupWindow.dismiss();
         }
@@ -1504,50 +1504,57 @@ public class Work_DetailsActivity extends BaseActivity {
         );
     }
 
-    private void MaterialDialogOneBtn1() {//审批工作流
-        final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content("是否填写输入意见")//
-                .btnText("是", "否，直接提交")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)
-                .show();
+//    private void MaterialDialogOneBtn1() {//审批工作流
+//        final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.isTitleShow(false)//
+//                .btnNum(2)
+//                .content("是否填写输入意见")//
+//                .btnText("是", "否，直接提交")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)
+//                .show();
+//
+//        dialog.setOnBtnClickL(
+//                new OnBtnClickL() {//是
+//                    @Override
+//                    public void onBtnClick() {
+//                        EditDialog(true);
+//                        dialog.dismiss();
+//                    }
+//                },
+//                new OnBtnClickL() {//否
+//                    @Override
+//                    public void onBtnClick() {
+//                        wfgoon("1", "");
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+//    }
 
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {//是
-                    @Override
-                    public void onBtnClick() {
-                        EditDialog(true);
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {//否
-                    @Override
-                    public void onBtnClick() {
-                        wfgoon("1", "");
-                        dialog.dismiss();
-                    }
-                }
-        );
-    }
 
-
-    private void EditDialog(final boolean isok) {//输入审核意见
+    private void EditDialog() {//输入审核意见
         final NormalEditTextDialog dialog = new NormalEditTextDialog(Work_DetailsActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content(isok ? "通过" : "不通过")//
-                .btnText("提交", "取消")//
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)
                 .show();
 
         dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                },
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
@@ -1558,7 +1565,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
                         dialog.dismiss();
                     }
                 }
@@ -1864,11 +1871,6 @@ public class Work_DetailsActivity extends BaseActivity {
                 case 2000:
                     wpmaterialLit = (ArrayList<Wpmaterial>) data.getSerializableExtra("wpmaterialList");
                     break;
-//            case 3000:
-//                failurereportList = (ArrayList<Failurereport>) data.getSerializableExtra("failurereportList");
-//                break;
-//            default:
-//                break;
             }
         }
     }

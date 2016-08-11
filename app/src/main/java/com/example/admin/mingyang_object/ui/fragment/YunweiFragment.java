@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.ui.activity.Udinspo_ListActivity;
 import com.example.admin.mingyang_object.ui.activity.Udreport_ListActivity;
+import com.example.admin.mingyang_object.ui.activity.Udrunlogr_ListActivity;
 
 
 /**
@@ -25,6 +26,11 @@ public class YunweiFragment extends BaseFragment {
      * 巡检单*
      */
     private TextView udinspoText;
+
+    /**
+     * 运行记录
+     */
+    private TextView udrunlogrText;
 
 
     @Override
@@ -49,6 +55,7 @@ public class YunweiFragment extends BaseFragment {
     private void findByIdView(View view) {
         udreportText = (TextView) view.findViewById(R.id.udreport_text_id);
         udinspoText = (TextView) view.findViewById(R.id.udinspo_text_id);
+        udrunlogrText = (TextView) view.findViewById(R.id.udrunlogr_text_id);
     }
 
     /**
@@ -57,6 +64,7 @@ public class YunweiFragment extends BaseFragment {
     private void setlistener() {
         udreportText.setOnClickListener(udreportTextOnClickListener);
         udinspoText.setOnClickListener(udinspoTextOnClickListener);
+        udrunlogrText.setOnClickListener(udrunlogrTextOnClickListener);
     }
 
 
@@ -75,5 +83,12 @@ public class YunweiFragment extends BaseFragment {
         }
     };
 
+    private View.OnClickListener udrunlogrTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), Udrunlogr_ListActivity.class);
+            startActivityForResult(intent, 0);
+        }
+    };
 
 }

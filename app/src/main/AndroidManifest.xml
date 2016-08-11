@@ -279,6 +279,9 @@
             android:label="@string/udinsproject_details_text"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".ui.activity.Udrunlogr_ListActivity"
+            android:label="@string/udinspo_text" />
+        <activity
             android:name=".ui.activity.Udcardrivelog_Listactivity"
             android:label="@string/udcardrivelog_text" />
         <activity

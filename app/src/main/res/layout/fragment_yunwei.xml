@@ -55,24 +55,23 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/work_linear_status_id"
+                android:id="@+id/work_linear_udrunlogr_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="invisible">
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:id="@+id/udfeedback_text_id"
+                    android:id="@+id/udrunlogr_text_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dimen_5"
                     android:drawableTop="@mipmap/ic_udfeedback"
                     android:gravity="center"
-                    android:text="@string/udfeedback_text" />
+                    android:text="@string/udrunlogr_text" />
 
             </LinearLayout>
         </TableRow>

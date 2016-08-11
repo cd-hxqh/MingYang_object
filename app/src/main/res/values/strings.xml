@@ -503,6 +503,7 @@
     <string name="udstockline_text">盘点明细行</string>
     <string name="udreport_text">故障提报单</string>
     <string name="udinspo_text">巡检单</string>
+    <string name="udrunlogr_text">运行记录</string>
     <string name="udcardrivelog_text">行驶记录</string>
     <string name="udcarfuelcharge_text">加油记录</string>
     <string name="udcarmainlog_text">维修记录</string>
@@ -563,6 +564,21 @@
     <string name="inspcontent_text">巡检不合格原因:</string>
     <string name="result2_text">结果:</string>
     <string name="udinsproject_details_text">巡检项目详情</string>
+
+    <!--运行记录-->
+    <string name="udrunlogr_lognum">运行日志编号:</string>
+    <string name="udrunlogr_description">描述:</string>
+    <string name="udrunlogr_branch">中心编号:</string>
+    <string name="udrunlogr_branchdesc">中心描述:</string>
+    <string name="udrunlogr_pronum">项目编号:</string>
+    <string name="udrunlogr_prodesc">项目描述:</string>
+    <string name="udrunlogr_year">年:</string>
+    <string name="udrunlogr_month">月:</string>
+    <string name="udrunlogr_prohead">负责人:</string>
+    <string name="udrunlogr_name1">负责人描述:</string>
+    <string name="udrunlogr_creater">录入人编号:</string>
+    <string name="udrunlogr_createname">录入人描述:</string>
+    <string name="udrunlogr_createtime">录入时间:</string>
 
     <!--行驶记录-->
     <string name="licensenum_text">车牌号:</string>

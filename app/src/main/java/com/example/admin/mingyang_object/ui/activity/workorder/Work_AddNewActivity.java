@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.dao.WoactivityDao;
 import com.example.admin.mingyang_object.dao.WorkOrderDao;
@@ -386,7 +390,7 @@ public class Work_AddNewActivity extends BaseActivity {
         udinspoby_2.setOnClickListener(new LayoutOnClickListener(15, Constants.PERSONCODE));
         udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16, Constants.PERSONCODE));
         udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17, Constants.PERSONCODE));
-        udprores.setOnClickListener(new LayoutOnClickListener(18,Constants.PERSONCODE));
+        udprores.setOnClickListener(new LayoutOnClickListener(18, Constants.PERSONCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -493,29 +497,29 @@ public class Work_AddNewActivity extends BaseActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus&&!udstoptime.getText().toString().equals("")&&!udrestarttime.getText().toString().equals("")
-                &&udjgresult.getText().toString().equals("")){
-            udjgresult.setText(getTime(udstoptime.getText().toString(),udrestarttime.getText().toString()));
+        if (hasFocus && !udstoptime.getText().toString().equals("") && !udrestarttime.getText().toString().equals("")
+                && udjgresult.getText().toString().equals("")) {
+            udjgresult.setText(getTime(udstoptime.getText().toString(), udrestarttime.getText().toString()));
         }
     }
 
     //计算时间差
-    private String getTime(String time1,String time2){
+    private String getTime(String time1, String time2) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date now = null;
         java.util.Date date = null;
         try {
             now = df.parse(time1);
-            date=df.parse(time2);
+            date = df.parse(time2);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long l=date.getTime()-now.getTime();
-        long day=l/(24*60*60*1000);//天
-        long hour=(l/(60*60*1000)-day*24);//小时
-        long min=((l/(60*1000))-day*24*60-hour*60);//分
-        long s=(l/1000-day*24*60*60-hour*60*60-min*60);//秒
-        return "累积停机"+day+"天"+hour+"小时"+min+"分"+s+"秒";
+        long l = date.getTime() - now.getTime();
+        long day = l / (24 * 60 * 60 * 1000);//天
+        long hour = (l / (60 * 60 * 1000) - day * 24);//小时
+        long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);//分
+        long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);//秒
+        return "累积停机" + day + "天" + hour + "小时" + min + "分" + s + "秒";
     }
 
     //按照工单类型修改布局
@@ -620,7 +624,7 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_FR(){//故障工单
+    private void SetClick_FR() {//故障工单
         switch (workOrder.UDSTATUS) {
             case "新建":
 //                udprobdesc.setEnabled(false);
@@ -631,7 +635,7 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_AA(){//终验收工单
+    private void SetClick_AA() {//终验收工单
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udrlstartdate.setEnabled(false);
@@ -640,7 +644,7 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_SP(){//排查
+    private void SetClick_SP() {//排查
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udjgresult1.setEnabled(false);
@@ -655,7 +659,7 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_TP(){//技改工单
+    private void SetClick_TP() {//技改工单
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udrlstartdate.setEnabled(false);
@@ -665,7 +669,7 @@ public class Work_AddNewActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_WS(){//定检工单
+    private void SetClick_WS() {//定检工单
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udrlstartdate.setEnabled(false);
@@ -816,13 +820,13 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener failureOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (failurecode.getText().equals("")){
-                Toast.makeText(Work_AddNewActivity.this,"请选择故障类",Toast.LENGTH_SHORT).show();
+            if (failurecode.getText().equals("")) {
+                Toast.makeText(Work_AddNewActivity.this, "请选择故障类", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
-            }else if (problemcode.getText().equals("")){
-                Toast.makeText(Work_AddNewActivity.this,"请选择问题原因",Toast.LENGTH_SHORT).show();
+            } else if (problemcode.getText().equals("")) {
+                Toast.makeText(Work_AddNewActivity.this, "请选择问题原因", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
-            }else {
+            } else {
                 Intent intent = new Intent(Work_AddNewActivity.this, Failurelist1Activity.class);
                 intent.putExtra("failurecode", workOrder.PROBLEMCODE);
                 startActivityForResult(intent, 0);
@@ -1078,8 +1082,9 @@ public class Work_AddNewActivity extends BaseActivity {
                         } else if (workResult.errorMsg.equals("成功")) {
                             Toast.makeText(Work_AddNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
                             workOrder.isnew = false;
-                            setResult(100);
-                            finish();
+                            getWorkOrderData(workResult.wonum);
+//                            setResult(100);
+//                            finish();
                         } else {
                             Toast.makeText(Work_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
                         }
@@ -1087,10 +1092,46 @@ public class Work_AddNewActivity extends BaseActivity {
                     }
 
                 }.execute();
-            }else {
+            } else {
                 closeProgressDialog();
             }
         }
+    }
+
+    /**
+     * 查询服务器此工单数据并跳转到工单详情界面*
+     */
+    private void getWorkOrderData(String wonum) {
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorder(workOrder.WORKTYPE, wonum), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Work_AddNewActivity.this, results.getResultlist());
+                if (items != null && items.get(0) != null) {
+                    Intent intent = new Intent(Work_AddNewActivity.this, Work_DetailsActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("workOrder", items.get(0));
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, 0);
+                    finish();
+                }else {
+                    Toast.makeText(Work_AddNewActivity.this, "获取工单数据失败", Toast.LENGTH_SHORT).show();
+                    setResult(100);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(Work_AddNewActivity.this, "获取工单数据失败", Toast.LENGTH_SHORT).show();
+                setResult(100);
+                finish();
+            }
+        });
     }
 
     private void saveWorkOrder() {
@@ -1270,7 +1311,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private WorkOrder getWorkOrder() {
         WorkOrder workOrder = this.workOrder;
         workOrder.WONUM = wonum.getText().toString();
-        workOrder.DESCRIPTION = description.getText().toString();
+//        workOrder.DESCRIPTION = description.getText().toString();
         workOrder.BRANCH = branch.getText().toString();
         workOrder.UDPROJECTNUM = udprojectnum.getText().toString();
         workOrder.PRONAME = proname.getText().toString();
@@ -1335,6 +1376,29 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.JGPLANNUM = jgplannum.getText().toString();
         workOrder.UDJGTYPE = udjgtype.getText().toString();
         workOrder.UDFJAPPNUM = udfjappnum.getText().toString();
+        switch (workOrder.WORKTYPE) {
+            case Constants.FR:
+                workOrder.DESCRIPTION = udzglimit.getText().toString() + udrprrsb.getText().toString()
+                        + proname.getText().toString() + udlocnum.getText().toString() + "号风机" +
+                        failurecode.getText().toString() + "故障工单";
+                break;
+            case Constants.AA:
+                workOrder.DESCRIPTION = createdate.getText().toString() + createby.getText().toString()
+                        + proname.getText().toString() + udlocnum.getText().toString() + "号风机终验收工单";
+                break;
+            case Constants.SP:
+                workOrder.DESCRIPTION = createdate.getText().toString() + createby.getText().toString()
+                        + proname.getText().toString() + pctype.getText().toString() + "排查工单";
+                break;
+            case Constants.TP:
+                workOrder.DESCRIPTION = createdate.getText().toString() + createby.getText().toString()
+                        + proname.getText().toString() + udjgtype.getText().toString() + "技改工单";
+                break;
+            case Constants.WS:
+                workOrder.DESCRIPTION = createdate.getText().toString() + createby.getText().toString()
+                        + proname.getText().toString() + djtype.getText().toString() + "定检类型";
+                break;
+        }
         return workOrder;
     }
 
@@ -1438,7 +1502,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     udinspoby_2.setText(option.getDesc());
                     workOrder.NAME1 = option.getDesc();
-                    workOrder.UDINSPOBY2 = option.getName();
+                    workOrder.UDINSPOBY = option.getName();
                     break;
                 case 16:
                     option = (Option) data.getSerializableExtra("option");

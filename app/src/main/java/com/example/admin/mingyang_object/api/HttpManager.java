@@ -75,11 +75,11 @@ public class HttpManager {
                 if (status.equals("全部")) {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc','condition':{'WORKTYPE':'" + type + "'}}";
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WORKORDERID desc','condition':{'WORKTYPE':'" + type + "'}}";
                 }else {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WORKORDERID desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
                 }
             } else {
                 if (status.equals("全部")) {
@@ -98,12 +98,12 @@ public class HttpManager {
                 if (status.equals("全部")) {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc'" +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WORKORDERID desc'" +
                             ",'condition':{'WORKTYPE':'" + type + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
                 }else {
 
                     return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'CREATEDATE desc'" +
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WORKORDERID desc'" +
                             ",'condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'},'sinorsearch':{'WONUM':'" + search + "','DESCRIPTION':'" + search + "'}}";
                 }
             } else {
@@ -119,11 +119,35 @@ public class HttpManager {
                             "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'DEBUGWORKORDERNUM desc'" +
                             ",'sinorsearch':{'DEBUGWORKORDERNUM':'" + search + "','DESCRIPTION':'" + search + "'},'condition':{'STATUS':'" + status + "'}}";
                 }
-
-
             }
-
         }
+    }
+
+    public static String getworkorder(String type,String wonum){
+        switch (type) {
+            case Constants.FR://故障工单
+                appid = "UDREPORTWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.AA://终验收工单
+                appid = "UDZYSWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.SP://排查工单
+                appid = "UDPCWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.TP://技改工单
+                appid = "UDJGWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.WS://定检工单
+                appid = "UDDJWO";
+                objectname = "WORKORDER";
+                break;
+        }
+        return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                "'curpage':1,'showcount':20,'option':'read','condition':{'WONUM':'" + wonum + "'}}";
     }
 
     /**
@@ -379,6 +403,16 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'REPORTNUM DESC'}";
         }
         return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'REPORTNUM DESC','sinorsearch':{'REPORTNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+
+    /**
+     * 设置故障提报单的接口
+     */
+    public static String getudrunlogrurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDRUNLOGR_APPID + "','objectname':'" + Constants.UDRUNLOGR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'LOGNUM DESC'}";
+        }
+        return "{'appid':'" + Constants.UDRUNLOGR_APPID + "','objectname':'" + Constants.UDRUNLOGR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'LOGNUM DESC','sinorsearch':{'LOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
 

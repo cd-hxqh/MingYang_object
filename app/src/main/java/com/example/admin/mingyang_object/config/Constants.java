@@ -217,6 +217,11 @@ public class Constants {
     /**巡检项目表名**/
     public static final String UDINSPROJECT_NAME = "UDINSPROJECT";
 
+    /**运行日志appid**/
+    public static final String UDRUNLOGR_APPID = "UDRUNLOG";
+    /**运行日志表名**/
+    public static final String UDRUNLOGR_NAME = "UDRUNLOGR";
+
     /**行驶记录appid**/
     public static final String UDCARDRIVE_APPID = "UDCARDRIVE";
     /**行驶记录表名**/

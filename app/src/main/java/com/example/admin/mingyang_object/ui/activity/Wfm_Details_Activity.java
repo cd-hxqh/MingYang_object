@@ -124,55 +124,62 @@ public class Wfm_Details_Activity extends BaseActivity {
     private View.OnClickListener approveOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            MaterialDialogOneBtn1();
+            EditDialog();
         }
     };
 
 
-    private void MaterialDialogOneBtn1() {//审批工作流
-        final MaterialDialog dialog = new MaterialDialog(Wfm_Details_Activity.this);
-        dialog.setCancelable(true);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content("是否填写输入意见")//
-                .btnText("是", "否，直接提交")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)
-                .show();
+//    private void MaterialDialogOneBtn1() {//审批工作流
+//        final MaterialDialog dialog = new MaterialDialog(Wfm_Details_Activity.this);
+//        dialog.setCancelable(true);
+//        dialog.setCanceledOnTouchOutside(true);
+//        dialog.isTitleShow(false)//
+//                .btnNum(2)
+//                .content("是否填写输入意见")//
+//                .btnText("是", "否，直接提交")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)
+//                .show();
+//
+//        dialog.setOnBtnClickL(
+//                new OnBtnClickL() {//是
+//                    @Override
+//                    public void onBtnClick() {
+//                        EditDialog(true);
+//                        dialog.dismiss();
+//                    }
+//                },
+//                new OnBtnClickL() {//否
+//                    @Override
+//                    public void onBtnClick() {
+//                        wfgoon("1", "");
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+//    }
 
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {//是
-                    @Override
-                    public void onBtnClick() {
-                        EditDialog(true);
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {//否
-                    @Override
-                    public void onBtnClick() {
-                        wfgoon("1", "");
-                        dialog.dismiss();
-                    }
-                }
-        );
-    }
 
-
-    private void EditDialog(final boolean isok) {//输入审核意见
+    private void EditDialog() {//输入审核意见
         final NormalEditTextDialog dialog = new NormalEditTextDialog(Wfm_Details_Activity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content(isok ? "通过" : "不通过")//
-                .btnText("提交", "取消")//
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)
                 .show();
 
         dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                },
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
@@ -183,7 +190,7 @@ public class Wfm_Details_Activity extends BaseActivity {
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
-
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
                         dialog.dismiss();
                     }
                 }
