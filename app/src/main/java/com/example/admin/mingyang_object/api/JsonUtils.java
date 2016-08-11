@@ -2387,6 +2387,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udcarfuelcharge = new Udcarfuelcharge();
                 jsonObject = jsonArray.getJSONObject(i);
+                Log.i("加油卡台账", "data=" + jsonObject);
                 Field[] field = udcarfuelcharge.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);

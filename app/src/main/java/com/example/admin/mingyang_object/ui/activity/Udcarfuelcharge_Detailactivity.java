@@ -285,8 +285,6 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
             @Override
             public void onSuccess(Results results) {
 
-
-
                 ArrayList<GreaseCard> item = JsonUtils.parsingGreaseCard(Udcarfuelcharge_Detailactivity.this, results.getResultlist());
 
                 if (item == null || item.isEmpty()) {

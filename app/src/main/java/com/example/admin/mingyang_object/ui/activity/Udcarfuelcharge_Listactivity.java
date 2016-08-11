@@ -162,7 +162,7 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
         HttpManager.getDataPagingInfo(this, HttpManager.getudcarfuelchargeurl(search, page, 20), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
+                Log.i("加油卡台账", "data=" + results);
             }
 
             @Override
