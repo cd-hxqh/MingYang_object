@@ -131,7 +131,17 @@ public class Constants {
     /**
      * 项目车辆表名*
      */
+
     public static final String UDVEHICLE_NAME = "UDVEHICLE";
+    /**
+     * 项目车辆appid*
+     */
+    public static final String GREASECARD_APPID = "GREASECARD";
+    /**
+     * 项目车辆表名*
+     */
+
+    public static final String GREASECARD_NAME = "GREASECARD";
     /**
      * 部门appid*
      */

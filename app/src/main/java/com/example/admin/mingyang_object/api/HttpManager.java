@@ -452,6 +452,16 @@ public class HttpManager {
     }
 
     /**
+     * 设置加油卡台账接口
+     */
+    public static String getGreaseCard(String value, int curpage, int showcount){
+
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.GREASECARD_APPID + "','objectname':'" + Constants.GREASECARD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }
+        return "{'appid':'" + Constants.GREASECARD_APPID + "','objectname':'" + Constants.GREASECARD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PRONUM':'" + value + "','CREATEBY':'" + value + "'}}";
+    }
+    /**
      * 设置选择车辆接口
      */
     public static String getUddepturl(String value, int curpage, int showcount) {

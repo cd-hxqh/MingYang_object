@@ -41,6 +41,7 @@ import com.example.admin.mingyang_object.model.Wfassignment;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Wpmaterial;
+import com.example.admin.mingyang_object.model.GreaseCard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -2418,7 +2419,55 @@ public class JsonUtils<E> {
         }
 
     }
+    /**
+     *解析加油卡台账
+     *
+     */
+    public static ArrayList<GreaseCard>parsingGreaseCard(Context ctx,String data){
+        ArrayList<GreaseCard> list = null;
+        GreaseCard greaseCard = null;
+        try {
+            JSONObject jsonObjectData= new JSONObject(data);
 
+            JSONArray jsonArray = new JSONArray(jsonObjectData.getString("resultlist"));
+            Log.e("加油卡台账",jsonObjectData.getString("resultlist"));
+            JSONObject jsonObject;
+            list = new ArrayList<GreaseCard>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                greaseCard = new GreaseCard();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = greaseCard.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = greaseCard.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(greaseCard);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = greaseCard.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(greaseCard, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(greaseCard);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
     /**
      * 维修记录*
      */

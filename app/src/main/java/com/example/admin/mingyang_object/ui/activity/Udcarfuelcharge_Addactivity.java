@@ -14,8 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.GreaseCard;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
@@ -76,6 +80,8 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
 
     private TextView number4Text; //油品号
 
+    private TextView carNum; //油品号
+
     private EditText priceText; //单价
 
     private EditText fuelcostText; //加油费
@@ -112,7 +118,7 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-
+    private ArrayList<String> mCarNums = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +129,7 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+        getGreaseCard();
     }
 
 
@@ -140,6 +147,8 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
         number2Text = (EditText) findViewById(R.id.number2_text_id);
         number1Text = (EditText) findViewById(R.id.number1_text_id);
         number4Text = (TextView) findViewById(R.id.number4_text_id);
+        carNum = (TextView) findViewById(R.id.carnum_id);
+
         priceText = (EditText) findViewById(R.id.price_text_id);
         fuelcostText = (EditText) findViewById(R.id.fuelcost_text_id);
         invoicenumText = (EditText) findViewById(R.id.invoicenum_text_id);
@@ -167,9 +176,46 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
         canleButton.setOnClickListener(canleButtonOnClickListener);
+        carNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                carNumNormalListDialog();
+            }
+        });
     }
 
+    private void getGreaseCard(){
+        String url= HttpManager.getGreaseCard("",1,200);
+        HttpManager.getData(this,url,new HttpRequestHandler<Results>(){
+            @Override
+            public void onSuccess(Results results) {
 
+                ArrayList<GreaseCard> item = JsonUtils.parsingGreaseCard(Udcarfuelcharge_Addactivity.this, results.getResultlist());
+
+                if (item == null || item.isEmpty()) {
+
+                } else {
+                    for (int i=0;i<item.size();i++)
+                    {
+                        Log.e("加油卡台账","加油卡编号"+item.get(i).getCARNUM());
+
+                        mCarNums.add(item.get(i).getCARNUM());
+                    }
+                }
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+
+    }
     private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -277,7 +323,30 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
 
     }
 
+    private void carNumNormalListDialog() {
 
+        mMenuItems = new ArrayList<>();
+
+        for (int i = 0; i < mCarNums.size(); i++) {
+
+            mMenuItems.add(new DialogMenuItem(mCarNums.get(i), 0));
+        }
+        final NormalListDialog dialog = new NormalListDialog(Udcarfuelcharge_Addactivity.this, mMenuItems);
+        dialog.title("请选择加油卡编号")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                carNum.setText(mMenuItems.get(position).mOperName);
+
+                dialog.dismiss();
+            }
+        });
+
+    }
     /**
      * 封装需要上传的数据*
      */

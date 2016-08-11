@@ -18,6 +18,7 @@ public class Udcarfuelcharge extends Entity implements Serializable {
     private String NUMBER2; //上次加油里程表读数
     private String NUMBER1; //本次加油里程表读数
     private String NUMBER3; //里程差
+    private String CARNUM;  //加油卡编号
     private String NUMBER4; //油品号
     private String NUMBER5; //本次加油量（升）
     private String PRICE; //单价
@@ -192,6 +193,10 @@ public class Udcarfuelcharge extends Entity implements Serializable {
     public String getNUMBER4() {
         return NUMBER4;
     }
+
+    public String getCARNUM() {return CARNUM;}
+
+    public void setCARNUM(String CARNUM) {this.CARNUM = CARNUM;}
 
     public void setNUMBER4(String NUMBER4) {
         this.NUMBER4 = NUMBER4;

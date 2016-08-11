@@ -21,11 +21,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.model.GreaseCard;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
@@ -111,6 +115,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
     private EditText number2Text; //上次加油里程表读数
     private EditText number1Text; //本次加油里程表读数
     private TextView number3Text; //里程差
+    private TextView carNum; //加油卡编号
     private TextView number4Text; //油品号
     private TextView number5Text; //本次加油量
     private EditText priceText; //单价
@@ -156,7 +161,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-
+    private ArrayList<String> mCarNums = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +172,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         initView();
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+        getGreaseCard();
     }
 
     private void geiIntentData() {
@@ -179,8 +185,6 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
         scrollview = (ScrollView) findViewById(R.id.scrollview_id);
-
-
         carfuelchargenumText = (TextView) findViewById(R.id.carfuelchargenum_text_id);
         descriptionText = (TextView) findViewById(R.id.description_text_id);
         licensenumText = (TextView) findViewById(R.id.licensenum_text_id);
@@ -202,6 +206,7 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         number1Text = (EditText) findViewById(R.id.number1_text_id);
         number3Text = (TextView) findViewById(R.id.number3_text_id);
         number4Text = (TextView) findViewById(R.id.number4_text_id);
+        carNum = (TextView) findViewById(R.id.carnum_id);
         number5Text = (TextView) findViewById(R.id.number5_text_id);
         priceText = (EditText) findViewById(R.id.price_text_id);
         fuelcostText = (EditText) findViewById(R.id.fuelcost_text_id);
@@ -256,7 +261,6 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.udcarfuelcharge_detail_text));
-
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         operationLinearLayout.setVisibility(View.GONE);
@@ -266,9 +270,51 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
         isEdit(isEdit);
         comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
         saveButton.setOnClickListener(saveButtonOnClickListener);
+        carNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                carNumNormalListDialog();
+            }
+        });
     }
 
+    //查询可用的加油卡号
+    private void getGreaseCard(){
+       String url=HttpManager.getGreaseCard("",1,200);
+        HttpManager.getData(this,url,new HttpRequestHandler<Results>(){
+            @Override
+            public void onSuccess(Results results) {
 
+
+
+                ArrayList<GreaseCard> item = JsonUtils.parsingGreaseCard(Udcarfuelcharge_Detailactivity.this, results.getResultlist());
+
+                if (item == null || item.isEmpty()) {
+
+                } else {
+                        for (int i=0;i<item.size();i++)
+                        {
+                            Log.e("加油卡台账","加油卡编号"+item.get(i).getCARNUM());
+
+                            mCarNums.add(item.get(i).getCARNUM());
+                        }
+                }
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+
+
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+
+    }
     private CompoundButton.OnCheckedChangeListener comisornoTextOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -456,6 +502,29 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 number4Text.setText(mMenuItems.get(position).mOperName);
+
+                dialog.dismiss();
+            }
+        });
+
+    }
+    private void carNumNormalListDialog() {
+
+        mMenuItems = new ArrayList<>();
+
+        for (int i = 0; i < mCarNums.size(); i++) {
+            mMenuItems.add(new DialogMenuItem(mCarNums.get(i), 0));
+        }
+        final NormalListDialog dialog = new NormalListDialog(Udcarfuelcharge_Detailactivity.this, mMenuItems);
+        dialog.title("请选择加油卡编号")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnOperItemClickL(new OnOperItemClickL() {
+            @Override
+            public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                carNum.setText(mMenuItems.get(position).mOperName);
 
                 dialog.dismiss();
             }
