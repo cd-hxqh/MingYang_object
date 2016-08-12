@@ -19,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
@@ -280,7 +281,11 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
 
     //查询可用的加油卡号
     private void getGreaseCard(){
-       String url=HttpManager.getGreaseCard("",1,200);
+       String url=HttpManager.getGreaseCard(udcarfuelcharge.getPRONUM(),1,200);
+        if (udcarfuelcharge.getPRONUM()==null||udcarfuelcharge.getPRONUM().length()==0)
+        {
+            url=HttpManager.getGreaseCard("",1,200);
+        }
         HttpManager.getData(this,url,new HttpRequestHandler<Results>(){
             @Override
             public void onSuccess(Results results) {
@@ -508,6 +513,11 @@ public class Udcarfuelcharge_Detailactivity extends BaseActivity {
     }
     private void carNumNormalListDialog() {
 
+        if (mCarNums.size()==0)
+        {
+            Toast.makeText(Udcarfuelcharge_Detailactivity.this,"没有符合条件的加油卡",Toast.LENGTH_SHORT).show();
+            return;
+        }
         mMenuItems = new ArrayList<>();
 
         for (int i = 0; i < mCarNums.size(); i++) {

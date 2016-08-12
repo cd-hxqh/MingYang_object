@@ -186,6 +186,10 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
 
     private void getGreaseCard(){
         String url= HttpManager.getGreaseCard("",1,200);
+        if (licensenumText.getText().toString().length()>0)
+        {
+            url= HttpManager.getGreaseCard(licensenumText.getText().toString(),1,200);
+        }
         HttpManager.getData(this,url,new HttpRequestHandler<Results>(){
             @Override
             public void onSuccess(Results results) {
@@ -273,6 +277,7 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
                 case Constants.UDVEHICLE:
                     option = (Option) data.getSerializableExtra("option");
                     licensenumText.setText(option.getName());
+                    getGreaseCard();
                     carnameText.setText(option.getDesc());
                     number2Text.setText(option.getValue6());
                     break;

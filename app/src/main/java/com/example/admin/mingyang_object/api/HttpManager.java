@@ -493,7 +493,7 @@ public class HttpManager {
         if (value.equals("")) {
             return "{'appid':'" + Constants.GREASECARD_APPID + "','objectname':'" + Constants.GREASECARD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
         }
-        return "{'appid':'" + Constants.GREASECARD_APPID + "','objectname':'" + Constants.GREASECARD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PRONUM':'" + value + "','CREATEBY':'" + value + "'}}";
+        return "{'appid':'" + Constants.GREASECARD_APPID + "','objectname':'" + Constants.GREASECARD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PRONUM':'" + value + "','LICENSENUM':'" + value + "'}}";
     }
     /**
      * 设置选择车辆接口

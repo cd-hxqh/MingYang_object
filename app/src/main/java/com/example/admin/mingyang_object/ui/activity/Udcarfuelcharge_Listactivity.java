@@ -277,7 +277,6 @@ public class Udcarfuelcharge_Listactivity extends BaseActivity implements SwipeR
         getData(searchText);
     }
 
-
     private void showPopupWindow(View view) {
 
         View contentView = LayoutInflater.from(Udcarfuelcharge_Listactivity.this).inflate(

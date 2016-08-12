@@ -36,6 +36,16 @@ public class Udcarfuelcharge extends Entity implements Serializable {
     private String RESPONSID; //责任人ID
     private String RESPNAME; //责任人名称
     private String COMISORNO; //是否提交
+    private String PRONUM;//项目编号
+    public String getPRONUM() {
+        return PRONUM;
+    }
+
+    public void setPRONUM(String PRONUM) {
+        this.PRONUM = PRONUM;
+    }
+
+
 
 
     public String getUDCARFUELCHARGEID() {
