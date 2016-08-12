@@ -24,6 +24,7 @@ import com.example.admin.mingyang_object.model.UdprorunlogLine1;
 import com.example.admin.mingyang_object.model.UdprorunlogLine2;
 import com.example.admin.mingyang_object.model.UdprorunlogLine3;
 import com.example.admin.mingyang_object.model.UdprorunlogLine4;
+import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line1Activity;
 import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line2Activity;
@@ -64,7 +65,19 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     /**
      * 界面信息*
      */
-
+    private TextView lognum;//运行日志编号
+    private TextView description;//描述
+    private TextView branch;//中心编号
+    private TextView branchdesc;//中心描述
+    private TextView pronum;//项目编号
+    private TextView prodesc;//项目描述
+    private TextView year;//年
+    private TextView month;//月
+    private TextView prohead;//负责人
+    private TextView name1;//负责人描述
+    private TextView creater;//录入人编号
+    private TextView createname;//录入人描述
+    private TextView createtime;//录入时间
 
     private Button cancel;
     private Button save;
@@ -73,24 +86,14 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
 
-    private Udprorunlog udprorunlog;
+    private Udrunlogr udrunlogr;
 
     private PopupWindow popupWindow;
 
     /**
-     * 土建*
+     * 工作日志活动子表*
      */
-    private LinearLayout tujianLinearLayout;
-    /**
-     * 吊装*
-     */
-    private LinearLayout diaozhuangLinearLayout;
-    /**
-     * 工作日志*
-     */
-    private LinearLayout gzrzLinearLayout;
-    /**工装管理**/
-    private LinearLayout gzglLinearLayout;
+    private LinearLayout udrunlinerLinearLayout;
 
 
     @Override
@@ -103,7 +106,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     }
 
     private void geiIntentData() {
-        udprorunlog = (Udprorunlog) getIntent().getSerializableExtra("udprorunlog");
+        udrunlogr = (Udrunlogr) getIntent().getSerializableExtra("udrunlogr");
     }
 
     @Override
@@ -112,22 +115,49 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
+        lognum = (TextView) findViewById(R.id.udrunlogr_lognum);
+        description = (TextView) findViewById(R.id.udrunlogr_description);
+        branch = (TextView) findViewById(R.id.udrunlogr_branch);
+        branchdesc = (TextView) findViewById(R.id.udrunlogr_branchdesc);
+        pronum = (TextView) findViewById(R.id.udrunlogr_pronum);
+        prodesc = (TextView) findViewById(R.id.udrunlogr_prodesc);
+        year = (TextView) findViewById(R.id.udrunlogr_year);
+        month = (TextView) findViewById(R.id.udrunlogr_month);
+        prohead = (TextView) findViewById(R.id.udrunlogr_prohead);
+        name1 = (TextView) findViewById(R.id.udrunlogr_name1);
+        creater = (TextView) findViewById(R.id.udrunlogr_creater);
+        createname = (TextView) findViewById(R.id.udrunlogr_createname);
+        createtime = (TextView) findViewById(R.id.udrunlogr_createtime);
 
         cancel = (Button) findViewById(R.id.work_cancel);
         save = (Button) findViewById(R.id.work_save);
 
-        if (udprorunlog != null) {
+        if (udrunlogr != null) {
+            lognum.setText(udrunlogr.LOGNUM);
+            description.setText(udrunlogr.DESCRIPTION);
+            branch.setText(udrunlogr.BRANCH);
+            branchdesc.setText(udrunlogr.BRANCHDESC);
+            pronum.setText(udrunlogr.PRONUM);
+            prodesc.setText(udrunlogr.PRODESC);
+            year.setText(udrunlogr.YEAR);
+            month.setText(udrunlogr.MONTH);
+            prohead.setText(udrunlogr.PROHEAD);
+            name1.setText(udrunlogr.NAME1);
+            creater.setText(udrunlogr.CREATER);
+            createname.setText(udrunlogr.CREATENAME);
+            createtime.setText(udrunlogr.CREATETIME);
         }
     }
 
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        titleTextView.setText(getString(R.string.udprorunlog_detail_title));
+        titleTextView.setText(getString(R.string.udrunlogr_detail_title));
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
+        prohead.setOnClickListener(new LayoutOnClickListener(1,Constants.PERSONCODE));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +189,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     private void showPopupWindow(View view) {
 
         View contentView = LayoutInflater.from(Udrunlogr_DetailActivity.this).inflate(
-                R.layout.logpopup_window, null);
+                R.layout.udrunlogr_window, null);
 
 
         popupWindow = new PopupWindow(contentView,
@@ -180,15 +210,16 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
                 R.mipmap.popup_background_mtrl_mult));
 
         popupWindow.showAsDropDown(view);
-        tujianLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline1_text_id);
-        diaozhuangLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline2_text_id);
-        gzrzLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline_text_id);
-        gzglLinearLayout = (LinearLayout) contentView.findViewById(R.id.udprorunlogline4_text_id);
-
-
-
-
+        udrunlinerLinearLayout = (LinearLayout) contentView.findViewById(R.id.udrunliner_text_id);
+        udrunlinerLinearLayout.setOnClickListener(udrunlinerOnClickListener);
     }
+
+    private View.OnClickListener udrunlinerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
 
 
     private class LayoutOnClickListener implements View.OnClickListener {
@@ -254,7 +285,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
      */
     private void submitDataInfo() {
         final NormalDialog dialog = new NormalDialog(Udrunlogr_DetailActivity.this);
-        dialog.content("确定修改日报吗?")//
+        dialog.content("确定修改运行记录吗?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -277,8 +308,10 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
                 });
     }
 
-    private Udprorunlog getUdprorunlog() {
-        return udprorunlog;
+    private Udrunlogr getUdprorunlog() {
+        Udrunlogr udrunlogr = this.udrunlogr;
+        udrunlogr.PROHEAD = prohead.getText().toString();
+        return udrunlogr;
     }
 
     private boolean isOK(){
@@ -319,7 +352,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-//        updataInfo = JsonUtils.UdprorunlogToJson(getUdprorunlog(), getUdprorunlogLine1(),getUdprorunlogLine2(),getUdprorunlogLine3(),getUdprorunlogLine4());
+        updataInfo = JsonUtils.UdrunlogrToJson(getUdprorunlog(), getUdprorunlogLine1());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -328,7 +361,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult reviseresult = AndroidClientService.UpdateWO(Udrunlogr_DetailActivity.this,finalUpdataInfo,
-                        "UDPRORUNLOG", "PRORUNLOGNUM", udprorunlog.PRORUNLOGNUM, Constants.WORK_URL);
+                        "UDRUNLOR", "LOGNUM", udrunlogr.getLOGNUM(), Constants.WORK_URL);
                 return reviseresult;
             }
 
@@ -336,9 +369,9 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
                 if (workResult.errorMsg == null) {
-                    Toast.makeText(Udrunlogr_DetailActivity.this, "修改日报失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Udrunlogr_DetailActivity.this, "修改运行记录失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Udrunlogr_DetailActivity.this, "修改日报成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Udrunlogr_DetailActivity.this, "修改运行记录成功", Toast.LENGTH_SHORT).show();
                     setResult(100);
                     finish();
                 } else {
@@ -358,22 +391,8 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
             switch (requestCode) {
                 case 1:
                     option = (Option) data.getSerializableExtra("option");
-//                    pronumText.setText(option.getName());
-//                    prdescText.setText(option.getDesc());
-//                    pronumDesc = option.getName() + option.getDesc();
-//                    branchText.setText(option.getValue1());
-//                    udprorescText.setText(option.getValue4());
-//                    contractsText.setText(option.getValue4());
-//                    udprorunlog.CONTRACTS = option.getValue2();
-//                    udprorunlog.UDPRORESC = option.getValue4();
-//                    udprorunlog.RESPONSID = option.getValue2();
-//                    prostageText.setText(option.getValue3());
-//                    if (!monthText.getText().equals("")&&!yearText.getText().equals("")) {
-//                        descriptionText.setText(yearText.getText().toString() + "年" + monthText.getText().toString()
-//                                + "月" + pronumDesc);
-//                    }else {
-//                        descriptionText.setText(pronumDesc);
-//                    }
+                    prohead.setText(option.getName());
+                    name1.setText(option.getDesc());
                     break;
                 case 2:
                     option = (Option) data.getSerializableExtra("option");

@@ -232,7 +232,7 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
         udrunlogrAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(Udrunlogr_ListActivity.this, Udinspo_DetailActivity.class);
+                Intent intent = new Intent(Udrunlogr_ListActivity.this, Udrunlogr_DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("udrunlogr", items.get(position));
                 intent.putExtras(bundle);
@@ -249,7 +249,7 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
         udrunlogrAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(Udrunlogr_ListActivity.this, Udinspo_DetailActivity.class);
+                Intent intent = new Intent(Udrunlogr_ListActivity.this, Udrunlogr_DetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("udrunlogr", items.get(position));
                 intent.putExtras(bundle);

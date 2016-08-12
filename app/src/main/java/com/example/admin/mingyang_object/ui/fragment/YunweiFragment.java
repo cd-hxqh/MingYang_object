@@ -62,6 +62,7 @@ public class YunweiFragment extends BaseFragment {
      * 设置跳转监听
      */
     private void setlistener() {
+//        udrunlogrText.setVisibility(View.INVISIBLE);
         udreportText.setOnClickListener(udreportTextOnClickListener);
         udinspoText.setOnClickListener(udinspoTextOnClickListener);
         udrunlogrText.setOnClickListener(udrunlogrTextOnClickListener);

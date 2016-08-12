@@ -280,7 +280,11 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udrunlogr_ListActivity"
-            android:label="@string/udinspo_text" />
+            android:label="@string/udrunlogr_text" />
+        <activity
+            android:name=".ui.activity.Udrunlogr_DetailActivity"
+            android:label="@string/udrunlogr_detail_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Listactivity"
             android:label="@string/udcardrivelog_text" />

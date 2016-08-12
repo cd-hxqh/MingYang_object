@@ -2078,6 +2078,81 @@ public class JsonUtils<E> {
     }
 
     /**
+     * 封装项目日报数据
+     *
+     * @return
+     */
+    public static String UdrunlogrToJson(Udrunlogr udprorunlog, ArrayList<UdprorunlogLine1> udprorunlogLine1s) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udprorunlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    if (!name.equals("isnew")) {
+                        getOrSet = udprorunlog.getClass().getMethod("get" + name);
+                        Object value = null;
+                        value = getOrSet.invoke(udprorunlog);
+                        if (value != null && !name.equals("BRANCH")) {
+                            jsonObject.put(name, value + "");
+                        }
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            if (udprorunlogLine1s != null && udprorunlogLine1s.size() != 0) {
+                object.put("UDRUNLINER", "");
+                JSONArray udprorunlogline1Array = new JSONArray();
+                JSONObject udprorunlogline1Obj;
+                for (int i = 0; i < udprorunlogLine1s.size(); i++) {
+                    udprorunlogline1Obj = new JSONObject();
+                    Field[] field1 = udprorunlogLine1s.get(i).getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                    for (int j = 0; j < field1.length; j++) {
+                        field1[j].setAccessible(true);
+                        String name = field1[j].getName();//获取属性的名字
+                        Method getOrSet = null;
+                        try {
+                            getOrSet = udprorunlogLine1s.get(i).getClass().getMethod("get" + name);
+                            Object value = null;
+                            value = getOrSet.invoke(udprorunlogLine1s.get(i));
+                            if (value != null) {
+                                udprorunlogline1Obj.put(name, value + "");
+                            }
+                        } catch (NoSuchMethodException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (udprorunlogline1Obj.get("TYPE").equals("add") && udprorunlogline1Obj.has("UDRUNLINERID") && udprorunlogline1Obj.get("UDRUNLINERID").equals("0")) {
+                        udprorunlogline1Obj.remove("UDRUNLINERID");
+                    }
+                    udprorunlogline1Array.put(udprorunlogline1Obj);
+                }
+                jsonObject.put("UDRUNLINER", udprorunlogline1Array);
+            }
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+
+    /**
      * 封装库存盘点数据
      *
      * @return

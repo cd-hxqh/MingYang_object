@@ -566,6 +566,7 @@
     <string name="udinsproject_details_text">巡检项目详情</string>
 
     <!--运行记录-->
+    <string name="udrunlogr_detail_title">运行记录详情</string>
     <string name="udrunlogr_lognum">运行日志编号:</string>
     <string name="udrunlogr_description">描述:</string>
     <string name="udrunlogr_branch">中心编号:</string>
@@ -579,6 +580,7 @@
     <string name="udrunlogr_creater">录入人编号:</string>
     <string name="udrunlogr_createname">录入人描述:</string>
     <string name="udrunlogr_createtime">录入时间:</string>
+    <string name="udrunliner_text">工作日志活动</string>
 
     <!--行驶记录-->
     <string name="licensenum_text">车牌号:</string>
