@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -19,20 +21,18 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
-import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine1;
-import com.example.admin.mingyang_object.model.UdprorunlogLine2;
-import com.example.admin.mingyang_object.model.UdprorunlogLine3;
-import com.example.admin.mingyang_object.model.UdprorunlogLine4;
+import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.Udrunliner;
 import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.model.WebResult;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line1Activity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line2Activity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line3Activity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line4Activity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.GetDateAndTime;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
@@ -41,12 +41,11 @@ import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
 
-
 /**
- * 运行记录详情
+ * Created by think on 2016/8/15.
+ * 运行记录新增页面
  */
-public class Udrunlogr_DetailActivity extends BaseActivity {
-    private static String TAG = "Udrunlogr_DetailActivity";
+public class Udrunlogr_AddNewActivity extends BaseActivity {
 
     /**
      * 返回按钮
@@ -57,6 +56,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
      */
     private TextView titleTextView;
 
+
     /**
      * 菜单
      */
@@ -66,6 +66,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     /**
      * 界面信息*
      */
+    private LinearLayout udrunlogrlayout;
     private TextView lognum;//运行日志编号
     private TextView description;//描述
     private TextView branch;//中心编号
@@ -80,15 +81,14 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     private TextView createname;//录入人描述
     private TextView createtime;//录入时间
 
-    private Button cancel;
-    private Button save;
+    private Button cancel;//取消
+    private Button save;//保存
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
 
     private Udrunlogr udrunlogr;
-    private ArrayList<Udrunliner> udrunliners = new ArrayList<>();
 
     private PopupWindow popupWindow;
 
@@ -97,18 +97,15 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
      */
     private LinearLayout udrunlinerLinearLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_udrunlogr_details);
-        geiIntentData();
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
         findViewById();
         initView();
-    }
-
-    private void geiIntentData() {
-        udrunlogr = (Udrunlogr) getIntent().getSerializableExtra("udrunlogr");
     }
 
     @Override
@@ -117,6 +114,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
+        udrunlogrlayout = (LinearLayout) findViewById(R.id.udrunlogr_layout);
         lognum = (TextView) findViewById(R.id.udrunlogr_lognum);
         description = (TextView) findViewById(R.id.udrunlogr_description);
         branch = (TextView) findViewById(R.id.udrunlogr_branch);
@@ -133,33 +131,26 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 
         cancel = (Button) findViewById(R.id.work_cancel);
         save = (Button) findViewById(R.id.work_save);
-
-        if (udrunlogr != null) {
-            lognum.setText(udrunlogr.LOGNUM);
-            description.setText(udrunlogr.DESCRIPTION);
-            branch.setText(udrunlogr.BRANCH);
-            branchdesc.setText(udrunlogr.BRANCHDESC);
-            pronum.setText(udrunlogr.PRONUM);
-            prodesc.setText(udrunlogr.PRODESC);
-            year.setText(udrunlogr.YEAR);
-            month.setText(udrunlogr.MONTH);
-            prohead.setText(udrunlogr.PROHEAD);
-            name1.setText(udrunlogr.NAME1);
-            creater.setText(udrunlogr.CREATER);
-            createname.setText(udrunlogr.CREATENAME);
-            createtime.setText(udrunlogr.CREATETIME);
-        }
     }
 
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        titleTextView.setText(getString(R.string.udrunlogr_detail_title));
+        titleTextView.setText("新增运行记录");
+
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+        udrunlogrlayout.setVisibility(View.GONE);
 
-        prohead.setOnClickListener(new LayoutOnClickListener(1,Constants.PERSONCODE));
+        creater.setText(AccountUtils.getpersonId(Udrunlogr_AddNewActivity.this));
+        createname.setText(AccountUtils.getdisplayName(Udrunlogr_AddNewActivity.this));
+        createtime.setText(GetDateAndTime.GetDateTime());
+
+        prohead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        pronum.setOnClickListener(new LayoutOnClickListener(2, Constants.UDPROCODE));
+        year.setOnClickListener(new NormalListDialogOnClickListener(year));
+        month.setOnClickListener(new NormalListDialogOnClickListener(month));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +172,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
             finish();
         }
     };
+
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -190,7 +182,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 
     private void showPopupWindow(View view) {
 
-        View contentView = LayoutInflater.from(Udrunlogr_DetailActivity.this).inflate(
+        View contentView = LayoutInflater.from(Udrunlogr_AddNewActivity.this).inflate(
                 R.layout.udrunlogr_window, null);
 
 
@@ -219,14 +211,9 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     private View.OnClickListener udrunlinerOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Udrunlogr_DetailActivity.this, UdrunlinerListActivity.class);
-            intent.putExtra("Udrunlogr", getUdprorunlog());
-            intent.putExtra("UdrunlinerList", udrunliners);
-            startActivityForResult(intent, 1000);
-            popupWindow.dismiss();
+
         }
     };
-
 
     private class LayoutOnClickListener implements View.OnClickListener {
         int requestCode;
@@ -239,7 +226,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Udrunlogr_DetailActivity.this, OptionActivity.class);
+            Intent intent = new Intent(Udrunlogr_AddNewActivity.this, OptionActivity.class);
             intent.putExtra("optiontype", optiontype);
             startActivityForResult(intent, requestCode);
         }
@@ -261,15 +248,15 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     private void NormalListDialog(final TextView textView) {
         String[] types = new String[0];
         mMenuItems = new ArrayList<>();
-//        if (textView == yearText) {
-//            types = getResources().getStringArray(R.array.year_array);
-//        } else if (textView == monthText) {
-//            types = getResources().getStringArray(R.array.month_array);
-//        }
+        if (textView == year) {
+            types = getResources().getStringArray(R.array.year_array);
+        } else if (textView == month) {
+            types = getResources().getStringArray(R.array.month_array);
+        }
         for (int i = 0; i < types.length; i++) {
             mMenuItems.add(new DialogMenuItem(types[i], 0));
         }
-        final NormalListDialog dialog = new NormalListDialog(Udrunlogr_DetailActivity.this, mMenuItems);
+        final NormalListDialog dialog = new NormalListDialog(Udrunlogr_AddNewActivity.this, mMenuItems);
         dialog.title("请选择")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
@@ -277,21 +264,34 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         dialog.setOnOperItemClickL(new OnOperItemClickL() {
             @Override
             public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 textView.setText(mMenuItems.get(position).mOperName);
-//                if (!yearText.getText().toString().equals("") && !monthText.getText().equals("")) {
-//                    descriptionText.setText(yearText.getText().toString() + "年" + monthText.getText() + "月" + pronumDesc);
-//                }
+
                 dialog.dismiss();
             }
         });
+    }
+
+    //时间选择监听
+    private class DateTimeOnClickListener implements View.OnClickListener {
+        TextView textView;
+
+        private DateTimeOnClickListener(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View view) {
+            new DateTimeSelect(Udrunlogr_AddNewActivity.this, textView).showDialog();
+        }
     }
 
     /**
      * 提交数据*
      */
     private void submitDataInfo() {
-        final NormalDialog dialog = new NormalDialog(Udrunlogr_DetailActivity.this);
-        dialog.content("确定修改运行记录吗?")//
+        final NormalDialog dialog = new NormalDialog(Udrunlogr_AddNewActivity.this);
+        dialog.content("确定新增运行记录吗?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -305,49 +305,35 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
                         if (isOK()) {
-                            showProgressDialog("数据提交中...");
                             startAsyncTask();
-                            dialog.dismiss();
+                        } else {
+                            closeProgressDialog();
                         }
+                        dialog.dismiss();
                     }
                 });
     }
 
-    private Udrunlogr getUdprorunlog() {
-        Udrunlogr udrunlogr = this.udrunlogr;
-        udrunlogr.PROHEAD = prohead.getText().toString();
-        return udrunlogr;
-    }
-
-    private boolean isOK(){
-        if (pronum.getText().toString().equals("")){
-            Toast.makeText(Udrunlogr_DetailActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+    private boolean isOK() {
+        if (pronum.getText().toString().equals("")) {
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (year.getText().toString().equals("")){
-            Toast.makeText(Udrunlogr_DetailActivity.this, "请输入年号", Toast.LENGTH_SHORT).show();
+        if (year.getText().toString().equals("")) {
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "请输入年号", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (month.getText().toString().equals("")){
-            Toast.makeText(Udrunlogr_DetailActivity.this, "请输入月份", Toast.LENGTH_SHORT).show();
+        if (month.getText().toString().equals("")) {
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "请输入月份", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (prohead.getText().toString().equals("")){
-            Toast.makeText(Udrunlogr_DetailActivity.this, "请输入负责人", Toast.LENGTH_SHORT).show();
+        if (prohead.getText().toString().equals("")) {
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "请输入负责人", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
-    }
-
-    private ArrayList<Udrunliner> getUdprorunlogLine1() {
-        ArrayList<Udrunliner> udprorunlogLine1s = new ArrayList<>();
-//        for (int i = 0; i < UdprorunlogLine1List.size(); i++) {
-//            if (UdprorunlogLine1List.get(i).TYPE != null) {
-//                udprorunlogLine1s.add(UdprorunlogLine1List.get(i));
-//            }
-//        }
-        return udprorunlogLine1s;
     }
 
 
@@ -361,7 +347,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 //        } else {
         String updataInfo = null;
 //            if (workOrder.status.equals(Constants.WAIT_APPROVAL)) {
-        updataInfo = JsonUtils.UdrunlogrToJson(getUdprorunlog(), getUdprorunlogLine1());
+        updataInfo = JsonUtils.UdrunlogrToJson(getUdprorunlog(), getUdrunliner());
 //            } else if (workOrder.status.equals(Constants.APPROVALED)) {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
@@ -369,28 +355,52 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Udrunlogr_DetailActivity.this,finalUpdataInfo,
-                        "UDRUNLOGR", "LOGNUM", udrunlogr.getLOGNUM(), Constants.WORK_URL);
+                WebResult reviseresult = AndroidClientService.InsertWO(Udrunlogr_AddNewActivity.this,
+                        finalUpdataInfo, "UDRUNLOGR", "LOGNUM", AccountUtils.getpersonId(Udrunlogr_AddNewActivity.this), Constants.WORK_URL);
                 return reviseresult;
             }
 
             @Override
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
-                    Toast.makeText(Udrunlogr_DetailActivity.this, "修改运行记录失败", Toast.LENGTH_SHORT).show();
+                if (workResult == null || workResult.errorMsg == null) {
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, "新增运行记录失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
-                    Toast.makeText(Udrunlogr_DetailActivity.this, "修改运行记录成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, "运行记录" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
                     setResult(100);
                     finish();
                 } else {
-                    Toast.makeText(Udrunlogr_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
                 }
                 closeProgressDialog();
             }
+
         }.execute();
 ////        }
+    }
 
+    private Udrunlogr getUdprorunlog() {
+        Udrunlogr udrunlogr = new Udrunlogr();
+        udrunlogr.setPRONUM(pronum.getText().toString());
+        udrunlogr.setMONTH(month.getText().toString());
+        udrunlogr.setYEAR(year.getText().toString());
+        udrunlogr.setPROHEAD(prohead.getText().toString());
+        udrunlogr.setCREATER(creater.getText().toString());
+        udrunlogr.setCREATETIME(createtime.getText().toString());
+        udrunlogr.setDESCRIPTION(createtime.getText().toString() + createname.getText().toString()
+                + "_" + prodesc.getText().toString() + year.getText().toString() + "年" +
+                month.getText().toString() + "月运行记录");
+        return udrunlogr;
+    }
+
+    private ArrayList<Udrunliner> getUdrunliner() {
+        ArrayList<Udrunliner> udprorunlogLine1s = new ArrayList<>();
+//        for (int i = 0; i < UdprorunlogLine1List.size(); i++) {
+//            if (UdprorunlogLine1List.get(i).TYPE != null) {
+//                udprorunlogLine1s.add(UdprorunlogLine1List.get(i));
+//            }
+//        }
+        return udprorunlogLine1s;
     }
 
     @Override
@@ -405,9 +415,12 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
                     break;
                 case 2:
                     option = (Option) data.getSerializableExtra("option");
-                    break;
-                case 1000:
-                    udrunliners = (ArrayList<Udrunliner>) data.getSerializableExtra("UdrunlinerList");
+                    pronum.setText(option.getName());
+                    prodesc.setText(option.getDesc());
+                    branch.setText(option.getValue1());
+                    branchdesc.setText(option.getValue6());
+                    prohead.setText(option.getValue2());
+                    name1.setText(option.getValue4());
                     break;
             }
         }

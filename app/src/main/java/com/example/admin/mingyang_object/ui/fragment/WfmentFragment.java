@@ -220,11 +220,13 @@ public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.O
 
                         if (item != null || item.size() != 0) {
                             if (page == 1) {
+                                items = new ArrayList<Wfassignment>();
                                 initAdapter(new ArrayList<Wfassignment>());
                             }
                             for (int i = 0; i < item.size(); i++) {
                                 items.add(item.get(i));
                             }
+                            addData(item);
                         }
                         nodatalayout.setVisibility(View.GONE);
 
@@ -251,6 +253,23 @@ public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.O
     private void initAdapter(final List<Wfassignment> list) {
         wfmListAdapter = new WfmListAdapter(getActivity(), R.layout.list_item, list);
         recyclerView.setAdapter(wfmListAdapter);
+        wfmListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), Wfm_Details_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("wfassignment", items.get(position));
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    /**
+     * 添加数据*
+     */
+    private void addData(final List<Wfassignment> list) {
+        wfmListAdapter.addData(list);
         wfmListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

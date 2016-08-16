@@ -112,12 +112,14 @@
 
 
     <string name="title_activity_wfm"> 流程审批</string>
-    <string name="wfm_ownertable_title">应用程序名:</string>
+    <string name="wfm_app_title">流程审批名:</string>
+    <string name="wfm_ownertable_title">表名:</string>
     <string name="wfm_assigncode_title">任务分配人:</string>
+    <string name="wfm_udassign02_title">流程发起人:</string>
     <string name="wfm_duedate_title">到期日期:</string>
     <string name="wfm_processname_title">过程名称:</string>
     <string name="wfm_roleid_title">任务角色:</string>
-    <string name="wfm_startdate_title">当前日期:</string>
+    <string name="wfm_startdate_title">流程发起日期:</string>
     <string name="wfm_approve_text">审批</string>
     <string name="wfm_detail_title">流程审批详情</string>
     <string name="desc_text">描述:</string>
@@ -581,6 +583,7 @@
     <string name="udrunlogr_createname">录入人描述:</string>
     <string name="udrunlogr_createtime">录入时间:</string>
     <string name="udrunliner_text">工作日志活动</string>
+    <string name="udrunliner_list">故障日志活动列表</string>
 
     <!--行驶记录-->
     <string name="licensenum_text">车牌号:</string>

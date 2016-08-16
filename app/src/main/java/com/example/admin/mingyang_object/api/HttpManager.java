@@ -406,13 +406,22 @@ public class HttpManager {
     }
 
     /**
-     * 设置故障提报单的接口
+     * 设置运行记录的接口
      */
     public static String getudrunlogrurl(String value, int curpage, int showcount) {
         if (value.equals("")) {
             return "{'appid':'" + Constants.UDRUNLOGR_APPID + "','objectname':'" + Constants.UDRUNLOGR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'LOGNUM DESC'}";
         }
         return "{'appid':'" + Constants.UDRUNLOGR_APPID + "','objectname':'" + Constants.UDRUNLOGR_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'LOGNUM DESC','sinorsearch':{'LOGNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+
+    /**
+     * 设置运行记录子表接口*
+     */
+    public static String getUdrunlinerUrl(String lognum, int curpage, int showcount) {
+        return "{'appid':'" + Constants.UDRUNLINER_APPID + "','objectname':'" + Constants.UDRUNLINER_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
+                ",'condition':{'LOGNUM':'" + lognum + "'}" +
+                "}";
     }
 
 

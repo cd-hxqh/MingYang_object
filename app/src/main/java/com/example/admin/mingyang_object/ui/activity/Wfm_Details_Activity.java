@@ -45,13 +45,13 @@ public class Wfm_Details_Activity extends BaseActivity {
     /**
      * 界面信息显示*
      */
-    private TextView ownertableText; //应用程序名
+    private TextView appText; //应用程序名
     private TextView descriptionText; //描述
-    private TextView assigncodeText; //任务分配人
-    private TextView duedateText; //到期日期
-    private TextView processnameText; //过程名称
-    private TextView roleidText; //任务角色
-    private TextView startdateText; //当前日期
+    private TextView udassign02Text; //任务分配人
+//    private TextView duedateText; //到期日期
+//    private TextView processnameText; //过程名称
+//    private TextView roleidText; //任务角色
+    private TextView startdateText; //流程发起日期
 
     private Button approve;
 
@@ -81,12 +81,12 @@ public class Wfm_Details_Activity extends BaseActivity {
         titleView = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
 
-        ownertableText = (TextView) findViewById(R.id.wfm_ownertable_text);
+        appText = (TextView) findViewById(R.id.wfm_app_text);
         descriptionText = (TextView) findViewById(R.id.wfm_description_text);
-        assigncodeText = (TextView) findViewById(R.id.wfm_assigncode_text);
-        duedateText = (TextView) findViewById(R.id.wfm_duedate_text);
-        processnameText = (TextView) findViewById(R.id.wfm_processname_text);
-        roleidText = (TextView) findViewById(R.id.wfm_roleid_text);
+        udassign02Text = (TextView) findViewById(R.id.wfm_udassign02_text);
+//        duedateText = (TextView) findViewById(R.id.wfm_duedate_text);
+//        processnameText = (TextView) findViewById(R.id.wfm_processname_text);
+//        roleidText = (TextView) findViewById(R.id.wfm_roleid_text);
         startdateText = (TextView) findViewById(R.id.wfm_startdate_text);
         approve = (Button) findViewById(R.id.wfm_approve);
     }
@@ -98,12 +98,12 @@ public class Wfm_Details_Activity extends BaseActivity {
 
 
         if (wfm != null) {
-            ownertableText.setText(wfm.getOWNERTABLE() == null ? "" : wfm.getOWNERTABLE());
+            appText.setText(wfm.getUDASSIGN01() == null ? "" : wfm.getUDASSIGN01());
             descriptionText.setText(wfm.getDESCRIPTION() == null ? "" : wfm.getDESCRIPTION());
-            assigncodeText.setText(wfm.getASSIGNCODE() == null ? "" : wfm.getASSIGNCODE());
-            duedateText.setText(wfm.getDUEDATE() == null ? "" : wfm.getDUEDATE());
-            processnameText.setText(wfm.getPROCESSNAME() == null ? "" : wfm.getPROCESSNAME());
-            roleidText.setText(wfm.getROLEID() == null ? "" : wfm.getROLEID());
+            udassign02Text.setText(wfm.getUDASSIGN02() == null ? "" : wfm.getUDASSIGN02());
+//            duedateText.setText(wfm.getDUEDATE() == null ? "" : wfm.getDUEDATE());
+//            processnameText.setText(wfm.getPROCESSNAME() == null ? "" : wfm.getPROCESSNAME());
+//            roleidText.setText(wfm.getROLEID() == null ? "" : wfm.getROLEID());
             startdateText.setText(wfm.getSTARTDATE() == null ? "" : wfm.getSTARTDATE());
         }
         mBasIn = new BounceTopEnter();

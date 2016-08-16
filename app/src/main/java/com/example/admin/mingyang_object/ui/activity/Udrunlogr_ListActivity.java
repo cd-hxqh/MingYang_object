@@ -59,6 +59,8 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
      */
     private ImageView backImageView;
 
+    private ImageView addimg;
+
     LinearLayoutManager layoutManager;
     public RecyclerView recyclerView;
     private LinearLayout nodatalayout;
@@ -77,7 +79,7 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_udinspolist);
+        setContentView(R.layout.activity_worklist);
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
@@ -90,6 +92,7 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
     protected void findViewById() {
         titlename = (TextView) findViewById(R.id.title_name);
         backImageView = (ImageView) findViewById(R.id.title_back_id);
+        addimg = (ImageView) findViewById(R.id.title_add);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
         refresh_layout = (SwipeRefreshLayout) this.findViewById(R.id.swipe_container);
@@ -102,6 +105,14 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
         setSearchEdit();
         titlename.setText(R.string.udrunlogr_text);
         backImageView.setOnClickListener(backImageViewOnClickListener);
+        addimg.setVisibility(View.VISIBLE);
+        addimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Udrunlogr_ListActivity.this,Udrunlogr_AddNewActivity.class);
+                startActivityForResult(intent,0);
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);

@@ -11,15 +11,17 @@ public class Wfassignment implements Serializable {
 
 
     private String APP;//应用程序的名称
+    private String UDASSIGN01;//应用程序中文名称
     private String ASSIGNCODE;//任务分配人
+    private String UDASSIGN02;//流程发起人
     private String DESCRIPTION;//描述
     private String DUEDATE;//到期日期
     private String ORIGPERSON;//进行委派之前的任务分配的原始人员
     private String OWNERID;//受控制记录的唯一标识  //keyValue
     private String OWNERTABLE;//表名
-    private String PROCESSNAME;//过程名称
-    private String ROLEID;//任务角色
-    private String STARTDATE;//当前日期
+    private String PROCESSNAME;//过程名称  不显示
+    private String ROLEID;//任务角色  不显示
+    private String STARTDATE;//流程发起日期
     private String WFASSIGNMENTID;//编号
 
 
@@ -109,5 +111,21 @@ public class Wfassignment implements Serializable {
 
     public void setWFASSIGNMENTID(String WFASSIGNMENTID) {
         this.WFASSIGNMENTID = WFASSIGNMENTID;
+    }
+
+    public String getUDASSIGN01() {
+        return UDASSIGN01;
+    }
+
+    public void setUDASSIGN01(String UDASSIGN01) {
+        this.UDASSIGN01 = UDASSIGN01;
+    }
+
+    public String getUDASSIGN02() {
+        return UDASSIGN02;
+    }
+
+    public void setUDASSIGN02(String UDASSIGN02) {
+        this.UDASSIGN02 = UDASSIGN02;
     }
 }

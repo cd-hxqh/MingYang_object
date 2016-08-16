@@ -32,6 +32,7 @@ import com.example.admin.mingyang_object.model.UdprorunlogLine3;
 import com.example.admin.mingyang_object.model.UdprorunlogLine4;
 import com.example.admin.mingyang_object.model.Udqtyform;
 import com.example.admin.mingyang_object.model.Udreport;
+import com.example.admin.mingyang_object.model.Udrunliner;
 import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
@@ -1355,6 +1356,52 @@ public class JsonUtils<E> {
     }
 
     /**
+     * 工作日报子表信息
+     */
+    public static ArrayList<Udrunliner> parsingUdrunliner(Context ctx, String data, String prorunlognum) {
+        Log.i(TAG, "Udrunliner data=" + data);
+        ArrayList<Udrunliner> list = null;
+        Udrunliner udrunliner = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Udrunliner>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                udrunliner = new Udrunliner();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = udrunliner.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.get(name) != null) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udrunliner.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udrunliner);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udrunliner.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udrunliner, jsonObject.get(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+//                udprorunlogLine3.PRORUNLOGNUM = prorunlognum;
+                udrunliner.isUpload = true;
+                list.add(udrunliner);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
      * 解析人员信息
      */
     public static ArrayList<Person> parsingPerson(String data) {
@@ -2082,7 +2129,7 @@ public class JsonUtils<E> {
      *
      * @return
      */
-    public static String UdrunlogrToJson(Udrunlogr udprorunlog, ArrayList<UdprorunlogLine1> udprorunlogLine1s) {
+    public static String UdrunlogrToJson(Udrunlogr udprorunlog, ArrayList<Udrunliner> udprorunlogLine1s) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         try {

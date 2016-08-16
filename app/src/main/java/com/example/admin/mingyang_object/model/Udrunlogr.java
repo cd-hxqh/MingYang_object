@@ -22,6 +22,8 @@ public class Udrunlogr implements Serializable {
     public String CREATENAME;//录入人描述
     public String CREATETIME;//录入时间
 
+    public boolean isnew;//是否是新增运行记录
+
 
     public String getUDRUNLOGRID() {
         return UDRUNLOGRID;

@@ -286,6 +286,14 @@
             android:label="@string/udrunlogr_detail_title"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".ui.activity.Udrunlogr_AddNewActivity"
+            android:label="@string/udrunlogr_detail_title"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".ui.activity.UdrunlinerListActivity"
+            android:label="@string/udrunliner_list"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
             android:name=".ui.activity.Udcardrivelog_Listactivity"
             android:label="@string/udcardrivelog_text" />
         <activity

@@ -22,6 +22,9 @@ public class Udrunliner implements Serializable {
     public String COMPSTA;//完成情况
     public String REMARK;//备注
 
+    public String TYPE;
+    public boolean isUpload;
+
     public String getUDRUNLINERID() {
         return UDRUNLINERID;
     }
