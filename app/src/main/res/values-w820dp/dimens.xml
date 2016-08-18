@@ -14,6 +14,10 @@
     <dimen name="dimen_20">20dp</dimen>
     <dimen name="actionbar_dimen">56dp</dimen>
 
+    <dimen name="dimen_120dp">120dip</dimen>
+    <dimen name="dimen_100dp">100dip</dimen>
+    <dimen name="dimen_80dp">80dip</dimen>
+    <dimen name="dimen_60dp">60dip</dimen>
     <dimen name="dimen_40dp">40dip</dimen>
     <dimen name="dimen_5">5dp</dimen>
     <dimen name="dimen_20sp">20sp</dimen>

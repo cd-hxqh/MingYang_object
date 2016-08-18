@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.util.Log;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
@@ -126,6 +126,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         geiIntentData();
         findViewById();
         initView();
+        Log.e("项目日报","项目日报详情");
     }
 
     private void geiIntentData() {
@@ -134,6 +135,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
 
     @Override
     protected void findViewById() {
+
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
@@ -251,6 +253,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udprorunlog_Line1Activity.class);
             intent.putExtra("udprorunlog", getUdprorunlog());
             intent.putExtra("UdprorunlogLine1List", UdprorunlogLine1List);
+            Log.e("项目日报","准备跳转到土建阶段日报");
             startActivityForResult(intent, 1000);
             popupWindow.dismiss();
 
@@ -262,6 +265,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udprorunlog_Line2Activity.class);
             intent.putExtra("udprorunlog", getUdprorunlog());
             intent.putExtra("UdprorunlogLine2List", UdprorunlogLine2List);
+            Log.e("项目日报","准备跳转到吊装调试日报");
             startActivityForResult(intent, 2000);
             popupWindow.dismiss();
         }
@@ -273,6 +277,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udprorunlog_Line3Activity.class);
             intent.putExtra("udprorunlog", getUdprorunlog());
             intent.putExtra("UdprorunlogLine3List", UdprorunlogLine3List);
+            Log.e("项目日报","准备跳转到工作日报");
             startActivityForResult(intent, 3000);
             popupWindow.dismiss();
         }
@@ -283,6 +288,7 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             Intent intent = new Intent(Udprorunlog_DetailActivity.this, Udprorunlog_Line4Activity.class);
             intent.putExtra("udprorunlog", getUdprorunlog());
             intent.putExtra("UdprorunlogLine4List", UdprorunlogLine4List);
+            Log.e("项目日报","准备跳转到工装管理");
             startActivityForResult(intent, 4000);
             popupWindow.dismiss();
         }

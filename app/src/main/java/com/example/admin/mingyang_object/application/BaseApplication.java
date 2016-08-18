@@ -3,17 +3,16 @@ package com.example.admin.mingyang_object.application;
 import android.app.Application;
 import android.content.Context;
 
-
-
 /**
  * Created by think on 2015/8/11.
  */
+
 public class BaseApplication extends Application {
+
     private String username;
     private static BaseApplication mContext;
 
     private static Context context;
-
 
     private String OrderResult;
 

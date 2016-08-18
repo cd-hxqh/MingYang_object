@@ -643,6 +643,8 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlog = new Udprorunlog();
                 jsonObject = jsonArray.getJSONObject(i);
+                Log.e("项目日报","项目日报列表"+jsonObject);
+
                 Field[] field = udprorunlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);

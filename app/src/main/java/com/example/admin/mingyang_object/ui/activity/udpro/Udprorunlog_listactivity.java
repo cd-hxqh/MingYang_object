@@ -69,6 +69,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
 
         findViewById();
         initView();
+        Log.e("项目日报","项目日报列表");
     }
 
 
@@ -189,6 +190,7 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
                     getData(searchText);
                     return true;
                 }
+
                 return false;
             }
         });
