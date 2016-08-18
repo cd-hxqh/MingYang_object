@@ -141,7 +141,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-        udrunlogrlayout.setVisibility(View.GONE);
+//        udrunlogrlayout.setVisibility(View.GONE);
 
         creater.setText(AccountUtils.getpersonId(Udrunlogr_AddNewActivity.this));
         createname.setText(AccountUtils.getdisplayName(Udrunlogr_AddNewActivity.this));

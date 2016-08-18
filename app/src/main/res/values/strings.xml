@@ -583,7 +583,21 @@
     <string name="udrunlogr_createname">录入人描述:</string>
     <string name="udrunlogr_createtime">录入时间:</string>
     <string name="udrunliner_text">工作日志活动</string>
-    <string name="udrunliner_list">故障日志活动列表</string>
+    <string name="udrunliner_list">工作日志活动列表</string>
+    <string name="udrunliner_details">工作日志活动详情</string>
+    <string name="udrunliner_logdate">日期:</string>
+    <string name="udrunliner_newdesc">描述:</string>
+    <string name="udrunliner_weather">天气:</string>
+    <string name="udrunliner_tem">温度℃:</string>
+    <string name="udrunliner_windspeed">平均风速(m/s):</string>
+    <string name="udrunliner_personattnum">人员考勤编号:</string>
+    <string name="udrunliner_worknum">工作序号:</string>
+    <string name="udrunliner_workpg">工作班成员:</string>
+    <string name="udrunliner_worktype">工作性质:</string>
+    <string name="udrunliner_workcron">工作任务:</string>
+    <string name="udrunliner_compsta">完成情况:</string>
+    <string name="udrunliner_remark">备注:</string>
+
 
     <!--行驶记录-->
     <string name="licensenum_text">车牌号:</string>
