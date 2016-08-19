@@ -276,6 +276,7 @@
     <string name="work_failreport">故障汇报</string>
     <string name="work_flower">发送工作流</string>
     <string name="work_commit">图片上传</string>
+    <string name="attachment_details">图片查看</string>
 
     <!--调试工单-->
     <string name="debugwork_debugworkordernum">工单号:</string>

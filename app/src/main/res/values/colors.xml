@@ -21,5 +21,6 @@
 
     <color name="blue_color">#00529d</color> <!--蓝色-->
     <color name="light_blue_color">#48abe8</color> <!--浅蓝色-->
+    <color name="default_text_color">#48abe8</color> <!--浅蓝色-->
 
 </resources>

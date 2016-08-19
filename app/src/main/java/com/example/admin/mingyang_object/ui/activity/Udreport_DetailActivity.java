@@ -26,7 +26,6 @@ import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.Option;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udqtyform;
 import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.WebResult;

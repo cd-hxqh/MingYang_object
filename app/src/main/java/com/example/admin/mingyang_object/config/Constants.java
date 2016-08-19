@@ -17,6 +17,8 @@ public class Constants {
 //    public static final String HTTPS_API_URL = "http://121.35.242.172:7001/meaweb/services";
 
 
+
+
     /**
      * 登陆URL*
      */
@@ -242,6 +244,14 @@ public class Constants {
     public static final String UDCARMAINLOG_NAME = "UDCARMAINLOG";
 
 
+    /**附件appid**/
+    public static final String DOCLINKS_APPID = "DOCLINKS";
+    /**附件表名**/
+    public static final String DOCLINKS_NAME = "DOCLINKS";
+
+
+
+
 
 
 
@@ -319,6 +329,8 @@ public class Constants {
     //工单状态
     public static final String STATUS1 = "新建";
     public static final String STATUS2 = "进行中";
+
+
 
 
 

@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
-import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.utils.DateSelect;

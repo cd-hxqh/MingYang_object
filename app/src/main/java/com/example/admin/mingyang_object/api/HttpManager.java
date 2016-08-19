@@ -589,6 +589,22 @@ public class HttpManager {
         return "{'appid':'','objectname':'WORKORDER','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
     }
 
+
+    /**
+     * 查询附件的接口
+     */
+    public static String getDoclinks(String ownertable, String ownerid){
+        return "{'appid':'" + Constants.DOCLINKS_APPID + "','objectname':'" + Constants.DOCLINKS_NAME  + "','option':'read','condition':{'OWNERTABLE':'=" + ownertable  + "','OWNERID':'=" + ownerid+"'}}";
+    }
+
+
+
+
+
+
+
+
+
     /**
      * 使用用户名密码登录
      *

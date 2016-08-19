@@ -1,15 +1,15 @@
 package com.example.admin.mingyang_object.api;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.example.admin.mingyang_object.bean.LoginResults;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.DebugWorkOrder;
-import com.example.admin.mingyang_object.model.Entity;
+import com.example.admin.mingyang_object.model.Doclinks;
 import com.example.admin.mingyang_object.model.Failurelist;
+import com.example.admin.mingyang_object.model.GreaseCard;
 import com.example.admin.mingyang_object.model.Item;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
@@ -25,6 +25,7 @@ import com.example.admin.mingyang_object.model.Udfeedback;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.model.Udinvestp;
+import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine1;
 import com.example.admin.mingyang_object.model.UdprorunlogLine2;
@@ -38,12 +39,10 @@ import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.WebResult;
-import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.Wfassignment;
+import com.example.admin.mingyang_object.model.Woactivity;
 import com.example.admin.mingyang_object.model.WorkOrder;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Wpmaterial;
-import com.example.admin.mingyang_object.model.GreaseCard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +52,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 /**
@@ -2603,7 +2601,6 @@ public class JsonUtils<E> {
             JSONObject jsonObjectData= new JSONObject(data);
 
             JSONArray jsonArray = new JSONArray(jsonObjectData.getString("resultlist"));
-            Log.e("加油卡台账",jsonObjectData.getString("resultlist"));
             JSONObject jsonObject;
             list = new ArrayList<GreaseCard>();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -2767,6 +2764,59 @@ public class JsonUtils<E> {
         }
         return jsonObject.toString();
     }
+
+
+
+    /**
+     * 附件类*
+     */
+    public static ArrayList<Doclinks> parsingDoclinks(Context ctx, String data) {
+        Log.i(TAG,"ddddata="+data);
+        ArrayList<Doclinks> list = null;
+        Doclinks doclinks = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<Doclinks>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                doclinks = new Doclinks();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = doclinks.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = doclinks.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(doclinks);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = doclinks.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(doclinks, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(doclinks);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+
 
 
 }

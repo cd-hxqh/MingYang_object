@@ -21,15 +21,11 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
-import com.example.admin.mingyang_object.model.Wfassignment;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdstocklineAdapter;
-import com.example.admin.mingyang_object.ui.adapter.WfmListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.AccountUtils;
 
 import java.util.ArrayList;
 import java.util.List;

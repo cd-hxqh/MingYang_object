@@ -396,6 +396,12 @@
             android:name=".ui.activity.PhotoActivity"
             android:label="@string/title_activity_photo"></activity>
         <activity
+            android:name=".ui.activity.WxDemoActivity"
+            android:label="@string/title_activity_photo"></activity>
+        <activity
+            android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
+            android:theme="@style/ImagePickerThemeFullScreen"/>
+        <activity
             android:name=".ui.activity.Failurelist1Activity"
             android:label="@string/title_activity_failurelist1"></activity>
         <activity

@@ -26,7 +26,7 @@ import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
-import com.example.admin.mingyang_object.ui.activity.PhotoActivity;
+import com.example.admin.mingyang_object.ui.activity.WxDemoActivity;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
@@ -276,7 +276,7 @@ public class DebugWork_DetailsActivity extends BaseActivity {
                 Log.e("调试工单","上传图片");
 
                 popupWindow.dismiss();
-                Intent intent = new Intent(DebugWork_DetailsActivity.this, PhotoActivity.class);
+                Intent intent = new Intent(DebugWork_DetailsActivity.this, WxDemoActivity.class);
                 intent.putExtra("ownertable", "WORKORDER");
                 intent.putExtra("ownerid", workOrder.getDEBUGWORKORDERID()+"");
                 startActivityForResult(intent, 0);

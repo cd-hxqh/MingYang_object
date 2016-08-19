@@ -1,1 +1,1 @@
-include ':photopicker', ':FlycoAnimation_Lib', ':FlycoDialog_Lib', ':app', ':bDIntegrationSDK_LibProject'
+include ':FlycoAnimation_Lib', ':FlycoDialog_Lib', ':app', ':bDIntegrationSDK_LibProject', ':imagepicker'

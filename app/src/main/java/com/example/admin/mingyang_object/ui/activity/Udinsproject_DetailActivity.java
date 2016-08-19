@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 
 

@@ -42,7 +42,7 @@
         android:minWidth="1dp"
         android:padding="@dimen/dimen_5"
         android:text="全部"
-        android:textColor="@color/default_text_color"
+        android:textColor="@color/white"
         android:textSize="14sp" />
 
 </RelativeLayout>

@@ -1,47 +1,54 @@
 package com.example.admin.mingyang_object.ui.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
-import com.example.admin.mingyang_object.config.Constants;
-import com.example.admin.mingyang_object.model.WebResult;
-import com.example.admin.mingyang_object.utils.MessageUtils;
-import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
-import com.lling.photopicker.PhotoPickerActivity;
-import com.lling.photopicker.utils.ImageLoader;
-import com.lling.photopicker.utils.OtherUtils;
+import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.model.Doclinks;
+import com.example.admin.mingyang_object.ui.adapter.ImageLoadAdapter;
+import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 
-import org.kobjects.base64.Base64;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 图片选择*
  */
-public class PhotoActivity extends BaseActivity {
+public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRecyclerViewItemClickListener {
 
     private static final String TAG = "PhotoActivity";
+
+    public static final int IMAGE_ITEM_ADD = -1;
+    public static final int REQUEST_CODE_SELECT = 100;
+    public static final int REQUEST_CODE_PREVIEW = 101;
+
+
+    private ImageLoadAdapter adapter;
+    private ArrayList<ImageItem> selImageList; //当前选择的所有图片
+    private int maxImgCount = 9;               //允许选择图片最大数
+
+
+    private static final String URL_STRING = "/share/doclinks/";
+    /**
+     * 测试环境的url地址
+     **/
+    private static final String CESHI_URL = "http://qaseam.mywind.com.cn/";
+    /**
+     * 正式环境的图片URL地址
+     **/
+    private static final String ZHENGSHI_URL = "http://eam.mywind.com.cn/";
 
     private static final int PICK_PHOTO = 1;
 
@@ -57,27 +64,11 @@ public class PhotoActivity extends BaseActivity {
      * text_hint*
      */
     private TextView textView;
-    /**
-     * 提交按钮*
-     */
-    private Button submitBtn;
 
     /**
-     * 选择图片*
-     */
-    private Button chooseImageBtn;
-    /**
-     * 图片显示*
-     */
-    private GridView mGrideView;
-
-    private List<String> mResults;
-
-    private GridAdapter mAdapter;
-
-    private int mColumnWidth;
-
-    ArrayList<String> result = new ArrayList<String>();
+     * 上传附件
+     **/
+    private ImageView uploadImgeView;
 
 
     /**
@@ -93,13 +84,15 @@ public class PhotoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo);
-        int screenWidth = OtherUtils.getWidthInPx(getApplicationContext());
-        mColumnWidth = (screenWidth - OtherUtils.dip2px(getApplicationContext(), 4)) / 3;
+        setContentView(R.layout.activity_photo1);
         getInitData();
 
         findViewById();
         initView();
+        initWidget();
+        showProgressDialog("获取图片");
+        getData();
+
 
     }
 
@@ -114,28 +107,40 @@ public class PhotoActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
         textView = (TextView) findViewById(R.id.text_id);
-        submitBtn = (Button) findViewById(R.id.submit_btn);
-        chooseImageBtn = (Button) findViewById(R.id.picker_btn);
-        mGrideView = (GridView) findViewById(R.id.gridview);
+        uploadImgeView = (ImageView) findViewById(R.id.title_add);
 
     }
 
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        titleTextView.setText(getString(R.string.work_commit));
-        chooseImageBtn.setOnClickListener(chooseImageBtnOnClickListener);
-        submitBtn.setVisibility(View.VISIBLE);
-        submitBtn.setOnClickListener(submitBtnOnClickListener);
-        if (result == null || result.size() == 0) {
-            textView.setVisibility(View.VISIBLE);
-            mGrideView.setVisibility(View.GONE);
+        titleTextView.setText(getString(R.string.attachment_details));
+        uploadImgeView.setVisibility(View.VISIBLE);
 
-        } else {
-            textView.setVisibility(View.GONE);
-            textView.setVisibility(View.GONE);
+        uploadImgeView.setOnClickListener(uploadBtnOnClickListener);
+    }
+
+
+    private View.OnClickListener uploadBtnOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = getIntent();
+            intent.setClass(PhotoActivity.this, WxDemoActivity.class);
+            intent.putExtra("isCamera", 1);
+            startActivityForResult(intent, 0);
         }
+    };
 
+
+    private void initWidget() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        selImageList = new ArrayList<>();
+        adapter = new ImageLoadAdapter(this, selImageList, maxImgCount);
+        adapter.setOnItemClickListener(this);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
     }
 
 
@@ -146,195 +151,129 @@ public class PhotoActivity extends BaseActivity {
         }
     };
 
-    private View.OnClickListener chooseImageBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int selectedMode = PhotoPickerActivity.MODE_MULTI;
 
-            boolean showCamera = true;
+    private void showResult(ArrayList<ImageItem> paths) {
 
-
-            int maxNum = PhotoPickerActivity.DEFAULT_NUM;
-
-
-            Intent intent = new Intent(PhotoActivity.this, PhotoPickerActivity.class);
-            intent.putExtra(PhotoPickerActivity.EXTRA_SHOW_CAMERA, showCamera);
-            intent.putExtra(PhotoPickerActivity.EXTRA_SELECT_MODE, selectedMode);
-            intent.putExtra(PhotoPickerActivity.EXTRA_MAX_MUN, maxNum);
-            startActivityForResult(intent, PICK_PHOTO);
-        }
-    };
-
-
-    private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (result == null || result.size() == 0) {
-                MessageUtils.showMiddleToast(PhotoActivity.this, "请选择需要上传的图片");
-            } else {
-                showProgressDialog("提交数据中");
-                progressDialog.setCancelable(false);
-                for (int i = 0; i < result.size(); i++) {
-                    startAsyncTask(result.get(i));
-                }
-            }
-        }
-    };
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_PHOTO) {
-            if (resultCode == RESULT_OK) {
-                ArrayList<String> result1 = data.getStringArrayListExtra(PhotoPickerActivity.KEY_RESULT);
-                for (String r : result1) {
-                    result.add(r);
-                }
-
-                showResult(result);
-            }
-        }
-    }
-
-    /**
-     * 获取文件名称*
-     */
-    private String getFileName(String fileName) {
-        File file = new File(fileName);
-        String name = null;
-        if (file.exists()) {
-            name = file.getName();
-        }
-        return name;
-    }
-
-
-    private void showResult(ArrayList<String> paths) {
-        if (mResults == null) {
-            mResults = new ArrayList<String>();
-        }
-        mResults.clear();
-        mResults.addAll(paths);
-
-        if (mAdapter == null) {
-            mAdapter = new GridAdapter(mResults);
-            mGrideView.setAdapter(mAdapter);
-        } else {
-            mAdapter.setPathList(mResults);
-            mAdapter.notifyDataSetChanged();
-        }
-
-        if (mResults == null || mResults.size() == 0) {
+        adapter.setImages(paths);
+        if (paths == null || paths.size() == 0) {
             textView.setVisibility(View.VISIBLE);
-            mGrideView.setVisibility(View.GONE);
 
         } else {
             textView.setVisibility(View.GONE);
-            mGrideView.setVisibility(View.VISIBLE);
         }
     }
 
-    private class GridAdapter extends BaseAdapter {
-        private List<String> pathList;
-
-        public GridAdapter(List<String> listUrls) {
-            this.pathList = listUrls;
-        }
-
-        @Override
-        public int getCount() {
-            return pathList.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return pathList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public void setPathList(List<String> pathList) {
-            this.pathList = pathList;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView;
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.item_image, null);
-                imageView = (ImageView) convertView.findViewById(R.id.imageView);
-                convertView.setTag(imageView);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mColumnWidth, mColumnWidth);
-                imageView.setLayoutParams(params);
-            } else {
-                imageView = (ImageView) convertView.getTag();
-            }
-            ImageLoader.getInstance(getApplicationContext()).display(getItem(position), imageView, mColumnWidth, mColumnWidth);
-            return convertView;
+    @Override
+    public void onItemClick(View view, int position) {
+        switch (position) {
+//            case IMAGE_ITEM_ADD:
+//                //打开选择,本次允许选择的数量
+//                ImagePicker.getInstance().setSelectLimit(maxImgCount - selImageList.size());
+//                Intent intent = new Intent(this, ImageGridActivity.class);
+//                startActivityForResult(intent, REQUEST_CODE_SELECT);
+//                break;
+            default:
+                //打开预览
+                Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
+                intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
+                intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
+                break;
         }
     }
 
 
-    /**
-     * 测试图片上传*
-     */
-    private String getuploadBuffer(String fileName) {
-        try {
-            FileInputStream fis = new FileInputStream(fileName);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int count = 0;
-            while ((count = fis.read(buffer)) >= 0) {
-                baos.write(buffer, 0, count);
-            }
-            String uploadBuffer = new String(Base64.encode(baos.toByteArray()));  //进行Base64编码
-            fis.close();
-            return uploadBuffer;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-
-    }
-
-
-    /**
-     * 提交数据*
-     */
-    private void startAsyncTask(String fileName) {
-        String updataInfo = null;
-        String name = null;
-        updataInfo = getuploadBuffer(fileName);
-        name = getFileName(fileName);
-
-        Log.i(TAG, "updataInfo=" + updataInfo);
-        final String finalUpdataInfo = updataInfo;
-        final String finalname = name;
-        new AsyncTask<String, String, String>() {
-            @Override
-            protected String doInBackground(String... strings) {
-                String reviseresult = AndroidClientService.connectWebService(PhotoActivity.this,
-                        finalname, finalUpdataInfo, ownertable, ownerid, Constants.WORK_URL);
-                return reviseresult;
-            }
-
-            @Override
-            protected void onPostExecute(String workResult) {
-                super.onPostExecute(workResult);
-                if (workResult == null) {
-                    MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传失败");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "resultCode=" + resultCode);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            //添加图片返回
+            if (data != null && requestCode == REQUEST_CODE_SELECT) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                selImageList.addAll(images);
+                adapter.setImages(selImageList);
+                if (adapter.getItemCount() != 0) {
+                    textView.setVisibility(View.GONE);
                 } else {
-                    MessageUtils.showMiddleToast(PhotoActivity.this, "图片上传成功");
-                    finish();
+                    textView.setVisibility(View.VISIBLE);
                 }
+
+            }
+        } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
+            //预览图片返回
+            if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+                selImageList.clear();
+                selImageList.addAll(images);
+                adapter.setImages(selImageList);
+            }
+        }
+    }
+
+
+    private void getData() {
+        HttpManager.getData(this, HttpManager.getDoclinks(ownertable, ownerid), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                closeProgressDialog();
+                ArrayList<Doclinks> item = JsonUtils.parsingDoclinks(PhotoActivity.this, results.getResultlist());
+                if (item == null || item.isEmpty()) {
+                    textView.setVisibility(View.VISIBLE);
+                } else {
+                    if (item != null || item.size() != 0) {
+                        textView.setVisibility(View.GONE);
+                        for (int i = 0; i < item.size(); i++) {
+                            String url = item.get(i).URL;
+                            if (url!=null) {
+                                //拼接图片的URL
+                                ImageItem imageItem = new ImageItem();
+                                imageItem.path = getUrls(url);
+                                selImageList.add(imageItem);
+                            }
+                        }
+                        if(selImageList!=null||selImageList.size()!=0) {
+                            showResult(selImageList);
+                        }else{
+                            textView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+
+            }
+
+            @Override
+            public void onFailure(String error) {
                 closeProgressDialog();
             }
-        }.execute();
-
+        });
     }
+
+
+    /**
+     * 拼接图片的URl
+     **/
+    private String getUrls(String url) {
+        //测试环境的附件
+        String ip_url = AccountUtils.getIpAddress(PhotoActivity.this);
+        String imagesUrl = null;
+        if (ip_url.equals("http://eamapp.mywind.com.cn:9080")) { //正式
+            imagesUrl = ZHENGSHI_URL;
+        } else if (ip_url.equals("http://qaseamapp.mywind.com.cn:9080")) { //测试
+            imagesUrl = CESHI_URL;
+
+
+        }
+        url = url.replace(URL_STRING, "");
+
+
+        return imagesUrl + url;
+    }
+
+
 }
