@@ -66,7 +66,6 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worklist);
-
         findViewById();
         initView();
         Log.e("项目日报","项目日报列表");
@@ -195,7 +194,6 @@ public class Udprorunlog_listactivity extends BaseActivity implements SwipeRefre
             }
         });
     }
-
 
     /**
      * 获取数据*

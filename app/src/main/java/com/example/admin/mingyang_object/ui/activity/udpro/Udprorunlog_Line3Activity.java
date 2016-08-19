@@ -66,6 +66,7 @@ public class Udprorunlog_Line3Activity extends BaseActivity implements SwipeRefr
         getData();
         findViewById();
         initView();
+        Log.e("项目日报","工作日报");
     }
 
     private void getData() {

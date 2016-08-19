@@ -1187,6 +1187,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine1 = new UdprorunlogLine1();
                 jsonObject = jsonArray.getJSONObject(i);
+                Log.e("项目日报","土建阶段子表"+jsonObject);
                 Field[] field = udprorunlogLine1.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1220,7 +1221,7 @@ public class JsonUtils<E> {
     }
 
     /**
-     * 解析土建阶段子表信息
+     * 解析吊装调试子表信息
      */
     public static ArrayList<UdprorunlogLine2> parsingUdprorunlogLine2(Context ctx, String data, String prorunlognum) {
         Log.i(TAG, "UdprorunlogLine2 data=" + data);
@@ -1233,6 +1234,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine2 = new UdprorunlogLine2();
                 jsonObject = jsonArray.getJSONObject(i);
+                Log.e("项目日报","吊装调试子表"+jsonObject);
                 Field[] field = udprorunlogLine2.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1279,6 +1281,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine3 = new UdprorunlogLine3();
                 jsonObject = jsonArray.getJSONObject(i);
+                Log.e("项目日报","工作日报子表"+jsonObject);
                 Field[] field = udprorunlogLine3.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1325,6 +1328,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine4 = new UdprorunlogLine4();
                 jsonObject = jsonArray.getJSONObject(i);
+                Log.e("项目日报","工装管理子表"+jsonObject);
                 Field[] field = udprorunlogLine4.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);

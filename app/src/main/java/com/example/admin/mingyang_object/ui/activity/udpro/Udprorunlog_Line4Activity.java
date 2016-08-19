@@ -61,10 +61,10 @@ public class Udprorunlog_Line4Activity extends BaseActivity implements SwipeRefr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_woactivity);
-
         getData();
         findViewById();
         initView();
+        Log.e("项目日报","工装管理");
     }
 
     private void getData() {
@@ -100,7 +100,6 @@ public class Udprorunlog_Line4Activity extends BaseActivity implements SwipeRefr
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 //        woactivityAdapter = new WoactivityAdapter(Work_WoactivityActivity.this);
 //        recyclerView.setAdapter(woactivityAdapter);
-
         refresh_layout.setColor(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,

@@ -2,18 +2,20 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
 
+    </style>
 
     <style name="SampleTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/nomal_button_color</item>
         <item name="colorPrimaryDark">@color/nomal_button_color</item>
+        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
     </style>
 
     <style name="mingyang.ActivityTheme" parent="mingyang.AppTheme.Base">
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/mingyang.DrawerArrowStyle</item>
+
     </style>
 
     <style name="mingyang.AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -28,6 +30,11 @@
     <style name="mingyang.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="fade" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
     </style>
 
 </resources>

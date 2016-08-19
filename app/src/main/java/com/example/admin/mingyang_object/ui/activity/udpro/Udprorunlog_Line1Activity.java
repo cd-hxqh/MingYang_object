@@ -38,6 +38,7 @@ import java.util.List;
  * Created by think on 2016/7/4.
  */
 public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {
+
     private ImageView backImageView;
     private TextView titleTextView;
     private ImageView menuImageView;
@@ -65,6 +66,7 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
         getData();
         findViewById();
         initView();
+        Log.e("项目日报","土建阶段日报");
     }
 
     private void getData() {
@@ -187,7 +189,6 @@ public class Udprorunlog_Line1Activity extends BaseActivity implements SwipeRefr
                             }
                         }
                         nodatalayout.setVisibility(View.GONE);
-
                         initAdapter(UdprorunlogLine1List);
                     }
                 }
