@@ -17,13 +17,9 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.Udrunliner;
 import com.example.admin.mingyang_object.model.Udrunlogr;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line2AddNewActivity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line2DetailsActivity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdprorunlogLine2Adapter;
 import com.example.admin.mingyang_object.ui.adapter.UdrunlinerAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.flyco.animation.BaseAnimatorSet;
@@ -52,7 +48,7 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
     private SwipeRefreshLayout refresh_layout = null;
     private int page = 1;
     public Udrunlogr udrunlogr;
-    public ArrayList<Udrunliner>udrunliners = new ArrayList<>();
+    public ArrayList<Udrunliner> udrunlinerArrayList = new ArrayList<>();
     public ArrayList<Udrunliner> deleteList = new ArrayList<>();
 
     private BaseAnimatorSet mBasIn;
@@ -72,7 +68,7 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
 
     private void getData() {
         udrunlogr = (Udrunlogr) getIntent().getSerializableExtra("Udrunlogr");
-        udrunliners = (ArrayList<Udrunliner>) getIntent().getSerializableExtra("UdrunlinerList");
+        udrunlinerArrayList = (ArrayList<Udrunliner>) getIntent().getSerializableExtra("UdrunlinerList");
     }
 
     @Override
@@ -121,39 +117,39 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
 //            menuImageView.setVisibility(View.GONE);
 //        }
 
-        if (!udrunlogr.isnew){
-            if (udrunliners == null || udrunliners.size() == 0){
+        if (!udrunlogr.isnew) {
+            if (udrunlinerArrayList == null || udrunlinerArrayList.size() == 0) {
                 refresh_layout.setRefreshing(true);
                 getdata();
-            }else{
-                if (udrunliners != null && udrunliners.size() != 0) {
-                    initList(udrunliners);
+            } else {
+                if (udrunlinerArrayList != null && udrunlinerArrayList.size() != 0) {
+                    initList(udrunlinerArrayList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
+                } else {
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
         } else {//新建项目日报
-            if (udrunliners == null || udrunliners.size() == 0){
+            if (udrunlinerArrayList == null || udrunlinerArrayList.size() == 0) {
                 initAdapter(new ArrayList<Udrunliner>());
                 nodatalayout.setVisibility(View.VISIBLE);
-            }else {
-                if (udrunliners != null && udrunliners.size() != 0) {
-                    initList(udrunliners);
+            } else {
+                if (udrunlinerArrayList != null && udrunlinerArrayList.size() != 0) {
+                    initList(udrunlinerArrayList);
 //                woactivityAdapter.addData(woactivityList);
-                }else {
+                } else {
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             }
         }
     }
 
-    private void initList(ArrayList<Udrunliner> list ){
+    private void initList(ArrayList<Udrunliner> list) {
         ArrayList<Udrunliner> woactivities = new ArrayList<>();
-        for (int i = 0;i< list.size();i++){
-            if (list.get(i).TYPE!=null&&list.get(i).TYPE.equals("delete")){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).TYPE != null && list.get(i).TYPE.equals("delete")) {
                 deleteList.add(list.get(i));
-            }else {
+            } else {
                 woactivities.add(list.get(i));
             }
         }
@@ -176,22 +172,24 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
                     }
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
-                    if ((udrunliners == null || udrunliners.isEmpty())&&page==1) {
+                    if ((udrunliners == null || udrunliners.isEmpty()) && page == 1) {
                         nodatalayout.setVisibility(View.VISIBLE);
                         initAdapter(new ArrayList<Udrunliner>());
                     } else {
 
-                        if (udrunliners != null || udrunliners.size() != 0) {
-                            if (udrunliners == null){
-                                udrunliners = new ArrayList<Udrunliner>();
-                            }
+                        if (udrunliners != null &&udrunliners.size() != 0) {
                             for (int i = 0; i < udrunliners.size(); i++) {
-                                udrunliners.add(udrunliners.get(i));
+                                udrunlinerArrayList.add(udrunliners.get(i));
+                            }
+                            if (page == 1) {
+                                initAdapter(udrunlinerArrayList);
+                            } else {
+                                addAdapter(udrunliners);
                             }
                         }
                         nodatalayout.setVisibility(View.GONE);
 
-                        initAdapter(udrunliners);
+//                        initAdapter(udrunlinerArrayList);
                     }
                 }
 
@@ -214,37 +212,42 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
      * 获取数据*
      */
     private void initAdapter(final List<Udrunliner> list) {
-        udrunlinerAdapter = new UdrunlinerAdapter(UdrunlinerListActivity.this, R.layout.list_item, list);
+        udrunlinerAdapter = new UdrunlinerAdapter(UdrunlinerListActivity.this, R.layout.list_item_1, list);
         recyclerView.setAdapter(udrunlinerAdapter);
         udrunlinerAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("udprorunlogline2", list.get(position));
-                bundle.putSerializable("udprorunlog", udrunlogr);
+                bundle.putSerializable("udrunliner", list.get(position));
+                bundle.putSerializable("udrunlogr", udrunlogr);
                 bundle.putSerializable("position", position);
-                intent.setClass(UdrunlinerListActivity.this, Udprorunlog_Line2DetailsActivity.class);
+                intent.setClass(UdrunlinerListActivity.this, UdrunlinerDetailsActivity.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 2);
             }
         });
     }
 
-//    private void addListData(ArrayList<Woactivity> list) {
-//        if (nodatalayout.getVisibility() == View.VISIBLE) {
-//            nodatalayout.setVisibility(View.GONE);
-//        }
-//        if (page == 1 && woactivityAdapter.getItemCount() != 0) {
-//            woactivityAdapter = new WoactivityAdapter(Woactivity_Activity.this);
-//            recyclerView.setAdapter(woactivityAdapter);
-//        }
-//        if ((list == null || list.size() == 0) && page == 1) {
-//            nodatalayout.setVisibility(View.VISIBLE);
-//        } else {
-//            woactivityAdapter.addData(list);
-//        }
-//    }
+    /**
+     * 添加数据数据*
+     */
+    private void addAdapter(final List<Udrunliner> list) {
+        udrunlinerAdapter.addData(list);
+        udrunlinerAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("udrunliner", udrunlinerArrayList.get(position));
+                bundle.putSerializable("udrunlogr", udrunlogr);
+                bundle.putSerializable("position", position);
+                intent.setClass(UdrunlinerListActivity.this, UdrunlinerDetailsActivity.class);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 2);
+            }
+        });
+    }
 
     private View.OnClickListener backOnClickListener = new View.OnClickListener() {
         @Override
@@ -281,9 +284,10 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
         public void onClick(View view) {
             Intent intent;
             intent = new Intent();
-            intent.setClass(UdrunlinerListActivity.this, Udprorunlog_Line2AddNewActivity.class);
+            intent.setClass(UdrunlinerListActivity.this, UdrunlinerAddNewActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("udprorunlog", udrunlogr);
+            bundle.putSerializable("udrunlogr", udrunlogr);
+            bundle.putSerializable("udrunlinerArrayList",udrunlinerArrayList);
             intent.putExtras(bundle);
             startActivityForResult(intent, 1);
         }
@@ -301,18 +305,18 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
         @Override
         public void onClick(View v) {
             Intent intent = getIntent();
-            intent.putExtra("UdrunlinerList",getList());
+            intent.putExtra("UdrunlinerList", getList());
             UdrunlinerListActivity.this.setResult(1000, intent);
             UdrunlinerListActivity.this.finish();
         }
     };
 
-    private ArrayList<Udrunliner> getList(){
+    private ArrayList<Udrunliner> getList() {
         ArrayList<Udrunliner> list = new ArrayList<>();
-        if(udrunlinerAdapter.getData().size()!=0) {
+        if (udrunlinerAdapter.getData().size() != 0) {
             list.addAll(udrunlinerAdapter.getData());
         }
-        if(deleteList.size()!=0) {
+        if (deleteList.size() != 0) {
             list.addAll(deleteList);
         }
         return list;
@@ -323,8 +327,8 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
         switch (resultCode) {
             case 1://新增
                 if (data != null) {
-                    Udrunliner udprorunlogLine2 = (Udrunliner) data.getSerializableExtra("udprorunlogLine2");
-                    udrunlinerAdapter.add(udprorunlogLine2);
+                    Udrunliner udrunliner = (Udrunliner) data.getSerializableExtra("udrunliner");
+                    udrunlinerAdapter.add(udrunliner);
                     initAdapter(udrunlinerAdapter.getData());
                     nodatalayout.setVisibility(View.GONE);
                 }
@@ -333,9 +337,9 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
                 break;
             case 2://修改
                 if (data != null) {
-                    Udrunliner udprorunlogLine2 = (Udrunliner) data.getSerializableExtra("udprorunlogLine2");
+                    Udrunliner udrunliner = (Udrunliner) data.getSerializableExtra("udrunliner");
                     int position = data.getIntExtra("position", 0);
-                    udrunlinerAdapter.set(position, udprorunlogLine2);
+                    udrunlinerAdapter.set(position, udrunliner);
                     initAdapter(udrunlinerAdapter.getData());
                     udrunlinerAdapter.notifyDataSetChanged();
                 }
@@ -354,9 +358,9 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
                 break;
             case 4://服务器任务删除操作
                 if (data != null) {
-                    Udrunliner udprorunlogLine2 = (Udrunliner) data.getSerializableExtra("udprorunlogLine2");
+                    Udrunliner udrunliner = (Udrunliner) data.getSerializableExtra("udrunliner");
                     int position = data.getIntExtra("position", 0);
-                    deleteList.add(udprorunlogLine2);
+                    deleteList.add(udrunliner);
                     udrunlinerAdapter.remove(position);
                     initAdapter(udrunlinerAdapter.getData());
                     udrunlinerAdapter.notifyDataSetChanged();
@@ -369,10 +373,10 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
 
     @Override
     public void onRefresh() {
-        if (!udrunlogr.isnew&& (udrunliners == null || udrunliners.size() == 0)) {
+        if (!udrunlogr.isnew && (udrunlinerArrayList == null || udrunlinerArrayList.size() == 0)) {
             page = 1;
             getdata();
-        }else {
+        } else {
             refresh_layout.setRefreshing(false);
         }
     }
@@ -382,7 +386,7 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
         if (!udrunlogr.isnew) {
             page++;
             getdata();
-        }else {
+        } else {
             refresh_layout.setLoading(false);
         }
     }

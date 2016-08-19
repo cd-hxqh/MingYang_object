@@ -30,10 +30,14 @@ public class UdrunlinerAdapter extends BaseQuickAdapter<Udrunliner> {
     @Override
     protected void convert(BaseViewHolder helper, Udrunliner item) {
         CardView cardView = helper.getView(R.id.card_container);
-        helper.setText(R.id.item_num_title, mContext.getString(R.string.udprorunlog_line2_createdate));
-        helper.setText(R.id.item_desc_title, mContext.getString(R.string.udprorunlog_line2_personid));
-        helper.setText(R.id.item_num_text, item.getLOGDATE());
-        helper.setText(R.id.item_desc_text, item.getWORKPG()  );
+        helper.setText(R.id.displayname_id, mContext.getString(R.string.udrunliner_logdate));
+        helper.setText(R.id.personid_id, mContext.getString(R.string.udrunliner_worknum));
+        helper.setText(R.id.primaryphone_id, mContext.getString(R.string.udrunliner_workpg));
+        helper.setText(R.id.udjbdescription_id, mContext.getString(R.string.udrunliner_workcron));
+        helper.setText(R.id.displayname_text_id, item.getLOGDATE());
+        helper.setText(R.id.personid_text_id, item.getWORKNUM());
+        helper.setText(R.id.primaryphone_text_id, item.getWORKPG());
+        helper.setText(R.id.udjbdescription_text_id, item.getWORKCRON());
 
     }
 

@@ -66,6 +66,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     /**
      * 界面信息*
      */
+    private LinearLayout udrunlogrlayout;
     private TextView lognum;//运行日志编号
     private TextView description;//描述
     private TextView branch;//中心编号
@@ -117,6 +118,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
+        udrunlogrlayout = (LinearLayout) findViewById(R.id.udrunlogr_layout);
         lognum = (TextView) findViewById(R.id.udrunlogr_lognum);
         description = (TextView) findViewById(R.id.udrunlogr_description);
         branch = (TextView) findViewById(R.id.udrunlogr_branch);
@@ -158,6 +160,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
+        udrunlogrlayout.setVisibility(View.VISIBLE);
 
         prohead.setOnClickListener(new LayoutOnClickListener(1,Constants.PERSONCODE));
 

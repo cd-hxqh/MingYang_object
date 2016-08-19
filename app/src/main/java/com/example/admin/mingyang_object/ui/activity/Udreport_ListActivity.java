@@ -147,7 +147,7 @@ public class Udreport_ListActivity extends BaseActivity implements SwipeRefreshL
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
 
-                    if (item != null || item.size() != 0) {
+                    if (item != null && item.size() != 0) {
                         for (int i = 0; i < item.size(); i++) {
                             items.add(item.get(i));
                         }
