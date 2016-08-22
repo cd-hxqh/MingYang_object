@@ -3,7 +3,6 @@ package com.example.admin.mingyang_object.ui.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import java.util.List;
 
 
 public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.SelectedPicViewHolder> {
-    private static final String TAG = "ImagePickerAdapter";
     private int maxImgCount;
     private Context mContext;
     private List<ImageItem> mData;
@@ -36,9 +34,6 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
 
     public void setImages(List<ImageItem> data) {
         mData = new ArrayList<>(data);
-//        for (ImageItem item : mData) {
-//            Log.i(TAG, "mData=" + item.path);
-//        }
 //        if (getItemCount() < maxImgCount) {
 //            mData.add(new ImageItem());
 //            isAdded = true;
@@ -92,13 +87,8 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
             itemView.setOnClickListener(this);
             //根据条目位置设置图片
             ImageItem item = mData.get(position);
-//            if (isAdded && position == getItemCount() - 1) {
-////                iv_img.setImageResource(R.drawable.selector_image_add);
-////                clickPosition = WxDemoActivity.IMAGE_ITEM_ADD;
-//            } else {
-                Log.i(TAG, "item.path=" + item.path);
-                ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
-                clickPosition = position;
+            ImagePicker.getInstance().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
+            clickPosition = position;
 //            }
         }
 

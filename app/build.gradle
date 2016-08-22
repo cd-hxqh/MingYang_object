@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    buildToolsVersion '23.0.1'
 
     defaultConfig {
         applicationId "com.example.admin.mingyang_object"
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 22
-        versionCode 3
+        versionCode 4
         versionName "1.0.3"
         multiDexEnabled true
     }

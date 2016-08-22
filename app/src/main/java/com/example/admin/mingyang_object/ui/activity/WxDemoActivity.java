@@ -14,12 +14,14 @@ import android.widget.TextView;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.ui.adapter.ImagePickerAdapter;
+import com.example.admin.mingyang_object.ui.widget.GlideImageLoader;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
+import com.lzy.imagepicker.view.CropImageView;
 
 import org.kobjects.base64.Base64;
 
@@ -87,6 +89,7 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
         findViewById();
         initView();
         initWidget();
+        initImagePicker();
     }
 
     private void getInitData() {
@@ -99,7 +102,6 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
 
         ownertable = getIntent().getExtras().getString("ownertable");
         ownerid = getIntent().getExtras().getString("ownerid");
-        Log.i(TAG, "ownertable=" + ownertable + ",ownerid=" + ownerid);
     }
 
     @Override
@@ -139,6 +141,21 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
+
+    private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);                      //显示拍照按钮
+        imagePicker.setCrop(false);                           //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
+        imagePicker.setSelectLimit(maxImgCount);              //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);                         //保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);                         //保存文件的高度。单位像素
+    }
+
 
     @Override
     public void onItemClick(View view, int position) {
