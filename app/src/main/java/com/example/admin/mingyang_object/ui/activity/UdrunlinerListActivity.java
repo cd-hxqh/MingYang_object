@@ -177,7 +177,7 @@ public class UdrunlinerListActivity extends BaseActivity implements SwipeRefresh
                         initAdapter(new ArrayList<Udrunliner>());
                     } else {
 
-                        if (udrunliners != null &&udrunliners.size() != 0) {
+                        if (udrunliners != null && udrunliners.size() != 0) {
                             for (int i = 0; i < udrunliners.size(); i++) {
                                 udrunlinerArrayList.add(udrunliners.get(i));
                             }

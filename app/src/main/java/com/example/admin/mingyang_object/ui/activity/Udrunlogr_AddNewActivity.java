@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -21,8 +19,6 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
-import com.example.admin.mingyang_object.model.UdprorunlogLine1;
-import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.model.Udrunliner;
 import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.model.WebResult;
@@ -43,46 +39,46 @@ import java.util.ArrayList;
 
 /**
  * Created by think on 2016/8/15.
- * è¿è¡Œè®°å½•æ–°å¢é¡µé¢
+ * ÔËĞĞ¼ÇÂ¼ĞÂÔöÒ³Ãæ
  */
 public class Udrunlogr_AddNewActivity extends BaseActivity {
 
     /**
-     * è¿”å›æŒ‰é’®
+     * ·µ»Ø°´Å¥
      */
     private ImageView backImageView;
     /**
-     * æ ‡é¢˜
+     * ±êÌâ
      */
     private TextView titleTextView;
 
 
     /**
-     * èœå•
+     * ²Ëµ¥
      */
     private ImageView menuImageView;
 
 
     /**
-     * ç•Œé¢ä¿¡æ¯*
+     * ½çÃæĞÅÏ¢*
      */
-    private LinearLayout udrunlogrlayout;
-    private TextView lognum;//è¿è¡Œæ—¥å¿—ç¼–å·
-    private TextView description;//æè¿°
-    private TextView branch;//ä¸­å¿ƒç¼–å·
-    private TextView branchdesc;//ä¸­å¿ƒæè¿°
-    private TextView pronum;//é¡¹ç›®ç¼–å·
-    private TextView prodesc;//é¡¹ç›®æè¿°
-    private TextView year;//å¹´
-    private TextView month;//æœˆ
-    private TextView prohead;//è´Ÿè´£äºº
-    private TextView name1;//è´Ÿè´£äººæè¿°
-    private TextView creater;//å½•å…¥äººç¼–å·
-    private TextView createname;//å½•å…¥äººæè¿°
-    private TextView createtime;//å½•å…¥æ—¶é—´
+//    private LinearLayout udrunlogrlayout;
+//    private TextView lognum;//ÔËĞĞÈÕÖ¾±àºÅ
+//    private TextView description;//ÃèÊö
+    private TextView branch;//ÖĞĞÄ±àºÅ
+    private TextView branchdesc;//ÖĞĞÄÃèÊö
+    private TextView pronum;//ÏîÄ¿±àºÅ
+    private TextView prodesc;//ÏîÄ¿ÃèÊö
+    private TextView year;//Äê
+    private TextView month;//ÔÂ
+    private TextView prohead;//¸ºÔğÈË
+    private TextView name1;//¸ºÔğÈËÃèÊö
+    private TextView creater;//Â¼ÈëÈË±àºÅ
+    private TextView createname;//Â¼ÈëÈËÃèÊö
+    private TextView createtime;//Â¼ÈëÊ±¼ä
 
-    private Button cancel;//å–æ¶ˆ
-    private Button save;//ä¿å­˜
+    private Button cancel;//È¡Ïû
+    private Button save;//±£´æ
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -93,14 +89,14 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     /**
-     * å·¥ä½œæ—¥å¿—æ´»åŠ¨å­è¡¨*
+     * ¹¤×÷ÈÕÖ¾»î¶¯×Ó±í*
      */
     private LinearLayout udrunlinerLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_udrunlogr_details);
+        setContentView(R.layout.activity_udrunlogr_addnew);
 
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
@@ -114,9 +110,9 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        udrunlogrlayout = (LinearLayout) findViewById(R.id.udrunlogr_layout);
-        lognum = (TextView) findViewById(R.id.udrunlogr_lognum);
-        description = (TextView) findViewById(R.id.udrunlogr_description);
+//        udrunlogrlayout = (LinearLayout) findViewById(R.id.udrunlogr_layout);
+//        lognum = (TextView) findViewById(R.id.udrunlogr_lognum);
+//        description = (TextView) findViewById(R.id.udrunlogr_description);
         branch = (TextView) findViewById(R.id.udrunlogr_branch);
         branchdesc = (TextView) findViewById(R.id.udrunlogr_branchdesc);
         pronum = (TextView) findViewById(R.id.udrunlogr_pronum);
@@ -136,7 +132,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        titleTextView.setText("æ–°å¢è¿è¡Œè®°å½•");
+        titleTextView.setText("ĞÂÔöÔËĞĞ¼ÇÂ¼");
 
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
@@ -257,7 +253,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
             mMenuItems.add(new DialogMenuItem(types[i], 0));
         }
         final NormalListDialog dialog = new NormalListDialog(Udrunlogr_AddNewActivity.this, mMenuItems);
-        dialog.title("è¯·é€‰æ‹©")//
+        dialog.title("ÇëÑ¡Ôñ")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -272,7 +268,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
         });
     }
 
-    //æ—¶é—´é€‰æ‹©ç›‘å¬
+    //Ê±¼äÑ¡Ôñ¼àÌı
     private class DateTimeOnClickListener implements View.OnClickListener {
         TextView textView;
 
@@ -287,11 +283,11 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
     }
 
     /**
-     * æäº¤æ•°æ®*
+     * Ìá½»Êı¾İ*
      */
     private void submitDataInfo() {
         final NormalDialog dialog = new NormalDialog(Udrunlogr_AddNewActivity.this);
-        dialog.content("ç¡®å®šæ–°å¢è¿è¡Œè®°å½•å—?")//
+        dialog.content("È·¶¨ĞÂÔöÔËĞĞ¼ÇÂ¼Âğ?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -305,7 +301,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("æ•°æ®æäº¤ä¸­...");
+                        showProgressDialog("Êı¾İÌá½»ÖĞ...");
                         if (isOK()) {
                             startAsyncTask();
                         } else {
@@ -318,19 +314,19 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
 
     private boolean isOK() {
         if (pronum.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥é¡¹ç›®ç¼–å·", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈëÏîÄ¿±àºÅ", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (year.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥å¹´å·", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈëÄêºÅ", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (month.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥æœˆä»½", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈëÔÂ·İ", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (prohead.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥è´Ÿè´£äºº", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈë¸ºÔğÈË", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -338,11 +334,11 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
 
 
     /**
-     * æäº¤æ•°æ®*
+     * Ìá½»Êı¾İ*
      */
     private void startAsyncTask() {
 //        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "æš‚æ— ç½‘ç»œ,ç°ç¦»çº¿ä¿å­˜æ•°æ®!");
+//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "ÔİÎŞÍøÂç,ÏÖÀëÏß±£´æÊı¾İ!");
 //            saveWorkOrder();
 //        } else {
         String updataInfo = null;
@@ -364,9 +360,9 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
                 if (workResult == null || workResult.errorMsg == null) {
-                    Toast.makeText(Udrunlogr_AddNewActivity.this, "æ–°å¢è¿è¡Œè®°å½•å¤±è´¥", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("æˆåŠŸ")) {
-                    Toast.makeText(Udrunlogr_AddNewActivity.this, "è¿è¡Œè®°å½•" + workResult.wonum + "æ–°å¢æˆåŠŸ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, "ĞÂÔöÔËĞĞ¼ÇÂ¼Ê§°Ü", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("³É¹¦")) {
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, "ÔËĞĞ¼ÇÂ¼" + workResult.wonum + "ĞÂÔö³É¹¦", Toast.LENGTH_SHORT).show();
                     setResult(100);
                     finish();
                 } else {
@@ -388,8 +384,8 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
         udrunlogr.setCREATER(creater.getText().toString());
         udrunlogr.setCREATETIME(createtime.getText().toString());
         udrunlogr.setDESCRIPTION(createtime.getText().toString() + createname.getText().toString()
-                + "_" + prodesc.getText().toString() + year.getText().toString() + "å¹´" +
-                month.getText().toString() + "æœˆè¿è¡Œè®°å½•");
+                + "_" + prodesc.getText().toString() + year.getText().toString() + "Äê" +
+                month.getText().toString() + "ÔÂÔËĞĞ¼ÇÂ¼");
         return udrunlogr;
     }
 

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,10 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
-import com.example.admin.mingyang_object.model.Udprorunlog;
-import com.example.admin.mingyang_object.model.UdprorunlogLine1;
 import com.example.admin.mingyang_object.model.Udrunliner;
 import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.utils.DateSelect;

@@ -76,6 +76,7 @@ public class Work_AddNewActivity extends BaseActivity {
      * 工作计划*
      */
     private LinearLayout planLinearlayout;
+    private TextView workplanText;
     /**
      * 物料信息
      */
@@ -752,6 +753,7 @@ public class Work_AddNewActivity extends BaseActivity {
         popupWindow.showAsDropDown(view);
 
         planLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_plan_id);
+        workplanText = (TextView) contentView.findViewById(R.id.workplan_text);
         wpmaterialLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_wpmaterial_id);
 //        reportLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_report_id);
         flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);

@@ -3,6 +3,7 @@ package com.example.admin.mingyang_object.ui.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,18 +20,9 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
-import com.example.admin.mingyang_object.model.Udprorunlog;
-import com.example.admin.mingyang_object.model.UdprorunlogLine1;
-import com.example.admin.mingyang_object.model.UdprorunlogLine2;
-import com.example.admin.mingyang_object.model.UdprorunlogLine3;
-import com.example.admin.mingyang_object.model.UdprorunlogLine4;
 import com.example.admin.mingyang_object.model.Udrunliner;
 import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.model.WebResult;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line1Activity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line2Activity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line3Activity;
-import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_Line4Activity;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
@@ -66,7 +58,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
     /**
      * 界面信息*
      */
-    private LinearLayout udrunlogrlayout;
+//    private LinearLayout udrunlogrlayout;
     private TextView lognum;//运行日志编号
     private TextView description;//描述
     private TextView branch;//中心编号
@@ -118,7 +110,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
 
-        udrunlogrlayout = (LinearLayout) findViewById(R.id.udrunlogr_layout);
+//        udrunlogrlayout = (LinearLayout) findViewById(R.id.udrunlogr_layout);
         lognum = (TextView) findViewById(R.id.udrunlogr_lognum);
         description = (TextView) findViewById(R.id.udrunlogr_description);
         branch = (TextView) findViewById(R.id.udrunlogr_branch);
@@ -160,9 +152,9 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
-        udrunlogrlayout.setVisibility(View.VISIBLE);
+//        udrunlogrlayout.setVisibility(View.VISIBLE);
 
-        prohead.setOnClickListener(new LayoutOnClickListener(1,Constants.PERSONCODE));
+        prohead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,11 +337,11 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 
     private ArrayList<Udrunliner> getUdprorunlogLine1() {
         ArrayList<Udrunliner> udprorunlogLine1s = new ArrayList<>();
-//        for (int i = 0; i < UdprorunlogLine1List.size(); i++) {
-//            if (UdprorunlogLine1List.get(i).TYPE != null) {
-//                udprorunlogLine1s.add(UdprorunlogLine1List.get(i));
-//            }
-//        }
+        for (int i = 0; i < udrunliners.size(); i++) {
+            if (udrunliners.get(i).TYPE != null) {
+                udprorunlogLine1s.add(udrunliners.get(i));
+            }
+        }
         return udprorunlogLine1s;
     }
 
@@ -369,10 +361,11 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
 //                updataInfo = JsonUtils.WorkToJson(getWorkOrder(), null, null, null, null, getLabtransList());
 //            }
         final String finalUpdataInfo = updataInfo;
+        Log.i(TAG, finalUpdataInfo);
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult reviseresult = AndroidClientService.UpdateWO(Udrunlogr_DetailActivity.this,finalUpdataInfo,
+                WebResult reviseresult = AndroidClientService.UpdateWO(Udrunlogr_DetailActivity.this, finalUpdataInfo,
                         "UDRUNLOGR", "LOGNUM", udrunlogr.getLOGNUM(), Constants.WORK_URL);
                 return reviseresult;
             }

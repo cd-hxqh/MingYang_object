@@ -15,8 +15,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,16 +27,12 @@ import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.Udrunlogr;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdinspoAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdrunlogrAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
 import com.flyco.dialog.entity.DialogMenuItem;
-import com.flyco.dialog.listener.OnOperItemClickL;
-import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,43 +138,43 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
 
     private void getData(String search, final int page) {
 //        if (!AccountUtils.getIsOffLine(Udrunlogr_ListActivity.this)&&!status.equals("本地记录")) {
-            HttpManager.getDataPagingInfo(this, HttpManager.getudrunlogrurl(search, page, 20), new HttpRequestHandler<Results>() {
-                @Override
-                public void onSuccess(Results results) {
-                    Log.i(TAG, "data=" + results);
-                }
+        HttpManager.getDataPagingInfo(this, HttpManager.getudrunlogrurl(search, page, 20), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
 
-                @Override
-                public void onSuccess(Results results, int totalPages, int currentPage) {
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
 
-                    ArrayList<Udrunlogr> item = JsonUtils.parsingUdrunlogr(Udrunlogr_ListActivity.this, results.getResultlist());
-                    refresh_layout.setRefreshing(false);
-                    refresh_layout.setLoading(false);
-                    if (item == null || item.isEmpty()) {
-                        nodatalayout.setVisibility(View.VISIBLE);
-                    } else {
-
-                        if (item != null || item.size() != 0) {
-                            if (page == 1) {
-                                items = new ArrayList<Udrunlogr>();
-                                initAdapter(new ArrayList<Udrunlogr>());
-                            }
-                            for (int i = 0; i < item.size(); i++) {
-                                items.add(item.get(i));
-                            }
-                            addAdapter(item);
-                        }
-                        nodatalayout.setVisibility(View.GONE);
-//                        initAdapter(items);
-                    }
-                }
-
-                @Override
-                public void onFailure(String error) {
-                    refresh_layout.setRefreshing(false);
+                ArrayList<Udrunlogr> item = JsonUtils.parsingUdrunlogr(Udrunlogr_ListActivity.this, results.getResultlist());
+                refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
+                if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
+                } else {
+
+                    if (item != null || item.size() != 0) {
+                        if (page == 1) {
+                            items = new ArrayList<Udrunlogr>();
+                            initAdapter(new ArrayList<Udrunlogr>());
+                        }
+                        for (int i = 0; i < item.size(); i++) {
+                            items.add(item.get(i));
+                        }
+                        addAdapter(item);
+                    }
+                    nodatalayout.setVisibility(View.GONE);
+//                        initAdapter(items);
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                refresh_layout.setRefreshing(false);
+                nodatalayout.setVisibility(View.VISIBLE);
+            }
+        });
 //        }else if (AccountUtils.getIsOffLine(Udrunlogr_ListActivity.this)&&!status.equals("本地记录")){//本地保存记录
 //            refresh_layout.setRefreshing(false);
 //            refresh_layout.setLoading(false);

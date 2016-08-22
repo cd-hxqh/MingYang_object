@@ -2129,7 +2129,7 @@ public class JsonUtils<E> {
     }
 
     /**
-     * 封装项目日报数据
+     * 封装运行记录数据
      *
      * @return
      */
@@ -2172,11 +2172,13 @@ public class JsonUtils<E> {
                         String name = field1[j].getName();//获取属性的名字
                         Method getOrSet = null;
                         try {
-                            getOrSet = udprorunlogLine1s.get(i).getClass().getMethod("get" + name);
-                            Object value = null;
-                            value = getOrSet.invoke(udprorunlogLine1s.get(i));
-                            if (value != null) {
-                                udprorunlogline1Obj.put(name, value + "");
+                            if (!name.equals("isUpload")) {
+                                getOrSet = udprorunlogLine1s.get(i).getClass().getMethod("get" + name);
+                                Object value = null;
+                                value = getOrSet.invoke(udprorunlogLine1s.get(i));
+                                if (value != null) {
+                                    udprorunlogline1Obj.put(name, value + "");
+                                }
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -2186,6 +2188,8 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
+                    udprorunlogline1Obj.put("forapp","1");
+                    udprorunlogline1Obj.put("PRONUM","S1-20140053");
                     if (udprorunlogline1Obj.get("TYPE").equals("add") && udprorunlogline1Obj.has("UDRUNLINERID") && udprorunlogline1Obj.get("UDRUNLINERID").equals("0")) {
                         udprorunlogline1Obj.remove("UDRUNLINERID");
                     }
