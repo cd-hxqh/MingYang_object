@@ -467,7 +467,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udinspoby_2.setOnClickListener(new LayoutOnClickListener(15, Constants.PERSONCODE));
         udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16, Constants.PERSONCODE));
         udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17, Constants.PERSONCODE));
-        udprores.setOnClickListener(new LayoutOnClickListener(18,Constants.PERSONCODE));
+        udprores.setOnClickListener(new LayoutOnClickListener(18, Constants.PERSONCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -494,7 +494,7 @@ public class Work_DetailsActivity extends BaseActivity {
         });
         setLayout();
 
-        if(workOrder.id!=0){
+        if (workOrder.id != 0) {
             getLocationData(workOrder.id);
         }
         getFailureList();
@@ -614,29 +614,29 @@ public class Work_DetailsActivity extends BaseActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus&&!udstoptime.getText().toString().equals("")&&!udrestarttime.getText().toString().equals("")
-                &&udjgresult.getText().toString().equals("")){
-            udjgresult.setText(getTime(udstoptime.getText().toString(),udrestarttime.getText().toString()));
+        if (hasFocus && !udstoptime.getText().toString().equals("") && !udrestarttime.getText().toString().equals("")
+                && udjgresult.getText().toString().equals("")) {
+            udjgresult.setText(getTime(udstoptime.getText().toString(), udrestarttime.getText().toString()));
         }
     }
 
     //计算时间差
-    private String getTime(String time1,String time2){
+    private String getTime(String time1, String time2) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date now = null;
         java.util.Date date = null;
         try {
             now = df.parse(time1);
-            date=df.parse(time2);
+            date = df.parse(time2);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long l=date.getTime()-now.getTime();
-        long day=l/(24*60*60*1000);//天
-        long hour=(l/(60*60*1000)-day*24);//小时
-        long min=((l/(60*1000))-day*24*60-hour*60);//分
-        long s=(l/1000-day*24*60*60-hour*60*60-min*60);//秒
-        return "累积停机"+day+"天"+hour+"小时"+min+"分"+s+"秒";
+        long l = date.getTime() - now.getTime();
+        long day = l / (24 * 60 * 60 * 1000);//天
+        long hour = (l / (60 * 60 * 1000) - day * 24);//小时
+        long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);//分
+        long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);//秒
+        return "累积停机" + day + "天" + hour + "小时" + min + "分" + s + "秒";
     }
 
     //按照工单类型修改布局
@@ -741,7 +741,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_FR(){//故障工单
+    private void SetClick_FR() {//故障工单
         switch (workOrder.UDSTATUS) {
             case "新建":
 //                udprobdesc.setBackgroundColor(getResources().getColor(R.color.light_gray2));
@@ -781,7 +781,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_AA(){//终验收工单
+    private void SetClick_AA() {//终验收工单
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udrlstartdate.setEnabled(false);
@@ -800,7 +800,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_SP(){//排查
+    private void SetClick_SP() {//排查
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udjgresult1.setEnabled(false);
@@ -854,7 +854,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_TP(){//技改工单
+    private void SetClick_TP() {//技改工单
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udrlstartdate.setEnabled(false);
@@ -881,7 +881,7 @@ public class Work_DetailsActivity extends BaseActivity {
         }
     }
 
-    private void SetClick_WS(){//定检工单
+    private void SetClick_WS() {//定检工单
         switch (workOrder.UDSTATUS) {
             case "新建":
                 udrlstartdate.setEnabled(false);
@@ -970,8 +970,6 @@ public class Work_DetailsActivity extends BaseActivity {
 
 
                 return false;
-                // 这里如果返回true的话，touch事件将被拦截
-                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
             }
         });
 
@@ -996,7 +994,7 @@ public class Work_DetailsActivity extends BaseActivity {
         commitLinearLayout.setOnClickListener(commitOnClickListener);
         failureLinearLayout.setOnClickListener(failureOnClickListener);
 
-        if (!workOrder.WORKTYPE.equals(Constants.FR)){
+        if (!workOrder.WORKTYPE.equals(Constants.FR)) {
             workplanText.setText("工作详情");
         }
         decisionLayout();
@@ -1055,7 +1053,7 @@ public class Work_DetailsActivity extends BaseActivity {
             popupWindow.dismiss();
             Intent intent = new Intent(Work_DetailsActivity.this, PhotoActivity.class);
             intent.putExtra("ownertable", "WORKORDER");
-            intent.putExtra("ownerid", workOrder.getWORKORDERID()+"");
+            intent.putExtra("ownerid", workOrder.getWORKORDERID() + "");
             startActivityForResult(intent, 0);
         }
     };
@@ -1063,11 +1061,11 @@ public class Work_DetailsActivity extends BaseActivity {
     private View.OnClickListener failureOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (failurecode.getText().equals("")){
-                Toast.makeText(Work_DetailsActivity.this,"请选择故障类",Toast.LENGTH_SHORT).show();
-            }else if (problemcode.getText().equals("")){
-                Toast.makeText(Work_DetailsActivity.this,"请选择问题原因",Toast.LENGTH_SHORT).show();
-            }else {
+            if (failurecode.getText().equals("")) {
+                Toast.makeText(Work_DetailsActivity.this, "请选择故障类", Toast.LENGTH_SHORT).show();
+            } else if (problemcode.getText().equals("")) {
+                Toast.makeText(Work_DetailsActivity.this, "请选择问题原因", Toast.LENGTH_SHORT).show();
+            } else {
                 Intent intent = new Intent(Work_DetailsActivity.this, Failurelist1Activity.class);
                 intent.putExtra("failurecode", workOrder.PROBLEMCODE);
                 startActivityForResult(intent, 0);
@@ -1333,7 +1331,7 @@ public class Work_DetailsActivity extends BaseActivity {
                         closeProgressDialog();
                     }
                 }.execute();
-            //}else {
+                //}else {
                 closeProgressDialog();
             }
         }
@@ -1350,7 +1348,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 for (Woactivity woactivity : woactivityList) {
                     woactivity.belongid = id;
                 }
-                if (new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM).size()>0){//删除默认保存的记录，防止重复
+                if (new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM).size() > 0) {//删除默认保存的记录，防止重复
                     new WoactivityDao(Work_DetailsActivity.this).deleteList(new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM));
                 }
                 new WoactivityDao(Work_DetailsActivity.this).create(woactivityList);
@@ -1359,7 +1357,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 for (Wpmaterial wplabor : wpmaterialLit) {
                     wplabor.belongid = id;
                 }
-                if (new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM).size()>0){//删除默认保存的记录，防止重复
+                if (new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM).size() > 0) {//删除默认保存的记录，防止重复
                     new WpmaterialDao(Work_DetailsActivity.this).deleteList(new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM));
                 }
                 new WpmaterialDao(Work_DetailsActivity.this).create(wpmaterialLit);
@@ -1368,13 +1366,13 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     //如果为历史数据，则获取本地子表信息
-    private void getLocationData(int  id){
+    private void getLocationData(int id) {
         woactivityList = (ArrayList<Woactivity>) new WoactivityDao(Work_DetailsActivity.this).queryById(id);
-        if(woactivityList ==null ||woactivityList.size()==0){//如果没有修过记录，则查找默认保存记录
+        if (woactivityList == null || woactivityList.size() == 0) {//如果没有修过记录，则查找默认保存记录
             woactivityList = (ArrayList<Woactivity>) new WoactivityDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM);
         }
         wpmaterialLit = (ArrayList<Wpmaterial>) new WpmaterialDao(Work_DetailsActivity.this).queryById(id);
-        if (wpmaterialLit == null || wpmaterialLit.size() == 0){
+        if (wpmaterialLit == null || wpmaterialLit.size() == 0) {
             wpmaterialLit = (ArrayList<Wpmaterial>) new WpmaterialDao(Work_DetailsActivity.this).queryByWonum(workOrder.WONUM);
         }
     }
@@ -1737,8 +1735,8 @@ public class Work_DetailsActivity extends BaseActivity {
         return wpmaterials;
     }
 
-    private void getFailureList(){//得到故障问题failurelist
-        HttpManager.getDataPagingInfo(this, HttpManager.getFailurelist3Url(1, 20,workOrder.FAILURECODE), new HttpRequestHandler<Results>() {
+    private void getFailureList() {//得到故障问题failurelist
+        HttpManager.getDataPagingInfo(this, HttpManager.getFailurelist3Url(1, 20, workOrder.FAILURECODE), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -1748,8 +1746,8 @@ public class Work_DetailsActivity extends BaseActivity {
             public void onSuccess(Results results, int totalPages, int currentPage) {
                 if (results.getResultlist() != null) {
                     ArrayList<Failurelist> items = JsonUtils.parsingFailurelist(results.getResultlist());
-                    if (items!=null&&items.size() == 1) {//问题原因
-                        failurelist = items.get(0).FAILURELIST+"";
+                    if (items != null && items.size() == 1) {//问题原因
+                        failurelist = items.get(0).FAILURELIST + "";
                     }
                 }
             }

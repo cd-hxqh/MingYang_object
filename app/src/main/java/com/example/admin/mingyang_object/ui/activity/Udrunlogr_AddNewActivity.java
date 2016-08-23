@@ -39,46 +39,46 @@ import java.util.ArrayList;
 
 /**
  * Created by think on 2016/8/15.
- * ÔËĞĞ¼ÇÂ¼ĞÂÔöÒ³Ãæ
+ * è¿è¡Œè®°å½•æ–°å¢é¡µé¢
  */
 public class Udrunlogr_AddNewActivity extends BaseActivity {
 
     /**
-     * ·µ»Ø°´Å¥
+     * è¿”å›æŒ‰é’®
      */
     private ImageView backImageView;
     /**
-     * ±êÌâ
+     * æ ‡é¢˜
      */
     private TextView titleTextView;
 
 
     /**
-     * ²Ëµ¥
+     * èœå•
      */
     private ImageView menuImageView;
 
 
     /**
-     * ½çÃæĞÅÏ¢*
+     * ç•Œé¢ä¿¡æ¯*
      */
 //    private LinearLayout udrunlogrlayout;
-//    private TextView lognum;//ÔËĞĞÈÕÖ¾±àºÅ
-//    private TextView description;//ÃèÊö
-    private TextView branch;//ÖĞĞÄ±àºÅ
-    private TextView branchdesc;//ÖĞĞÄÃèÊö
-    private TextView pronum;//ÏîÄ¿±àºÅ
-    private TextView prodesc;//ÏîÄ¿ÃèÊö
-    private TextView year;//Äê
-    private TextView month;//ÔÂ
-    private TextView prohead;//¸ºÔğÈË
-    private TextView name1;//¸ºÔğÈËÃèÊö
-    private TextView creater;//Â¼ÈëÈË±àºÅ
-    private TextView createname;//Â¼ÈëÈËÃèÊö
-    private TextView createtime;//Â¼ÈëÊ±¼ä
+//    private TextView lognum;//è¿è¡Œæ—¥å¿—ç¼–å·
+//    private TextView description;//æè¿°
+    private TextView branch;//ä¸­å¿ƒç¼–å·
+    private TextView branchdesc;//ä¸­å¿ƒæè¿°
+    private TextView pronum;//é¡¹ç›®ç¼–å·
+    private TextView prodesc;//é¡¹ç›®æè¿°
+    private TextView year;//å¹´
+    private TextView month;//æœˆ
+    private TextView prohead;//è´Ÿè´£äºº
+    private TextView name1;//è´Ÿè´£äººæè¿°
+    private TextView creater;//å½•å…¥äººç¼–å·
+    private TextView createname;//å½•å…¥äººæè¿°
+    private TextView createtime;//å½•å…¥æ—¶é—´
 
-    private Button cancel;//È¡Ïû
-    private Button save;//±£´æ
+    private Button cancel;//å–æ¶ˆ
+    private Button save;//ä¿å­˜
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
@@ -89,7 +89,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     /**
-     * ¹¤×÷ÈÕÖ¾»î¶¯×Ó±í*
+     * å·¥ä½œæ—¥å¿—æ´»åŠ¨å­è¡¨*
      */
     private LinearLayout udrunlinerLinearLayout;
 
@@ -132,7 +132,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
     @Override
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
-        titleTextView.setText("ĞÂÔöÔËĞĞ¼ÇÂ¼");
+        titleTextView.setText("æ–°å¢è¿è¡Œè®°å½•");
 
         menuImageView.setVisibility(View.VISIBLE);
         menuImageView.setImageResource(R.mipmap.ic_more);
@@ -253,7 +253,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
             mMenuItems.add(new DialogMenuItem(types[i], 0));
         }
         final NormalListDialog dialog = new NormalListDialog(Udrunlogr_AddNewActivity.this, mMenuItems);
-        dialog.title("ÇëÑ¡Ôñ")//
+        dialog.title("è¯·é€‰æ‹©")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -268,7 +268,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
         });
     }
 
-    //Ê±¼äÑ¡Ôñ¼àÌı
+    //æ—¶é—´é€‰æ‹©ç›‘å¬
     private class DateTimeOnClickListener implements View.OnClickListener {
         TextView textView;
 
@@ -283,11 +283,11 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
     }
 
     /**
-     * Ìá½»Êı¾İ*
+     * æäº¤æ•°æ®*
      */
     private void submitDataInfo() {
         final NormalDialog dialog = new NormalDialog(Udrunlogr_AddNewActivity.this);
-        dialog.content("È·¶¨ĞÂÔöÔËĞĞ¼ÇÂ¼Âğ?")//
+        dialog.content("ç¡®å®šæ–°å¢è¿è¡Œè®°å½•å—?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
@@ -301,7 +301,7 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
-                        showProgressDialog("Êı¾İÌá½»ÖĞ...");
+                        showProgressDialog("æ•°æ®æäº¤ä¸­...");
                         if (isOK()) {
                             startAsyncTask();
                         } else {
@@ -314,19 +314,19 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
 
     private boolean isOK() {
         if (pronum.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈëÏîÄ¿±àºÅ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥é¡¹ç›®ç¼–å·", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (year.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈëÄêºÅ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥å¹´å·", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (month.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈëÔÂ·İ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥æœˆä»½", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (prohead.getText().toString().equals("")) {
-            Toast.makeText(Udrunlogr_AddNewActivity.this, "ÇëÊäÈë¸ºÔğÈË", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Udrunlogr_AddNewActivity.this, "è¯·è¾“å…¥è´Ÿè´£äºº", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -334,11 +334,11 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
 
 
     /**
-     * Ìá½»Êı¾İ*
+     * æäº¤æ•°æ®*
      */
     private void startAsyncTask() {
 //        if (NetWorkHelper.isNetwork(Work_DetailsActivity.this)) {
-//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "ÔİÎŞÍøÂç,ÏÖÀëÏß±£´æÊı¾İ!");
+//            MessageUtils.showMiddleToast(Work_DetailsActivity.this, "æš‚æ— ç½‘ç»œ,ç°ç¦»çº¿ä¿å­˜æ•°æ®!");
 //            saveWorkOrder();
 //        } else {
         String updataInfo = null;
@@ -360,9 +360,9 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
                 if (workResult == null || workResult.errorMsg == null) {
-                    Toast.makeText(Udrunlogr_AddNewActivity.this, "ĞÂÔöÔËĞĞ¼ÇÂ¼Ê§°Ü", Toast.LENGTH_SHORT).show();
-                } else if (workResult.errorMsg.equals("³É¹¦")) {
-                    Toast.makeText(Udrunlogr_AddNewActivity.this, "ÔËĞĞ¼ÇÂ¼" + workResult.wonum + "ĞÂÔö³É¹¦", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, "æ–°å¢è¿è¡Œè®°å½•å¤±è´¥", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("æˆåŠŸ")) {
+                    Toast.makeText(Udrunlogr_AddNewActivity.this, "è¿è¡Œè®°å½•" + workResult.wonum + "æ–°å¢æˆåŠŸ", Toast.LENGTH_SHORT).show();
                     setResult(100);
                     finish();
                 } else {
@@ -372,7 +372,6 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
             }
 
         }.execute();
-////        }
     }
 
     private Udrunlogr getUdprorunlog() {
@@ -384,8 +383,8 @@ public class Udrunlogr_AddNewActivity extends BaseActivity {
         udrunlogr.setCREATER(creater.getText().toString());
         udrunlogr.setCREATETIME(createtime.getText().toString());
         udrunlogr.setDESCRIPTION(createtime.getText().toString() + createname.getText().toString()
-                + "_" + prodesc.getText().toString() + year.getText().toString() + "Äê" +
-                month.getText().toString() + "ÔÂÔËĞĞ¼ÇÂ¼");
+                + "_" + prodesc.getText().toString() + year.getText().toString() + "å¹´" +
+                month.getText().toString() + "æœˆè¿è¡Œè®°å½•");
         return udrunlogr;
     }
 
