@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.ui.activity.WxDemoActivity;
 import com.example.admin.mingyang_object.ui.widget.GlideImageLoader;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -21,7 +20,7 @@ import java.util.List;
 
 
 public class ImageLoadAdapter extends RecyclerView.Adapter<ImageLoadAdapter.SelectedPicViewHolder> {
-    private static final String TAG="ImagePickerAdapter";
+    private static final String TAG = "ImagePickerAdapter";
     private int maxImgCount;
     private Context mContext;
     private List<ImageItem> mData;
@@ -39,19 +38,20 @@ public class ImageLoadAdapter extends RecyclerView.Adapter<ImageLoadAdapter.Sele
 
     public void setImages(List<ImageItem> data) {
         mData = new ArrayList<>(data);
-        if (getItemCount() < maxImgCount) {
-            mData.add(new ImageItem());
-            isAdded = true;
-        } else {
-            isAdded = false;
-        }
+//        if (getItemCount() < maxImgCount) {
+//            mData.add(new ImageItem());
+//            isAdded = true;
+//        } else {
+//            isAdded = false;
+//        }
         notifyDataSetChanged();
     }
 
     public List<ImageItem> getImages() {
         //由于图片未选满时，最后一张显示添加图片，因此这个方法返回真正的已选图片
-        if (isAdded) return new ArrayList<>(mData.subList(0, mData.size() - 1));
-        else return mData;
+//        if (isAdded) return new ArrayList<>(mData.subList(0, mData.size() - 1));
+//        else return mData;
+        return mData;
     }
 
     public ImageLoadAdapter(Context mContext, List<ImageItem> data, int maxImgCount) {
@@ -91,14 +91,14 @@ public class ImageLoadAdapter extends RecyclerView.Adapter<ImageLoadAdapter.Sele
             itemView.setOnClickListener(this);
             //根据条目位置设置图片
             ImageItem item = mData.get(position);
-            if (isAdded && position == getItemCount() - 1) {
-//                iv_img.setImageResource(R.drawable.selector_image_add);
-                clickPosition = WxDemoActivity.IMAGE_ITEM_ADD;
-            } else {
-                Log.i(TAG, "item.path=" + item.path);
-                initImagePicker().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
-                clickPosition = position;
-            }
+//            if (isAdded && position == getItemCount() - 1) {
+////                iv_img.setImageResource(R.drawable.selector_image_add);
+//                clickPosition = WxDemoActivity.IMAGE_ITEM_ADD;
+//            } else {
+            Log.i(TAG, "item.path=" + item.path);
+            initImagePicker().getImageLoader().displayImage((Activity) mContext, item.path, iv_img, 0, 0);
+            clickPosition = position;
+//            }
         }
 
         @Override
@@ -106,7 +106,6 @@ public class ImageLoadAdapter extends RecyclerView.Adapter<ImageLoadAdapter.Sele
             if (listener != null) listener.onItemClick(v, clickPosition);
         }
     }
-
 
 
     private ImagePicker initImagePicker() {
