@@ -765,6 +765,10 @@ public class Work_AddNewActivity extends BaseActivity {
         flowerLinearLayout.setVisibility(View.GONE);
         commitLinearLayout.setVisibility(View.GONE);
         failureLinearLayout.setOnClickListener(failureOnClickListener);
+
+        if (!workOrder.WORKTYPE.equals(Constants.FR)){
+            workplanText.setText("工作详情");
+        }
         decisionLayout();
 
     }
