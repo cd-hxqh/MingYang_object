@@ -14,6 +14,7 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Doclinks;
 import com.example.admin.mingyang_object.ui.adapter.ImageLoadAdapter;
 import com.example.admin.mingyang_object.utils.AccountUtils;
@@ -177,6 +178,8 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra("results", ImagePicker.SERVER_IMAGE_ITEMS);
+                intentPreview.putExtra("IMAGE_URL", AccountUtils.getIpAddress(this) + Constants.WORK_FLOW_URL);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }
@@ -186,7 +189,7 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "resultCode=" + resultCode);
+        Log.i(TAG, "resultCode=" + resultCode + ",requestCode=" + requestCode);
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
             //添加图片返回
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
@@ -204,6 +207,7 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
             //预览图片返回
             if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
                 ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+
                 selImageList.clear();
                 selImageList.addAll(images);
                 adapter.setImages(selImageList);
@@ -225,16 +229,17 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
                         textView.setVisibility(View.GONE);
                         for (int i = 0; i < item.size(); i++) {
                             String url = item.get(i).URL;
-                            if (url!=null) {
+                            if (url != null) {
                                 //拼接图片的URL
                                 ImageItem imageItem = new ImageItem();
                                 imageItem.path = getUrls(url);
+                                imageItem.name = item.get(i).getDOCINFOID();
                                 selImageList.add(imageItem);
                             }
                         }
-                        if(selImageList!=null||selImageList.size()!=0) {
+                        if (selImageList != null || selImageList.size() != 0) {
                             showResult(selImageList);
-                        }else{
+                        } else {
                             textView.setVisibility(View.VISIBLE);
                         }
                     }

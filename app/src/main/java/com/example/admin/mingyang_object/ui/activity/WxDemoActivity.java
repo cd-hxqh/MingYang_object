@@ -15,6 +15,7 @@ import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.ui.adapter.ImagePickerAdapter;
 import com.example.admin.mingyang_object.ui.widget.GlideImageLoader;
+import com.example.admin.mingyang_object.utils.ImageCompressUtils;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.lzy.imagepicker.ImagePicker;
@@ -171,6 +172,7 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
                 Intent intentPreview = new Intent(this, ImagePreviewDelActivity.class);
                 intentPreview.putExtra(ImagePicker.EXTRA_IMAGE_ITEMS, (ArrayList<ImageItem>) adapter.getImages());
                 intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                intentPreview.putExtra("results", ImagePicker.LOCATION_IMAGE_ITEMS);
                 startActivityForResult(intentPreview, REQUEST_CODE_PREVIEW);
                 break;
         }
@@ -196,13 +198,17 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
             //预览图片返回
             if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
-               ArrayList<ImageItem> imageItems = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+                imageItems = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
 
                 selImageList.clear();
                 selImageList.addAll(imageItems);
                 adapter.setImages(selImageList);
                 adapter.notifyDataSetChanged();
-                Log.i(TAG, "size=" + adapter.getItemCount());
+                if (adapter.getItemCount() != 0) {
+                    textView.setVisibility(View.GONE);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -222,11 +228,12 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
     };
 
     /**
-     * 删除
+     * 上传
      **/
     private View.OnClickListener submitBtnOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Log.i(TAG, "imageItems=" + imageItems.size());
             if (imageItems == null || imageItems.size() == 0) {
                 MessageUtils.showMiddleToast(WxDemoActivity.this, "请选择需要上传的图片");
             } else {
@@ -243,69 +250,78 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
     /**
      * 测试图片上传*
      */
-    private String getuploadBuffer(String fileName) {
-
-        try {
-            File f = new File(fileName);
-            if (f.exists() && f.isFile()) {
-                Log.i(TAG, "size=" + f.length());
-            } else {
-            }
-
-
-            FileInputStream fis = new FileInputStream(fileName);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int count = 0;
-            while ((count = fis.read(buffer)) >= 0) {
-                baos.write(buffer, 0, count);
-            }
-            String uploadBuffer = new String(Base64.encode(baos.toByteArray()));  //进行Base64编码
-            fis.close();
-            return uploadBuffer;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-
-    }
-
-
-    /**
-     * 提交数据*
-     */
     private void startAsyncTask(String fileName) {
-        String updataInfo = null;
-        String name = null;
-        updataInfo = getuploadBuffer(fileName);
-        name = getFileName(fileName);
+        File f = new File(fileName);
 
-        Log.i(TAG, "updataInfo=" + updataInfo);
-        final String finalUpdataInfo = updataInfo;
-        final String finalname = name;
-        new AsyncTask<String, String, String>() {
-            @Override
-            protected String doInBackground(String... strings) {
-                String reviseresult = AndroidClientService.connectWebService(WxDemoActivity.this,
-                        finalname, finalUpdataInfo, ownertable, ownerid, Constants.WORK_URL);
-                return reviseresult;
-            }
+        ImageCompressUtils.from(WxDemoActivity.this)
+                .load(fileName)
+                .execute(new ImageCompressUtils.OnCompressListener() {
+                    @Override
+                    public String onSuccess(File file) {
 
-            @Override
-            protected void onPostExecute(String workResult) {
-                super.onPostExecute(workResult);
-                if (workResult == null) {
-                    MessageUtils.showMiddleToast(WxDemoActivity.this, "图片上传失败");
-                } else {
-                    MessageUtils.showMiddleToast(WxDemoActivity.this, "图片上传成功");
-                    finish();
-                }
-                closeProgressDialog();
-            }
-        }.execute();
+                        try {
+                            FileInputStream fis = new FileInputStream(file);
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            byte[] buffer = new byte[1024];
+                            int count = 0;
+                            while ((count = fis.read(buffer)) >= 0) {
+                                baos.write(buffer, 0, count);
+                            }
+                            String uploadBuffer = new String(Base64.encode(baos.toByteArray()));  //进行Base64编码
+                            fis.close();
+
+
+                            String name = getFileName(file.getPath());
+
+                            final String finalUpdataInfo = uploadBuffer;
+                            final String finalname = name;
+                            new AsyncTask<String, String, String>() {
+                                @Override
+                                protected String doInBackground(String... strings) {
+                                    String reviseresult = AndroidClientService.connectWebService(WxDemoActivity.this,
+                                            finalname, finalUpdataInfo, ownertable, ownerid, Constants.WORK_URL);
+                                    return reviseresult;
+                                }
+
+                                @Override
+                                protected void onPostExecute(String workResult) {
+                                    super.onPostExecute(workResult);
+                                    if (workResult == null) {
+                                        MessageUtils.showMiddleToast(WxDemoActivity.this, "图片上传失败");
+                                    } else {
+                                        MessageUtils.showMiddleToast(WxDemoActivity.this, "图片上传成功");
+                                        finish();
+                                    }
+                                    closeProgressDialog();
+                                }
+                            }.execute();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        return null;
+                    }
+
+                    ;
+
+                    @Override
+                    public void onError(Throwable e) {
+                        MessageUtils.showMiddleToast(WxDemoActivity.this, "图片上传失败");
+                    }
+                });
 
     }
+
+//    /**
+//     * 提交数据*
+//     */
+//    private void startAsyncTask(String fileName) {
+//        String updataInfo = null;
+//        String name = null;
+//        updataInfo = getuploadBuffer(fileName);
+//
+//    }
 
 
     /**
@@ -317,8 +333,6 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
         if (file.exists()) {
             name = file.getName();
         }
-
-        Log.i(TAG, "name=" + name);
         return name;
     }
 
