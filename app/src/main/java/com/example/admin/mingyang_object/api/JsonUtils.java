@@ -15,6 +15,7 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.UdPerson;
+import com.example.admin.mingyang_object.model.UdTriprePort;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
@@ -973,6 +974,61 @@ public class JsonUtils<E> {
                 list.add(workOrder);
             }
             return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析调试工单信息
+     */
+    public static ArrayList<UdTriprePort> parsingTripReport(Context ctx, String data) {
+
+        ArrayList<UdTriprePort> list = null;
+
+        UdTriprePort udTriprePort = null;
+
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<UdTriprePort>();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                udTriprePort = new UdTriprePort();
+                jsonObject = jsonArray.getJSONObject(i);
+
+                Log.e("出差","JSON数据"+jsonObject);
+
+                Field[] field = udTriprePort.getClass().getDeclaredFields();//获取实体类的所有属性，返回Field数组
+
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = udTriprePort.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(udTriprePort);
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = udTriprePort.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(udTriprePort, jsonObject.getString(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(udTriprePort);
+            }
+            return list;
+
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -1972,6 +2028,45 @@ public class JsonUtils<E> {
         return jsonObject.toString();
     }
 
+    /**
+     * 封装出差报告数据
+     *
+     * @return
+     */
+    public static String tripPortToJson(UdTriprePort udTriprePort) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            Field[] field = udTriprePort.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+            for (int j = 0; j < field.length; j++) {
+                field[j].setAccessible(true);
+                String name = field[j].getName();//获取属性的名字
+                Method getOrSet = null;
+                try {
+                    getOrSet = udTriprePort.getClass().getMethod("get" + name);
+                    Object value = null;
+                    value = getOrSet.invoke(udTriprePort);
+                    if (value != null) {
+                        jsonObject.put(name, value + "");
+                    }
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject object = new JSONObject();
+            object.put("", "");
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(object);
+            jsonObject.put("relationShip", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
     /**
      * 封装故障提报单数据
      *

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.ui.activity.TriprePort_listActivity;
 import com.example.admin.mingyang_object.ui.activity.udpro.Udfeedback_listactivity;
 import com.example.admin.mingyang_object.ui.activity.udpro.Udpro_ListActivity;
 import com.example.admin.mingyang_object.ui.activity.udpro.Udprorunlog_listactivity;
@@ -30,6 +31,10 @@ public class ProjectFragment extends BaseFragment {
      * 问题联络单*
      */
     private TextView udfeedbackText;
+    /**
+     * 出差总结报告*
+     */
+    private TextView udtripreportText;
 
 
     @Override
@@ -55,6 +60,7 @@ public class ProjectFragment extends BaseFragment {
         udrroText = (TextView) view.findViewById(R.id.udrro_text_id);
         udprorunlogText = (TextView) view.findViewById(R.id.udprorunlog_text_id);
         udfeedbackText = (TextView) view.findViewById(R.id.udfeedback_text_id);
+        udtripreportText = (TextView) view.findViewById(R.id.tripreport_text_id);
     }
 
     /**
@@ -64,6 +70,7 @@ public class ProjectFragment extends BaseFragment {
         udrroText.setOnClickListener(udrroTextOnClickListener);
         udprorunlogText.setOnClickListener(udprorunlogTextOnClickListener);
         udfeedbackText.setOnClickListener(udfeedbackTextOnClickListener);
+        udtripreportText.setOnClickListener(tripReportTextOnClickListener);
     }
 
 
@@ -89,5 +96,11 @@ public class ProjectFragment extends BaseFragment {
             startActivityForResult(intent, 0);
         }
     };
-
+    private View.OnClickListener tripReportTextOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), TriprePort_listActivity.class);
+            startActivityForResult(intent, 0);
+        }
+    };
 }

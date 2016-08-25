@@ -70,6 +70,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
     private String status = "全部";
 
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -109,7 +110,7 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
         choose.setVisibility(View.VISIBLE);
         choose.setOnClickListener(new NormalListDialogOnClickListener(choose));
         titlename.setText(WorkTypeUtils.getTitle(worktype));
-        addimg.setVisibility(View.VISIBLE);
+        addimg.setVisibility(View.GONE);
         addimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +119,6 @@ public class DebugWork_ListActivity extends BaseActivity implements SwipeRefresh
                 startActivity(intent);
             }
         });
-        addimg.setVisibility(View.GONE);
         backlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

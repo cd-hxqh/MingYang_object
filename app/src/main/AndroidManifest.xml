@@ -16,14 +16,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Permission for Unit Test -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-
-
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
@@ -164,258 +161,213 @@
             android:theme="@style/mingyang.ActivityTheme" />
         <activity
             android:name=".ui.activity.udpro.Udpro_ListActivity"
-            android:label="@string/udrro_text"
-            
-            />
+            android:label="@string/udrro_text" />
         <activity
             android:name=".ui.activity.udpro.Udpro_DetailActivity"
-            android:label="@string/udpro_detail_text"
-            />
+            android:label="@string/udpro_detail_text" />
         <activity
             android:name=".ui.activity.udpro.Udfandetails_ListActivity"
-            android:label="@string/udfandetails_text"
-            />
+            android:label="@string/udfandetails_text" />
         <activity
             android:name=".ui.activity.udpro.Udfandetails_DetailActivity"
-            android:label="@string/udfandetails_details_title"
-            
-            />
+            android:label="@string/udfandetails_details_title" />
         <activity
             android:name=".ui.activity.UdPerson_ListActivity"
-            android:label="@string/person_text"
-            />
+            android:label="@string/person_text" />
         <activity
             android:name=".ui.activity.Ududvehicle_ListActivity"
-            android:label="@string/udvehicle_text"
-            />
+            android:label="@string/udvehicle_text" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_listactivity"
-            android:label="@string/udprorunlog_text"
-            />
+            android:label="@string/udprorunlog_text" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_DetailActivity"
-            android:label="@string/udprorunlog_detail_title"
-            />
+            android:label="@string/udprorunlog_detail_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_AddNewActivity"
-            android:label="@string/udprorunlog_addnew_title"
-            />
+            android:label="@string/udprorunlog_addnew_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1Activity"
-            android:label="@string/udprorunlog_line1_title"
-            />
+            android:label="@string/udprorunlog_line1_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4Activity"
-            android:label="@string/udprorunlog_line4_title"
-            />
+            android:label="@string/udprorunlog_line4_title" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1DetailsActivity"
             android:label="@string/udprorunlog_line1_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4DetailsActivity"
             android:label="@string/udprorunlog_line4_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line4AddNewActivity"
             android:label="@string/udprorunlog_line4_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line1AddNewActivity"
             android:label="@string/udprorunlog_line1_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2Activity"
             android:label="@string/udprorunlog_line2_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2DetailsActivity"
             android:label="@string/udprorunlog_line2_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line2AddNewActivity"
             android:label="@string/udprorunlog_line2_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line3Activity"
             android:label="@string/udprorunlog_line3_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line3DetailsActivity"
             android:label="@string/udprorunlog_line3_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udprorunlog_Line3AddNewActivity"
             android:label="@string/udprorunlog_line3_details_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udfeedback_listactivity"
-            android:label="@string/udfeedback_text"
-            />
+            android:label="@string/udfeedback_text" />
         <activity
             android:name=".ui.activity.udpro.Udfeedback_DetailActivity"
             android:label="@string/udfeedback_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.udpro.Udfeedback_AddNewActivity"
             android:label="@string/udfeedback_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udstock_DetailActivity"
-            android:label="@string/udstock_detail_text"
-            />
+            android:label="@string/udstock_detail_text" />
         <activity
             android:name=".ui.activity.Udstockline_DetailActivity"
             android:label="@string/udstockline_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udreport_ListActivity"
-            android:label="@string/udreport_text"
-            />
+            android:label="@string/udreport_text" />
         <activity
             android:name=".ui.activity.Udreport_DetailActivity"
             android:label="@string/udreport_detail_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udreport_AddNewActivity"
             android:label="@string/udreport_detail_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udinspo_ListActivity"
-            android:label="@string/udinspo_text"
-            />
+            android:label="@string/udinspo_text" />
         <activity
             android:name=".ui.activity.Udinspo_DetailActivity"
             android:label="@string/udinspo_detail_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udinsproject_ListActivity"
-            android:label="@string/udinsproject_text"
-            />
+            android:label="@string/udinsproject_text" />
         <activity
             android:name=".ui.activity.Udinsproject_DetailActivity"
             android:label="@string/udinsproject_details_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udrunlogr_ListActivity"
-            android:label="@string/udrunlogr_text"
-            />
+            android:label="@string/udrunlogr_text" />
         <activity
             android:name=".ui.activity.Udrunlogr_DetailActivity"
             android:label="@string/udrunlogr_detail_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udrunlogr_AddNewActivity"
             android:label="@string/udrunlogr_detail_title"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.UdrunlinerListActivity"
             android:label="@string/udrunliner_list"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.UdrunlinerDetailsActivity"
             android:label="@string/udrunliner_details"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.UdrunlinerAddNewActivity"
             android:label="@string/udrunliner_details"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Listactivity"
-            android:label="@string/udcardrivelog_text"
-            />
+            android:label="@string/udcardrivelog_text" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Detailactivity"
             android:label="@string/udcarddrivelog_details_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcardrivelog_Addactivity"
             android:label="@string/xcjlxj_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Listactivity"
-            android:label="@string/udcarfuelcharge_text"
-            />
+            android:label="@string/udcarfuelcharge_text" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Addactivity"
             android:label="@string/udcarfuelcharge_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarfuelcharge_Detailactivity"
             android:label="@string/udcarfuelcharge_detail_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Listactivity"
-            android:label="@string/udcarmainlog_text"
-            />
+            android:label="@string/udcarmainlog_text" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Detailactivity"
             android:label="@string/wxjlxq_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Udcarmainlog_Addactivity"
             android:label="@string/wxjlxq_text"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.activity.Wfm_Details_Activity"
-            android:label="@string/wfm_detail_title"
-            />
+            android:label="@string/wfm_detail_title" />
         <activity
             android:name=".ui.activity.OptionActivity"
-            android:label="@string/title_activity_option"
-            />
+            android:label="@string/title_activity_option" />
         <activity
             android:name=".ui.activity.PhotoActivity"
-            android:label="@string/title_activity_photo"></activity>
+            android:label="@string/title_activity_photo" />
         <activity
             android:name=".ui.activity.WxDemoActivity"
-            android:label="@string/title_activity_photo"></activity>
+            android:label="@string/title_activity_photo" />
         <activity
             android:name="com.lzy.imagepicker.ui.ImagePreviewDelActivity"
-            android:theme="@style/ImagePickerThemeFullScreen"/>
+            android:theme="@style/ImagePickerThemeFullScreen" />
         <activity
             android:name=".ui.activity.Failurelist1Activity"
-            android:label="@string/title_activity_failurelist1"></activity>
+            android:label="@string/title_activity_failurelist1" />
         <activity
             android:name=".ui.activity.Failurelist2Activity"
-            android:label="@string/title_activity_failurelist1"></activity>
-
-        <!--百度自动更新设置-->
+            android:label="@string/title_activity_failurelist1" />
+        <activity
+            android:name=".ui.activity.TriprePort_listActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity
+            android:name=".ui.activity.TriprePort_addNewActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity
+            android:name=".ui.activity.TriprePort_DetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <!-- 百度自动更新设置 -->
         <meta-data
             android:name="BDAPPID"
             android:value="8437947" />
         <meta-data
             android:name="BDAPPKEY"
             android:value="UT3mZKEpcZdTQvgW4qT6WTFqWG20ZDNj" />
-
 
         <activity
             android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"

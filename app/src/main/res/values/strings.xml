@@ -110,7 +110,6 @@
     <!--流程审批-->
 
 
-
     <string name="title_activity_wfm"> 流程审批</string>
     <string name="wfm_app_title">流程审批名:</string>
     <string name="wfm_ownertable_title">表名:</string>
@@ -123,7 +122,6 @@
     <string name="wfm_approve_text">审批</string>
     <string name="wfm_detail_title">流程审批详情</string>
     <string name="desc_text">描述:</string>
-
 
 
     <!--项目管理-->
@@ -268,7 +266,7 @@
     <string name="wpmaterial_orderunit">订购单位:</string>
     <string name="wpmaterial_location">库房:</string>
     <string name="wpmaterial_locdesc">库房描述:</string>
-    
+
     <string name="work_labtrans">员工</string>
     <string name="work_matusetrans">物料</string>
     <string name="work_realinfo">实际情况</string>

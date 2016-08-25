@@ -1,34 +1,28 @@
 package com.example.admin.mingyang_object.model;
 
+import java.io.Serializable;
+
 /**
  * Created by chris on 16/8/22.
  */
-public class UdTriprePort {
+public class UdTriprePort implements Serializable {
 
     private String SERIALNUMBER;//编号
     private String DESCRIPTION;//描述
     private String ACOUNT;//出差人编号
-    private String DISPLAYNAME;//出差人姓名
-    private String DEPARTMENT;//部门编号
-    private String DEPARTMENT_DESCRIPTION;//部门名称
+    private String NAME1;//出差人姓名
+    private String DEPTNUM;//部门编号
+    private String DEPTNAME;//部门名称
     private String CREATEBY;//录入人;
     private String CREATER_DISPLAYNAME;// 录入人姓名
     private String CREATEDATE;//录入日期
     private String TRIPCODE;//出差申请编号
     private String TRIPDATE;//出差日期
     private String PROJECT;//出差项目
-    private String PROJECT_DESCRIPTION;//项目名称
+    private String PROJECTNAME;//项目名称
     private String TOPLACE;//出差地点
     private String TRIPCONTENT;//出差事由
     private String WORKCONTENT;//工作内容
-
-    public String getDESCRIPTION() {
-        return DESCRIPTION;
-    }
-
-    public void setDESCRIPTION(String DESCRIPTION) {
-        this.DESCRIPTION = DESCRIPTION;
-    }
 
     public String getSERIALNUMBER() {
         return SERIALNUMBER;
@@ -36,6 +30,14 @@ public class UdTriprePort {
 
     public void setSERIALNUMBER(String SERIALNUMBER) {
         this.SERIALNUMBER = SERIALNUMBER;
+    }
+
+    public String getDESCRIPTION() {
+        return DESCRIPTION;
+    }
+
+    public void setDESCRIPTION(String DESCRIPTION) {
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     public String getACOUNT() {
@@ -46,28 +48,28 @@ public class UdTriprePort {
         this.ACOUNT = ACOUNT;
     }
 
-    public String getDISPLAYNAME() {
-        return DISPLAYNAME;
+    public String getNAME1() {
+        return NAME1;
     }
 
-    public void setDISPLAYNAME(String DISPLAYNAME) {
-        this.DISPLAYNAME = DISPLAYNAME;
+    public void setNAME1(String NAME1) {
+        this.NAME1 = NAME1;
     }
 
-    public String getDEPARTMENT() {
-        return DEPARTMENT;
+    public String getDEPTNUM() {
+        return DEPTNUM;
     }
 
-    public void setDEPARTMENT(String DEPARTMENT) {
-        this.DEPARTMENT = DEPARTMENT;
+    public void setDEPTNUM(String DEPTNUM) {
+        this.DEPTNUM = DEPTNUM;
     }
 
-    public String getDEPARTMENT_DESCRIPTION() {
-        return DEPARTMENT_DESCRIPTION;
+    public String getDEPTNAME() {
+        return DEPTNAME;
     }
 
-    public void setDEPARTMENT_DESCRIPTION(String DEPARTMENT_DESCRIPTION) {
-        this.DEPARTMENT_DESCRIPTION = DEPARTMENT_DESCRIPTION;
+    public void setDEPTNAME(String DEPTNAME) {
+        this.DEPTNAME = DEPTNAME;
     }
 
     public String getCREATEBY() {
@@ -118,12 +120,12 @@ public class UdTriprePort {
         this.PROJECT = PROJECT;
     }
 
-    public String getPROJECT_DESCRIPTION() {
-        return PROJECT_DESCRIPTION;
+    public String getPROJECTNAME() {
+        return PROJECTNAME;
     }
 
-    public void setPROJECT_DESCRIPTION(String PROJECT_DESCRIPTION) {
-        this.PROJECT_DESCRIPTION = PROJECT_DESCRIPTION;
+    public void setPROJECTNAME(String PROJECTNAME) {
+        this.PROJECTNAME = PROJECTNAME;
     }
 
     public String getTOPLACE() {

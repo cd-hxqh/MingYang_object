@@ -164,6 +164,19 @@ public class HttpManager {
     }
 
     /**
+     * 设置出差总结报告*
+     */
+    public static String getTripReportUrl(String search, int curpage, int showcount) {
+        if (search.equals("")) {
+            return "{'appid':'" + Constants.UDTRIPREPORT_APPID + "','objectname':'" + Constants.UDTRIPREPORT_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        } else {
+            return "{'appid':'" + Constants.UDTRIPREPORT_APPID + "','objectname':'" + Constants.UDTRIPREPORT_NAME + "'," +
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'"+"'sinorsearch':{'SERIALNUMBER':' + value + ','PROJECT':' + value + '}}";
+        }
+    }
+
+    /**
      * 设置计划任务接口*
      */
     public static String getwoactivityUrl(String wonum, int curpage, int showcount) {

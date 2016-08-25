@@ -228,6 +228,7 @@ public class AndroidClientService {
      * 通用修改
      */
     public static String connectWebService(Context context, String filename, String image, String ownertable, String ownerid, String url) {
+
         Log.i(TAG, "filename=" + filename + ",ownertable=" + ownertable + ",ownerid=" + ownerid);
         Log.i(TAG, "url=" + url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

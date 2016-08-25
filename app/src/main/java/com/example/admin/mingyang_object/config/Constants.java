@@ -250,13 +250,6 @@ public class Constants {
     public static final String DOCLINKS_NAME = "DOCLINKS";
 
 
-
-
-
-
-
-
-
     //设备appid
     public static final String ASSET_APPID = "UDASSET";
     //设备表名
@@ -271,6 +264,13 @@ public class Constants {
     public static final String PERSON_NAME = "PERSON";
 
 
+    /**
+     *出差总结报告
+     */
+
+    public static final String UDTRIPREPORT_APPID="TRIPREPORT";
+
+    public static final String UDTRIPREPORT_NAME="UDTRIPREPORT";
 
     /**
      * 位置表*
