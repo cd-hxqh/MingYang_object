@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
@@ -214,7 +213,9 @@ public class TriprePort_addNewActivity extends BaseActivity {
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
+
         dialog.setOnBtnClickL(
+
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
@@ -244,6 +245,7 @@ public class TriprePort_addNewActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
+
                 WebResult reviseresult = AndroidClientService.InsertWO(TriprePort_addNewActivity.this,
                         finalUpdataInfo, "UDTRIPREPORT", "SERIALNUMBER", AccountUtils.getpersonId(TriprePort_addNewActivity.this), Constants.WORK_URL);
                 //Context context, String json, String mboObjectName, String mboKey, String personId, String url
@@ -252,16 +254,23 @@ public class TriprePort_addNewActivity extends BaseActivity {
 
             @Override
             protected void onPostExecute(WebResult workResult) {
+
                 super.onPostExecute(workResult);
+
                 if (workResult.errorMsg == null) {
+
                     Toast.makeText(TriprePort_addNewActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+
                 } else if (workResult.errorMsg.equals("成功")) {
-                    //Toast.makeText(TriprePort_addNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
 
                     finish();
+
                 } else {
+
                     Toast.makeText(TriprePort_addNewActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+
                 }
+
                 closeProgressDialog();
             }
 

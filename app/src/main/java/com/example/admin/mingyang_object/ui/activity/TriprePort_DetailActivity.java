@@ -1,6 +1,7 @@
 package com.example.admin.mingyang_object.ui.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,15 +9,30 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.UdTriprePort;
+import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.utils.DateSelect;
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 
 public class TriprePort_DetailActivity extends BaseActivity {
 
@@ -41,6 +57,12 @@ public class TriprePort_DetailActivity extends BaseActivity {
     private TextView creatby;//录入人
     private TextView createDate;//录入时间
 
+    private Button cancel;
+    private Button save;
+
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +70,10 @@ public class TriprePort_DetailActivity extends BaseActivity {
         getIntentData();
         findViewById();
         initView();
+
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+
     }
     private void getIntentData(){
         triprePortr=(UdTriprePort)getIntent().getSerializableExtra("triprePortr");
@@ -69,21 +95,25 @@ public class TriprePort_DetailActivity extends BaseActivity {
         //项目
         project=(TextView)findViewById(R.id.trip_project);
         //描述
-        description=(TextView) findViewById(R.id.trip_decription);
+        description=(EditText) findViewById(R.id.trip_decription);
         //地点
-        toplace=(TextView)findViewById(R.id.trip_location);
+        toplace=(EditText)findViewById(R.id.trip_location);
         //出差申请号
         tripcode=(TextView)findViewById(R.id.trip_num);
         //出差日期
         tripdate=(TextView)findViewById(R.id.trip_date);
         //出差事由
-        tripcontent=(TextView)findViewById(R.id.trip_reason);
+        tripcontent=(EditText)findViewById(R.id.trip_reason);
         //工作内容
-        workcontent=(TextView)findViewById(R.id.trip_word_content);
+        workcontent=(EditText)findViewById(R.id.trip_word_content);
         //录入人
         creatby=(TextView)findViewById(R.id.trip_createby);
         //录入时间
         createDate=(TextView)findViewById(R.id.trip_createDate);
+
+        cancel = (Button) findViewById(R.id.work_cancel);
+        save = (Button) findViewById(R.id.work_save);
+
     }
     @Override
     protected void initView() {
@@ -122,9 +152,100 @@ public class TriprePort_DetailActivity extends BaseActivity {
         creatby.setText(triprePortr.getCREATEBY());
         //录入时间
         createDate.setText(triprePortr.getCREATEDATE());
+
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("出差","选择出差人");
+                Intent intent = new Intent(TriprePort_DetailActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 1);
+            }
+        });
+        department.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("出差","选择出差部门");
+                Intent intent = new Intent(TriprePort_DetailActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.UDDEPTCODE);
+                startActivityForResult(intent, 2);
+
+            }
+        });
+        project.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("出差","选择出差项目");
+                Intent intent = new Intent(TriprePort_DetailActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.UDPROCODE);
+                startActivityForResult(intent, 3);
+            }
+        });
+        tripdate.setOnClickListener(new DateChecked(tripdate));
+        creatby.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("出差","选择录入人");
+                Intent intent = new Intent(TriprePort_DetailActivity.this, OptionActivity.class);
+                intent.putExtra("optiontype", Constants.PERSONCODE);
+                startActivityForResult(intent, 4);
+            }
+        });
+        createDate.setOnClickListener(new DateChecked(tripdate));
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Log.e("调试工单","按下取消按钮");
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitDataInfo();
+                Log.e("调试工单","按下确定按钮");
+            }
+        });
+
+    }
+    class DateChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateSelect(TriprePort_DetailActivity.this, textView).showDialog();
+        }
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Option option;
+        if (requestCode==1)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            name.setText(option.getName());
+        }
+        if (requestCode==2)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            department.setText(option.getName());
+        }
+        if (requestCode==3)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            project.setText(option.getName());
+        }
+        if (requestCode==4)
+        {
+            option = (Option) data.getSerializableExtra("option");
+            creatby.setText(option.getName());
+        }
+    }
     private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -172,5 +293,83 @@ public class TriprePort_DetailActivity extends BaseActivity {
                 startActivityForResult(intent, 0);
             }
         });
+    }
+    private void submitDataInfo() {
+        final NormalDialog dialog = new NormalDialog(TriprePort_DetailActivity.this);
+        dialog.content("确定保存修改?")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        showProgressDialog("数据提交中...");
+                        startAsyncTask();
+                        dialog.dismiss();
+                    }
+                });
+    }
+    /**
+     * 提交数据*
+     */
+    private void startAsyncTask(){
+
+        String updataInfo = null;
+
+        updataInfo = JsonUtils.tripPortToJson(getTriprePortr());
+
+        final String finalUpdataInfo = updataInfo;
+        Log.e("出差","将要提交的出差总结报告"+finalUpdataInfo);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult reviseresult = AndroidClientService.UpdateWO(TriprePort_DetailActivity.this,
+                        finalUpdataInfo, "UDTRIPREPORT", "SERIALNUMBER", AccountUtils.getpersonId(TriprePort_DetailActivity.this), Constants.WORK_URL);
+                //Context context, String json, String mboObjectName, String mboKey, String personId, String url
+                return reviseresult;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult workResult) {
+                super.onPostExecute(workResult);
+                if (workResult.errorMsg == null) {
+                    Toast.makeText(TriprePort_DetailActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                } else if (workResult.errorMsg.equals("成功")) {
+                    //Toast.makeText(TriprePort_addNewActivity.this, "工单" + workResult.wonum + "新增成功", Toast.LENGTH_SHORT).show();
+
+                    finish();
+                } else {
+                    Toast.makeText(TriprePort_DetailActivity.this, workResult.errorMsg, Toast.LENGTH_SHORT).show();
+                }
+                closeProgressDialog();
+            }
+
+        }.execute();
+    }
+    protected UdTriprePort getTriprePortr()
+    {
+        UdTriprePort  triprePort=new UdTriprePort();
+
+        triprePort.setACOUNT(name.getText().toString());
+        triprePort.setDESCRIPTION(description.getText().toString());//描述
+        triprePort.setACOUNT(name.getText().toString());//出差人编号
+        triprePort.setNAME1(name.getText().toString());//出差人姓名
+        triprePort.setDEPTNUM(department.getText().toString());//部门编号
+        triprePort.setCREATEBY(creatby.getText().toString());//录入人;
+        triprePort.setCREATEDATE(createDate.getText().toString()+" 00:00:00");//录入日期
+        triprePort.setTRIPDATE(tripdate.getText().toString()+" 00:00:00");//出差日期
+        triprePort.setPROJECT(project.getText().toString());//出差项目
+        triprePort.setTOPLACE(toplace.getText().toString());//出差地点
+        triprePort.setTRIPCONTENT(tripcontent.getText().toString());//出差事由
+        triprePort.setWORKCONTENT(workcontent.getText().toString());//工作内容
+
+        return triprePort;
     }
 }
