@@ -54,20 +54,28 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
     private TextView phonenum;//电话号码
     private TextView prophase;//当前项目阶段
     private EditText workjob;//当日工作内容
-//    private EditText remark;//备注
 
-    private TextView funnum;//机位号
+
+    public TextView dznum;//机位号
+
+    public EditText clxproduction;//主机累计到货数q
+    public EditText compchecking;//轮毂累计到货数clx
+    public EditText comprunning;//叶片累计到货数e
+
+    public EditText basecomp;//基础浇筑完成累计数r
+    public EditText bpqproduction;//吊装完成累计数t
+    public EditText debugging;//电气安装完成累计数y
+    public EditText debugging2;//安装验收完成累计数u
+
+    public TextView date1;//试运行开始日期160829
+    public TextView date2;//试运行完成日期null
+    public TextView date3;//预验收完成日期null
+
+    public EditText debuggingcheck;//试运行台数q
+    public EditText dzcomp;//试运行完成台数w
+    public EditText dzstart;//预验收完成台数e
+
     private EditText remark;//备注
-    private EditText string1;//吊装开始
-    private EditText string2;//吊装完成
-    private EditText string3;//安装验收
-    private EditText string4;//并网调试
-    private EditText string5;//动态调试
-    private EditText string6;//调试验收
-    private EditText string7;//试运行开始
-    private EditText string8;//试运行完成
-    private EditText string9;//预验收完成
-
     private LinearLayout buttonlayout;
     private Button confirm;//确定
     private Button cancel;//删除
@@ -103,19 +111,27 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         phonenum = (TextView) findViewById(R.id.udprorunlog_line2_phononum);
         prophase = (TextView) findViewById(R.id.udprorunlog_line2_prophase);
         workjob = (EditText) findViewById(R.id.udprorunlog_line2_workjob);
-        remark = (EditText) findViewById(R.id.udprorunlogline2_remark);
+        remark = (EditText) findViewById(R.id.udprorunlogline2_remark1);
 
-        funnum = (TextView) findViewById(R.id.udprorunlogline2_funnum);
-//        remark1 = (EditText) findViewById(R.id.udprorunlogline2_remark1);
-        string1 = (EditText) findViewById(R.id.udprorunlogline2_string1);
-        string2 = (EditText) findViewById(R.id.udprorunlogline2_string2);
-        string3 = (EditText) findViewById(R.id.udprorunlogline2_string3);
-        string4 = (EditText) findViewById(R.id.udprorunlogline2_string4);
-        string5 = (EditText) findViewById(R.id.udprorunlogline2_string5);
-        string6 = (EditText) findViewById(R.id.udprorunlogline2_string6);
-        string7 = (EditText) findViewById(R.id.udprorunlogline2_string7);
-        string8 = (EditText) findViewById(R.id.udprorunlogline2_string8);
-        string9 = (EditText) findViewById(R.id.udprorunlogline2_string9);
+        dznum = (TextView) findViewById(R.id.udprorunlogline2_dznum);
+//
+        clxproduction = (EditText) findViewById(R.id.udprorunlogline2_clxproduction);//主机累计到货数q
+        compchecking = (EditText) findViewById(R.id.udprorunlogline2_compchecking);//轮毂累计到货数clx
+        comprunning = (EditText) findViewById(R.id.udprorunlogline2_comprunning);//叶片累计到货数e
+
+        basecomp = (EditText) findViewById(R.id.udprorunlogline2_basecomp);//基础浇筑完成累计数r
+        bpqproduction = (EditText) findViewById(R.id.udprorunlogline2_bpqproduction);//吊装完成累计数t
+        debugging = (EditText) findViewById(R.id.udprorunlogline2_debugging);//电气安装完成累计数y
+        debugging2 = (EditText) findViewById(R.id.udprorunlogline2_debugging2);//安装验收完成累计数u
+
+        date1 = (TextView) findViewById(R.id.udprorunlogline2_date1);//试运行开始日期160829
+        date2 = (TextView) findViewById(R.id.udprorunlogline2_date2);//试运行完成日期null
+        date3 = (TextView) findViewById(R.id.udprorunlogline2_date3);//预验收完成日期null
+
+        debuggingcheck = (EditText) findViewById(R.id.udprorunlogline2_debuggingcheck);//试运行台数q
+        dzcomp = (EditText) findViewById(R.id.udprorunlogline2_dzcomp);//试运行完成台数w
+        dzstart = (EditText) findViewById(R.id.udprorunlogline2_dzstart);//预验收完成台数e
+
 
         confirm = (Button) findViewById(R.id.work_save);
         cancel = (Button) findViewById(R.id.work_cancel);
@@ -131,6 +147,36 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         });
         titleTextView.setText("新增" + getResources().getString(R.string.udprorunlog_line2_details_title));
 
+
+        createdate.setText(udprorunlogLine2.CREATEDATE);
+        personid.setText(udprorunlogLine2.PERSONID);
+        person.setText(udprorunlogLine2.NAME);
+        phonenum.setText(udprorunlogLine2.PHONE);
+        prophase.setText(udprorunlogLine2.PROPHASE);
+        workjob.setText(udprorunlogLine2.WORKJOB);
+
+        clxproduction.setText(udprorunlogLine2.CLXPRODUCTION);//主机累计到货数q
+        compchecking.setText(udprorunlogLine2.COMPCHECKING);//轮毂累计到货数clx
+        comprunning.setText(udprorunlogLine2.COMPRUNNING);//叶片累计到货数e
+
+        basecomp.setText(udprorunlogLine2.BASECOMP);//基础浇筑完成累计数r
+        bpqproduction.setText(udprorunlogLine2.BPQPRODUCTION);//吊装完成累计数t
+        debugging.setText(udprorunlogLine2.DEBUGGING);//电气安装完成累计数y
+        debugging2.setText(udprorunlogLine2.DEBUGGING2);//安装验收完成累计数u
+
+        date1.setText(udprorunlogLine2.DATE1);//试运行开始日期160829
+        date2.setText(udprorunlogLine2.DATE2);//试运行完成日期null
+        date3.setText(udprorunlogLine2.DATE3);//预验收完成日期null
+
+        debuggingcheck.setText(udprorunlogLine2.DEBUGGINGCHECK);//试运行台数q
+        dzcomp.setText(udprorunlogLine2.DZCOMP);//试运行完成台数w
+        dzstart.setText(udprorunlogLine2.DZSTART);//预验收完成台数e
+
+
+        date1.setOnClickListener(new DateChecked(date1));
+        date2.setOnClickListener(new DateChecked(date2));
+        date3.setOnClickListener(new DateChecked(date3));
+
         createdate.setText(GetDateAndTime.GetDate());
         personid.setText(udprorunlog.RESPONSID);
         person.setText(udprorunlog.UDPRORESC);
@@ -139,32 +185,41 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         createdate.setOnClickListener(new DateChecked(createdate));
         personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
-        funnum.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
+        dznum.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
 
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);
     }
 
     private UdprorunlogLine2 getUdprorunlogLine2() {
+
         UdprorunlogLine2 udprorunlogLine2 = this.udprorunlogLine2;
         udprorunlogLine2.PRORUNLOGNUM = udprorunlog.PRORUNLOGNUM;
         udprorunlogLine2.CREATEDATE = createdate.getText().toString();
         udprorunlogLine2.PERSONID = personid.getText().toString();
-        udprorunlogLine2.CREATEBY = person.getText().toString();
+        udprorunlogLine2.NAME = person.getText().toString();
         udprorunlogLine2.PROPHASE = prophase.getText().toString();
         udprorunlogLine2.WORKJOB = workjob.getText().toString();
-        udprorunlogLine2.REMARK = remark.getText().toString();
-        udprorunlogLine2.FUNNUM = funnum.getText().toString();
-//        udprorunlogLine2.REMARK1 = remark1.getText().toString();
-        udprorunlogLine2.STRING1 = string1.getText().toString();
-        udprorunlogLine2.STRING2 = string2.getText().toString();
-        udprorunlogLine2.STRING3 = string3.getText().toString();
-        udprorunlogLine2.STRING4 = string4.getText().toString();
-        udprorunlogLine2.STRING5 = string5.getText().toString();
-        udprorunlogLine2.STRING6 = string6.getText().toString();
-        udprorunlogLine2.STRING7 = string7.getText().toString();
-        udprorunlogLine2.STRING8 = string8.getText().toString();
-        udprorunlogLine2.STRING9 = string9.getText().toString();
+        udprorunlogLine2.REMARK1 = remark.getText().toString();
+        udprorunlogLine2.DZNUM = dznum.getText().toString();
+
+        udprorunlogLine2.CLXPRODUCTION=clxproduction.getText().toString();//主机累计到货数q
+        udprorunlogLine2.COMPCHECKING=compchecking.getText().toString();//轮毂累计到货数clx
+        udprorunlogLine2.COMPRUNNING=comprunning.getText().toString();//叶片累计到货数e
+
+        udprorunlogLine2.BASECOMP=basecomp.getText().toString();//基础浇筑完成累计数r
+        udprorunlogLine2.BPQPRODUCTION=bpqproduction.getText().toString();//吊装完成累计数t
+        udprorunlogLine2.DEBUGGING=debugging.getText().toString();//电气安装完成累计数y
+        udprorunlogLine2.DEBUGGING2=debugging2.getText().toString();//安装验收完成累计数u
+
+        udprorunlogLine2.DATE1=date1.getText().toString();//试运行开始日期160829
+        udprorunlogLine2.DATE2=date2.getText().toString();//试运行完成日期null
+        udprorunlogLine2.DATE3=date3.getText().toString();//预验收完成日期null
+
+        udprorunlogLine2.DEBUGGINGCHECK=debuggingcheck.getText().toString();//试运行台数q
+        udprorunlogLine2.DZCOMP=dzcomp.getText().toString();//试运行完成台数w
+        udprorunlogLine2.DZSTART=dzstart.getText().toString();//预验收完成台数e
+//
         udprorunlogLine2.TYPE = "add";
         return udprorunlogLine2;
     }
@@ -305,7 +360,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
                 case 2:
                     if (data != null) {
                         option = (Option) data.getSerializableExtra("option");
-                        funnum.setText(option.getName());
+                        dznum.setText(option.getName());
                     }
             }
         }

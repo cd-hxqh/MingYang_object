@@ -632,7 +632,7 @@ public class JsonUtils<E> {
      * 项目日报*
      */
     public static ArrayList<Udprorunlog> parsingUdprorunlog(Context ctx, String data) {
-        Log.i(TAG, "Udprorunlog data=" + data);
+        Log.i("项目日报", "data=" + data);
         ArrayList<Udprorunlog> list = null;
         Udprorunlog udprorunlog = null;
         try {
@@ -1278,7 +1278,7 @@ public class JsonUtils<E> {
      * 解析吊装调试子表信息
      */
     public static ArrayList<UdprorunlogLine2> parsingUdprorunlogLine2(Context ctx, String data, String prorunlognum) {
-        Log.i(TAG, "UdprorunlogLine2 data=" + data);
+
         ArrayList<UdprorunlogLine2> list = null;
         UdprorunlogLine2 udprorunlogLine2 = null;
         try {
@@ -1288,7 +1288,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine2 = new UdprorunlogLine2();
                 jsonObject = jsonArray.getJSONObject(i);
-                Log.e("项目日报","吊装调试子表"+jsonObject);
+                Log.e("项目日报","吊装调试子表"+jsonObject+"\n");
                 Field[] field = udprorunlogLine2.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1881,7 +1881,7 @@ public class JsonUtils<E> {
                 jsonObject.put("UDPRORUNLOGLINE1", udprorunlogline1Array);
             }
             if (udprorunlogLine2s != null && udprorunlogLine2s.size() != 0) {
-                object.put("UDPRORUNLOGLINE2DZ", "");
+                object.put("UDPRORUNLOGLINE2", "");
                 JSONArray udprorunlogline2Array = new JSONArray();
                 JSONObject udprorunlogline2Obj;
                 for (int i = 0; i < udprorunlogLine2s.size(); i++) {
@@ -1911,7 +1911,7 @@ public class JsonUtils<E> {
                     }
                     udprorunlogline2Array.put(udprorunlogline2Obj);
                 }
-                jsonObject.put("UDPRORUNLOGLINE2DZ", udprorunlogline2Array);
+                jsonObject.put("UDPRORUNLOGLINE2", udprorunlogline2Array);
             }
             if (udprorunlogLine3s != null && udprorunlogLine3s.size() != 0) {
                 object.put("UDPRORUNLOGC", "");

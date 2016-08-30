@@ -33,7 +33,7 @@ public class UdprorunlogLine2Adapter extends BaseQuickAdapter<UdprorunlogLine2> 
         helper.setText(R.id.item_num_title, mContext.getString(R.string.udprorunlog_line2_createdate));
         helper.setText(R.id.item_desc_title, mContext.getString(R.string.udprorunlog_line2_personid));
         helper.setText(R.id.item_num_text, item.getCREATEDATE());
-        helper.setText(R.id.item_desc_text, item.getCREATEBY()  );
+        helper.setText(R.id.item_desc_text, item.NAME);
 
     }
 

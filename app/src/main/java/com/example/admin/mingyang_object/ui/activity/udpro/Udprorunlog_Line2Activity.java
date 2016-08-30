@@ -159,19 +159,24 @@ public class Udprorunlog_Line2Activity extends BaseActivity implements SwipeRefr
     }
 
     private void getdata() {
+        Log.e("项目日报","查询吊装调试日报");
         if (udprorunlog.PRORUNLOGNUM != null && !udprorunlog.PRORUNLOGNUM.equals("")) {
+            Log.e("项目日报","查询吊装调试日报地址"+HttpManager.getUdprorunlogLine2Url(udprorunlog.PRORUNLOGNUM, page, 20));
+
             HttpManager.getDataPagingInfo(Udprorunlog_Line2Activity.this, HttpManager.getUdprorunlogLine2Url(udprorunlog.PRORUNLOGNUM, page, 20), new HttpRequestHandler<Results>() {
                 @Override
                 public void onSuccess(Results results) {
+                    Log.e("项目日报","查询吊装调试日报成功1");
                     Log.i(TAG, "data=" + results);
                 }
 
                 @Override
                 public void onSuccess(Results results, int currentPage, int showcount) {
+                    Log.e("项目日报","查询吊装调试日报成功2");
                     ArrayList<UdprorunlogLine2> udprorunlogLine2s = null;
-                    if (currentPage == page) {
+                    //if (currentPage == page) {
                         udprorunlogLine2s = JsonUtils.parsingUdprorunlogLine2(Udprorunlog_Line2Activity.this, results.getResultlist(), udprorunlog.PRORUNLOGNUM);
-                    }
+                    //}
                     refresh_layout.setRefreshing(false);
                     refresh_layout.setLoading(false);
                     if ((udprorunlogLine2s == null || udprorunlogLine2s.isEmpty())&&page==1) {
@@ -195,6 +200,7 @@ public class Udprorunlog_Line2Activity extends BaseActivity implements SwipeRefr
 
                 @Override
                 public void onFailure(String error) {
+                    Log.e("项目日报","查询吊装调试日报失败:" +error);
                     if (page == 1) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     }
@@ -203,6 +209,7 @@ public class Udprorunlog_Line2Activity extends BaseActivity implements SwipeRefr
                 }
             });
         } else {
+            Log.e("项目日报","不查询吊装调试日报");
             refresh_layout.setRefreshing(false);
             refresh_layout.setLoading(false);
         }

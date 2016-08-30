@@ -225,6 +225,10 @@ public class TriprePort_addNewActivity extends BaseActivity {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick() {
+                        if(!checkdata())
+                        {
+                            return;
+                        }
                         showProgressDialog("数据提交中...");
                         startAsyncTask();
                         dialog.dismiss();
@@ -294,6 +298,55 @@ public class TriprePort_addNewActivity extends BaseActivity {
         triprePort.setWORKCONTENT(workcontent.getText().toString());//工作内容
 
         return triprePort;
+    }
+    protected  boolean checkdata()
+    {
+        //姓名
+        if("".equals(name.getText().toString())||name.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选择出差人", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //部门
+        if("".equals(department.getText().toString())||department.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选部门", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //录入人
+        if("".equals(department.getText().toString())||department.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选择录入人", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //出差项目
+        if("".equals(department.getText().toString())||department.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选择出差项目", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //出差地点
+        if("".equals(department.getText().toString())||department.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选填写出差地点", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //出差日期
+        if("".equals(department.getText().toString())||department.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选择出差日期", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //录入时间
+        if("".equals(department.getText().toString())||department.getText()==null)
+        {
+            Toast.makeText(TriprePort_addNewActivity.this, "请选录入时间", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //
+
+        return true;
+
     }
 }
 
