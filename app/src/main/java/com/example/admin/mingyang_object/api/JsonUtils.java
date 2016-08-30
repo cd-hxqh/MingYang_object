@@ -2283,8 +2283,8 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
-                    udprorunlogline1Obj.put("forapp","1");
-                    udprorunlogline1Obj.put("PRONUM","S1-20140053");
+                    udprorunlogline1Obj.put("FORAPP","1");
+                    udprorunlogline1Obj.put("DESCRIPTION",udprorunlog.LOGNUM);
                     if (udprorunlogline1Obj.get("TYPE").equals("add") && udprorunlogline1Obj.has("UDRUNLINERID") && udprorunlogline1Obj.get("UDRUNLINERID").equals("0")) {
                         udprorunlogline1Obj.remove("UDRUNLINERID");
                     }

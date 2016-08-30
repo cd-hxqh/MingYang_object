@@ -23,6 +23,7 @@ public class Udrunliner implements Serializable {
     public String REMARK;//备注
 
     public String TYPE;
+    public String LOGNUM;//运行日志编号
     public boolean isUpload;
 
     public String getUDRUNLINERID() {
@@ -135,5 +136,21 @@ public class Udrunliner implements Serializable {
 
     public void setREMARK(String REMARK) {
         this.REMARK = REMARK;
+    }
+
+    public String getTYPE() {
+        return TYPE;
+    }
+
+    public void setTYPE(String TYPE) {
+        this.TYPE = TYPE;
+    }
+
+    public String getLOGNUM() {
+        return LOGNUM;
+    }
+
+    public void setLOGNUM(String LOGNUM) {
+        this.LOGNUM = LOGNUM;
     }
 }

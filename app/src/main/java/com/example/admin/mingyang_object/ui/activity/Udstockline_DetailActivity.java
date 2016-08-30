@@ -66,13 +66,13 @@ public class Udstockline_DetailActivity extends BaseActivity {
 
     private TextView msehlText; //单位
 
-    private LinearLayout numexistLayout;
-    private TextView numexistText;//账存数量
+//    private LinearLayout numexistLayout;
+//    private TextView numexistText;//账存数量
 
     private EditText actualqtyText; //实盘数量
 
-    private LinearLayout diffqtyLayout;
-    private TextView diffqtyText; //差异数量
+//    private LinearLayout diffqtyLayout;
+//    private TextView diffqtyText; //差异数量
 
     private EditText diffreasonText; //差异原因
 
@@ -111,11 +111,11 @@ public class Udstockline_DetailActivity extends BaseActivity {
         matnrText = (TextView) findViewById(R.id.matnr_text_id);
         maktxText = (TextView) findViewById(R.id.maktx_text_id);
         msehlText = (TextView) findViewById(R.id.msehl_text_id);
-        numexistLayout = (LinearLayout) findViewById(R.id.numexist_layout);
-        numexistText = (TextView) findViewById(R.id.numexist_text_id);
+//        numexistLayout = (LinearLayout) findViewById(R.id.numexist_layout);
+//        numexistText = (TextView) findViewById(R.id.numexist_text_id);
         actualqtyText = (EditText) findViewById(R.id.actualqty_text_id);
-        diffqtyLayout = (LinearLayout) findViewById(R.id.diffqty_layout);
-        diffqtyText = (TextView) findViewById(R.id.diffqty_text_id);
+//        diffqtyLayout = (LinearLayout) findViewById(R.id.diffqty_layout);
+//        diffqtyText = (TextView) findViewById(R.id.diffqty_text_id);
         diffreasonText = (EditText) findViewById(R.id.diffreason_text_id);
 
         buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
@@ -127,15 +127,15 @@ public class Udstockline_DetailActivity extends BaseActivity {
             matnrText.setText(udstockline.getMATNR());
             maktxText.setText(udstockline.getMAKTX());
             msehlText.setText(udstockline.getMSEHL());
-            numexistText.setText(udstockline.getNUMEXIST());
+//            numexistText.setText(udstockline.getNUMEXIST());
             actualqtyText.setText(udstockline.getACTUALQTY() + "");
-            diffqtyText.setText(udstockline.getDIFFQTY() + "");
+//            diffqtyText.setText(udstockline.getDIFFQTY() + "");
             diffreasonText.setText(udstockline.getDIFFREASON());
 
-            if (udstock.getISCLOSE().equals("Y")){
-                numexistLayout.setVisibility(View.GONE);
-                diffqtyLayout.setVisibility(View.GONE);
-            }
+//            if (udstock.getISCLOSE().equals("Y")){
+//                numexistLayout.setVisibility(View.GONE);
+//                diffqtyLayout.setVisibility(View.GONE);
+//            }
         }
     }
 
@@ -144,7 +144,7 @@ public class Udstockline_DetailActivity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.udstockline_text));
 
-        actualqtyText.addTextChangedListener(new EditChangedListener());
+//        actualqtyText.addTextChangedListener(new EditChangedListener());
         save.setText("上传");
         cancel.setOnClickListener(backImageViewOnClickListener);
         save.setOnClickListener(new View.OnClickListener() {
@@ -155,43 +155,43 @@ public class Udstockline_DetailActivity extends BaseActivity {
         });
     }
 
-    class EditChangedListener implements TextWatcher {
-        private CharSequence temp;//监听前的文本
-        private int editStart;//光标开始位置
-        private int editEnd;//光标结束位置
-        private final int charMaxNum = 10;
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            temp = s;
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (!s.equals("0") && !s.equals("") && count != 0) {
-                diffqtyText.setText((int)(Integer.parseInt(s.toString()) - Double.parseDouble(numexistText.getText().toString())) + "");
-            } else {
-                diffqtyText.setText((int)(-Double.parseDouble(numexistText.getText().toString())) + "");
-            }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-//            if (DEBUG)
-//                Log.i(TAG, "输入文字后的状态");
-//            /** 得到光标开始和结束位置 ,超过最大数后记录刚超出的数字索引进行控制 */
-//            editStart = mEditTextMsg.getSelectionStart();
-//            editEnd = mEditTextMsg.getSelectionEnd();
-//            if (temp.length() > charMaxNum) {
-//                Toast.makeText(getApplicationContext(), "你输入的字数已经超过了限制！", Toast.LENGTH_LONG).show();
-//                s.delete(editStart - 1, editEnd);
-//                int tempSelection = editStart;
-//                mEditTextMsg.setText(s);
-//                mEditTextMsg.setSelection(tempSelection);
+//    class EditChangedListener implements TextWatcher {
+//        private CharSequence temp;//监听前的文本
+//        private int editStart;//光标开始位置
+//        private int editEnd;//光标结束位置
+//        private final int charMaxNum = 10;
+//
+//        @Override
+//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            temp = s;
+//        }
+//
+//        @Override
+//        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            if (!s.equals("0") && !s.equals("") && count != 0) {
+//                diffqtyText.setText((int)(Integer.parseInt(s.toString()) - Double.parseDouble(numexistText.getText().toString())) + "");
+//            } else {
+//                diffqtyText.setText((int)(-Double.parseDouble(numexistText.getText().toString())) + "");
 //            }
-
-        }
-    }
+//        }
+//
+//        @Override
+//        public void afterTextChanged(Editable s) {
+////            if (DEBUG)
+////                Log.i(TAG, "输入文字后的状态");
+////            /** 得到光标开始和结束位置 ,超过最大数后记录刚超出的数字索引进行控制 */
+////            editStart = mEditTextMsg.getSelectionStart();
+////            editEnd = mEditTextMsg.getSelectionEnd();
+////            if (temp.length() > charMaxNum) {
+////                Toast.makeText(getApplicationContext(), "你输入的字数已经超过了限制！", Toast.LENGTH_LONG).show();
+////                s.delete(editStart - 1, editEnd);
+////                int tempSelection = editStart;
+////                mEditTextMsg.setText(s);
+////                mEditTextMsg.setSelection(tempSelection);
+////            }
+//
+//        }
+//    }
 
     ;
 
@@ -200,7 +200,7 @@ public class Udstockline_DetailActivity extends BaseActivity {
      */
     private void submitDataInfo() {
         if (udstockline.getACTUALQTY() == (actualqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(actualqtyText.getText().toString()))
-                && udstockline.getDIFFQTY() == (diffqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(diffqtyText.getText().toString()))
+//                && udstockline.getDIFFQTY() == (diffqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(diffqtyText.getText().toString()))
                 && udstockline.getDIFFREASON().equals(diffreasonText.getText().toString())) {
             finish();
         } else {

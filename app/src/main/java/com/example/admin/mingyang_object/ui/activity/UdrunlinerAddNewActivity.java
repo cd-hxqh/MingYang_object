@@ -142,6 +142,7 @@ public class UdrunlinerAddNewActivity extends BaseActivity {
         udrunliner.WORKCRON = workcron.getText().toString();
         udrunliner.COMPSTA = compsta.getText().toString();
         udrunliner.REMARK = remark.getText().toString();
+        udrunliner.LOGNUM = udrunlogr.LOGNUM;
         udrunliner.TYPE = "add";
         return udrunliner;
     }

@@ -119,6 +119,7 @@
     <string name="wfm_processname_title">过程名称:</string>
     <string name="wfm_roleid_title">任务角色:</string>
     <string name="wfm_startdate_title">流程发起日期:</string>
+    <string name="wfm_details_text">查看表单详情</string>
     <string name="wfm_approve_text">审批</string>
     <string name="wfm_detail_title">流程审批详情</string>
     <string name="desc_text">描述:</string>

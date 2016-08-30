@@ -359,7 +359,7 @@ public class HttpManager {
      */
     public static String getUdprorunlogLine1Url(String prorunlognum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDPRORUNLOGLINE1_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE1_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
-                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                ",'orderby':'CREATEDATE desc','condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
                 "}";
     }
 
@@ -368,7 +368,7 @@ public class HttpManager {
      */
     public static String getUdprorunlogLine2Url(String prorunlognum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDPRORUNLOGLINE2_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE2_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
-                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                ",'orderby':'CREATEDATE desc','condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
                 "}";
     }
 
@@ -377,7 +377,7 @@ public class HttpManager {
      */
     public static String getUdprorunlogLine3Url(String prorunlognum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDPRORUNLOGLINE3_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE3_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
-                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                ",'orderby':'RUNLOGDATE desc','condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
                 "}";
     }
 
@@ -386,7 +386,7 @@ public class HttpManager {
      */
     public static String getUdprorunlogLine4Url(String prorunlognum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDPRORUNLOGLINE4_APPID + "','objectname':'" + Constants.UDPRORUNLOGLINE4_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
-                ",'condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
+                ",'orderby':'RUNLOGDATE desc','condition':{'PRORUNLOGNUM':'" + prorunlognum + "'}" +
                 "}";
     }
 
@@ -462,7 +462,7 @@ public class HttpManager {
      */
     public static String getudinsprojecturl(String insponum, int curpage, int showcount) {
 //        if (value.equals("")) {
-            return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'JPTASK','condition':{'INSPONUM':'" + insponum + "'}}";
+        return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'JPTASK','condition':{'INSPONUM':'" + insponum + "'}}";
 //        }
 //        return "{'appid':'" + Constants.UDINSPROJECT_APPID + "','objectname':'" + Constants.UDINSPROJECT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'JPTASK','condition':{'INSPONUM':'" + insponum + "'}" + ",'sinorsearch':{'JPTASK':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }

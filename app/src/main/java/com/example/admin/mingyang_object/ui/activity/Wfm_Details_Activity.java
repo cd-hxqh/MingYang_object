@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Wfassignment;
+import com.example.admin.mingyang_object.utils.GetWorkTypeUtil;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -48,11 +50,13 @@ public class Wfm_Details_Activity extends BaseActivity {
     private TextView appText; //应用程序名
     private TextView descriptionText; //描述
     private TextView udassign02Text; //任务分配人
-//    private TextView duedateText; //到期日期
+    //    private TextView duedateText; //到期日期
 //    private TextView processnameText; //过程名称
 //    private TextView roleidText; //任务角色
     private TextView startdateText; //流程发起日期
 
+    private Button details;//查看详情
+    private LinearLayout detailslayout;
     private Button approve;
 
     private ProgressDialog mProgressDialog;
@@ -88,6 +92,8 @@ public class Wfm_Details_Activity extends BaseActivity {
 //        processnameText = (TextView) findViewById(R.id.wfm_processname_text);
 //        roleidText = (TextView) findViewById(R.id.wfm_roleid_text);
         startdateText = (TextView) findViewById(R.id.wfm_startdate_text);
+        details = (Button) findViewById(R.id.details);
+        detailslayout = (LinearLayout) findViewById(R.id.details_layout);
         approve = (Button) findViewById(R.id.wfm_approve);
     }
 
@@ -96,6 +102,12 @@ public class Wfm_Details_Activity extends BaseActivity {
         titleView.setText(getString(R.string.wfm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
+        if (wfm.getOWNERTABLE()!=null&&!wfm.getOWNERTABLE().equals("WORKORDER")
+                &&wfm.getOWNERTABLE().equals("DEBUGWORKORDER")&&wfm.getOWNERTABLE().equals("UDSTOCK")
+                &&wfm.getOWNERTABLE().equals("UDFEEDBACK")&&wfm.getOWNERTABLE().equals("UDREPORT")
+                &&wfm.getOWNERTABLE().equals("UDINSPO")){
+            detailslayout.setVisibility(View.INVISIBLE);
+        }
 
         if (wfm != null) {
             appText.setText(wfm.getUDASSIGN01() == null ? "" : wfm.getUDASSIGN01());
@@ -105,9 +117,14 @@ public class Wfm_Details_Activity extends BaseActivity {
 //            processnameText.setText(wfm.getPROCESSNAME() == null ? "" : wfm.getPROCESSNAME());
 //            roleidText.setText(wfm.getROLEID() == null ? "" : wfm.getROLEID());
             startdateText.setText(wfm.getSTARTDATE() == null ? "" : wfm.getSTARTDATE());
+            if (wfm.getUDASSIGN01() != null && !wfm.getUDASSIGN01().equals("")) {
+                details.setText("查看" + wfm.getUDASSIGN01() + "详情");
+            }
         }
+
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
+        details.setOnClickListener(detailsOnClickListener);
         approve.setOnClickListener(approveOnClickListener);
     }
 
@@ -118,6 +135,29 @@ public class Wfm_Details_Activity extends BaseActivity {
         @Override
         public void onClick(View v) {
             finish();
+        }
+    };
+
+    private View.OnClickListener detailsOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (wfm.getUDASSIGN01()){
+                case "WORKORDER"://工单
+                    String worktype = GetWorkTypeUtil.getWorkType(wfm.getPROCESSNAME());
+
+                    break;
+                case "DEBUGWORKORDER"://调试工单
+                    break;
+                case "UDSTOCK"://库存盘点
+                    break;
+                case "UDFEEDBACK"://问题联络单
+
+                    break;
+                case "UDREPORT"://故障提报单
+                    break;
+                case "UDINSPO"://巡检单
+                    break;
+            }
         }
     };
 

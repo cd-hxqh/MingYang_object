@@ -55,6 +55,7 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.MaterialDialog;
+import com.flyco.dialog.widget.MaterialDialog2;
 import com.flyco.dialog.widget.NormalDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
@@ -1480,7 +1481,7 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     private void MaterialDialogOneBtn() {//开始工作流
-        final MaterialDialog dialog = new MaterialDialog(Work_DetailsActivity.this);
+        final MaterialDialog2 dialog = new MaterialDialog2(Work_DetailsActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.isTitleShow(false)//
