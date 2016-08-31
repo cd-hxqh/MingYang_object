@@ -279,7 +279,7 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
                 popupWindow.dismiss();
                 Intent intent = new Intent(DebugWork_DetailsActivity.this, WxDemoActivity.class);
-                intent.putExtra("ownertable", "WORKORDER");
+                intent.putExtra("ownertable", "DEBUGWORKORDER");
                 intent.putExtra("ownerid", workOrder.getDEBUGWORKORDERID()+"");
                 startActivityForResult(intent, 0);
             }
