@@ -19,7 +19,7 @@ public class UdprorunlogLine2 implements Serializable{
 
     public String DZNUM;//机位号
 
-    public String PRORUNLOGNUM;//
+    public String PRORUNLOGNUM;//项目日报编号
 
     public String CLXPRODUCTION;//主机累计到货数q
     public String COMPCHECKING;//轮毂累计到货数clx

@@ -2,6 +2,7 @@ package com.example.admin.mingyang_object.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 /**
  * Created by think on 2015/8/11.
@@ -52,6 +53,10 @@ public class BaseApplication extends Application {
     public static Context getContext() {
         return context;
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
 }
