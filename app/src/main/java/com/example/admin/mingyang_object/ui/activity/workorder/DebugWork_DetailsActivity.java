@@ -253,6 +253,7 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         planLinearlayout.setOnClickListener(planOnClickListener);
         //发送工作流
         workfloatLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+
         workfloatLinearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,13 +262,14 @@ public class DebugWork_DetailsActivity extends BaseActivity {
                     MaterialDialogOneBtn();
                     Log.e("调试工单","启动工作流");
                 } else {
-                    MaterialDialogOneBtn1();
+                    EditDialog();
                     Log.e("调试工单","发送工作流");
                 }
 
                 popupWindow.dismiss();
             }
         });
+
         //图片上传
         pictureLinearlayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
         pictureLinearlayout.setOnClickListener(new View.OnClickListener() {
@@ -283,7 +285,42 @@ public class DebugWork_DetailsActivity extends BaseActivity {
             }
         });
     }
+    private void EditDialog() {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(DebugWork_DetailsActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
 
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("1", text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -462,13 +499,13 @@ public class DebugWork_DetailsActivity extends BaseActivity {
 
     }
 
-    //工作流审批
-    private View.OnClickListener approvalBtnOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            MaterialDialogOneBtn1();
-        }
-    };
+//    //工作流审批
+//    private View.OnClickListener approvalBtnOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            MaterialDialogOneBtn1();
+//        }
+//    };
 
     private void MaterialDialogOneBtn() {//开始工作流
         final MaterialDialog dialog = new MaterialDialog(DebugWork_DetailsActivity.this);
@@ -498,67 +535,73 @@ public class DebugWork_DetailsActivity extends BaseActivity {
                 }
         );
     }
-    private void MaterialDialogOneBtn1() {//审批工作流
-        final MaterialDialog dialog = new MaterialDialog(DebugWork_DetailsActivity.this);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content("是否填写输入意见")//
-                .btnText("是", "否，直接提交")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)
-                .show();
+//    private void MaterialDialogOneBtn1() {//审批工作流
+//        final MaterialDialog dialog = new MaterialDialog(DebugWork_DetailsActivity.this);
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.isTitleShow(false)//
+//                .btnNum(2)
+//                .content("是否填写输入意见")//
+//                .btnText("是", "否，直接提交")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)
+//                .show();
+//
+//        dialog.setOnBtnClickL(
+//                new OnBtnClickL() {//是
+//                    @Override
+//                    public void onBtnClick() {
+//                        MaterialDialogOneBtn(true);
+//                        dialog.dismiss();
+//                    }
+//                },
+//                new OnBtnClickL() {//否
+//                    @Override
+//                    public void onBtnClick() {
+//                        wfgoon(workOrder.DEBUGWORKORDERNUM, "1", "");
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+//    }
 
-        dialog.setOnBtnClickL(
-                new OnBtnClickL() {//是
-                    @Override
-                    public void onBtnClick() {
-                        EditDialog(true);
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {//否
-                    @Override
-                    public void onBtnClick() {
-                        wfgoon(workOrder.DEBUGWORKORDERNUM, "1", "");
-                        dialog.dismiss();
-                    }
-                }
-        );
-    }
 
-
-    private void EditDialog(final boolean isok) {//输入审核意见
-        final NormalEditTextDialog dialog = new NormalEditTextDialog(DebugWork_DetailsActivity.this);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content(isok ? "通过" : "不通过")//
-                .btnText("提交", "取消")//
-                .showAnim(mBasIn)//
-                .dismissAnim(mBasOut)
-                .show();
-
-        dialog.setOnBtnClickL(
-                new OnBtnEditClickL() {
-                    @Override
-                    public void onBtnClick(String text) {
-                        wfgoon(workOrder.DEBUGWORKORDERNUM, "1", text);
-
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnEditClickL() {
-                    @Override
-                    public void onBtnClick(String text) {
-
-                        dialog.dismiss();
-                    }
-                }
-        );
-    }
+//    private void EditDialog() {//输入审核意见
+//        final NormalEditTextDialog dialog = new NormalEditTextDialog(DebugWork_DetailsActivity.this);
+//        dialog.setCancelable(false);
+//        dialog.setCanceledOnTouchOutside(false);
+//        dialog.isTitleShow(true)//
+//                .title("审批工作流")
+//                .btnNum(3)
+//                .content("通过")//
+//                .btnText("取消", "通过", "不通过")//
+//                .showAnim(mBasIn)//
+//                .dismissAnim(mBasOut)
+//                .show();
+//
+//        dialog.setOnBtnClickL(
+//                new OnBtnEditClickL() {
+//                    @Override
+//                    public void onBtnClick(String text) {
+//                        dialog.dismiss();
+//                    }
+//                },
+//                new OnBtnEditClickL() {
+//                    @Override
+//                    public void onBtnClick(String text) {
+//                        wfgoon("1", text);
+//                        dialog.dismiss();
+//                    }
+//                },
+//                new OnBtnEditClickL() {
+//                    @Override
+//                    public void onBtnClick(String text) {
+//                        wfgoon("0", text.equals("通过") ? "不通过" : text);
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+//    }
 
 
     /**
@@ -567,31 +610,36 @@ public class DebugWork_DetailsActivity extends BaseActivity {
      * @param id
      * @param zx
      */
-    private void wfgoon(final String id, final String zx, final String desc) {
-//        mProgressDialog = ProgressDialog.show(Work_DetailsActivity.this, null,
-//                getString(R.string.inputing), true, true);
-//        mProgressDialog.setCanceledOnTouchOutside(false);
-//        mProgressDialog.setCancelable(false);
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                String result = AndroidClientService.approve(Work_detailsActivity.this, "UDFJHWO", "WORKORDER", id, "WONUM" + "ID", zx, desc);
-//
-//                Log.i(TAG, "result=" + result);
-//                return result;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                if (s == null || s.equals("")) {
-//                    Toast.makeText(Work_detailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(Work_detailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
-//                }
-//                mProgressDialog.dismiss();
-//            }
-//        }.execute();
+    private void wfgoon(final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(DebugWork_DetailsActivity.this, null,
+                getString(R.string.approve), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.approve(DebugWork_DetailsActivity.this,
+                        Constants.UDDEBUGWOR, "DEBUGWORKORDER", workOrder.DEBUGWORKORDERNUM, "DEBUGWORKORDERNUM", zx, desc);
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s == null || s.wonum == null || s.errorMsg == null) {
+                    Toast.makeText(DebugWork_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.wonum.equals(workOrder.DEBUGWORKORDERNUM) && s.errorMsg != null) {
+                    //udstatus.setText(s.errorMsg);
+                    workOrder.STATUS = s.errorMsg;
+                    Toast.makeText(DebugWork_DetailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(DebugWork_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
     /**
      * 开始工作流
@@ -604,7 +652,7 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult result = AndroidClientService.startwf(DebugWork_DetailsActivity.this, WorkTypeUtils.getProcessname("DC"), "WORKORDER", workOrder.DEBUGWORKORDERNUM, "WONUM");
+                WebResult result = AndroidClientService.startwf(DebugWork_DetailsActivity.this, WorkTypeUtils.getProcessname("DC"), "DEBUGWORKORDER", workOrder.DEBUGWORKORDERNUM, "DEBUGWORKORDERNUM");
 
                 Log.i(TAG, "result=" + result);
                 return result;

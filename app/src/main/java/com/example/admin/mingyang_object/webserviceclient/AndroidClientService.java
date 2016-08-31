@@ -50,6 +50,7 @@ public class AndroidClientService {
      * @return
      */
     public static WebResult startwf(Context context, String processname, String mbo, String keyValue, String key) {
+
         String url = AccountUtils.getIpAddress(context) + Constants.WORK_FLOW_URL;
         Log.e("发送工作流",url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

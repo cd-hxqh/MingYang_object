@@ -325,7 +325,7 @@ public class Constants {
     public static final String UDJGWO = "UDJGWO";//技改工单
     public static final String UDPCWO = "UDPCWO";//排查工单
     public static final String UDZYSWO = "UDZYSWO";//终验收工单
-
+    public static final String UDDEBUGWOR="UDDEBUGWOR";//调试工单
     //工单状态
     public static final String STATUS1 = "新建";
     public static final String STATUS2 = "进行中";

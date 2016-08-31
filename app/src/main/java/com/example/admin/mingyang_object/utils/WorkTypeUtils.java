@@ -49,6 +49,9 @@ public class WorkTypeUtils {
             case "WS"://定检工单
                 Processname = Constants.UDDJWO;
                 break;
+            case "DC"://调试工单
+                Processname = Constants.UDDEBUGWOR;
+                break;
         }
         return Processname;
     }
