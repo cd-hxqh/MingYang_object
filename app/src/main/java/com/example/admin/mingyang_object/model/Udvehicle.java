@@ -10,6 +10,7 @@ public class Udvehicle implements Serializable {
 
     private String DRIVER; //司机
     private String LICENSENUM; //是车牌号
+    private String VEHICLENAME;//车辆名称
     private String PRONUM; //所属项目
     private String PRODESC;//所属项目描述
     private String BRANCH;//所属中心
@@ -35,6 +36,14 @@ public class Udvehicle implements Serializable {
 
     public void setLICENSENUM(String LICENSENUM) {
         this.LICENSENUM = LICENSENUM;
+    }
+
+    public String getVEHICLENAME() {
+        return VEHICLENAME;
+    }
+
+    public void setVEHICLENAME(String VEHICLENAME) {
+        this.VEHICLENAME = VEHICLENAME;
     }
 
     public String getPRONUM() {

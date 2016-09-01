@@ -147,7 +147,39 @@ public class HttpManager {
                 break;
         }
         return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                "'curpage':1,'showcount':20,'option':'read','condition':{'WONUM':'" + wonum + "'}}";
+                "'curpage':1,'showcount':20,'option':'read','condition':{'WONUM':'=" + wonum + "'}}";
+    }
+
+    public static String getworkorderByid(String type,String workorderid){
+        switch (type) {
+            case Constants.FR://故障工单
+                appid = "UDREPORTWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.AA://终验收工单
+                appid = "UDZYSWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.SP://排查工单
+                appid = "UDPCWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.TP://技改工单
+                appid = "UDJGWO";
+                objectname = "WORKORDER";
+                break;
+            case Constants.WS://定检工单
+                appid = "UDDJWO";
+                objectname = "WORKORDER";
+                break;
+        }
+        return "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
+                "'curpage':1,'showcount':20,'option':'read','condition':{'WORKORDERID':'=" + workorderid + "'}}";
+    }
+
+    public static String getdebugworkorderByid(String debugworkorderid){
+        return "{'appid':'DEBUGORDER','objectname':'DEBUGWORKORDER'," +
+                "'curpage':1,'showcount':20,'option':'read','condition':{'DEBUGWORKORDERID':'=" + debugworkorderid + "'}}";
     }
 
     /**
@@ -322,6 +354,12 @@ public class HttpManager {
         return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'FEEDBACKNUM desc'    ,'sinorsearch':{'FEEDBACKNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
     }
 
+    /**
+     * 根据id查询问题联络单的接口
+     */
+    public static String getUdfeedbacksurlByid(String feedbackid) {
+        return "{'appid':'" + Constants.UDFEEDBACK_APPID + "','objectname':'" + Constants.UDFEEDBACK_NAME + "','curpage':1,'showcount':20,'option':'read','condition':{'UDFEEDBACKID':'=" + feedbackid + "'}}";
+    }
 
     /**
      * 设置项目人员的接口
@@ -401,6 +439,13 @@ public class HttpManager {
     }
 
     /**
+     * 根据库存单id查询库存盘点信息
+     */
+    public static String getudstockurlByid(String udstockid) {
+        return "{'appid':'" + Constants.UDSTOCK_APPID + "','objectname':'" + Constants.UDSTOCK_NAME + "','curpage':1,'showcount':20,'option':'read','condition':{'UDSTOCKID':'" + udstockid + "'}}";
+    }
+
+    /**
      * 设置库存盘点行的接口
      */
     public static String getudstocklineurl(String lgort, String stocknum, int curpage, int showcount) {
@@ -416,6 +461,13 @@ public class HttpManager {
             return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'REPORTNUM DESC'}";
         }
         return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" + ",'orderby':'REPORTNUM DESC','sinorsearch':{'REPORTNUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+    }
+
+    /**
+     * 根据id查找故障提报单的接口
+     */
+    public static String getudreporturlByid(String udreportid) {
+        return "{'appid':'" + Constants.UDREPORT_APPID + "','objectname':'" + Constants.UDREPORT_NAME + "','curpage':1,'showcount':20,'option':'read','condition':{'UDREPORTID':'" + udreportid + "'}}";
     }
 
     /**
@@ -455,6 +507,13 @@ public class HttpManager {
                 return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'INSPONUM DESC'," + ",'sinorsearch':{'INSPONUM':'" + value + "','DESCRIPTION':'" + value + "'},'condition':{'STATUS':'=" + status + "'}}";
             }
         }
+    }
+
+    /**
+     * 设置巡检单的接口
+     */
+    public static String getudinspourlByid(String udinspoid) {
+        return "{'appid':'" + Constants.UDINSPOAPP_APPID + "','objectname':'" + Constants.UDINSPO_NAME + "','curpage':1,'showcount':20,'option':'read','condition':{'UDINSPOID':'" + udinspoid + "'}}";
     }
 
     /**

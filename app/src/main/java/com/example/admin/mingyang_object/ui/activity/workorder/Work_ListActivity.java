@@ -53,7 +53,7 @@ import java.util.ArrayList;
 
 /**
  * Created by think on 2015/10/27.
- * 工单详情界面
+ * 工单列表界面
  */
 public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener{
     private static String TAG = "Work_ListActivity";

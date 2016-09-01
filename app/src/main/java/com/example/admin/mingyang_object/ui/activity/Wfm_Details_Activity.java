@@ -1,6 +1,7 @@
 package com.example.admin.mingyang_object.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.api.HttpManager;
+import com.example.admin.mingyang_object.api.HttpRequestHandler;
+import com.example.admin.mingyang_object.api.JsonUtils;
+import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.model.DebugWorkOrder;
+import com.example.admin.mingyang_object.model.Udfeedback;
+import com.example.admin.mingyang_object.model.Udinspo;
+import com.example.admin.mingyang_object.model.Udreport;
+import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.model.Wfassignment;
+import com.example.admin.mingyang_object.model.WorkOrder;
+import com.example.admin.mingyang_object.ui.activity.udpro.Udfeedback_DetailActivity;
+import com.example.admin.mingyang_object.ui.activity.workorder.DebugWork_DetailsActivity;
+import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
 import com.example.admin.mingyang_object.utils.GetWorkTypeUtil;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
@@ -24,6 +38,8 @@ import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
+
+import java.util.ArrayList;
 
 /**
  * 流程审批详情
@@ -103,9 +119,9 @@ public class Wfm_Details_Activity extends BaseActivity {
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
         if (wfm.getOWNERTABLE()!=null&&!wfm.getOWNERTABLE().equals("WORKORDER")
-                &&wfm.getOWNERTABLE().equals("DEBUGWORKORDER")&&wfm.getOWNERTABLE().equals("UDSTOCK")
-                &&wfm.getOWNERTABLE().equals("UDFEEDBACK")&&wfm.getOWNERTABLE().equals("UDREPORT")
-                &&wfm.getOWNERTABLE().equals("UDINSPO")){
+                &&!wfm.getOWNERTABLE().equals("DEBUGWORKORDER")&&!wfm.getOWNERTABLE().equals("UDSTOCK")
+                &&!wfm.getOWNERTABLE().equals("UDFEEDBACK")&&!wfm.getOWNERTABLE().equals("UDREPORT")
+                &&!wfm.getOWNERTABLE().equals("UDINSPO")){
             detailslayout.setVisibility(View.INVISIBLE);
         }
 
@@ -141,21 +157,26 @@ public class Wfm_Details_Activity extends BaseActivity {
     private View.OnClickListener detailsOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (wfm.getUDASSIGN01()){
+            showProgressDialog("数据查询中...");
+            switch (wfm.getOWNERTABLE()){
                 case "WORKORDER"://工单
                     String worktype = GetWorkTypeUtil.getWorkType(wfm.getPROCESSNAME());
-
+                    getWorkOrderData(worktype);
                     break;
                 case "DEBUGWORKORDER"://调试工单
+                    getDebugWorkOrderData();
                     break;
                 case "UDSTOCK"://库存盘点
+                    getUdstockData();
                     break;
                 case "UDFEEDBACK"://问题联络单
-
+                    getUdfeedbackData();
                     break;
                 case "UDREPORT"://故障提报单
+                    getUdreportData();
                     break;
                 case "UDINSPO"://巡检单
+                    getUdinspoData();
                     break;
             }
         }
@@ -167,38 +188,6 @@ public class Wfm_Details_Activity extends BaseActivity {
             EditDialog();
         }
     };
-
-
-//    private void MaterialDialogOneBtn1() {//审批工作流
-//        final MaterialDialog dialog = new MaterialDialog(Wfm_Details_Activity.this);
-//        dialog.setCancelable(true);
-//        dialog.setCanceledOnTouchOutside(true);
-//        dialog.isTitleShow(false)//
-//                .btnNum(2)
-//                .content("是否填写输入意见")//
-//                .btnText("是", "否，直接提交")//
-//                .showAnim(mBasIn)//
-//                .dismissAnim(mBasOut)
-//                .show();
-//
-//        dialog.setOnBtnClickL(
-//                new OnBtnClickL() {//是
-//                    @Override
-//                    public void onBtnClick() {
-//                        EditDialog(true);
-//                        dialog.dismiss();
-//                    }
-//                },
-//                new OnBtnClickL() {//否
-//                    @Override
-//                    public void onBtnClick() {
-//                        wfgoon("1", "");
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//    }
-
 
     private void EditDialog() {//输入审核意见
         final NormalEditTextDialog dialog = new NormalEditTextDialog(Wfm_Details_Activity.this);
@@ -271,6 +260,246 @@ public class Wfm_Details_Activity extends BaseActivity {
                 mProgressDialog.dismiss();
             }
         }.execute();
+    }
+
+    //获取工单信息并跳转
+    private void getWorkOrderData(String worktype){
+        HttpManager.getDataPagingInfo(this, HttpManager.getworkorderByid(worktype, wfm.getOWNERID()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+                if (results.getResultlist() != null) {
+                    ArrayList<WorkOrder> items = JsonUtils.parsingWorkOrder(Wfm_Details_Activity.this, results.getResultlist());
+                    if (items != null && items.get(0) != null) {
+                        Intent intent = new Intent(Wfm_Details_Activity.this, Work_DetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("workOrder", items.get(0));
+//                        bundle.putSerializable("justread", items.get(0));
+                        intent.putExtras(bundle);
+                        startActivityForResult(intent, 0);
+//                        finish();
+                    } else {
+                        closeProgressDialog();
+                        Toast.makeText(Wfm_Details_Activity.this, "获取工单数据失败", Toast.LENGTH_SHORT).show();
+//                        setResult(100);
+//                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+                Toast.makeText(Wfm_Details_Activity.this, "获取工单数据失败", Toast.LENGTH_SHORT).show();
+//                setResult(100);
+//                finish();
+            }
+        });
+    }
+
+    //获取调试工单信息并跳转
+    private void getDebugWorkOrderData(){
+        HttpManager.getDataPagingInfo(this, HttpManager.getdebugworkorderByid(wfm.getOWNERID()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+                if (results.getResultlist() != null) {
+                    ArrayList<DebugWorkOrder> items = JsonUtils.parsingDebugWorkOrder(Wfm_Details_Activity.this, results.getResultlist());
+                    if (items != null && items.get(0) != null) {
+                        Intent intent = new Intent(Wfm_Details_Activity.this, DebugWork_DetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("debugworkOrder", items.get(0));
+//                        bundle.putSerializable("justread", items.get(0));
+                        intent.putExtras(bundle);
+                        startActivityForResult(intent, 0);
+//                        finish();
+                    }else {
+                        closeProgressDialog();
+                        Toast.makeText(Wfm_Details_Activity.this, "获取工单数据失败", Toast.LENGTH_SHORT).show();
+//                        setResult(100);
+//                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+                Toast.makeText(Wfm_Details_Activity.this, "获取工单数据失败", Toast.LENGTH_SHORT).show();
+//                setResult(100);
+//                finish();
+            }
+        });
+    }
+
+    //获取问题联络单信息并跳转
+    private void getUdstockData(){
+        HttpManager.getDataPagingInfo(this, HttpManager.getudstockurlByid(wfm.getOWNERID()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+                if (results.getResultlist() != null) {
+                    ArrayList<Udstock> items = JsonUtils.parsingUdstock(Wfm_Details_Activity.this, results.getResultlist());
+                    if (items != null && items.get(0) != null) {
+                        Intent intent = new Intent(Wfm_Details_Activity.this, Udstock_DetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("udstock", items.get(0));
+//                        bundle.putSerializable("justread", items.get(0));
+                        intent.putExtras(bundle);
+                        startActivityForResult(intent, 0);
+//                        finish();
+                    }else {
+                        closeProgressDialog();
+                        Toast.makeText(Wfm_Details_Activity.this, "获取库存盘点数据失败", Toast.LENGTH_SHORT).show();
+//                        setResult(100);
+//                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+                Toast.makeText(Wfm_Details_Activity.this, "获取库存盘点数据失败", Toast.LENGTH_SHORT).show();
+//                setResult(100);
+//                finish();
+            }
+        });
+    }
+
+    //获取问题联络单信息并跳转
+    private void getUdfeedbackData(){
+        HttpManager.getDataPagingInfo(this, HttpManager.getUdfeedbacksurlByid(wfm.getOWNERID()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+                if (results.getResultlist() != null) {
+                    ArrayList<Udfeedback> items = JsonUtils.parsingUdfeedback(Wfm_Details_Activity.this, results.getResultlist());
+                    if (items != null && items.get(0) != null) {
+                        Intent intent = new Intent(Wfm_Details_Activity.this, Udfeedback_DetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("udfeedback", items.get(0));
+//                        bundle.putSerializable("justread", items.get(0));
+                        intent.putExtras(bundle);
+                        startActivityForResult(intent, 0);
+//                        finish();
+                    }else {
+                        closeProgressDialog();
+                        Toast.makeText(Wfm_Details_Activity.this, "获取问题联络单数据失败", Toast.LENGTH_SHORT).show();
+//                        setResult(100);
+//                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+                Toast.makeText(Wfm_Details_Activity.this, "获取问题联络单数据失败", Toast.LENGTH_SHORT).show();
+//                setResult(100);
+//                finish();
+            }
+        });
+    }
+
+    //获取故障提报单信息并跳转
+    private void getUdreportData(){
+        HttpManager.getDataPagingInfo(this, HttpManager.getudreporturlByid(wfm.getOWNERID()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+                if (results.getResultlist() != null) {
+                    ArrayList<Udreport> items = JsonUtils.parsingUdreport(Wfm_Details_Activity.this, results.getResultlist());
+                    if (items != null && items.get(0) != null) {
+                        Intent intent = new Intent(Wfm_Details_Activity.this, Udreport_DetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("udreport", items.get(0));
+//                        bundle.putSerializable("justread", items.get(0));
+                        intent.putExtras(bundle);
+                        startActivityForResult(intent, 0);
+//                        finish();
+                    }else {
+                        closeProgressDialog();
+                        Toast.makeText(Wfm_Details_Activity.this, "获取故障提报单数据失败", Toast.LENGTH_SHORT).show();
+//                        setResult(100);
+//                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+                Toast.makeText(Wfm_Details_Activity.this, "获取故障提报单数据失败", Toast.LENGTH_SHORT).show();
+//                setResult(100);
+//                finish();
+            }
+        });
+    }
+
+    //获取巡检单信息并跳转
+    private void getUdinspoData(){
+        HttpManager.getDataPagingInfo(this, HttpManager.getudinspourlByid(wfm.getOWNERID()), new HttpRequestHandler<Results>() {
+            @Override
+            public void onSuccess(Results results) {
+                Log.i(TAG, "data=" + results);
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+                if (results.getResultlist() != null) {
+                    ArrayList<Udinspo> items = JsonUtils.parsingUdinspo(Wfm_Details_Activity.this, results.getResultlist());
+                    if (items != null && items.get(0) != null) {
+                        Intent intent = new Intent(Wfm_Details_Activity.this, Udinspo_DetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("udinspo", items.get(0));
+//                        bundle.putSerializable("justread", items.get(0));
+                        intent.putExtras(bundle);
+                        startActivityForResult(intent, 0);
+//                        finish();
+                    }else {
+                        closeProgressDialog();
+                        Toast.makeText(Wfm_Details_Activity.this, "获取巡检单数据失败", Toast.LENGTH_SHORT).show();
+//                        setResult(100);
+//                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+                Toast.makeText(Wfm_Details_Activity.this, "获取巡检单数据失败", Toast.LENGTH_SHORT).show();
+//                setResult(100);
+//                finish();
+            }
+        });
     }
 
 }

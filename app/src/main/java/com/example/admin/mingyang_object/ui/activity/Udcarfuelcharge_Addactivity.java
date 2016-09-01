@@ -278,7 +278,7 @@ public class Udcarfuelcharge_Addactivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     licensenumText.setText(option.getName());
                     getGreaseCard();
-                    carnameText.setText(option.getDesc());
+                    carnameText.setText(option.getValue4());
                     number2Text.setText(option.getValue6());
                     break;
 

@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Failurelist;
 import com.example.admin.mingyang_object.model.Item;
 import com.example.admin.mingyang_object.model.JobPlan;
@@ -54,8 +55,13 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Option option = optionList.get(position);
-        holder.itemNumTitle.setText("编号:");
-        holder.itemDescTitle.setText("描述:");
+        if (activity.optiontype== Constants.UDVEHICLE){
+            holder.itemNumTitle.setText("车牌号:");
+            holder.itemDescTitle.setText("司机:");
+        }else {
+            holder.itemNumTitle.setText("编号:");
+            holder.itemDescTitle.setText("描述:");
+        }
 
         if (isNoDesc){
             holder.itemDescTitle.setVisibility(View.GONE);
@@ -256,7 +262,7 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option.setValue1(data.get(i).getPRONUM());
                 option.setValue2(data.get(i).getPRODESC());
                 option.setValue3(data.get(i).getBRANCHDESC());
-                option.setValue4(data.get(i).getDRIVER());
+                option.setValue4(data.get(i).getVEHICLENAME());//车辆名称
                 option.setValue5(data.get(i).getENDNUMBER());
                 option.setValue6(data.get(i).getNUMBER1());//加油
                 option.setValue7(data.get(i).getNUMBER2());//行驶
