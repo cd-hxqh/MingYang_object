@@ -591,29 +591,36 @@ public class Udinspo_DetailActivity extends BaseActivity {
     }
 
     private void MaterialDialogOneBtn() {//审批工作流
-        final MaterialDialog dialog = new MaterialDialog(Udinspo_DetailActivity.this);
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Udinspo_DetailActivity.this);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.isTitleShow(false)//
-                .btnNum(2)
-                .content("是否填写输入意见")//
-                .btnText("是", "否，直接提交")//
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)
                 .show();
 
         dialog.setOnBtnClickL(
-                new OnBtnClickL() {//是
+                new OnBtnEditClickL() {
                     @Override
-                    public void onBtnClick() {
-                        EditDialog(true);
+                    public void onBtnClick(String text) {
                         dialog.dismiss();
                     }
                 },
-                new OnBtnClickL() {//否
+                new OnBtnEditClickL() {
                     @Override
-                    public void onBtnClick() {
-                        wfgoon("1", "");
+                    public void onBtnClick(String text) {
+                        wfgoon("1", text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
                         dialog.dismiss();
                     }
                 }
@@ -634,7 +641,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult result = AndroidClientService.approve(Udinspo_DetailActivity.this,
-                        "UDINSPO", "UDINSPO", udinspo.getINSPONUM(), "UDINSPOID", zx, desc);
+                        "UDINSPO", "UDINSPO", udinspo.getUDINSPOID(), "UDINSPOID", zx, desc,AccountUtils.getpersonId(Udinspo_DetailActivity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;
@@ -645,7 +652,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
                 super.onPostExecute(s);
                 if (s == null || s.wonum == null || s.errorMsg == null) {
                     Toast.makeText(Udinspo_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                } else if (s.wonum.equals(udinspo.getINSPONUM()) && s.errorMsg != null) {
+                } else if (s.wonum.equals(udinspo.getUDINSPOID()) && s.errorMsg != null) {
                     statusText.setText(s.errorMsg);
                     udinspo.setSTATUS(s.errorMsg);
                     Toast.makeText(Udinspo_DetailActivity.this, "审批成功", Toast.LENGTH_SHORT).show();

@@ -199,6 +199,10 @@ public class JsonUtils<E> {
             JSONObject object = new JSONObject(data);
             if (object.has("status") && !object.getString("status").equals("")) {
                 webResult.errorMsg = object.getString("status");
+            }else if (object.has("massage") && !object.getString("massage").equals("")){
+                webResult.errorMsg = object.getString("massage");
+            }else if (object.has("errorMsg") && !object.getString("errorMsg").equals("")){
+                webResult.errorMsg = object.getString("errorMsg");
             }
             if (object.has(num) && !object.getString(num).equals("")) {
                 webResult.wonum = object.getString(num);

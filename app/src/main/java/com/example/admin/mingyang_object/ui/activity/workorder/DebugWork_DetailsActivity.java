@@ -27,6 +27,7 @@ import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.WxDemoActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
@@ -619,7 +620,8 @@ public class DebugWork_DetailsActivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult result = AndroidClientService.approve(DebugWork_DetailsActivity.this,
-                        Constants.UDDEBUGWOR, "DEBUGWORKORDER", workOrder.DEBUGWORKORDERNUM, "DEBUGWORKORDERNUM", zx, desc);
+                        Constants.UDDEBUGWOR, "DEBUGWORKORDER", workOrder.DEBUGWORKORDERID, "DEBUGWORKORDERID", zx, desc,
+                        AccountUtils.getpersonId(DebugWork_DetailsActivity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;
@@ -630,7 +632,7 @@ public class DebugWork_DetailsActivity extends BaseActivity {
                 super.onPostExecute(s);
                 if (s == null || s.wonum == null || s.errorMsg == null) {
                     Toast.makeText(DebugWork_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                } else if (s.wonum.equals(workOrder.DEBUGWORKORDERNUM) && s.errorMsg != null) {
+                } else if (s.wonum.equals(workOrder.DEBUGWORKORDERID) && s.errorMsg != null) {
                     //udstatus.setText(s.errorMsg);
                     workOrder.STATUS = s.errorMsg;
                     Toast.makeText(DebugWork_DetailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();

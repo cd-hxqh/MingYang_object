@@ -1,6 +1,8 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +17,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
+import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
+import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdstocklineAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
+import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.dialog.listener.OnBtnEditClickL;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +79,8 @@ public class Udstock_DetailActivity extends BaseActivity {
 
     private CheckBox isclose;//暗盘
 
+    private TextView statusText; //状态
+
     private TextView createdbyText; //创建人
 
     private TextView createdateText; //创建时间
@@ -78,6 +90,10 @@ public class Udstock_DetailActivity extends BaseActivity {
 
     private PopupWindow popupWindow;
 
+    /**
+     * 发送工作流*
+     */
+    private LinearLayout flowerLinearLayout;
     /**
      * 上传附件*
      */
@@ -105,7 +121,9 @@ public class Udstock_DetailActivity extends BaseActivity {
     private int page = 1;
 
     ArrayList<Udstockline> items = new ArrayList<Udstockline>();
-
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +152,7 @@ public class Udstock_DetailActivity extends BaseActivity {
         locdescText = (TextView) findViewById(R.id.locdesc_text_id);
         isopen = (CheckBox) findViewById(R.id.isopen_text_id);
         isclose = (CheckBox) findViewById(R.id.isclose_text_id);
+        statusText = (TextView) findViewById(R.id.status_text_id);
         createdbyText = (TextView) findViewById(R.id.createdby_text_id);
         createdateText = (TextView) findViewById(R.id.createdate_text_id);
 
@@ -145,6 +164,7 @@ public class Udstock_DetailActivity extends BaseActivity {
             locdescText.setText(udstock.getLOCDESC());
             isopen.setChecked(udstock.getISOPEN().equals("Y"));
             isclose.setChecked(udstock.getISCLOSE().equals("Y"));
+            statusText.setText(udstock.getSTATUS());
             createdbyText.setText(udstock.getCREATENAME());
             createdateText.setText(udstock.getCREATEDATE());
 
@@ -221,6 +241,8 @@ public class Udstock_DetailActivity extends BaseActivity {
 
         popupWindow.showAsDropDown(view);
         uploadfile = (LinearLayout) contentView.findViewById(R.id.upload_file_id);
+        flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        flowerLinearLayout.setOnClickListener(flowerOnClickListener);
         uploadfile.setOnClickListener(uploadfileOnClickListener);
 
 
@@ -237,6 +259,102 @@ public class Udstock_DetailActivity extends BaseActivity {
             startActivityForResult(intent, 0);
         }
     };
+
+    private View.OnClickListener flowerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (udstock.getINVOWNER()==null||!udstock.getINVOWNER().equals(AccountUtils.getpersonId(Udstock_DetailActivity.this))){
+                Toast.makeText(Udstock_DetailActivity.this, "您不是当前流程任务分配人，无权限操作", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (udstock.getSTATUS().equals("待处理")||udstock.getSTATUS().equals("驳回")) {
+                for (int i = 0;i < items.size();i ++){
+                    if (items.get(i).getACTUALQTY()==0){
+                        Toast.makeText(Udstock_DetailActivity.this, "您不是当前流程任务分配人，无权限操作", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                MaterialDialogOneBtn();
+            }else {
+                Toast.makeText(Udstock_DetailActivity.this, "仅当状态为待处理或驳回时才能发送工作流", Toast.LENGTH_SHORT).show();
+            }
+            popupWindow.dismiss();
+        }
+    };
+
+    private void MaterialDialogOneBtn() {//审批工作流
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Udstock_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("1", text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    /**
+     * 审批工作流
+     *
+     * @param zx
+     */
+    private void wfgoon(final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(Udstock_DetailActivity.this, null,
+                getString(R.string.approve), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.approve(Udstock_DetailActivity.this,
+                        "UDSTOCK", "UDSTOCK", udstock.getUDSTOCKID(), "UDSTOCKID", zx, desc, AccountUtils.getpersonId(Udstock_DetailActivity.this));
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s == null || s.wonum == null || s.errorMsg == null) {
+                    Toast.makeText(Udstock_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.wonum.equals(udstock.getUDSTOCKID()) && s.errorMsg != null) {
+                    statusText.setText(s.errorMsg);
+                    udstock.setSTATUS(s.errorMsg);
+                    Toast.makeText(Udstock_DetailActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udstock_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
 
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {

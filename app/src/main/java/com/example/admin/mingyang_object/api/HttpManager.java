@@ -485,7 +485,7 @@ public class HttpManager {
      */
     public static String getUdrunlinerUrl(String lognum, int curpage, int showcount) {
         return "{'appid':'" + Constants.UDRUNLINER_APPID + "','objectname':'" + Constants.UDRUNLINER_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'" +
-                ",'condition':{'LOGNUM':'" + lognum + "'}" +
+                ",'orderby':'LOGDATE DESC','condition':{'LOGNUM':'" + lognum + "'}" +
                 "}";
     }
 

@@ -1621,7 +1621,8 @@ public class Work_DetailsActivity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult result = AndroidClientService.approve(Work_DetailsActivity.this,
-                        WorkTypeUtils.getProcessname(workOrder.WORKTYPE), "WORKORDER", workOrder.WONUM, "WONUM", zx, desc);
+                        WorkTypeUtils.getProcessname(workOrder.WORKTYPE), "WORKORDER", workOrder.WORKORDERID+"", "WORKORDERID", zx, desc,
+                        AccountUtils.getpersonId(Work_DetailsActivity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;
@@ -1632,7 +1633,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 super.onPostExecute(s);
                 if (s == null || s.wonum == null || s.errorMsg == null) {
                     Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                } else if (s.wonum.equals(workOrder.WONUM) && s.errorMsg != null) {
+                } else if (s.wonum.equals(workOrder.WORKORDERID) && s.errorMsg != null) {
                     udstatus.setText(s.errorMsg);
                     workOrder.UDSTATUS = s.errorMsg;
                     Toast.makeText(Work_DetailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();

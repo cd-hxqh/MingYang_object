@@ -86,7 +86,7 @@ public class AndroidClientService {
      *
      * @return
      */
-    public static WebResult approve(Context context, String processname, String mbo, String keyValue, String key, String zx, String desc) {
+    public static WebResult approve(Context context, String processname, String mbo, String keyValue, String key, String zx, String desc,String loginid) {
         String url = AccountUtils.getIpAddress(context) + Constants.WORK_FLOW_URL;
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
@@ -100,6 +100,7 @@ public class AndroidClientService {
         if (!desc.equals("")) {
             soapReq.addProperty("desc", desc);//审批意见
         }
+        soapReq.addProperty("loginid",loginid);//用户id
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);
         try {

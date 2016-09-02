@@ -28,6 +28,7 @@ import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.udpro.Udfeedback_DetailActivity;
 import com.example.admin.mingyang_object.ui.activity.workorder.DebugWork_DetailsActivity;
 import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.GetWorkTypeUtil;
 import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
@@ -240,7 +241,8 @@ public class Wfm_Details_Activity extends BaseActivity {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult result = AndroidClientService.approve(Wfm_Details_Activity.this,
-                        wfm.getPROCESSNAME(), wfm.getOWNERTABLE(), wfm.getOWNERID(), wfm.getOWNERTABLE() + "ID", zx, desc);
+                        wfm.getPROCESSNAME(), wfm.getOWNERTABLE(), wfm.getOWNERID(), wfm.getOWNERTABLE() + "ID", zx, desc,
+                        AccountUtils.getpersonId(Wfm_Details_Activity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;
