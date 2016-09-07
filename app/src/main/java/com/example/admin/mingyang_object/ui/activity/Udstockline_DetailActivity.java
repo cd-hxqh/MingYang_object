@@ -25,6 +25,7 @@ import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.WebResult;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
@@ -146,6 +147,11 @@ public class Udstockline_DetailActivity extends BaseActivity {
 
 //        actualqtyText.addTextChangedListener(new EditChangedListener());
         save.setText("上传");
+        if (udstock.getINVOWNER()==null||!udstock.getINVOWNER().equals(AccountUtils.getpersonId(Udstockline_DetailActivity.this))){
+            actualqtyText.setEnabled(false);
+            diffreasonText.setEnabled(false);
+        }
+
         cancel.setOnClickListener(backImageViewOnClickListener);
         save.setOnClickListener(new View.OnClickListener() {
             @Override

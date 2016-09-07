@@ -25,6 +25,7 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.WebResult;
@@ -91,6 +92,10 @@ public class Udstock_DetailActivity extends BaseActivity {
     private PopupWindow popupWindow;
 
     /**
+     * 库存盘点行
+     */
+    private LinearLayout udstocklineLayout;
+    /**
      * 发送工作流*
      */
     private LinearLayout flowerLinearLayout;
@@ -100,25 +105,25 @@ public class Udstock_DetailActivity extends BaseActivity {
     private LinearLayout uploadfile;
 
 
-    LinearLayoutManager layoutManager;
-
-
-    /**
-     * RecyclerView*
-     */
-    public RecyclerView recyclerView;
-    /**
-     * 暂无数据*
-     */
-    private LinearLayout nodatalayout;
-    /**
-     * 界面刷新*
-     */
-    private SwipeRefreshLayout refresh_layout = null;
-
-    UdstocklineAdapter udstocklineAdapter;
-
-    private int page = 1;
+//    LinearLayoutManager layoutManager;
+//
+//
+//    /**
+//     * RecyclerView*
+//     */
+//    public RecyclerView recyclerView;
+//    /**
+//     * 暂无数据*
+//     */
+//    private LinearLayout nodatalayout;
+//    /**
+//     * 界面刷新*
+//     */
+//    private SwipeRefreshLayout refresh_layout = null;
+//
+//    UdstocklineAdapter udstocklineAdapter;
+//
+//    private int page = 1;
 
     ArrayList<Udstockline> items = new ArrayList<Udstockline>();
     private BaseAnimatorSet mBasIn;
@@ -143,7 +148,6 @@ public class Udstock_DetailActivity extends BaseActivity {
         backImageView = (ImageView) findViewById(R.id.title_back_id);
         titleTextView = (TextView) findViewById(R.id.title_name);
         menuImageView = (ImageView) findViewById(R.id.title_add);
-
 
         stocknumText = (TextView) findViewById(R.id.stocknum_text_id);
         descriptionText = (TextView) findViewById(R.id.description_text_id);
@@ -173,9 +177,9 @@ public class Udstock_DetailActivity extends BaseActivity {
         }
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
-        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
-        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
+//        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_id);
+//        refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+//        nodatalayout = (LinearLayout) findViewById(R.id.have_not_data_id);
     }
 
     @Override
@@ -186,20 +190,20 @@ public class Udstock_DetailActivity extends BaseActivity {
         menuImageView.setImageResource(R.mipmap.ic_more);
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
-        layoutManager = new LinearLayoutManager(Udstock_DetailActivity.this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.scrollToPosition(0);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        refresh_layout.setColor(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        refresh_layout.setRefreshing(true);
-
-        refresh_layout.setOnRefreshListener(onRefreshListener);
-        refresh_layout.setOnLoadListener(onLoadListener);
-        getData();
+//        layoutManager = new LinearLayoutManager(Udstock_DetailActivity.this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        layoutManager.scrollToPosition(0);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        refresh_layout.setColor(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+//        refresh_layout.setRefreshing(true);
+//
+//        refresh_layout.setOnRefreshListener(onRefreshListener);
+//        refresh_layout.setOnLoadListener(onLoadListener);
+//        getData();
 
     }
 
@@ -240,14 +244,26 @@ public class Udstock_DetailActivity extends BaseActivity {
                 R.mipmap.popup_background_mtrl_mult));
 
         popupWindow.showAsDropDown(view);
+        udstocklineLayout = (LinearLayout) contentView.findViewById(R.id.udstockline_id);
         uploadfile = (LinearLayout) contentView.findViewById(R.id.upload_file_id);
         flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        udstocklineLayout.setOnClickListener(udstocklineOnClickListener);
         flowerLinearLayout.setOnClickListener(flowerOnClickListener);
         uploadfile.setOnClickListener(uploadfileOnClickListener);
 
 
     }
 
+    private View.OnClickListener udstocklineOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Udstock_DetailActivity.this, UdstocklineListActivity.class);
+            intent.putExtra("Udstock", udstock);
+            intent.putExtra("UdstocklineList", items);
+            startActivityForResult(intent, 1000);
+            popupWindow.dismiss();
+        }
+    };
 
     private View.OnClickListener uploadfileOnClickListener = new View.OnClickListener() {
         @Override
@@ -357,83 +373,92 @@ public class Udstock_DetailActivity extends BaseActivity {
     }
 
 
-    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            page = 1;
+//    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+//        @Override
+//        public void onRefresh() {
+//            page = 1;
+//
+//            getData();
+//        }
+//    };
+//
+//    private SwipeRefreshLayout.OnLoadListener onLoadListener = new SwipeRefreshLayout.OnLoadListener() {
+//        @Override
+//        public void onLoad() {
+//            page++;
+//
+//            getData();
+//        }
+//    };
+//
+//
+//    /**
+//     * 获取数据*
+//     */
+//    private void getData() {
+//        HttpManager.getDataPagingInfo(Udstock_DetailActivity.this, HttpManager.getudstocklineurl(udstock.getLOCATION(), udstock.getSTOCKNUM(), page, 20), new HttpRequestHandler<Results>() {
+//            @Override
+//            public void onSuccess(Results results) {
+//                Log.i(TAG, "data=" + results);
+//            }
+//
+//            @Override
+//            public void onSuccess(Results results, int totalPages, int currentPage) {
+//
+//                ArrayList<Udstockline> item = JsonUtils.parsingUdstockline(Udstock_DetailActivity.this, results.getResultlist());
+//                refresh_layout.setRefreshing(false);
+//                refresh_layout.setLoading(false);
+//                if (item == null || item.isEmpty()) {
+//                    nodatalayout.setVisibility(View.VISIBLE);
+//                } else {
+//
+//                    if (item != null || item.size() != 0) {
+//                        for (int i = 0; i < item.size(); i++) {
+//                            items.add(item.get(i));
+//                        }
+//                    }
+//                    nodatalayout.setVisibility(View.GONE);
+//
+//                    initAdapter(item);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(String error) {
+//                refresh_layout.setRefreshing(false);
+//                nodatalayout.setVisibility(View.VISIBLE);
+//            }
+//        });
+//    }
+//
+//
+//    /**
+//     * 获取数据*
+//     */
+//    private void initAdapter(final List<Udstockline> list) {
+//        udstocklineAdapter = new UdstocklineAdapter(Udstock_DetailActivity.this, R.layout.udstocklinelist_item, list);
+//        recyclerView.setAdapter(udstocklineAdapter);
+//        udstocklineAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                Intent intent = new Intent(Udstock_DetailActivity.this, Udstockline_DetailActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("udstockline", items.get(position));
+//                bundle.putSerializable("udstock", udstock);
+//                intent.putExtras(bundle);
+//                startActivityForResult(intent, 0);
+//            }
+//        });
+//    }
 
-            getData();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            switch (requestCode) {
+                case 1000:
+                    items = (ArrayList<Udstockline>) data.getSerializableExtra("UdstocklineList");
+                    break;
+            }
         }
-    };
-
-    private SwipeRefreshLayout.OnLoadListener onLoadListener = new SwipeRefreshLayout.OnLoadListener() {
-        @Override
-        public void onLoad() {
-            page++;
-
-            getData();
-        }
-    };
-
-
-    /**
-     * 获取数据*
-     */
-    private void getData() {
-        HttpManager.getDataPagingInfo(Udstock_DetailActivity.this, HttpManager.getudstocklineurl(udstock.getLOCATION(), udstock.getSTOCKNUM(), page, 20), new HttpRequestHandler<Results>() {
-            @Override
-            public void onSuccess(Results results) {
-                Log.i(TAG, "data=" + results);
-            }
-
-            @Override
-            public void onSuccess(Results results, int totalPages, int currentPage) {
-
-                ArrayList<Udstockline> item = JsonUtils.parsingUdstockline(Udstock_DetailActivity.this, results.getResultlist());
-                refresh_layout.setRefreshing(false);
-                refresh_layout.setLoading(false);
-                if (item == null || item.isEmpty()) {
-                    nodatalayout.setVisibility(View.VISIBLE);
-                } else {
-
-                    if (item != null || item.size() != 0) {
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
-                        }
-                    }
-                    nodatalayout.setVisibility(View.GONE);
-
-                    initAdapter(item);
-                }
-            }
-
-            @Override
-            public void onFailure(String error) {
-                refresh_layout.setRefreshing(false);
-                nodatalayout.setVisibility(View.VISIBLE);
-            }
-        });
     }
-
-
-    /**
-     * 获取数据*
-     */
-    private void initAdapter(final List<Udstockline> list) {
-        udstocklineAdapter = new UdstocklineAdapter(Udstock_DetailActivity.this, R.layout.udstocklinelist_item, list);
-        recyclerView.setAdapter(udstocklineAdapter);
-        udstocklineAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(Udstock_DetailActivity.this, Udstockline_DetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("udstockline", items.get(position));
-                bundle.putSerializable("udstock", udstock);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, 0);
-            }
-        });
-    }
-
-
 }

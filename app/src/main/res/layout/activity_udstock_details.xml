@@ -312,50 +312,50 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40dp"
-        android:background="@color/light_gray2"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_40dp"-->
+        <!--android:background="@color/light_gray2"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:orientation="horizontal">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="行项目号"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="行项目号"-->
+            <!--android:textColor="@color/nomal_button_color"-->
+            <!--android:textSize="@dimen/dimens_16dp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="物料描述"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="物料描述"-->
+            <!--android:textColor="@color/nomal_button_color"-->
+            <!--android:textSize="@dimen/dimens_16dp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="盘点数量"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="盘点数量"-->
+            <!--android:textColor="@color/nomal_button_color"-->
+            <!--android:textSize="@dimen/dimens_16dp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="详情"
-            android:textColor="@color/nomal_button_color"
-            android:textSize="@dimen/dimens_16dp" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="详情"-->
+            <!--android:textColor="@color/nomal_button_color"-->
+            <!--android:textSize="@dimen/dimens_16dp" />-->
+    <!--</LinearLayout>-->
 
-    <include layout="@layout/work_list"></include>
+    <!--<include layout="@layout/work_list"></include>-->
 
 </LinearLayout>

@@ -357,6 +357,13 @@
             android:theme="@style/mingyang.ActivityTheme"
             />
         <activity
+            android:name=".ui.activity.UdstocklineListActivity"
+            android:label="@string/udstocklinelist_text"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/mingyang.ActivityTheme"
+            />
+        <activity
             android:name=".ui.activity.Udreport_ListActivity"
             android:label="@string/udreport_text"
             android:screenOrientation="portrait"

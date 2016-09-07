@@ -503,6 +503,7 @@
     <string name="diffqty_text">差异数量:</string>
     <string name="diffreason_text">差异原因:</string>
     <string name="udstockline_text">盘点明细行</string>
+    <string name="udstocklinelist_text">盘点明细行列表</string>
     <string name="udreport_text">故障提报单</string>
     <string name="udinspo_text">巡检单</string>
     <string name="udrunlogr_text">运行记录</string>

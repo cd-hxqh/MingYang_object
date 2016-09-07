@@ -273,7 +273,9 @@ public class Udfeedback_DetailActivity extends BaseActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitDataInfo();
+                if (isOK()) {
+                    submitDataInfo();
+                }
             }
         });
     }
@@ -312,6 +314,68 @@ public class Udfeedback_DetailActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    private boolean isOK(){
+        switch (udfeedback.getSTATUS()){
+            case "新建":
+                if (problemtypeText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入问题类型", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (emergencyText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入紧急程度", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (pronumText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (createnameText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入需求提出人", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (problemsituationText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入现场问题及进展描述", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "待审批":
+                if (dept2Text.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入支持部门", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (leaderText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入支持部门领导", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (responsetimeText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入需求完成时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "已派工":
+                if (foundtimeText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入抵达时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (comptimeText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入完成时间", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (progressText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入解决问题及反馈", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            case "已响应":
+                if (remarkText.getText().toString().equals("")){
+                    Toast.makeText(Udfeedback_DetailActivity.this, "请输入说明", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+        }
+        return false;
     }
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -405,7 +469,7 @@ public class Udfeedback_DetailActivity extends BaseActivity {
      */
     private void submitDataInfo() {
         final NormalDialog dialog = new NormalDialog(Udfeedback_DetailActivity.this);
-        dialog.content("确定修改工单吗?")//
+        dialog.content("确定修改问题联络单吗?")//
                 .showAnim(mBasIn)//
                 .dismissAnim(mBasOut)//
                 .show();
