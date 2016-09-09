@@ -19,9 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
@@ -35,6 +33,7 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.REGULARINSPECTIONPLANLINK;
 import com.example.admin.mingyang_object.model.Uddept;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
@@ -45,7 +44,6 @@ import com.example.admin.mingyang_object.ui.adapter.OptionAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -248,6 +246,8 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             if (getIntent().getStringExtra("wonumtype").equals("工单跟踪")) {
                 return HttpManager.getWorkorderAll(page, 20);
             }
+        }else if (optiontype == Constants.REGULARINSPECTIONPLANLINKCODE){//部门
+            return HttpManager.getRegularinspectionplanlinkurl(searchText, page, 20);
         }
         return "";
     }
@@ -327,6 +327,11 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             ArrayList<Uddept> items = JsonUtils.parsingUddept(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addUddeptDate(items);
+                            }
+                        }else if (optiontype == Constants.REGULARINSPECTIONPLANLINKCODE) {//定检计划编号
+                            ArrayList<REGULARINSPECTIONPLANLINK> items = JsonUtils.parsingRegularinspectionplanlink(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addRegularinspectionplanlinkDate(items);
                             }
                         }
                         if (optionAdapter.getItemCount() == 0) {

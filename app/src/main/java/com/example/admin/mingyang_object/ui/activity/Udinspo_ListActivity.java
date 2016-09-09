@@ -158,26 +158,28 @@ public class Udinspo_ListActivity extends BaseActivity implements SwipeRefreshLa
                     if (item == null || item.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
-
-                        if (item != null || item.size() != 0) {
-                            if (page == 1) {
-                                items = new ArrayList<Udinspo>();
-                                initAdapter(new ArrayList<Udinspo>());
+                        if (totalPages == page) {
+                            if (item != null || item.size() != 0) {
+                                if (page == 1) {
+                                    items = new ArrayList<Udinspo>();
+                                    initAdapter(new ArrayList<Udinspo>());
+                                }
+                                for (int i = 0; i < item.size(); i++) {
+                                    items.add(item.get(i));
+                                }
+                                addAdapter(item);
                             }
-                            for (int i = 0; i < item.size(); i++) {
-                                items.add(item.get(i));
-                            }
-                            addAdapter(item);
-                        }
-                        nodatalayout.setVisibility(View.GONE);
-                        new UdinspoDao(Udinspo_ListActivity.this).update(item);
+                            nodatalayout.setVisibility(View.GONE);
+                            new UdinspoDao(Udinspo_ListActivity.this).update(item);
 //                        initAdapter(items);
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(String error) {
                     refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             });

@@ -217,26 +217,28 @@ public class WfmentFragment extends BaseFragment implements SwipeRefreshLayout.O
                     if (item == null || item.isEmpty()) {
                         nodatalayout.setVisibility(View.VISIBLE);
                     } else {
+                        if (totalPages == page) {
+                            if (item != null || item.size() != 0) {
+                                if (page == 1) {
+                                    items = new ArrayList<Wfassignment>();
+                                    initAdapter(new ArrayList<Wfassignment>());
+                                }
+                                for (int i = 0; i < item.size(); i++) {
+                                    items.add(item.get(i));
+                                }
+                                addData(item);
+                            }
+                            nodatalayout.setVisibility(View.GONE);
 
-                        if (item != null || item.size() != 0) {
-                            if (page == 1) {
-                                items = new ArrayList<Wfassignment>();
-                                initAdapter(new ArrayList<Wfassignment>());
-                            }
-                            for (int i = 0; i < item.size(); i++) {
-                                items.add(item.get(i));
-                            }
-                            addData(item);
+//                        initAdapter(items);
                         }
-                        nodatalayout.setVisibility(View.GONE);
-
-                        initAdapter(items);
                     }
                 }
 
                 @Override
                 public void onFailure(String error) {
                     refresh_layout.setRefreshing(false);
+                    refresh_layout.setLoading(false);
                     nodatalayout.setVisibility(View.VISIBLE);
                 }
             });

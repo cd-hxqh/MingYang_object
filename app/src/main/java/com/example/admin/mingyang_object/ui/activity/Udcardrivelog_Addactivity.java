@@ -177,7 +177,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         titleTextView.setText(getString(R.string.xcjlxj_text));
 
         startdateText.setText(GetDateAndTime.GetDate());
-        driveridText.setText(AccountUtils.getdisplayName(Udcardrivelog_Addactivity.this));
+        driveridText.setText(AccountUtils.getpersonId(Udcardrivelog_Addactivity.this));
         createdateText.setText(GetDateAndTime.GetDate());
         licensenumText.setOnClickListener(licensenumTextOnClickListener);
         startdateText.setOnClickListener(startdateTextOnClickListener);

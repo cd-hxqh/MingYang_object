@@ -649,6 +649,17 @@ public class HttpManager {
     }
 
     /**
+     * 设置选择车辆接口
+     */
+    public static String getRegularinspectionplanlinkurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.REGULARINSPECTIONPLANLINK_APPID + "','objectname':'" + Constants.REGULARINSPECTIONPLANLINK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read'}";
+        }else {
+            return "{'appid':'" + Constants.REGULARINSPECTIONPLANLINK_APPID + "','objectname':'" + Constants.REGULARINSPECTIONPLANLINK_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'PLANNO':'" + value + "','PRODESC':'" + value + "'}}";
+        }
+    }
+
+    /**
      * 设置物资编码的接口
      */
     public static String getItemUrl(String serch, int curpage, int showcount) {

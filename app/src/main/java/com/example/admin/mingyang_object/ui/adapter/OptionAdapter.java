@@ -1,8 +1,5 @@
 package com.example.admin.mingyang_object.ui.adapter;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +16,7 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.REGULARINSPECTIONPLANLINK;
 import com.example.admin.mingyang_object.model.Uddept;
 import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
@@ -27,9 +25,6 @@ import com.example.admin.mingyang_object.model.Udvehicle;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -306,6 +301,30 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
                 option = new Option();
                 option.setName(data.get(i).getDEPTNUM());
                 option.setDesc(data.get(i).getDESCRIPTION());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addRegularinspectionplanlinkDate(ArrayList<REGULARINSPECTIONPLANLINK> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getPLANNO());//定检计划编号
+                option.setDesc(data.get(i).getPRODESC());//项目描述
+                option.setValue1(data.get(i).getPRONUM());//项目编号
+                option.setValue2(data.get(i).getBRANCH());//中心编号
+                option.setValue3(data.get(i).getBRANCHDESC());//中心描述
+                option.setValue4(data.get(i).getHEAD());//负责人
+                option.setValue5(data.get(i).getHEADNAME());//负责人描述
+                option.setValue6(data.get(i).getFJNO());//风机型号
+                option.setValue7(data.get(i).getSTANDARDNUM());//定检标准编号
+                option.setValue8(data.get(i).getJPDESC());//定检标准描述
+                option.setValue9(data.get(i).getPLANSTARTTIME());//计划开始时间
+                option.setValue10(data.get(i).getPLANENDTIME());//计划完成时间
+                option.setValue11(data.get(i).getREGULARINSPECTIONTYPE());//定检类型
                 optionList.add(option);
             }
         }

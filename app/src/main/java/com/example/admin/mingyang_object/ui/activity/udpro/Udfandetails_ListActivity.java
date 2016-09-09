@@ -168,6 +168,7 @@ public class Udfandetails_ListActivity extends BaseActivity implements SwipeRefr
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });

@@ -99,6 +99,10 @@ public class Constants {
     public static final String ITEM_APPID = "UDITEM";
     //物资编码表名
     public static final String ITEM_NAME = "ITEM";
+    //物资编码appid
+    public static final String REGULARINSPECTIONPLANLINK_APPID = "REGULARINSPECTIONPLANLINK";
+    //物资编码表名
+    public static final String REGULARINSPECTIONPLANLINK_NAME = "REGULARINSPECTIONPLANLINK";
 
 
     /**
@@ -388,5 +392,7 @@ public class Constants {
     public static final int UDDEPTCODE = 260;//部门
 
     public static final int WONUMCODE = 270;//业务单号
+
+    public static final int REGULARINSPECTIONPLANLINKCODE = 280;//定检计划编号
 
 }

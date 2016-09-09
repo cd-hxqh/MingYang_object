@@ -151,6 +151,7 @@ public class Udpro_ListActivity extends BaseActivity implements SwipeRefreshLayo
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });

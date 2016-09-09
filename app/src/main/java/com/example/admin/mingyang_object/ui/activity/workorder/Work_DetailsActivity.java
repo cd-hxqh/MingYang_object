@@ -109,6 +109,8 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout work_numlayout;
     private TextView wonum;//工单号
     private TextView description;//工单描述
+    private LinearLayout djplannumlayout;
+    private TextView djplannum;//定检计划编号
     private LinearLayout description_layout;
     private TextView branch;//中心
     private TextView udprojectnum;//项目
@@ -162,7 +164,6 @@ public class Work_DetailsActivity extends BaseActivity {
     private TextView udinspoby;//定检人员1
     private TextView udinspoby2;//定检人员2
     private TextView udinspoby3;//定检人员3
-    private TextView djplannum;//定检计划编号
     private TextView djtype;//定检类型
     private TextView pccompnum1;//计划定检风机台数
     private LinearLayout lastlayout;
@@ -302,6 +303,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udinspoby = (TextView) findViewById(R.id.work_udinspoby);
         udinspoby2 = (TextView) findViewById(R.id.work_udinspoby2);
         udinspoby3 = (TextView) findViewById(R.id.work_udinspoby3);
+        djplannumlayout = (LinearLayout) findViewById(R.id.work_djplannum_layout);
         djplannum = (TextView) findViewById(R.id.work_djplannum);
         djtype = (TextView) findViewById(R.id.work_djtype);
         pccompnum1 = (TextView) findViewById(R.id.work_pccompnum1);
@@ -469,6 +471,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udinspoby2_2.setOnClickListener(new LayoutOnClickListener(16, Constants.PERSONCODE));
         udinspoby3_2.setOnClickListener(new LayoutOnClickListener(17, Constants.PERSONCODE));
         udprores.setOnClickListener(new LayoutOnClickListener(18, Constants.PERSONCODE));
+        djplannum.setOnClickListener(new LayoutOnClickListener(19,Constants.REGULARINSPECTIONPLANLINKCODE));
         udplstartdate.setOnClickListener(new DateChecked(udplstartdate));
         udplstopdate.setOnClickListener(new DateChecked(udplstopdate));
         udrlstartdate.setOnClickListener(new DateChecked(udrlstartdate));
@@ -650,6 +653,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 inspolayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
+                djplannumlayout.setVisibility(View.GONE);
 
                 SetClick_FR();
                 break;
@@ -675,6 +679,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udjpnumlayout.setVisibility(View.GONE);
                 lastlayout.setVisibility(View.GONE);
                 udreportnumlayout.setVisibility(View.GONE);
+                djplannumlayout.setVisibility(View.GONE);
 
                 SetClick_AA();
                 break;
@@ -692,6 +697,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udlocationlayout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
                 udreportnumlayout.setVisibility(View.GONE);
+                djplannumlayout.setVisibility(View.GONE);
 
                 SetClick_SP();
                 break;
@@ -715,6 +721,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 udrprrsb1layout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
                 udreportnumlayout.setVisibility(View.GONE);
+                djplannumlayout.setVisibility(View.GONE);
 
                 SetClick_TP();
                 break;
@@ -1869,6 +1876,19 @@ public class Work_DetailsActivity extends BaseActivity {
                     workOrder.UDPRORES = option.getName();
                     workOrder.UDPRORESNAME = option.getDesc();
                     break;
+                case 19:
+                    option = (Option) data.getSerializableExtra("option");
+                    djplannum.setText(option.getName());
+                    proname.setText(option.getDesc());
+                    udprojectnum.setText(option.getValue1());
+                    branch.setText(option.getValue2());
+                    lead.setText(option.getValue5());
+                    workOrder.LEAD = option.getValue4();
+                    workOrder.LEADNAME = option.getValue5();
+                    udjpnum.setText(option.getValue7());
+                    udplstartdate.setText(option.getValue9());
+                    udplstopdate.setText(option.getValue10());
+                    djtype.setText(option.getValue11());
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {
                         woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");

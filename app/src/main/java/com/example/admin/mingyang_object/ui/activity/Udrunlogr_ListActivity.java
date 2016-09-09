@@ -153,25 +153,27 @@ public class Udrunlogr_ListActivity extends BaseActivity implements SwipeRefresh
                 if (item == null || item.isEmpty()) {
                     nodatalayout.setVisibility(View.VISIBLE);
                 } else {
-
-                    if (item != null || item.size() != 0) {
-                        if (page == 1) {
-                            items = new ArrayList<Udrunlogr>();
-                            initAdapter(new ArrayList<Udrunlogr>());
+                    if (totalPages == page) {
+                        if (item != null || item.size() != 0) {
+                            if (page == 1) {
+                                items = new ArrayList<Udrunlogr>();
+                                initAdapter(new ArrayList<Udrunlogr>());
+                            }
+                            for (int i = 0; i < item.size(); i++) {
+                                items.add(item.get(i));
+                            }
+                            addAdapter(item);
                         }
-                        for (int i = 0; i < item.size(); i++) {
-                            items.add(item.get(i));
-                        }
-                        addAdapter(item);
-                    }
-                    nodatalayout.setVisibility(View.GONE);
+                        nodatalayout.setVisibility(View.GONE);
 //                        initAdapter(items);
+                    }
                 }
             }
 
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });

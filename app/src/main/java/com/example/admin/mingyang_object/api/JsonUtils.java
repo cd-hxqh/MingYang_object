@@ -14,6 +14,7 @@ import com.example.admin.mingyang_object.model.Item;
 import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Person;
+import com.example.admin.mingyang_object.model.REGULARINSPECTIONPLANLINK;
 import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.UdTriprePort;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
@@ -624,6 +625,52 @@ public class JsonUtils<E> {
 
                 }
                 list.add(uddept);
+            }
+            return list;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 解析定检计划信息*
+     */
+
+    public static ArrayList<REGULARINSPECTIONPLANLINK> parsingRegularinspectionplanlink(String data) {
+        ArrayList<REGULARINSPECTIONPLANLINK> list = null;
+        REGULARINSPECTIONPLANLINK regularinspectionplanlink = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<REGULARINSPECTIONPLANLINK>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                regularinspectionplanlink = new REGULARINSPECTIONPLANLINK();
+                jsonObject = jsonArray.getJSONObject(i);
+                Field[] field = regularinspectionplanlink.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = regularinspectionplanlink.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(regularinspectionplanlink);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = regularinspectionplanlink.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(regularinspectionplanlink, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(regularinspectionplanlink);
             }
             return list;
         } catch (JSONException e) {

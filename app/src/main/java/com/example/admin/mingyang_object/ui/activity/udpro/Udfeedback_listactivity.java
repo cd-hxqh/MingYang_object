@@ -173,6 +173,7 @@ public class Udfeedback_listactivity extends BaseActivity implements SwipeRefres
             @Override
             public void onFailure(String error) {
                 refresh_layout.setRefreshing(false);
+                refresh_layout.setLoading(false);
                 nodatalayout.setVisibility(View.VISIBLE);
             }
         });
