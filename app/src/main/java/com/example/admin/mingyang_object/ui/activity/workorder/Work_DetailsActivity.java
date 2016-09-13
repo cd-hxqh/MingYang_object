@@ -1640,7 +1640,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 super.onPostExecute(s);
                 if (s == null || s.wonum == null || s.errorMsg == null) {
                     Toast.makeText(Work_DetailsActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
-                } else if (s.wonum.equals(workOrder.WORKORDERID) && s.errorMsg != null) {
+                } else if (s.wonum.equals(workOrder.WORKORDERID+"") && s.errorMsg != null) {
                     udstatus.setText(s.errorMsg);
                     workOrder.UDSTATUS = s.errorMsg;
                     Toast.makeText(Work_DetailsActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
@@ -1885,6 +1885,7 @@ public class Work_DetailsActivity extends BaseActivity {
                     lead.setText(option.getValue5());
                     workOrder.LEAD = option.getValue4();
                     workOrder.LEADNAME = option.getValue5();
+                    wtcode.setText(option.getValue6());
                     udjpnum.setText(option.getValue7());
                     udplstartdate.setText(option.getValue9());
                     udplstopdate.setText(option.getValue10());

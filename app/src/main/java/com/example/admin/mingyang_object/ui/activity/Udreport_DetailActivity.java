@@ -1,5 +1,6 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,8 +38,11 @@ import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.MaterialDialog2;
 import com.flyco.dialog.widget.NormalDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 
 import java.text.ParseException;
@@ -79,6 +83,10 @@ public class Udreport_DetailActivity extends BaseActivity {
      * 查看故障原因措施*
      */
     private LinearLayout failureLinearLayout;
+    /**
+     * 发送工作流*
+     */
+    private LinearLayout flowerLinearLayout;
 
     /**
      * 界面信息*
@@ -145,7 +153,7 @@ public class Udreport_DetailActivity extends BaseActivity {
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
-
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +270,7 @@ public class Udreport_DetailActivity extends BaseActivity {
             remarkText.setFocusableInTouchMode(false);
             remarkText.setFocusable(false);
         }
-        statustypeText.setOnClickListener(new NormalListDialogOnClickListener(statustypeText));
+//        statustypeText.setOnClickListener(new NormalListDialogOnClickListener(statustypeText));
 
         getFailureList();
 
@@ -325,6 +333,8 @@ public class Udreport_DetailActivity extends BaseActivity {
         udpbforLayout = (LinearLayout) contentView.findViewById(R.id.udpbfor_id);
         commitLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_commit_id);
         failureLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_failure_id);
+        flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        flowerLinearLayout.setOnClickListener(flowerOnClickListener);
         workorderLayout.setOnClickListener(workorderOnClickListener);
         udpbforLayout.setOnClickListener(udpbforOnClickListener);
         commitLinearLayout.setOnClickListener(commitOnClickListener);
@@ -335,6 +345,18 @@ public class Udreport_DetailActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             finish();
+        }
+    };
+
+    private View.OnClickListener flowerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (udreport.getSTATUSTYPE().equals("新建")) {
+                MaterialDialogOneBtn();
+            } else {
+                EditDialog();
+            }
+            popupWindow.dismiss();
         }
     };
 
@@ -583,6 +605,140 @@ public class Udreport_DetailActivity extends BaseActivity {
             }
         }.execute();
 ////        }
+    }
+
+    private void MaterialDialogOneBtn() {//开始工作流
+        final MaterialDialog2 dialog = new MaterialDialog2(Udreport_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否启动工作流")//
+                .btnText("是", "否")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        startWF();
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void EditDialog() {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Udreport_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("1", text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    /**
+     * 开始工作流
+     */
+    private void startWF() {
+        mProgressDialog = ProgressDialog.show(Udreport_DetailActivity.this, null,
+                getString(R.string.start), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.startwf(Udreport_DetailActivity.this, "UDREPORT", "UDREPORT", udreport.getREPORTNUM(), "REPORTNUM");
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s != null && s.errorMsg != null && s.errorMsg.equals("工作流启动成功")) {
+                    Toast.makeText(Udreport_DetailActivity.this, s.errorMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udreport_DetailActivity.this, "工作流启动失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
+
+    /**
+     * 审批工作流
+     *
+     * @param zx
+     */
+    private void wfgoon(final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(Udreport_DetailActivity.this, null,
+                getString(R.string.approve), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.approve(Udreport_DetailActivity.this,
+                        "UDREPORT", "UDREPORT", udreport.getUDREPORTID() + "", "UDREPORTID", zx, desc,
+                        AccountUtils.getpersonId(Udreport_DetailActivity.this));
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s == null || s.wonum == null || s.errorMsg == null) {
+                    Toast.makeText(Udreport_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.wonum.equals(udreport.getUDREPORTID()+"") && s.errorMsg != null) {
+                    statustypeText.setText(s.errorMsg);
+                    udreport.setSTATUSTYPE(s.errorMsg);
+                    Toast.makeText(Udreport_DetailActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udreport_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     /**

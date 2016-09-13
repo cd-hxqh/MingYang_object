@@ -17,7 +17,7 @@ public class Udstockline implements Serializable {
     private String MSEHL;//单位
     private String NUMEXIST;//账存数量
     private String STOCKNUM;//盘点编号
-    private int ACTUALQTY;//实盘数量
+    private String ACTUALQTY;//实盘数量
     private int DIFFQTY;//差异数量
     private String DIFFREASON;//差异原因
 
@@ -87,11 +87,11 @@ public class Udstockline implements Serializable {
         this.STOCKNUM = STOCKNUM;
     }
 
-    public int getACTUALQTY() {
+    public String getACTUALQTY() {
         return ACTUALQTY;
     }
 
-    public void setACTUALQTY(int ACTUALQTY) {
+    public void setACTUALQTY(String  ACTUALQTY) {
         this.ACTUALQTY = ACTUALQTY;
     }
 

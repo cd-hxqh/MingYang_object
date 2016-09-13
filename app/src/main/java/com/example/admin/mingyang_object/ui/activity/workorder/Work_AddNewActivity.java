@@ -1547,6 +1547,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     lead.setText(option.getValue5());
                     workOrder.LEAD = option.getValue4();
                     workOrder.LEADNAME = option.getValue5();
+                    wtcode.setText(option.getValue6());
                     udjpnum.setText(option.getValue7());
                     udplstartdate.setText(option.getValue9());
                     udplstopdate.setText(option.getValue10());

@@ -205,10 +205,10 @@ public class Udstockline_DetailActivity extends BaseActivity {
      * 提交数据*
      */
     private void submitDataInfo() {
-        if (udstockline.getACTUALQTY() == (actualqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(actualqtyText.getText().toString()))
+        if (udstockline.getACTUALQTY().equals(actualqtyText.getText().toString())
 //                && udstockline.getDIFFQTY() == (diffqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(diffqtyText.getText().toString()))
                 && udstockline.getDIFFREASON().equals(diffreasonText.getText().toString())) {
-            finish();
+//            finish();
         } else {
             final NormalDialog dialog = new NormalDialog(Udstockline_DetailActivity.this);
             dialog.content("确定上传盘点行吗?")//
@@ -259,7 +259,7 @@ public class Udstockline_DetailActivity extends BaseActivity {
             @Override
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
+                if (workResult==null||workResult.errorMsg == null) {
                     Toast.makeText(Udstockline_DetailActivity.this, "修改库存盘点行失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udstockline_DetailActivity.this, "修改库存盘点行成功", Toast.LENGTH_SHORT).show();
@@ -276,7 +276,7 @@ public class Udstockline_DetailActivity extends BaseActivity {
     private ArrayList<Udstockline> getUdstockline() {
         ArrayList<Udstockline> udstocklines = new ArrayList<>();
         Udstockline udstockline = this.udstockline;
-        udstockline.setACTUALQTY(actualqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(actualqtyText.getText().toString()));
+        udstockline.setACTUALQTY(actualqtyText.getText().toString());
 //        udstockline.setDIFFQTY(diffqtyText.getText().toString().equals("") ? 0 : Integer.parseInt(diffqtyText.getText().toString()));
         udstockline.setDIFFREASON(diffreasonText.getText().toString());
         udstockline.setTYPE("update");

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class Udreport extends Entity implements Serializable {
 
-    private String UDREPORTID; //主键ID
+    private int UDREPORTID; //主键ID
     private String ASSETLOC; //设备位置描述
     private String BRANCH; //中心编码
     private String BRANCHDESC; //中心编码描述
@@ -38,11 +38,11 @@ public class Udreport extends Entity implements Serializable {
     private String UDPBFORMNUM;//质量问题反馈单编号
 
 
-    public String getUDREPORTID() {
+    public int getUDREPORTID() {
         return UDREPORTID;
     }
 
-    public void setUDREPORTID(String UDREPORTID) {
+    public void setUDREPORTID(int UDREPORTID) {
         this.UDREPORTID = UDREPORTID;
     }
 

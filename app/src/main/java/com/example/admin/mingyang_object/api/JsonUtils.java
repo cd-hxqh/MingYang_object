@@ -751,12 +751,12 @@ public class JsonUtils<E> {
                             // 调用getter方法获取属性值
                             Method getOrSet = udfeedback.getClass().getMethod("get" + name);
                             Object value = getOrSet.invoke(udfeedback);
-                            if (value == null) {
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
                                 //调用setter方法设属性值
                                 Class[] parameterTypes = new Class[1];
                                 parameterTypes[0] = field[j].getType();
                                 getOrSet = udfeedback.getClass().getDeclaredMethod("set" + name, parameterTypes);
-                                getOrSet.invoke(udfeedback, jsonObject.getString(name));
+                                getOrSet.invoke(udfeedback, jsonObject.get(name));
                             }
 
                         } catch (Exception e) {
@@ -2488,12 +2488,12 @@ public class JsonUtils<E> {
                             // 调用getter方法获取属性值
                             Method getOrSet = udreport.getClass().getMethod("get" + name);
                             Object value = getOrSet.invoke(udreport);
-                            if (value == null) {
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
                                 //调用setter方法设属性值
                                 Class[] parameterTypes = new Class[1];
                                 parameterTypes[0] = field[j].getType();
                                 getOrSet = udreport.getClass().getDeclaredMethod("set" + name, parameterTypes);
-                                getOrSet.invoke(udreport, jsonObject.getString(name));
+                                getOrSet.invoke(udreport, jsonObject.get(name));
                             }
 
                         } catch (Exception e) {

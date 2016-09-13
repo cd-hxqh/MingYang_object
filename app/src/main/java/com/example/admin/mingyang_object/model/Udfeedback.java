@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class Udfeedback extends Entity implements Serializable {
 
+    private int UDFEEDBACKID;
     private String FEEDBACKNUM; //编号
     private String DESCRIPTION; //描述
     private String PROBLEMTYPE; //问题类型
@@ -26,7 +27,7 @@ public class Udfeedback extends Entity implements Serializable {
     private String FOUNDTIME; //抵达时间
     private String COMPTIME; //完成时间
     private String PROGRESS; //解决问题及反馈
-    private String ISSTOP; //是否解决
+    private int ISSTOP; //是否解决
     private String REMARK; //说明
     private String BRANCH; //所属中心
     private String DEPT1; //提出人部门
@@ -40,7 +41,13 @@ public class Udfeedback extends Entity implements Serializable {
     private String SOLVENAME; //问题处理人
     private String PROSTAGE; //项目阶段
 
+    public int getUDFEEDBACKID() {
+        return UDFEEDBACKID;
+    }
 
+    public void setUDFEEDBACKID(int UDFEEDBACKID) {
+        this.UDFEEDBACKID = UDFEEDBACKID;
+    }
 
     public String getFEEDBACKNUM() {
         return FEEDBACKNUM;
@@ -178,11 +185,11 @@ public class Udfeedback extends Entity implements Serializable {
         this.PROGRESS = PROGRESS;
     }
 
-    public String getISSTOP() {
+    public int getISSTOP() {
         return ISSTOP;
     }
 
-    public void setISSTOP(String ISSTOP) {
+    public void setISSTOP(int ISSTOP) {
         this.ISSTOP = ISSTOP;
     }
 

@@ -1,8 +1,10 @@
 package com.example.admin.mingyang_object.ui.activity.udpro;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,13 +28,18 @@ import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
+import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateTimeSelect;
+import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.MaterialDialog2;
 import com.flyco.dialog.widget.NormalDialog;
+import com.flyco.dialog.widget.NormalEditTextDialog;
 import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
@@ -57,6 +64,7 @@ public class Udfeedback_DetailActivity extends BaseActivity {
      * 菜单
      */
     private ImageView menuImageView;
+    private PopupWindow popupWindow;
 
 
     /**
@@ -142,11 +150,17 @@ public class Udfeedback_DetailActivity extends BaseActivity {
     private Button cancel;
     private Button save;
 
+    /**
+     * 发送工作流*
+     */
+    private LinearLayout flowerLinearLayout;
+
     private Udfeedback udfeedback;
 
     private BaseAnimatorSet mBasIn;
     private BaseAnimatorSet mBasOut;
     private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -241,7 +255,7 @@ public class Udfeedback_DetailActivity extends BaseActivity {
             progressText.setText(udfeedback.getPROGRESS());
 
 
-            if(udfeedback.getISSTOP().equals("1")){
+            if(udfeedback.getISSTOP()==1){
                 isstopText.setChecked(true);
             }else {
                 isstopText.setChecked(false);
@@ -254,6 +268,9 @@ public class Udfeedback_DetailActivity extends BaseActivity {
     protected void initView() {
         backImageView.setOnClickListener(backImageViewOnClickListener);
         titleTextView.setText(getString(R.string.wtlldxj_text));
+        menuImageView.setImageResource(R.mipmap.ic_more);
+        menuImageView.setVisibility(View.VISIBLE);
+        menuImageView.setOnClickListener(menuImageViewOnClickListener);
 
         problemsituationText.setFocusable(false);
         problemsituationText.setFocusableInTouchMode(false);
@@ -279,6 +296,61 @@ public class Udfeedback_DetailActivity extends BaseActivity {
             }
         });
     }
+
+    private View.OnClickListener menuImageViewOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showPopupWindow(menuImageView);
+        }
+    };
+
+    /**
+     * 初始化showPopupWindow*
+     */
+    private void showPopupWindow(View view) {
+
+        // 一个自定义的布局，作为显示的内容
+        View contentView = LayoutInflater.from(Udfeedback_DetailActivity.this).inflate(
+                R.layout.udfeedback_popup_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                return false;
+            }
+        });
+
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        // 我觉得这里是API的一个bug
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        // 设置好参数之后再show
+        popupWindow.showAsDropDown(view);
+
+        flowerLinearLayout = (LinearLayout) contentView.findViewById(R.id.work_flower_id);
+        flowerLinearLayout.setOnClickListener(flowerOnClickListener);
+
+    }
+    private View.OnClickListener flowerOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (udfeedback.getSTATUS().equals("新建")) {
+                MaterialDialogOneBtn();
+            } else {
+                EditDialog();
+            }
+            popupWindow.dismiss();
+        }
+    };
 
     private void isCheckde(){
         switch (udfeedback.getSTATUS()){
@@ -530,6 +602,140 @@ public class Udfeedback_DetailActivity extends BaseActivity {
         }.execute();
 ////        }
 
+    }
+
+    private void MaterialDialogOneBtn() {//开始工作流
+        final MaterialDialog2 dialog = new MaterialDialog2(Udfeedback_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(false)//
+                .btnNum(2)
+                .content("是否启动工作流")//
+                .btnText("是", "否")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//是
+                    @Override
+                    public void onBtnClick() {
+                        startWF();
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//否
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    private void EditDialog() {//输入审核意见
+        final NormalEditTextDialog dialog = new NormalEditTextDialog(Udfeedback_DetailActivity.this);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.isTitleShow(true)//
+                .title("审批工作流")
+                .btnNum(3)
+                .content("通过")//
+                .btnText("取消", "通过", "不通过")//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("1", text);
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnEditClickL() {
+                    @Override
+                    public void onBtnClick(String text) {
+                        wfgoon("0", text.equals("通过") ? "不通过" : text);
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    /**
+     * 开始工作流
+     */
+    private void startWF() {
+        mProgressDialog = ProgressDialog.show(Udfeedback_DetailActivity.this, null,
+                getString(R.string.start), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.startwf(Udfeedback_DetailActivity.this, "UDFEEDBACK", "UDFEEDBACK", udfeedback.getFEEDBACKNUM(), "FEEDBACKNUM");
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s != null && s.errorMsg != null && s.errorMsg.equals("工作流启动成功")) {
+                    Toast.makeText(Udfeedback_DetailActivity.this, s.errorMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udfeedback_DetailActivity.this, "工作流启动失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
+    }
+
+    /**
+     * 审批工作流
+     *
+     * @param zx
+     */
+    private void wfgoon(final String zx, final String desc) {
+        mProgressDialog = ProgressDialog.show(Udfeedback_DetailActivity.this, null,
+                getString(R.string.approve), true, true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setCancelable(false);
+        new AsyncTask<String, String, WebResult>() {
+            @Override
+            protected WebResult doInBackground(String... strings) {
+                WebResult result = AndroidClientService.approve(Udfeedback_DetailActivity.this,
+                        "UDFEEDBACK", "UDFEEDBACK", udfeedback.getUDFEEDBACKID()+"", "UDFEEDBACKID", zx, desc,
+                        AccountUtils.getpersonId(Udfeedback_DetailActivity.this));
+
+                Log.i(TAG, "result=" + result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(WebResult s) {
+                super.onPostExecute(s);
+                if (s == null || s.wonum == null || s.errorMsg == null) {
+                    Toast.makeText(Udfeedback_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                } else if (s.wonum.equals(udfeedback.getUDFEEDBACKID()+"") && s.errorMsg != null) {
+                    statusText.setText(s.errorMsg);
+                    udfeedback.setSTATUS(s.errorMsg);
+                    Toast.makeText(Udfeedback_DetailActivity.this, "审批成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Udfeedback_DetailActivity.this, "审批失败", Toast.LENGTH_SHORT).show();
+                }
+                mProgressDialog.dismiss();
+            }
+        }.execute();
     }
 
     @Override

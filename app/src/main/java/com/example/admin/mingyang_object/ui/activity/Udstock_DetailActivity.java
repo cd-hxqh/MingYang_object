@@ -285,7 +285,7 @@ public class Udstock_DetailActivity extends BaseActivity {
             }
             if (udstock.getSTATUS().equals("待处理")||udstock.getSTATUS().equals("驳回")) {
                 for (int i = 0;i < items.size();i ++){
-                    if (items.get(i).getACTUALQTY()==0){
+                    if (!items.get(i).getACTUALQTY().equals("")){
                         Toast.makeText(Udstock_DetailActivity.this, "您不是当前流程任务分配人，无权限操作", Toast.LENGTH_SHORT).show();
                         return;
                     }
