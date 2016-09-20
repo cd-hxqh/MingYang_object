@@ -126,13 +126,14 @@ public class Udprorunlog_Line1AddNewActivity extends BaseActivity {
         titleTextView.setText("新增" + getResources().getString(R.string.udprorunlog_line1_details_title));
 
         createdate.setText(GetDateAndTime.GetDate());
+        prophase.setText(udprorunlog.PROSTAGE);
         funnum.setOnClickListener(new LayoutOnClickListener(1, Constants.UDLOCNUMCODE));
         personid.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         basestart.setOnClickListener(new DateChecked(basestart));
         baseplacing.setOnClickListener(new DateChecked(baseplacing));
         baseaog.setOnClickListener(new DateChecked(baseaog));
         tameraog.setOnClickListener(new DateChecked(tameraog));
-        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
+//        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
 
         confirm.setOnClickListener(confirmOnClickListener);
         cancel.setOnClickListener(cancelOnClickListener);

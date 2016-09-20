@@ -115,6 +115,18 @@ public class WorkOrder implements Serializable {
     public String UDINSPOBY3;//定检人员3
     @DatabaseField(columnName = "NAME3")
     public String NAME3;//定检人员3名称
+    @DatabaseField(columnName = "UDINSPOBY3")
+    public String UDINSPOBY4;//定检人员4
+    @DatabaseField(columnName = "NAME4")
+    public String NAME4;//定检人员4名称
+    @DatabaseField(columnName = "UDINSPOBY5")
+    public String UDINSPOBY5;//定检人员5
+    @DatabaseField(columnName = "NAME5")
+    public String NAME5;//定检人员5名称
+    @DatabaseField(columnName = "UDINSPOBY6")
+    public String UDINSPOBY6;//定检人员6
+    @DatabaseField(columnName = "NAME6")
+    public String NAME6;//定检人员6名称
     @DatabaseField(columnName = "DJPLANNUM")
     public String DJPLANNUM;//定检计划编号
     @DatabaseField(columnName = "DJTYPE")
@@ -159,6 +171,14 @@ public class WorkOrder implements Serializable {
     public String UDREPORTNUM;//故障提报单号
     @DatabaseField(columnName = "UDDESCRIP")
     public String UDDESCRIP;//处理过程
+    @DatabaseField(columnName = "UDWPTYPE")
+    public String UDWPTYPE;//人员类型
+    @DatabaseField(columnName = "UDWP")
+    public String UDWP;//承包人员
+    @DatabaseField(columnName = "UDCOND2")
+    public String UDCOND2;//需要其他单据
+    @DatabaseField(columnName = "UDCOND1")
+    public String UDCOND1;//需要其他单据
 
     @DatabaseField(columnName = "isnew")
     public boolean isnew;//是否是新增工单
@@ -749,5 +769,85 @@ public class WorkOrder implements Serializable {
 
     public void setLOCDESC(String LOCDESC) {
         this.LOCDESC = LOCDESC;
+    }
+
+    public String getUDWPTYPE() {
+        return UDWPTYPE;
+    }
+
+    public void setUDWPTYPE(String UDWPTYPE) {
+        this.UDWPTYPE = UDWPTYPE;
+    }
+
+    public String getUDWP() {
+        return UDWP;
+    }
+
+    public void setUDWP(String UDWP) {
+        this.UDWP = UDWP;
+    }
+
+    public String getUDCOND2() {
+        return UDCOND2;
+    }
+
+    public void setUDCOND2(String UDCOND2) {
+        this.UDCOND2 = UDCOND2;
+    }
+
+    public String getUDCOND1() {
+        return UDCOND1;
+    }
+
+    public void setUDCOND1(String UDCOND1) {
+        this.UDCOND1 = UDCOND1;
+    }
+
+    public String getUDINSPOBY4() {
+        return UDINSPOBY4;
+    }
+
+    public void setUDINSPOBY4(String UDINSPOBY4) {
+        this.UDINSPOBY4 = UDINSPOBY4;
+    }
+
+    public String getNAME4() {
+        return NAME4;
+    }
+
+    public void setNAME4(String NAME4) {
+        this.NAME4 = NAME4;
+    }
+
+    public String getUDINSPOBY5() {
+        return UDINSPOBY5;
+    }
+
+    public void setUDINSPOBY5(String UDINSPOBY5) {
+        this.UDINSPOBY5 = UDINSPOBY5;
+    }
+
+    public String getNAME5() {
+        return NAME5;
+    }
+
+    public void setNAME5(String NAME5) {
+        this.NAME5 = NAME5;
+    }
+
+    public String getUDINSPOBY6() {
+        return UDINSPOBY6;
+    }
+
+    public void setUDINSPOBY6(String UDINSPOBY6) {
+        this.UDINSPOBY6 = UDINSPOBY6;
+    }
+
+    public String getNAME6() {
+        return NAME6;
+    }
+
+    public void setNAME6(String NAME6) {
+        this.NAME6 = NAME6;
     }
 }

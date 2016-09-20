@@ -22,6 +22,8 @@ public class Udprorunlog extends Entity implements Serializable {
     public String PHONENUM;//电话号码
     public String YEAR; //年
     public String MONTH; //月
+    public String CHANGEBY;//修改人
+    public String CHANGEDATE;//修改时间
 
     public boolean isnew;//是否是新增项目日报
 
@@ -143,5 +145,21 @@ public class Udprorunlog extends Entity implements Serializable {
 
     public void setPRODESC(String PRODESC) {
         this.PRODESC = PRODESC;
+    }
+
+    public String getCHANGEBY() {
+        return CHANGEBY;
+    }
+
+    public void setCHANGEBY(String CHANGEBY) {
+        this.CHANGEBY = CHANGEBY;
+    }
+
+    public String getCHANGEDATE() {
+        return CHANGEDATE;
+    }
+
+    public void setCHANGEDATE(String CHANGEDATE) {
+        this.CHANGEDATE = CHANGEDATE;
     }
 }

@@ -85,6 +85,10 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
 
     private TextView statusText; //状态
 
+    private TextView changebyText; //修改人
+
+    private TextView changedateText; //修改日期
+
     private String pronumDesc = "";//项目描述
 
     private Button cancel;
@@ -152,6 +156,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         monthText = (TextView) findViewById(R.id.month_text_id);
         prostageText = (TextView) findViewById(R.id.prostage_text_id);
         statusText = (TextView) findViewById(R.id.status_text_id);
+        changebyText = (TextView) findViewById(R.id.changeby_text_id);
+        changedateText = (TextView) findViewById(R.id.changedate_text_id);
         cancel = (Button) findViewById(R.id.work_cancel);
         save = (Button) findViewById(R.id.work_save);
 
@@ -167,6 +173,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
             monthText.setText(udprorunlog.getMONTH());
             prostageText.setText(udprorunlog.getPROSTAGE());
             statusText.setText(udprorunlog.getSTATUS());
+            changebyText.setText(udprorunlog.getCHANGEBY());
+            changedateText.setText(udprorunlog.getCHANGEDATE());
         }
     }
 

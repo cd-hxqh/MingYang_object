@@ -142,6 +142,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView udjgresult;//累计时间
     private EditText udremark2;//没有编码的物料
     private EditText udprobdesc;//故障隐患描述
+    private TextView udcond2;//需要其他单据
     private LinearLayout timelayout;
     private LinearLayout udjpnumlayout;
     private TextView udjpnumtext;
@@ -156,10 +157,15 @@ public class Work_AddNewActivity extends BaseActivity {
     private TextView udinspoby;//定检人员1
     private TextView udinspoby2;//定检人员2
     private TextView udinspoby3;//定检人员3
+    private TextView udinspoby4;//定检人员4
+    private TextView udinspoby5;//定检人员5
+    private TextView udinspoby6;//定检人员6
     private TextView djtype;//定检类型
     private TextView pccompnum1;//计划定检风机台数
     private LinearLayout lastlayout;
     private TextView wtcode;//风机型号
+    private LinearLayout udcond1layout;
+    private TextView udcond1;//需要其他单据
     private LinearLayout assettypelayout;
     private TextView assettype;//设备类别
     private LinearLayout perinsprlayout;
@@ -193,6 +199,8 @@ public class Work_AddNewActivity extends BaseActivity {
     private LinearLayout udrprrsb1layout;
     private TextView udrprrsb1;//负责人
     private LinearLayout inspo2layout;//故障工单人员信息
+    private TextView udwptype;//人员类型
+    private EditText udwp;//承包人员
     private TextView lead2;//维护/运行组长
     private TextView udinspoby_2;//维护/运行人员
     private TextView udinspoby2_2;//维护/运行人员
@@ -279,6 +287,7 @@ public class Work_AddNewActivity extends BaseActivity {
         udjgresult = (TextView) findViewById(R.id.work_udjgresult);
         udremark2 = (EditText) findViewById(R.id.work_udremark2);
         udprobdesc = (EditText) findViewById(R.id.work_udprobdesc);
+        udcond2 = (TextView) findViewById(R.id.work_udcond2);
         timelayout = (LinearLayout) findViewById(R.id.work_timelayout);
         udjpnumlayout = (LinearLayout) findViewById(R.id.work_udjpnum_layout);
         udjpnumtext = (TextView) findViewById(R.id.work_udjpnum_text);
@@ -293,12 +302,17 @@ public class Work_AddNewActivity extends BaseActivity {
         udinspoby = (TextView) findViewById(R.id.work_udinspoby);
         udinspoby2 = (TextView) findViewById(R.id.work_udinspoby2);
         udinspoby3 = (TextView) findViewById(R.id.work_udinspoby3);
+        udinspoby4 = (TextView) findViewById(R.id.work_udinspoby4);
+        udinspoby5 = (TextView) findViewById(R.id.work_udinspoby5);
+        udinspoby6 = (TextView) findViewById(R.id.work_udinspoby6);
         djplannumlayout = (LinearLayout) findViewById(R.id.work_djplannum_layout);
         djplannum = (TextView) findViewById(R.id.work_djplannum);
         djtype = (TextView) findViewById(R.id.work_djtype);
         pccompnum1 = (TextView) findViewById(R.id.work_pccompnum1);
         lastlayout = (LinearLayout) findViewById(R.id.work_lastlayout);
         wtcode = (TextView) findViewById(R.id.work_wtcode);
+        udcond1layout = (LinearLayout) findViewById(R.id.work_udcond1_layout);
+        udcond1 = (TextView) findViewById(R.id.work_udcond1);
         assettypelayout = (LinearLayout) findViewById(R.id.work_assettype_layout);
         assettype = (TextView) findViewById(R.id.work_assettype);
         perinsprlayout = (LinearLayout) findViewById(R.id.work_perinspr_layout);
@@ -332,6 +346,8 @@ public class Work_AddNewActivity extends BaseActivity {
         udrprrsb1layout = (LinearLayout) findViewById(R.id.work_udrprrsb1_layout);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
         inspo2layout = (LinearLayout) findViewById(R.id.work_inspo2layout);
+        udwptype = (TextView) findViewById(R.id.work_udwptype);
+        udwp = (EditText) findViewById(R.id.work_udwp);
         lead2 = (TextView) findViewById(R.id.work_lead2);
         udinspoby_2 = (TextView) findViewById(R.id.work_udinspoby_2);
         udinspoby2_2 = (TextView) findViewById(R.id.work_udinspoby2_2);
@@ -365,11 +381,17 @@ public class Work_AddNewActivity extends BaseActivity {
         }
         djtype.setOnClickListener(new NormalListDialogOnClickListener(djtype));
         udjgtype.setOnClickListener(new NormalListDialogOnClickListener(udjgtype));
+        udwptype.setOnClickListener(new NormalListDialogOnClickListener(udwptype));
+        udcond2.setOnClickListener(new NormalListDialogOnClickListener(udcond2));
+        udcond1.setOnClickListener(new NormalListDialogOnClickListener(udcond1));
 //        culevel.setOnClickListener(new NormalListDialogOnClickListener(culevel));
         lead.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
         udinspoby.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         udinspoby2.setOnClickListener(new LayoutOnClickListener(3, Constants.PERSONCODE));
         udinspoby3.setOnClickListener(new LayoutOnClickListener(4, Constants.PERSONCODE));
+        udinspoby4.setOnClickListener(new LayoutOnClickListener(20, Constants.PERSONCODE));
+        udinspoby5.setOnClickListener(new LayoutOnClickListener(21, Constants.PERSONCODE));
+        udinspoby6.setOnClickListener(new LayoutOnClickListener(22, Constants.PERSONCODE));
         udrprrsb.setOnClickListener(new LayoutOnClickListener(11, Constants.PERSONCODE));
         udprojectnum.setOnClickListener(new LayoutOnClickListener(6, Constants.UDPROCODE));
         udlocnum.setOnClickListener(new LayoutOnClickListener(7, Constants.UDLOCNUMCODE));
@@ -447,6 +469,12 @@ public class Work_AddNewActivity extends BaseActivity {
             types = getResources().getStringArray(R.array.pctype_array);
         } else if (textView == udjgtype) {
             types = getResources().getStringArray(R.array.udjgtype_array);
+        }else if (textView == udwptype) {
+            types = getResources().getStringArray(R.array.udwptype_array);
+        }else if (textView == udcond2) {
+            types = getResources().getStringArray(R.array.udcond2_array);
+        }else if (textView == udcond1) {
+            types = getResources().getStringArray(R.array.udcond1_array);
         }
 //        else if (textView == culevel) {
 //            types = getResources().getStringArray(R.array.culevel_array);
@@ -537,7 +565,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 lastlayout.setVisibility(View.GONE);
                 udproreslayout.setVisibility(View.GONE);
                 djplannumlayout.setVisibility(View.GONE);
-
+                udcond1layout.setVisibility(View.GONE);
 
                 SetClick_FR();
                 break;
@@ -564,6 +592,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 lastlayout.setVisibility(View.GONE);
                 udreportnumlayout.setVisibility(View.GONE);
                 djplannumlayout.setVisibility(View.GONE);
+                udcond1layout.setVisibility(View.GONE);
 
                 SetClick_AA();
                 break;
@@ -582,7 +611,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 udproreslayout.setVisibility(View.GONE);
                 udreportnumlayout.setVisibility(View.GONE);
                 djplannumlayout.setVisibility(View.GONE);
-
+                udcond1layout.setVisibility(View.GONE);
 
                 SetClick_SP();
                 break;
@@ -607,7 +636,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 udproreslayout.setVisibility(View.GONE);
                 udreportnumlayout.setVisibility(View.GONE);
                 djplannumlayout.setVisibility(View.GONE);
-
+                udcond1layout.setVisibility(View.GONE);
 
                 SetClick_TP();
                 break;
@@ -1392,6 +1421,9 @@ public class Work_AddNewActivity extends BaseActivity {
         workOrder.JGPLANNUM = jgplannum.getText().toString();
         workOrder.UDJGTYPE = udjgtype.getText().toString();
         workOrder.UDFJAPPNUM = udfjappnum.getText().toString();
+        workOrder.UDWP = udwp.getText().toString();
+        workOrder.UDWPTYPE = udwptype.getText().toString();
+        workOrder.UDCOND1 = udcond1.getText().toString();
         switch (workOrder.WORKTYPE) {
             case Constants.FR:
                 workOrder.DESCRIPTION = udzglimit.getText().toString() + udrprrsb.getText().toString()
@@ -1552,6 +1584,24 @@ public class Work_AddNewActivity extends BaseActivity {
                     udplstartdate.setText(option.getValue9());
                     udplstopdate.setText(option.getValue10());
                     djtype.setText(option.getValue11());
+                case 20:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby4.setText(option.getDesc());
+                    workOrder.NAME4 = option.getDesc();
+                    workOrder.UDINSPOBY4 = option.getName();
+                    break;
+                case 21:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby5.setText(option.getDesc());
+                    workOrder.NAME5 = option.getDesc();
+                    workOrder.UDINSPOBY5 = option.getName();
+                    break;
+                case 22:
+                    option = (Option) data.getSerializableExtra("option");
+                    udinspoby6.setText(option.getDesc());
+                    workOrder.NAME6 = option.getDesc();
+                    workOrder.UDINSPOBY6 = option.getName();
+                    break;
                 case 1000:
                     if (data.hasExtra("woactivityList") && data.getSerializableExtra("woactivityList") != null) {
                         woactivityList = (ArrayList<Woactivity>) data.getSerializableExtra("woactivityList");

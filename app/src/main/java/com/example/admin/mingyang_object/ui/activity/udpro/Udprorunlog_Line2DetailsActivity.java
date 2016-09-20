@@ -179,7 +179,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
         date3.setOnClickListener(new DateChecked(date3));
         createdate.setOnClickListener(new DateChecked(createdate));
         personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
-        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
+//        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
         dznum.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
         confirm.setOnClickListener(confirmOnClickListener);
         delete.setOnClickListener(deleteOnClickListener);
@@ -191,7 +191,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
         udprorunlogLine2.CREATEDATE = createdate.getText().toString();
         udprorunlogLine2.PERSONID = personid.getText().toString();
         udprorunlogLine2.NAME = person.getText().toString();
-        udprorunlogLine2.PROPHASE = prophase.getText().toString();
+//        udprorunlogLine2.PROPHASE = prophase.getText().toString();
         udprorunlogLine2.WORKJOB = workjob.getText().toString();
 
         udprorunlogLine2.CLXPRODUCTION=clxproduction.getText().toString();//主机累计到货数q
@@ -234,7 +234,7 @@ public class Udprorunlog_Line2DetailsActivity extends BaseActivity {
                 Intent intent = getIntent();
                 if (udprorunlogLine2.CREATEDATE.equals(createdate.getText().toString())
                         && udprorunlogLine2.PERSONID.equals(personid.getText().toString())
-                        && udprorunlogLine2.PROPHASE.equals(prophase.getText().toString())
+//                        && udprorunlogLine2.PROPHASE.equals(prophase.getText().toString())
                         && udprorunlogLine2.WORKJOB.equals(workjob.getText().toString())
                         && udprorunlogLine2.REMARK1.equals(remark1.getText().toString())) {//如果内容没有修改
                     intent.putExtra("udprorunlogLine2", udprorunlogLine2);

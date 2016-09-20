@@ -35,6 +35,23 @@
         <item>运行系统</item>
     </string-array>
 
+    <string-array name="udwptype_array">
+        <item>工程内部</item>
+        <item>内包</item>
+        <item>外包</item>
+    </string-array>
+
+    <string-array name="udcond2_array">
+        <item>不需要其他单据</item>
+        <item>需要物资需用申请</item>
+        <item>需要质量问题反馈单</item>
+    </string-array>
+
+    <string-array name="udcond1_array">
+        <item>不需要其他单据</item>
+        <item>需要质量问题反馈单</item>
+    </string-array>
+
     <string-array name="culevel_array">
         <item>一般</item>
         <item>严重</item>

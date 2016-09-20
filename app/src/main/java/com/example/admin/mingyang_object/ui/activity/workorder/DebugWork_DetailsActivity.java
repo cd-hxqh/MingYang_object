@@ -654,7 +654,8 @@ public class DebugWork_DetailsActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult result = AndroidClientService.startwf(DebugWork_DetailsActivity.this, WorkTypeUtils.getProcessname("DC"), "DEBUGWORKORDER", workOrder.DEBUGWORKORDERNUM, "DEBUGWORKORDERNUM");
+                WebResult result = AndroidClientService.startwf(DebugWork_DetailsActivity.this, WorkTypeUtils.getProcessname("DC"), "DEBUGWORKORDER", workOrder.DEBUGWORKORDERNUM, "DEBUGWORKORDERNUM"
+                        ,AccountUtils.getpersonId(DebugWork_DetailsActivity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;

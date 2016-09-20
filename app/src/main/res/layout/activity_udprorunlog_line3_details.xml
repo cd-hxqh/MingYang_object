@@ -88,6 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:hint="@string/have_not_data"
                         android:gravity="center_vertical"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/dimens_16dp"  />
@@ -163,6 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:hint="@string/have_not_data"
                         android:inputType="numberDecimal"
                         android:gravity="center_vertical"
                         android:textColor="@color/light_black"
@@ -202,6 +204,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_5"
+                        android:hint="@string/have_not_data"
                         android:inputType="numberDecimal"
                         android:gravity="center_vertical"
                         android:textColor="@color/light_black"

@@ -49,18 +49,19 @@ public class AndroidClientService {
      *
      * @return
      */
-    public static WebResult startwf(Context context, String processname, String mbo, String keyValue, String key) {
+    public static WebResult startwf(Context context, String processname, String mbo, String keyValue, String key,String loginid) {
 
         String url = AccountUtils.getIpAddress(context) + Constants.WORK_FLOW_URL;
         Log.e("发送工作流",url);
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         soapEnvelope.implicitTypes = true;
         soapEnvelope.dotNet = true;
-        SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF");
+        SoapObject soapReq = new SoapObject(NAMESPACE, "wfservicestartWF2");
         soapReq.addProperty("processname", processname);//流程名称
         soapReq.addProperty("mbo", mbo);//如工单WORKORDER
         soapReq.addProperty("keyValue", keyValue);//对应的表ID的值，如工单需要传送WONUM的值，采购申请prnum的值
         soapReq.addProperty("key", key);//对应的表ID，如工单：wonum，采购申请，prnum
+        soapReq.addProperty("loginid",loginid);//用户id
         Log.e("发送工作流",soapReq.toString());
         soapEnvelope.setOutputSoapObject(soapReq);
         HttpTransportSE httpTransport = new HttpTransportSE(url, timeOut);

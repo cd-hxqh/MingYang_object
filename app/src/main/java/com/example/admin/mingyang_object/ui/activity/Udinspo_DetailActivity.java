@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -88,6 +89,9 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
     private TextView udlocnumText; //机位号
 
+    private TextView udwptype;//处理人员类型
+    private EditText udwp;//处理人员
+
 //    private TextView fjdescText; //设备位置
 
     private TextView statusText; //状态
@@ -101,6 +105,12 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private TextView inspoby1Text; //巡检人员1
 
     private TextView inspoby2Text; //巡检人员2
+
+    private TextView inspoby4Text; //巡检人员4
+
+    private TextView inspoby5Text; //巡检人员5
+
+    private TextView inspoby6Text; //巡检人员6
 
 
     private CheckBox isstopCheckBox; //是否停机
@@ -195,6 +205,8 @@ public class Udinspo_DetailActivity extends BaseActivity {
         modeltypeText = (TextView) findViewById(R.id.modeltype_text_id);
         jpnumText = (TextView) findViewById(R.id.jpnum_text_id);
         udlocnumText = (TextView) findViewById(R.id.udlocnum_text_id);
+        udwptype = (TextView) findViewById(R.id.work_udwptype);
+        udwp = (EditText) findViewById(R.id.work_udwp);
 //        fjdescText = (TextView) findViewById(R.id.fjdesc_text_id);
         statusText = (TextView) findViewById(R.id.status_text_id);
         inspplannumText = (TextView) findViewById(R.id.inspplannum_text_id);
@@ -202,6 +214,9 @@ public class Udinspo_DetailActivity extends BaseActivity {
         inspobyText = (TextView) findViewById(R.id.inspoby_text_id);
         inspoby1Text = (TextView) findViewById(R.id.inspoby_1_text_id);
         inspoby2Text = (TextView) findViewById(R.id.inspoby_2_text_id);
+        inspoby4Text = (TextView) findViewById(R.id.inspoby_4_text_id);
+        inspoby5Text = (TextView) findViewById(R.id.inspoby_5_text_id);
+        inspoby6Text = (TextView) findViewById(R.id.inspoby_6_text_id);
         isstopCheckBox = (CheckBox) findViewById(R.id.isstop_text_id);
         inspodateText = (TextView) findViewById(R.id.inspodate_text_id);
         stoptimeText = (TextView) findViewById(R.id.stoptime_text_id);
@@ -232,6 +247,8 @@ public class Udinspo_DetailActivity extends BaseActivity {
             modeltypeText.setText(udinspo.getMODELTYPE());
             jpnumText.setText(udinspo.getJPDESC());
             udlocnumText.setText(udinspo.getUDLOCNUM());
+            udwptype.setText(udinspo.getUDWPTYPE());
+            udwp.setText(udinspo.getUDWP());
 //            fjdescText.setText(udinspo.getFJDESC());
             statusText.setText(udinspo.getSTATUS());
             inspplannumText.setText(udinspo.getINSPPLANNUM());
@@ -239,6 +256,9 @@ public class Udinspo_DetailActivity extends BaseActivity {
             inspobyText.setText(udinspo.getNAME1());
             inspoby1Text.setText(udinspo.getNAME2());
             inspoby2Text.setText(udinspo.getNAME3());
+            inspoby4Text.setText(udinspo.getNAME4());
+            inspoby5Text.setText(udinspo.getNAME5());
+            inspoby6Text.setText(udinspo.getNAME6());
             if (udinspo.getISSTOP().equals("Y")) {
                 isstopCheckBox.setChecked(true);
             } else {
@@ -271,6 +291,7 @@ public class Udinspo_DetailActivity extends BaseActivity {
 
         if (udinspo.getSTATUS().equals("待执行")) {
             buttonlayout.setVisibility(View.VISIBLE);
+            udwptype.setOnClickListener(new NormalListDialogOnClickListener(udwptype));
 //            weatherText.setOnClickListener(new NormalListDialogOnClickListener(weatherText));
             inspodateText.setOnClickListener(new DateChecked(inspodateText));
             stoptimeText.setOnClickListener(new DateAndTimeChecked(stoptimeText));
@@ -424,8 +445,8 @@ public class Udinspo_DetailActivity extends BaseActivity {
     private void NormalListDialog(final TextView textView) {
         String[] types = new String[0];
         mMenuItems = new ArrayList<>();
-        if (textView == weatherText) {
-            types = getResources().getStringArray(R.array.weather_array);
+        if (textView == udwptype) {
+            types = getResources().getStringArray(R.array.udwptype_array);
         }
         for (int i = 0; i < types.length; i++) {
             mMenuItems.add(new DialogMenuItem(types[i], 0));
@@ -482,6 +503,8 @@ public class Udinspo_DetailActivity extends BaseActivity {
         udinspo.setINSPODATE(inspodateText.getText().toString());
         udinspo.setSTOPTIME(stoptimeText.getText().toString());
         udinspo.setOKTIME(oktimeText.getText().toString());
+        udinspo.setUDWPTYPE(udwptype.getText().toString());
+        udinspo.setUDWP(udwp.getText().toString());
         return udinspo;
     }
 

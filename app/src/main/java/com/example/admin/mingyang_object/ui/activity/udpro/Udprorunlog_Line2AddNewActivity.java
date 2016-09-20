@@ -152,7 +152,7 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         personid.setText(udprorunlogLine2.PERSONID);
         person.setText(udprorunlogLine2.NAME);
         phonenum.setText(udprorunlogLine2.PHONE);
-        prophase.setText(udprorunlogLine2.PROPHASE);
+//        prophase.setText(udprorunlogLine2.PROPHASE);
         workjob.setText(udprorunlogLine2.WORKJOB);
 
         clxproduction.setText(udprorunlogLine2.CLXPRODUCTION);//主机累计到货数q
@@ -181,10 +181,11 @@ public class Udprorunlog_Line2AddNewActivity extends BaseActivity {
         personid.setText(udprorunlog.RESPONSID);
         person.setText(udprorunlog.UDPRORESC);
         phonenum.setText(udprorunlog.PHONENUM);
+        prophase.setText(udprorunlog.PROSTAGE);
 
         createdate.setOnClickListener(new DateChecked(createdate));
         personid.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
-        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
+//        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
         dznum.setOnClickListener(new LayoutOnClickListener(2, Constants.UDLOCNUMCODE));
 
         confirm.setOnClickListener(confirmOnClickListener);

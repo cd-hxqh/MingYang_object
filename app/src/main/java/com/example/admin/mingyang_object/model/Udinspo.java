@@ -42,6 +42,12 @@ public class Udinspo extends Entity implements Serializable {
     private String INSPOBY2; //巡检人员编号
     @DatabaseField(columnName = "INSPOBY3")
     private String INSPOBY3; //巡检人员编号
+    @DatabaseField(columnName = "INSPOBY4")
+    private String INSPOBY4; //巡检人员编号
+    @DatabaseField(columnName = "INSPOBY5")
+    private String INSPOBY5; //巡检人员编号
+    @DatabaseField(columnName = "INSPOBY6")
+    private String INSPOBY6; //巡检人员编号
     @DatabaseField(columnName = "INSPODATE")
     private String INSPODATE; //巡检日期
     @DatabaseField(columnName = "INSPONUM")
@@ -88,8 +94,18 @@ public class Udinspo extends Entity implements Serializable {
     private String NAME2; //巡检人员名称
     @DatabaseField(columnName = "NAME3")
     private String NAME3; //巡检人员名称
+    @DatabaseField(columnName = "NAME4")
+    private String NAME4; //巡检人员名称
+    @DatabaseField(columnName = "NAME5")
+    private String NAME5; //巡检人员名称
+    @DatabaseField(columnName = "NAME6")
+    private String NAME6; //巡检人员名称
     @DatabaseField(columnName = "WONUM")
     private String WONUM; //故障工单号
+    @DatabaseField(columnName = "UDWPTYPE")
+    private String UDWPTYPE; //处理人员类型
+    @DatabaseField(columnName = "UDWP")
+    private String UDWP; //处理人员
 
     @DatabaseField(columnName = "isUpdate")
     public boolean isUpdate;//是否是本地已修改巡检单
@@ -407,5 +423,69 @@ public class Udinspo extends Entity implements Serializable {
 
     public void setBRANCHDESC(String BRANCHDESC) {
         this.BRANCHDESC = BRANCHDESC;
+    }
+
+    public String getUDWPTYPE() {
+        return UDWPTYPE;
+    }
+
+    public void setUDWPTYPE(String UDWPTYPE) {
+        this.UDWPTYPE = UDWPTYPE;
+    }
+
+    public String getUDWP() {
+        return UDWP;
+    }
+
+    public void setUDWP(String UDWP) {
+        this.UDWP = UDWP;
+    }
+
+    public String getNAME6() {
+        return NAME6;
+    }
+
+    public void setNAME6(String NAME6) {
+        this.NAME6 = NAME6;
+    }
+
+    public String getNAME5() {
+        return NAME5;
+    }
+
+    public void setNAME5(String NAME5) {
+        this.NAME5 = NAME5;
+    }
+
+    public String getNAME4() {
+        return NAME4;
+    }
+
+    public void setNAME4(String NAME4) {
+        this.NAME4 = NAME4;
+    }
+
+    public String getINSPOBY6() {
+        return INSPOBY6;
+    }
+
+    public void setINSPOBY6(String INSPOBY6) {
+        this.INSPOBY6 = INSPOBY6;
+    }
+
+    public String getINSPOBY5() {
+        return INSPOBY5;
+    }
+
+    public void setINSPOBY5(String INSPOBY5) {
+        this.INSPOBY5 = INSPOBY5;
+    }
+
+    public String getINSPOBY4() {
+        return INSPOBY4;
+    }
+
+    public void setINSPOBY4(String INSPOBY4) {
+        this.INSPOBY4 = INSPOBY4;
     }
 }

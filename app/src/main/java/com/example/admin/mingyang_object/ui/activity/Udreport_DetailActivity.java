@@ -684,7 +684,7 @@ public class Udreport_DetailActivity extends BaseActivity {
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
-                WebResult result = AndroidClientService.startwf(Udreport_DetailActivity.this, "UDREPORT", "UDREPORT", udreport.getREPORTNUM(), "REPORTNUM");
+                WebResult result = AndroidClientService.startwf(Udreport_DetailActivity.this, "UDREPORT", "UDREPORT", udreport.getREPORTNUM(), "REPORTNUM",AccountUtils.getpersonId(Udreport_DetailActivity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;

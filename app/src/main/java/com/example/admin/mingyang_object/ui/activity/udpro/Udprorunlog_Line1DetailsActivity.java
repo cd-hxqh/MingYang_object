@@ -149,7 +149,7 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
         baseplacing.setOnClickListener(new DateChecked(baseplacing));
         baseaog.setOnClickListener(new DateChecked(baseaog));
         tameraog.setOnClickListener(new DateChecked(tameraog));
-        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
+//        prophase.setOnClickListener(new NormalListDialogOnClickListener(prophase));
         confirm.setOnClickListener(confirmOnClickListener);
         delete.setOnClickListener(deleteOnClickListener);
     }
@@ -159,7 +159,7 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
         udprorunlogLine1.CREATEDATE = createdate.getText().toString();
         udprorunlogLine1.PERSONID = personid.getText().toString();
         udprorunlogLine1.FUNNUM = funnum.getText().toString();
-        udprorunlogLine1.PROPHASE = prophase.getText().toString();
+//        udprorunlogLine1.PROPHASE = prophase.getText().toString();
         udprorunlogLine1.LAND = land.getText().toString();
         udprorunlogLine1.INSIDEROAD = insideroad.getText().toString();
         udprorunlogLine1.OUTSIDEROAD = outsideroad.getText().toString();
@@ -181,7 +181,7 @@ public class Udprorunlog_Line1DetailsActivity extends BaseActivity {
             if(udprorunlogLine1.CREATEDATE.equals(createdate.getText().toString())
                     &&udprorunlogLine1.PERSONID.equals(personid.getText().toString())
                     &&udprorunlogLine1.FUNNUM.equals(funnum.getText().toString())
-                    &&udprorunlogLine1.PROPHASE.equals(prophase.getText().toString())
+//                    &&udprorunlogLine1.PROPHASE.equals(prophase.getText().toString())
                     &&udprorunlogLine1.LAND.equals(land.getText().toString())
                     &&udprorunlogLine1.INSIDEROAD.equals(insideroad.getText().toString())
                     &&udprorunlogLine1.OUTSIDEROAD.equals(outsideroad.getText().toString())

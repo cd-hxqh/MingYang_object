@@ -28,6 +28,7 @@ import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
+import com.example.admin.mingyang_object.utils.GetDateAndTime;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
@@ -85,6 +86,10 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
     private TextView prostageText; //项目阶段
 
     private TextView statusText; //状态
+
+    private TextView changebyText; //修改人
+
+    private TextView changedateText; //修改日期
 
     private String pronumDesc = "";//项目描述
 
@@ -153,6 +158,8 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         monthText = (TextView) findViewById(R.id.month_text_id);
         prostageText = (TextView) findViewById(R.id.prostage_text_id);
         statusText = (TextView) findViewById(R.id.status_text_id);
+        changebyText = (TextView) findViewById(R.id.changeby_text_id);
+        changedateText = (TextView) findViewById(R.id.changedate_text_id);
         cancel = (Button) findViewById(R.id.work_cancel);
         save = (Button) findViewById(R.id.work_save);
     }
@@ -166,6 +173,9 @@ public class Udprorunlog_AddNewActivity extends BaseActivity {
         menuImageView.setOnClickListener(menuImageViewOnClickListener);
         prorunlognumlayout.setVisibility(View.GONE);
         statusText.setText("新建");
+        changebyText.setText(AccountUtils.getuserName(Udprorunlog_AddNewActivity.this));
+        udprorunlog.CHANGEBY = AccountUtils.getuserName(Udprorunlog_AddNewActivity.this);
+        changedateText.setText(GetDateAndTime.GetDateTime());
         pronumText.setOnClickListener(new LayoutOnClickListener(1, Constants.UDPROCODE));
         contractsText.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         yearText.setOnClickListener(new NormalListDialogOnClickListener(yearText));
