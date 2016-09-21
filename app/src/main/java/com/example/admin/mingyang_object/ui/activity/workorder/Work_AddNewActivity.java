@@ -1535,7 +1535,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     break;
                 case 13:
                     option = (Option) data.getSerializableExtra("option");
-                    problemcode.setText(option.getDesc());
+                    problemcode.setText(option.getName());
                     gzwtdesc.setText(option.getDesc());
                     workOrder.GZWTDESC = option.getDesc();
                     workOrder.PROBLEMCODE = option.getName();
