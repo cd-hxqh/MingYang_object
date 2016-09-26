@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -24,20 +23,11 @@ import com.lzy.imagepicker.R;
  * ================================================
  */
 public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements View.OnClickListener {
-    private static final String TAG = "ImagePreviewDelActivity";
-    /**
-     * 服务器
-     **/
-    private String result;
-
-    public static String NAMESPACE = "http://www.ibm.com/maximo";//http://www.ibm.com/maximo
-    public static int timeOut = 60000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        result = getIntent().getStringExtra("results");
-        Log.i(TAG, "result=" + result);
+
         ImageView mBtnDel = (ImageView) findViewById(R.id.btn_del);
         mBtnDel.setOnClickListener(this);
         mBtnDel.setVisibility(View.VISIBLE);
@@ -64,9 +54,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         }
     }
 
-    /**
-     * 是否删除此张图片
-     */
+    /** 是否删除此张图片 */
     private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示");
@@ -75,19 +63,14 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-//                if (result.equals(ImagePicker.SERVER_IMAGE_ITEMS)) {
-                    Log.i(TAG, "id=" + mImageItems.get(mCurrentPosition).name);
-//                } else if (result.equals(ImagePicker.LOCATION_IMAGE_ITEMS)) {
-                    //移除当前图片刷新界面
-                    mImageItems.remove(mCurrentPosition);
-                    if (mImageItems.size() > 0) {
-                        mAdapter.setData(mImageItems);
-                        mAdapter.notifyDataSetChanged();
-                        mTitleCount.setText(getString(R.string.preview_image_count, mCurrentPosition + 1, mImageItems.size()));
-                    } else {
-                        onBackPressed();
-//                    }
+                //移除当前图片刷新界面
+                mImageItems.remove(mCurrentPosition);
+                if (mImageItems.size() > 0) {
+                    mAdapter.setData(mImageItems);
+                    mAdapter.notifyDataSetChanged();
+                    mTitleCount.setText(getString(R.string.preview_image_count, mCurrentPosition + 1, mImageItems.size()));
+                } else {
+                    onBackPressed();
                 }
             }
         });
@@ -104,9 +87,7 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
         super.onBackPressed();
     }
 
-    /**
-     * 单击时，隐藏头和尾
-     */
+    /** 单击时，隐藏头和尾 */
     @Override
     public void onImageSingleTap() {
         if (topBar.getVisibility() == View.VISIBLE) {
@@ -114,48 +95,13 @@ public class ImagePreviewDelActivity extends ImagePreviewBaseActivity implements
             topBar.setVisibility(View.GONE);
             tintManager.setStatusBarTintResource(com.lzy.imagepicker.R.color.transparent);//通知栏所需颜色
             //给最外层布局加上这个属性表示，Activity全屏显示，且状态栏被隐藏覆盖掉。
-            if (Build.VERSION.SDK_INT >= 16)
-                content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         } else {
             topBar.setAnimation(AnimationUtils.loadAnimation(this, com.lzy.imagepicker.R.anim.top_in));
             topBar.setVisibility(View.VISIBLE);
             tintManager.setStatusBarTintResource(com.lzy.imagepicker.R.color.status_bar);//通知栏所需颜色
             //Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态遮住
-            if (Build.VERSION.SDK_INT >= 16)
-                content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            if (Build.VERSION.SDK_INT >= 16) content.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }
-
-
-
-
-    /**删除服务器上的图片**/
-    private void deleteImage(String id){
-
-    }
-
-
-
-//    public static String deleteImage(Context context, String id) {
-//        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-//        soapEnvelope.implicitTypes = true;
-//        soapEnvelope.dotNet = true;
-//        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileservicedeleteImage");
-//        soapReq.addProperty("docinfoid", id);//id
-//        soapEnvelope.setOutputSoapObject(soapReq);
-//        HttpTransportSE httpTransport = new HttpTransportSE("", timeOut);
-//        try {
-//            httpTransport.call("urn:action", soapEnvelope);
-//        } catch (IOException | XmlPullParserException e) {
-//            return null;
-//        }
-//        String obj = null;
-//        try {
-//            obj = soapEnvelope.getResponse().toString();
-//        } catch (SoapFault soapFault) {
-//            soapFault.printStackTrace();
-//        }
-//        return obj;
-//    }
-
 }
