@@ -393,6 +393,8 @@ public class Udprorunlog_DetailActivity extends BaseActivity {
         udprorunlog.PRORUNLOGNUM = prorunlognumText.getText().toString();
         udprorunlog.DESCRIPTION = descriptionText.getText().toString();
         udprorunlog.PRONUM = pronumText.getText().toString();
+//        udprorunlog.CHANGEBY = null;
+//        udprorunlog.CHANGEDATE = null;
 //        udprorunlog.BRANCH = branchText.getText().toString();
 //        udprorunlog.UDPRORESC = udprorescText.getText().toString();
 //        udprorunlog.CONTRACTS = contractsText.getText().toString();

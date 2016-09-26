@@ -200,9 +200,9 @@ public class JsonUtils<E> {
             JSONObject object = new JSONObject(data);
             if (object.has("status") && !object.getString("status").equals("")) {
                 webResult.errorMsg = object.getString("status");
-            }else if (object.has("massage") && !object.getString("massage").equals("")){
+            } else if (object.has("massage") && !object.getString("massage").equals("")) {
                 webResult.errorMsg = object.getString("massage");
-            }else if (object.has("errorMsg") && !object.getString("errorMsg").equals("")){
+            } else if (object.has("errorMsg") && !object.getString("errorMsg").equals("")) {
                 webResult.errorMsg = object.getString("errorMsg");
             }
             if (object.has(num) && !object.getString(num).equals("")) {
@@ -693,7 +693,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlog = new Udprorunlog();
                 jsonObject = jsonArray.getJSONObject(i);
-                Log.e("项目日报","项目日报列表"+jsonObject);
+                Log.e("项目日报", "项目日报列表" + jsonObject);
 
                 Field[] field = udprorunlog.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
@@ -981,7 +981,6 @@ public class JsonUtils<E> {
         Log.i(TAG, "WorkOrder data=" + data);
 
 
-
         ArrayList<DebugWorkOrder> list = null;
 
         DebugWorkOrder workOrder = null;
@@ -996,7 +995,7 @@ public class JsonUtils<E> {
                 workOrder = new DebugWorkOrder();
                 jsonObject = jsonArray.getJSONObject(i);
 
-                Log.e("调试工单","数据"+jsonObject);
+                Log.e("调试工单", "数据" + jsonObject);
 
                 Field[] field = workOrder.getClass().getDeclaredFields();//获取实体类的所有属性，返回Field数组
 
@@ -1050,7 +1049,7 @@ public class JsonUtils<E> {
                 udTriprePort = new UdTriprePort();
                 jsonObject = jsonArray.getJSONObject(i);
 
-                Log.e("出差","JSON数据"+jsonObject);
+                Log.e("出差", "JSON数据" + jsonObject);
 
                 Field[] field = udTriprePort.getClass().getDeclaredFields();//获取实体类的所有属性，返回Field数组
 
@@ -1092,9 +1091,6 @@ public class JsonUtils<E> {
     public static ArrayList<UddebugWorkOrderLine> parsingUddebugWorkOrderLine(Context ctx, String data, String wonum) {
 
 
-
-
-
         ArrayList<UddebugWorkOrderLine> list = null;
         UddebugWorkOrderLine uddebugWorkOrderLine = null;
         try {
@@ -1105,7 +1101,7 @@ public class JsonUtils<E> {
                 uddebugWorkOrderLine = new UddebugWorkOrderLine();
                 jsonObject = jsonArray.getJSONObject(i);
 
-                Log.e("调试工单","子表数据"+jsonObject);
+                Log.e("调试工单", "子表数据" + jsonObject);
 
                 Field[] field = uddebugWorkOrderLine.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
@@ -1292,7 +1288,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine1 = new UdprorunlogLine1();
                 jsonObject = jsonArray.getJSONObject(i);
-                Log.e("项目日报","土建阶段子表"+jsonObject);
+                Log.e("项目日报", "土建阶段子表" + jsonObject);
                 Field[] field = udprorunlogLine1.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1339,7 +1335,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine2 = new UdprorunlogLine2();
                 jsonObject = jsonArray.getJSONObject(i);
-                Log.e("项目日报","吊装调试子表"+jsonObject+"\n");
+                Log.e("项目日报", "吊装调试子表" + jsonObject + "\n");
                 Field[] field = udprorunlogLine2.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1386,7 +1382,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine3 = new UdprorunlogLine3();
                 jsonObject = jsonArray.getJSONObject(i);
-                Log.e("项目日报","工作日报子表"+jsonObject);
+                Log.e("项目日报", "工作日报子表" + jsonObject);
                 Field[] field = udprorunlogLine3.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1396,7 +1392,7 @@ public class JsonUtils<E> {
                             // 调用getter方法获取属性值
                             Method getOrSet = udprorunlogLine3.getClass().getMethod("get" + name);
                             Object value = getOrSet.invoke(udprorunlogLine3);
-                            if (value == null || name.equals("UDPRORUNLOGCID")|| name.equals("TEM")|| name.equals("WINDSPEED")) {
+                            if (value == null || name.equals("UDPRORUNLOGCID") || name.equals("TEM") || name.equals("WINDSPEED")) {
                                 //调用setter方法设属性值
                                 Class[] parameterTypes = new Class[1];
                                 parameterTypes[0] = field[j].getType();
@@ -1433,7 +1429,7 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 udprorunlogLine4 = new UdprorunlogLine4();
                 jsonObject = jsonArray.getJSONObject(i);
-                Log.e("项目日报","工装管理子表"+jsonObject);
+                Log.e("项目日报", "工装管理子表" + jsonObject);
                 Field[] field = udprorunlogLine4.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1619,7 +1615,7 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    if (!name.equals("isnew")&&!name.equals("WORKORDERID")&&!name.equals("id")&&!name.equals("isUpdate")) {
+                    if (!name.equals("isnew") && !name.equals("WORKORDERID") && !name.equals("id") && !name.equals("isUpdate")) {
                         getOrSet = workOrder.getClass().getMethod("get" + name);
                         Object value = null;
                         value = getOrSet.invoke(workOrder);
@@ -1648,7 +1644,7 @@ public class JsonUtils<E> {
                         String name = field1[j].getName();//获取属性的名字
                         Method getOrSet = null;
                         try {
-                            if (!name.equals("belongid")&&!name.equals("id")&&!name.equals("isUpload")) {
+                            if (!name.equals("belongid") && !name.equals("id") && !name.equals("isUpload")) {
                                 getOrSet = woactivities.get(i).getClass().getMethod("get" + name);
                                 Object value = null;
                                 value = getOrSet.invoke(woactivities.get(i));
@@ -1732,7 +1728,7 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    if (!name.equals("isnew")&&!name.equals("WORKORDERID")) {
+                    if (!name.equals("isnew") && !name.equals("WORKORDERID")) {
                         getOrSet = workOrder.getClass().getMethod("get" + name);
                         Object value = null;
                         value = getOrSet.invoke(workOrder);
@@ -1943,11 +1939,13 @@ public class JsonUtils<E> {
                         String name = field1[j].getName();//获取属性的名字
                         Method getOrSet = null;
                         try {
-                            getOrSet = udprorunlogLine2s.get(i).getClass().getMethod("get" + name);
-                            Object value = null;
-                            value = getOrSet.invoke(udprorunlogLine2s.get(i));
-                            if (value != null) {
-                                udprorunlogline2Obj.put(name, value + "");
+                            if (!name.equals("isUpload")) {
+                                getOrSet = udprorunlogLine2s.get(i).getClass().getMethod("get" + name);
+                                Object value = null;
+                                value = getOrSet.invoke(udprorunlogLine2s.get(i));
+                                if (value != null) {
+                                    udprorunlogline2Obj.put(name, value + "");
+                                }
                             }
                         } catch (NoSuchMethodException e) {
                             e.printStackTrace();
@@ -2118,6 +2116,7 @@ public class JsonUtils<E> {
         }
         return jsonObject.toString();
     }
+
     /**
      * 封装故障提报单数据
      *
@@ -2215,7 +2214,7 @@ public class JsonUtils<E> {
                 String name = field[j].getName();//获取属性的名字
                 Method getOrSet = null;
                 try {
-                    if (!name.equals("id")&&!name.equals("isUpdate")&&!name.equals("belong")) {
+                    if (!name.equals("id") && !name.equals("isUpdate") && !name.equals("belong")) {
                         getOrSet = udinspo.getClass().getMethod("get" + name);
                         Object value = null;
                         value = getOrSet.invoke(udinspo);
@@ -2334,8 +2333,8 @@ public class JsonUtils<E> {
                             e.printStackTrace();
                         }
                     }
-                    udprorunlogline1Obj.put("FORAPP","1");
-                    udprorunlogline1Obj.put("DESCRIPTION",udprorunlog.LOGNUM);
+                    udprorunlogline1Obj.put("FORAPP", "1");
+                    udprorunlogline1Obj.put("DESCRIPTION", udprorunlog.LOGNUM);
                     if (udprorunlogline1Obj.get("TYPE").equals("add") && udprorunlogline1Obj.has("UDRUNLINERID") && udprorunlogline1Obj.get("UDRUNLINERID").equals("0")) {
                         udprorunlogline1Obj.remove("UDRUNLINERID");
                     }
@@ -2740,15 +2739,15 @@ public class JsonUtils<E> {
         }
 
     }
+
     /**
-     *解析加油卡台账
-     *
+     * 解析加油卡台账
      */
-    public static ArrayList<GreaseCard>parsingGreaseCard(Context ctx,String data){
+    public static ArrayList<GreaseCard> parsingGreaseCard(Context ctx, String data) {
         ArrayList<GreaseCard> list = null;
         GreaseCard greaseCard = null;
         try {
-            JSONObject jsonObjectData= new JSONObject(data);
+            JSONObject jsonObjectData = new JSONObject(data);
 
             JSONArray jsonArray = new JSONArray(jsonObjectData.getString("resultlist"));
             JSONObject jsonObject;
@@ -2788,6 +2787,7 @@ public class JsonUtils<E> {
         }
 
     }
+
     /**
      * 维修记录*
      */
@@ -2916,12 +2916,11 @@ public class JsonUtils<E> {
     }
 
 
-
     /**
      * 附件类*
      */
     public static ArrayList<Doclinks> parsingDoclinks(Context ctx, String data) {
-        Log.i(TAG,"ddddata="+data);
+        Log.i(TAG, "ddddata=" + data);
         ArrayList<Doclinks> list = null;
         Doclinks doclinks = null;
         try {
@@ -2964,9 +2963,6 @@ public class JsonUtils<E> {
         }
 
     }
-
-
-
 
 
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class UdprorunlogLine2 implements Serializable{
 
-    public int UDPRORUNLOGLINE2ID;
+    public int UDPRORUNLOGLINE2DZID;
     public String CREATEDATE;//日期
     public String PERSONID;//项目负责人
     public String NAME;//负责人描述
@@ -42,12 +42,12 @@ public class UdprorunlogLine2 implements Serializable{
     public String TYPE;
     public boolean isUpload;
 
-    public int getUDPRORUNLOGLINE2ID() {
-        return UDPRORUNLOGLINE2ID;
+    public int getUDPRORUNLOGLINE2DZID() {
+        return UDPRORUNLOGLINE2DZID;
     }
 
-    public void setUDPRORUNLOGLINE2ID(int UDPRORUNLOGLINE2ID) {
-        this.UDPRORUNLOGLINE2ID = UDPRORUNLOGLINE2ID;
+    public void setUDPRORUNLOGLINE2DZID(int UDPRORUNLOGLINE2ID) {
+        this.UDPRORUNLOGLINE2DZID = UDPRORUNLOGLINE2ID;
     }
 
     public String getCREATEDATE() {
@@ -249,4 +249,6 @@ public class UdprorunlogLine2 implements Serializable{
     public void setTITLE(String TITLE) {
         this.TITLE = TITLE;
     }
+
+
 }

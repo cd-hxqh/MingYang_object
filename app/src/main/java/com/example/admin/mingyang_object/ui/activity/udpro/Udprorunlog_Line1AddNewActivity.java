@@ -127,6 +127,7 @@ public class Udprorunlog_Line1AddNewActivity extends BaseActivity {
 
         createdate.setText(GetDateAndTime.GetDate());
         prophase.setText(udprorunlog.PROSTAGE);
+        createdate.setOnClickListener(new DateChecked(createdate));
         funnum.setOnClickListener(new LayoutOnClickListener(1, Constants.UDLOCNUMCODE));
         personid.setOnClickListener(new LayoutOnClickListener(2, Constants.PERSONCODE));
         basestart.setOnClickListener(new DateChecked(basestart));
