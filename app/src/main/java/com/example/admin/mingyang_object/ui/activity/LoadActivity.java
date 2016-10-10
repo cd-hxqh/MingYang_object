@@ -53,6 +53,7 @@ public class LoadActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

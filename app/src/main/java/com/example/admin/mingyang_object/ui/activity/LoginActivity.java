@@ -1,10 +1,14 @@
 package com.example.admin.mingyang_object.ui.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +31,7 @@ import com.example.admin.mingyang_object.manager.AppManager;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.utils.NetWorkHelper;
+import com.example.admin.mingyang_object.utils.PermissionsChecker;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
@@ -79,6 +84,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private BaseAnimatorSet mBasOut;
     private String adress;
 
+
+    private static final int REQUEST_CODE = 0; // 请求码
+
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE
+    };
+
+//    @Bind(R.id.main_t_toolbar) Toolbar mTToolbar;
+
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,9 +108,31 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
                 .getDeviceId();
+        mPermissionsChecker = new PermissionsChecker(this);
 
         findViewById();
         initView();
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)&&Build.VERSION.SDK_INT >= 23) {
+            startPermissionsActivity();
+        }
+    }
+
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
+        }
     }
 
     @Override
@@ -345,4 +386,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                      return this.getString(R.string.can_not_find_version_name);
                  }
          }
+
 }
