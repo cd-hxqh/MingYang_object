@@ -214,12 +214,14 @@ public class Wfm_Details_Activity extends BaseActivity {
                     @Override
                     public void onBtnClick(String text) {
                         wfgoon("1", text);
+
                         dialog.dismiss();
                     }
                 },
                 new OnBtnEditClickL() {
                     @Override
                     public void onBtnClick(String text) {
+                        Log.e("审批","通过");
                         wfgoon("0", text.equals("通过") ? "不通过" : text);
                         dialog.dismiss();
                     }
@@ -233,16 +235,26 @@ public class Wfm_Details_Activity extends BaseActivity {
      * @param zx
      */
     private void wfgoon(final String zx, final String desc) {
+
         mProgressDialog = ProgressDialog.show(Wfm_Details_Activity.this, null,
                 getString(R.string.approve), true, true);
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setCancelable(false);
+
         new AsyncTask<String, String, WebResult>() {
             @Override
             protected WebResult doInBackground(String... strings) {
                 WebResult result = AndroidClientService.approve(Wfm_Details_Activity.this,
                         wfm.getPROCESSNAME(), wfm.getOWNERTABLE(), wfm.getOWNERID(), wfm.getOWNERTABLE() + "ID", zx, desc,
                         AccountUtils.getpersonId(Wfm_Details_Activity.this));
+
+                Log.e("审批","PROCESSNAME:"+wfm.getPROCESSNAME());
+                Log.e("审批","OWNERTABLE:"+wfm.getOWNERTABLE());
+                Log.e("审批","OWNERID:"+wfm.getOWNERID());
+                Log.e("审批","OWNERTABLE:"+wfm.getOWNERTABLE());
+                Log.e("审批","是否通过:"+zx);
+                Log.e("审批","描述:"+desc);
+                Log.e("审批","工号:"+AccountUtils.getpersonId(Wfm_Details_Activity.this));
 
                 Log.i(TAG, "result=" + result);
                 return result;
@@ -254,7 +266,7 @@ public class Wfm_Details_Activity extends BaseActivity {
                 if (s == null || s.wonum == null || s.errorMsg == null) {
                     Toast.makeText(Wfm_Details_Activity.this, "审批失败", Toast.LENGTH_SHORT).show();
                 } else if (s.wonum.equals(wfm.getOWNERID()) && s.errorMsg != null) {
-                    Toast.makeText(Wfm_Details_Activity.this, s.errorMsg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Wfm_Details_Activity.this, s.errorMsg, Toast.LENGTH_LONG).show();
                     finish();
                 } else {
                     Toast.makeText(Wfm_Details_Activity.this, "审批失败", Toast.LENGTH_SHORT).show();
