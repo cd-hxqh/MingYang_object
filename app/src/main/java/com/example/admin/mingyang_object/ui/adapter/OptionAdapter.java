@@ -22,6 +22,7 @@ import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udvehicle;
+import com.example.admin.mingyang_object.model.Udwd;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.OptionActivity;
 
@@ -300,6 +301,19 @@ public class OptionAdapter extends RecyclerView.Adapter<OptionAdapter.ViewHolder
             for(int i = 0;i < data.size();i++){
                 option = new Option();
                 option.setName(data.get(i).getDEPTNUM());
+                option.setDesc(data.get(i).getDESCRIPTION());
+                optionList.add(option);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void addUdwdDate(ArrayList<Udwd> data){
+        if(data.size()>0){
+            Option option;
+            for(int i = 0;i < data.size();i++){
+                option = new Option();
+                option.setName(data.get(i).getNUM());
                 option.setDesc(data.get(i).getDESCRIPTION());
                 optionList.add(option);
             }

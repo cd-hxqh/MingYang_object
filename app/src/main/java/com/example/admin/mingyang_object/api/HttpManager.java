@@ -660,6 +660,17 @@ public class HttpManager {
     }
 
     /**
+     * 设置行驶记录业务单号接口
+     */
+    public static String getUDWDurl(String value, int curpage, int showcount) {
+        if (value.equals("")) {
+            return "{'appid':'" + Constants.UDWD_APPID + "','objectname':'" + Constants.UDWD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDTHREEWDID DESC'}";
+        }else {
+            return "{'appid':'" + Constants.UDWD_APPID + "','objectname':'" + Constants.UDWD_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'UDTHREEWDID DESC','sinorsearch':{'NUM':'" + value + "','DESCRIPTION':'" + value + "'}}";
+        }
+    }
+
+    /**
      * 设置物资编码的接口
      */
     public static String getItemUrl(String serch, int curpage, int showcount) {

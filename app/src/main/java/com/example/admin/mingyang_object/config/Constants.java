@@ -103,6 +103,10 @@ public class Constants {
     public static final String REGULARINSPECTIONPLANLINK_APPID = "REGULARINSPECTIONPLANLINK";
     //物资编码表名
     public static final String REGULARINSPECTIONPLANLINK_NAME = "REGULARINSPECTIONPLANLINK";
+    //行驶记录业务单号appid
+    public static final String UDWD_APPID = "UDWD";
+    //行驶记录业务单号表名
+    public static final String UDWD_NAME = "UDTHREEWD";
 
 
     /**
@@ -389,9 +393,13 @@ public class Constants {
 
     public static final int WORKORDERCODE = 250;//相关故障工单
 
+    public static final int WORKORDERCODE2 = 251;//工单
+
     public static final int UDDEPTCODE = 260;//部门
 
     public static final int WONUMCODE = 270;//业务单号
+
+    public static final int WONUMCODE2 = 271;//行驶记录业务单号
 
     public static final int REGULARINSPECTIONPLANLINKCODE = 280;//定检计划编号
 

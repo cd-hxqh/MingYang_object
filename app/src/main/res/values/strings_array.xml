@@ -13,8 +13,8 @@
     <string-array name="address_text">
         <item>正式 http://eamapp.mywind.com.cn:9080</item>
         <item>测试 http://qaseamapp.mywind.com.cn:9080</item>
-        <item>开发 http://112.91.182.4:7001</item>
-        <item>演示 http://demoeamapp.mywind.com.cn</item>
+        <item>开发 http://deveam.mywind.com.cn:7001</item>
+        <!--<item>演示 http://demoeamapp.mywind.com.cn</item>-->
         <!--<item>调试 http://192.168.100.220</item>-->
         <!--<item>调试 http://qaseamapp.mywind.com.cn</item>-->
     </string-array>
@@ -284,6 +284,16 @@
         <item>定检工单</item>
         <item>排查工单</item>
         <item>技改工单</item>
+        <item>故障工单</item>
+        <item>终验收工单</item>
+    </string-array>
+
+    <string-array name="wonum_array">
+        <item>巡检工单</item>
+        <item>调试工单</item>
+        <item>定检工单</item>
+        <item>技改工单</item>
+        <item>排查工单</item>
         <item>故障工单</item>
         <item>终验收工单</item>
     </string-array>

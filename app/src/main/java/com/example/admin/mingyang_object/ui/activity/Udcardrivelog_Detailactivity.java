@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,12 +23,21 @@ import android.widget.TextView;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
+import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
 import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.utils.MessageUtils;
 import com.example.admin.mingyang_object.utils.TimeSelect;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
+import com.flyco.animation.BaseAnimatorSet;
+import com.flyco.animation.BounceEnter.BounceTopEnter;
+import com.flyco.animation.SlideExit.SlideBottomExit;
+import com.flyco.dialog.entity.DialogMenuItem;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.NormalListDialog;
+
+import java.util.ArrayList;
 
 
 /**
@@ -145,12 +155,19 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
      */
     private Button cancelButton;
 
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private ArrayList<DialogMenuItem> mMenuItems = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_udcardrivelog_details);
         geiIntentData();
+        mBasIn = new BounceTopEnter();
+        mBasOut = new SlideBottomExit();
+
         findViewById();
         initView();
     }
@@ -248,7 +265,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         startdateText.setOnClickListener(startdateTextOnClickListener);
         starttimeText.setOnClickListener(starttimeTextOnClickListener);
         comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
-
+        wonumText.setOnClickListener(new LayoutOnClickListener(1,Constants.WONUMCODE2));
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
     }
@@ -298,6 +315,23 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
 
         }
     };
+
+    private class LayoutOnClickListener implements View.OnClickListener {
+        int requestCode;
+        int optiontype;
+
+        private LayoutOnClickListener(int requestCode, int optiontype) {
+            this.requestCode = requestCode;
+            this.optiontype = optiontype;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Udcardrivelog_Detailactivity.this, OptionActivity.class);
+            intent.putExtra("optiontype", optiontype);
+            startActivityForResult(intent, requestCode);
+        }
+    }
 
 
     private void showPopupWindow(View view) {
@@ -411,6 +445,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         standardfuelconsumptionText.setEnabled(isshow);
         //路桥费
         feeText.setEnabled(isshow);
+        //业务单号
+        wonumText.setEnabled(isshow);
     }
 
 
@@ -461,6 +497,7 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         String destination = destinationText.getText().toString(); //目的地
         String goreason = goreasonText.getText().toString(); //出车事由
         String endnumber = endnumberText.getText().toString(); //结束里程
+        String wonum = wonumText.getText().toString(); //业务单号
         String standardfuelconsumption = standardfuelconsumptionText.getText().toString(); //标准油耗
         String fee = feeText.getText().toString(); //路桥费
         if (!startdate.equals("") && !startdate.equals(udcardrivelog.getSTARTDATE())) {
@@ -480,6 +517,8 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         }
         if (!endnumber.equals("") && !endnumber.equals(udcardrivelog.getENDNUMBER())) {
             udcardrivelog.setENDNUMBER(endnumber);
+        }if (!wonum.equals("") && !wonum.equals(udcardrivelog.getWONUM())) {
+            udcardrivelog.setWONUM(wonum);
         }
         if (!standardfuelconsumption.equals("") && !standardfuelconsumption.equals(udcardrivelog.getSTANDARDFUELCONSUMPTION())) {
             udcardrivelog.setSTANDARDFUELCONSUMPTION(standardfuelconsumption);
@@ -495,5 +534,17 @@ public class Udcardrivelog_Detailactivity extends BaseActivity {
         return udcardrivelog;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
+        if (data != null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    wonumText.setText(option.getName());
+                    break;
+            }
+        }
+    }
 
 }

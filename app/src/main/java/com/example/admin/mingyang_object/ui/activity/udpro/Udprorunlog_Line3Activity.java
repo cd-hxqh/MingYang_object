@@ -35,7 +35,7 @@ import java.util.List;
 
 
 /**
- * 吊装调试日报列表页面
+ * 工作日报列表页面
  * Created by think on 2016/7/6.
  */
 public class Udprorunlog_Line3Activity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnLoadListener {

@@ -184,6 +184,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         starttimeText.setOnClickListener(starttimeTextOnClickListener);
 
         comisornoText.setOnCheckedChangeListener(comisornoTextOnCheckedChangeListener);
+        wonumText.setOnClickListener(new LayoutOnClickListener(1, Constants.WONUMCODE2));
 
 
         saveButton.setOnClickListener(saveButtonOnClickListener);
@@ -197,6 +198,23 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
             istijiao = isChecked;
         }
     };
+
+    private class LayoutOnClickListener implements View.OnClickListener {
+        int requestCode;
+        int optiontype;
+
+        private LayoutOnClickListener(int requestCode, int optiontype) {
+            this.requestCode = requestCode;
+            this.optiontype = optiontype;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Udcardrivelog_Addactivity.this, OptionActivity.class);
+            intent.putExtra("optiontype", optiontype);
+            startActivityForResult(intent, requestCode);
+        }
+    }
 
 
     private View.OnClickListener backImageViewOnClickListener = new View.OnClickListener() {
@@ -298,6 +316,12 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
                 default:
                     break;
             }
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+                    wonumText.setText(option.getName());
+                    break;
+            }
         }
     }
 
@@ -334,6 +358,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         String endnumber = endnumberText.getText().toString(); //结束里程
         String standardfuelconsumption = standardfuelconsumptionText.getText().toString(); //标准油耗
         String fee = feeText.getText().toString(); //路桥费
+        String wonum = wonumText.getText().toString();//业务单号
         Udcardrivelog udcardrivelog = new Udcardrivelog();
         udcardrivelog.setLICENSENUM(licensenum);
         udcardrivelog.setDRIVERID(driverid);
@@ -348,6 +373,7 @@ public class Udcardrivelog_Addactivity extends BaseActivity {
         udcardrivelog.setENDNUMBER(endnumber);
         udcardrivelog.setSTANDARDFUELCONSUMPTION(standardfuelconsumption);
         udcardrivelog.setFEE(fee);
+        udcardrivelog.setWONUM(wonum);
         if (istijiao) {
             udcardrivelog.setCOMISORNO("已提交");
         }

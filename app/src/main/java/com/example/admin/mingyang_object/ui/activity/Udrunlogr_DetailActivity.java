@@ -373,7 +373,7 @@ public class Udrunlogr_DetailActivity extends BaseActivity {
             @Override
             protected void onPostExecute(WebResult workResult) {
                 super.onPostExecute(workResult);
-                if (workResult.errorMsg == null) {
+                if (workResult==null||workResult.errorMsg == null) {
                     Toast.makeText(Udrunlogr_DetailActivity.this, "修改运行记录失败", Toast.LENGTH_SHORT).show();
                 } else if (workResult.errorMsg.equals("成功")) {
                     Toast.makeText(Udrunlogr_DetailActivity.this, "修改运行记录成功", Toast.LENGTH_SHORT).show();

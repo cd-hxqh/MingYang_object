@@ -39,6 +39,7 @@ import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.model.Udinvestp;
 import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udvehicle;
+import com.example.admin.mingyang_object.model.Udwd;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.adapter.OptionAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
@@ -248,6 +249,8 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
             }
         }else if (optiontype == Constants.REGULARINSPECTIONPLANLINKCODE){//部门
             return HttpManager.getRegularinspectionplanlinkurl(searchText, page, 20);
+        }else if (optiontype == Constants.WONUMCODE2){//行驶记录业务单号
+            return HttpManager.getUDWDurl(searchText, page, 20);
         }
         return "";
     }
@@ -327,6 +330,11 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
                             ArrayList<Uddept> items = JsonUtils.parsingUddept(results.getResultlist());
                             if (totalPages == page) {
                                 optionAdapter.addUddeptDate(items);
+                            }
+                        }else if (optiontype == Constants.WONUMCODE2) {//行驶记录业务单号
+                            ArrayList<Udwd> items = JsonUtils.parsingUdwd(results.getResultlist());
+                            if (totalPages == page) {
+                                optionAdapter.addUdwdDate(items);
                             }
                         }else if (optiontype == Constants.REGULARINSPECTIONPLANLINKCODE) {//定检计划编号
                             ArrayList<REGULARINSPECTIONPLANLINK> items = JsonUtils.parsingRegularinspectionplanlink(results.getResultlist());
