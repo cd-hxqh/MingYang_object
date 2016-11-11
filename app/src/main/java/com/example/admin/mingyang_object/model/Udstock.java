@@ -22,7 +22,7 @@ public class Udstock implements Serializable {
     private String INVOWNER;//能够操作的仓库管理员
     private String CREATENAME;//创建人名称
     private String CREATEDATE;//创建时间
-    private String ZPDNUM;//过账时间
+    private String ZPDNUM;//盘点凭证号
 
     public String getUDSTOCKID() {
         return UDSTOCKID;

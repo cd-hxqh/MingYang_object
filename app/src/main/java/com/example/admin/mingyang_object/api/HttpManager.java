@@ -448,11 +448,11 @@ public class HttpManager {
     /**
      * 设置库存盘点行的接口
      */
-    public static String getudstocklineurl(String value,String lgort, String stocknum, int curpage, int showcount) {
+    public static String getudstocklineurl(String value,String lgort, String zpdnum, int curpage, int showcount) {
         if (value.equals("")) {
-            return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LGORT':'" + lgort + "','STOCKNUM':'" + stocknum + "'}}";
+            return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','condition':{'LGORT':'" + lgort + "','ZPDNUM':'" + zpdnum + "'}}";
         }else {
-            return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'ZPDROW':'" + value + "','MAKTX':'" + value + "'},'condition':{'LGORT':'" + lgort + "','STOCKNUM':'" + stocknum + "'}}";
+            return "{'appid':'" + Constants.UDSTOCKLINE_APPID + "','objectname':'" + Constants.UDSTOCKLINE_NAME + "','curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','sinorsearch':{'ZPDROW':'" + value + "','MAKTX':'" + value + "'},'condition':{'LGORT':'" + lgort + "','ZPDNUM':'" + zpdnum + "'}}";
         }
     }
 

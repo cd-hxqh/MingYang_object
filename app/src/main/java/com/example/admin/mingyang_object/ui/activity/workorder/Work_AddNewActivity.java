@@ -815,18 +815,18 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener planOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (!workOrder.WORKTYPE.equals(Constants.FR) && !workOrder.WORKTYPE.equals(Constants.AA)) {
-                if (!udjpnum.getText().toString().equals("")) {
-                    if (workOrder.UDJPNUM != null && !workOrder.UDJPNUM.equals("")
-                            && !workOrder.UDJPNUM.equals(udjpnum.getText().toString())) {//如果计划编号变动
-                        woactivityList = new ArrayList<>();
-                    }
-                    workOrder.UDJPNUM = udjpnum.getText().toString();
-                } else {
-                    Toast.makeText(Work_AddNewActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
+//            if (!workOrder.WORKTYPE.equals(Constants.FR) && !workOrder.WORKTYPE.equals(Constants.AA)) {
+//                if (!udjpnum.getText().toString().equals("")) {
+//                    if (workOrder.UDJPNUM != null && !workOrder.UDJPNUM.equals("")
+//                            && !workOrder.UDJPNUM.equals(udjpnum.getText().toString())) {//如果计划编号变动
+//                        woactivityList = new ArrayList<>();
+//                    }
+//                    workOrder.UDJPNUM = udjpnum.getText().toString();
+//                } else {
+//                    Toast.makeText(Work_AddNewActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//            }
             Intent intent = new Intent(Work_AddNewActivity.this, Work_WoactivityActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("workOrder", workOrder);
@@ -986,10 +986,10 @@ public class Work_AddNewActivity extends BaseActivity {
                     Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (udjpnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_AddNewActivity.this, "请输入排查标准", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (udjpnum.getText().toString().equals("")) {
+//                    Toast.makeText(Work_AddNewActivity.this, "请输入排查标准", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (udplstartdate.getText().toString().equals("")) {
                     Toast.makeText(Work_AddNewActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
                     return false;
@@ -1024,10 +1024,10 @@ public class Work_AddNewActivity extends BaseActivity {
                     Toast.makeText(Work_AddNewActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (udjpnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_AddNewActivity.this, "请输入技改标准", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (udjpnum.getText().toString().equals("")) {
+//                    Toast.makeText(Work_AddNewActivity.this, "请输入技改标准", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (pcreson.getText().toString().equals("")) {
                     Toast.makeText(Work_AddNewActivity.this, "请输入技改原因", Toast.LENGTH_SHORT).show();
                     return false;
@@ -1066,10 +1066,10 @@ public class Work_AddNewActivity extends BaseActivity {
                     Toast.makeText(Work_AddNewActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (udjpnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_AddNewActivity.this, "请输入定检标准编号", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (udjpnum.getText().toString().equals("")) {
+//                    Toast.makeText(Work_AddNewActivity.this, "请输入定检标准编号", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (udplstartdate.getText().toString().equals("")) {
                     Toast.makeText(Work_AddNewActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
                     return false;

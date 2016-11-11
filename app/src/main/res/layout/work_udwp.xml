@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/work_inspo2layout"
+    android:id="@+id/work_udwplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"

@@ -207,6 +207,7 @@ public class Work_DetailsActivity extends BaseActivity {
     private LinearLayout udrprrsb1layout;
     private TextView udrprrsb1;//负责人
     private LinearLayout inspo2layout;//故障工单人员信息
+    private LinearLayout udwplayout;//
     private TextView udwptype;//人员类型
     private EditText udwp;//承包人员
     private TextView lead2;//维护/运行组长
@@ -356,6 +357,7 @@ public class Work_DetailsActivity extends BaseActivity {
         udrprrsb1layout = (LinearLayout) findViewById(R.id.work_udrprrsb1_layout);
         udrprrsb1 = (TextView) findViewById(R.id.work_udrprrsb1);
         inspo2layout = (LinearLayout) findViewById(R.id.work_inspo2layout);
+        udwplayout = (LinearLayout) findViewById(R.id.work_udwplayout);
         udwptype = (TextView) findViewById(R.id.work_udwptype);
         udwp = (EditText) findViewById(R.id.work_udwp);
         lead2 = (TextView) findViewById(R.id.work_lead2);
@@ -1050,8 +1052,8 @@ public class Work_DetailsActivity extends BaseActivity {
         public void onClick(View view) {
 //            if (workOrder.WORKTYPE.equals(Constants.SP)||workOrder.WORKTYPE.equals(Constants.TP)
 //                    ||workOrder.WORKTYPE.equals(Constants.WS)) {
-            if (workOrder.WORKTYPE.equals(Constants.FR) || workOrder.WORKTYPE.equals(Constants.AA)
-                    || (!workOrder.WORKTYPE.equals(Constants.FR) && !workOrder.WORKTYPE.equals(Constants.AA) && !udjpnum.getText().toString().equals(""))) {
+//            if (workOrder.WORKTYPE.equals(Constants.FR) || workOrder.WORKTYPE.equals(Constants.AA)
+//                    || (!workOrder.WORKTYPE.equals(Constants.FR) && !workOrder.WORKTYPE.equals(Constants.AA) && !udjpnum.getText().toString().equals(""))) {
                 Intent intent = new Intent(Work_DetailsActivity.this, Work_WoactivityActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("workOrder", workOrder);
@@ -1059,9 +1061,9 @@ public class Work_DetailsActivity extends BaseActivity {
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 1000);
                 popupWindow.dismiss();
-            } else {
-                Toast.makeText(Work_DetailsActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
-            }
+//            } else {
+//                Toast.makeText(Work_DetailsActivity.this, "请选择计划标准", Toast.LENGTH_SHORT).show();
+//            }
 //            }
         }
     };
@@ -1225,10 +1227,10 @@ public class Work_DetailsActivity extends BaseActivity {
                     Toast.makeText(Work_DetailsActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (udjpnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_DetailsActivity.this, "请输入排查标准", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (udjpnum.getText().toString().equals("")) {
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入排查标准", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (udplstartdate.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
                     return false;
@@ -1263,10 +1265,10 @@ public class Work_DetailsActivity extends BaseActivity {
                     Toast.makeText(Work_DetailsActivity.this, "请输入项目编号", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (udjpnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_DetailsActivity.this, "请输入技改标准", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (udjpnum.getText().toString().equals("")) {
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入技改标准", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (pcreson.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请输入技改原因", Toast.LENGTH_SHORT).show();
                     return false;
@@ -1305,10 +1307,10 @@ public class Work_DetailsActivity extends BaseActivity {
                     Toast.makeText(Work_DetailsActivity.this, "请输入机位号", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (udjpnum.getText().toString().equals("")) {
-                    Toast.makeText(Work_DetailsActivity.this, "请输入定检标准编号", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+//                if (udjpnum.getText().toString().equals("")) {
+//                    Toast.makeText(Work_DetailsActivity.this, "请输入定检标准编号", Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
                 if (udplstartdate.getText().toString().equals("")) {
                     Toast.makeText(Work_DetailsActivity.this, "请输入计划开始时间", Toast.LENGTH_SHORT).show();
                     return false;
@@ -1376,6 +1378,8 @@ public class Work_DetailsActivity extends BaseActivity {
                     }
                 }.execute();
                 //}else {
+                closeProgressDialog();
+            }else {
                 closeProgressDialog();
             }
         }

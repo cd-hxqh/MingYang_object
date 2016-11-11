@@ -168,7 +168,7 @@ public class UdstocklineListActivity extends BaseActivity implements SwipeRefres
     }
 
     private void getdata(String searchText, final int page) {
-            HttpManager.getDataPagingInfo(UdstocklineListActivity.this, HttpManager.getudstocklineurl(searchText,udstock.getLOCATION(), udstock.getSTOCKNUM(), page, 20), new HttpRequestHandler<Results>() {
+            HttpManager.getDataPagingInfo(UdstocklineListActivity.this, HttpManager.getudstocklineurl(searchText,udstock.getLOCATION(), udstock.getZPDNUM(), page, 20), new HttpRequestHandler<Results>() {
                 @Override
                 public void onSuccess(Results results) {
                     Log.i(TAG, "data=" + results);
