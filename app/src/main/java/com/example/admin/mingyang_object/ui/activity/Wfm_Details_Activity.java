@@ -2,6 +2,7 @@ package com.example.admin.mingyang_object.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,12 +120,12 @@ public class Wfm_Details_Activity extends BaseActivity {
         titleView.setText(getString(R.string.wfm_detail_title));
         backImageView.setOnClickListener(backImageViewOnClickListenrer);
 
-        if (wfm.getOWNERTABLE()!=null&&!wfm.getOWNERTABLE().equals("WORKORDER")
-                &&!wfm.getOWNERTABLE().equals("DEBUGWORKORDER")&&!wfm.getOWNERTABLE().equals("UDSTOCK")
-                &&!wfm.getOWNERTABLE().equals("UDFEEDBACK")&&!wfm.getOWNERTABLE().equals("UDREPORT")
-                &&!wfm.getOWNERTABLE().equals("UDINSPO")){
-            detailslayout.setVisibility(View.INVISIBLE);
-        }
+//        if (wfm.getOWNERTABLE()!=null&&!wfm.getOWNERTABLE().equals("WORKORDER")
+//                &&!wfm.getOWNERTABLE().equals("DEBUGWORKORDER")&&!wfm.getOWNERTABLE().equals("UDSTOCK")
+//                &&!wfm.getOWNERTABLE().equals("UDFEEDBACK")&&!wfm.getOWNERTABLE().equals("UDREPORT")
+//                &&!wfm.getOWNERTABLE().equals("UDINSPO")){
+//            detailslayout.setVisibility(View.INVISIBLE);
+//        }
 
         if (wfm != null) {
             appText.setText(wfm.getUDASSIGN01() == null ? "" : wfm.getUDASSIGN01());
@@ -178,6 +179,18 @@ public class Wfm_Details_Activity extends BaseActivity {
                     break;
                 case "UDINSPO"://巡检单
                     getUdinspoData();
+                    break;
+                default:
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(AccountUtils.getIpAddress(Wfm_Details_Activity.this)
+                            +"/maximo/ui/?event=loadapp&value="+wfm.getAPP()+"&uniqueid="+wfm.getOWNERID()+"");
+                    intent.setData(content_url);
+                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.putExtra("wfm",wfm);
+//                    intent.setClass(Wfm_Details_Activity.this,Wfm_webview_Activity.class);
+//                    startActivity(intent);
                     break;
             }
         }
