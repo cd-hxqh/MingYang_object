@@ -181,16 +181,23 @@ public class Wfm_Details_Activity extends BaseActivity {
                     getUdinspoData();
                     break;
                 default:
-                    Intent intent = new Intent();
-                    intent.setAction("android.intent.action.VIEW");
-                    Uri content_url = Uri.parse(AccountUtils.getIpAddress(Wfm_Details_Activity.this)
-                            +"/maximo/ui/?event=loadapp&value="+wfm.getAPP()+"&uniqueid="+wfm.getOWNERID()+"");
-                    intent.setData(content_url);
-                    startActivity(intent);
+
 //                    Intent intent = new Intent();
-//                    intent.putExtra("wfm",wfm);
-//                    intent.setClass(Wfm_Details_Activity.this,Wfm_webview_Activity.class);
+//                    intent.setAction("android.intent.action.VIEW");
+
+                    String content_url = AccountUtils.getIpAddress(Wfm_Details_Activity.this)
+                            +"/maximo/ui/?event=loadapp&value="+wfm.getAPP()+"&uniqueid="+wfm.getOWNERID()+"";
+
+//                    intent.setData(content_url);
 //                    startActivity(intent);
+
+                    Intent intent = new Intent();
+
+                    intent.putExtra("wfm",wfm);
+                    intent.putExtra("url",content_url);
+
+                    intent.setClass(Wfm_Details_Activity.this,Wfm_webview_Activity.class);
+                    startActivity(intent);
                     break;
             }
         }

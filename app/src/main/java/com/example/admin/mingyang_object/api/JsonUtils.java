@@ -2081,6 +2081,7 @@ public class JsonUtils<E> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.e("项目日报",jsonObject.toString());
         return jsonObject.toString();
     }
 
