@@ -159,45 +159,48 @@ public class Wfm_Details_Activity extends BaseActivity {
     private View.OnClickListener detailsOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showProgressDialog("数据查询中...");
+
             switch (wfm.getOWNERTABLE()){
                 case "WORKORDER"://工单
+                    showProgressDialog("数据查询中...");
                     String worktype = GetWorkTypeUtil.getWorkType(wfm.getPROCESSNAME());
                     getWorkOrderData(worktype);
                     break;
                 case "DEBUGWORKORDER"://调试工单
+                    showProgressDialog("数据查询中...");
                     getDebugWorkOrderData();
                     break;
                 case "UDSTOCK"://库存盘点
+                    showProgressDialog("数据查询中...");
                     getUdstockData();
                     break;
                 case "UDFEEDBACK"://问题联络单
+                    showProgressDialog("数据查询中...");
                     getUdfeedbackData();
                     break;
                 case "UDREPORT"://故障提报单
+                    showProgressDialog("数据查询中...");
                     getUdreportData();
                     break;
                 case "UDINSPO"://巡检单
                     getUdinspoData();
+                    showProgressDialog("数据查询中...");
                     break;
                 default:
-
-//                    Intent intent = new Intent();
-//                    intent.setAction("android.intent.action.VIEW");
 
                     String content_url = AccountUtils.getIpAddress(Wfm_Details_Activity.this)
                             +"/maximo/ui/?event=loadapp&value="+wfm.getAPP()+"&uniqueid="+wfm.getOWNERID()+"";
 
-//                    intent.setData(content_url);
-//                    startActivity(intent);
-
                     Intent intent = new Intent();
 
                     intent.putExtra("wfm",wfm);
+
                     intent.putExtra("url",content_url);
 
                     intent.setClass(Wfm_Details_Activity.this,Wfm_webview_Activity.class);
+
                     startActivity(intent);
+
                     break;
             }
         }

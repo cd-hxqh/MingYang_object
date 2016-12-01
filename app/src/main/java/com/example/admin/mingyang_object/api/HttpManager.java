@@ -695,14 +695,6 @@ public class HttpManager {
         return "{'appid':'" + Constants.DOCLINKS_APPID + "','objectname':'" + Constants.DOCLINKS_NAME  + "','option':'read','condition':{'OWNERTABLE':'=" + ownertable  + "','OWNERID':'=" + ownerid+"'}}";
     }
 
-
-
-
-
-
-
-
-
     /**
      * 使用用户名密码登录
      *

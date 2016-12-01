@@ -24,6 +24,7 @@ public class Udrunliner implements Serializable {
 
     public String TYPE;
     public String LOGNUM;//运行日志编号
+
     public boolean isUpload;
 
     public String getUDRUNLINERID() {

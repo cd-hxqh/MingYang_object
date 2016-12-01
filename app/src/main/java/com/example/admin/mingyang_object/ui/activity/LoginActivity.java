@@ -106,8 +106,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
         }
-        imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
-                .getDeviceId();
+
         mPermissionsChecker = new PermissionsChecker(this);
 
         findViewById();
@@ -121,6 +120,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (mPermissionsChecker.lacksPermissions(PERMISSIONS)&&Build.VERSION.SDK_INT >= 23) {
             startPermissionsActivity();
         }
+        imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
+                .getDeviceId();
     }
 
     private void startPermissionsActivity() {

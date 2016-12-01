@@ -6,13 +6,19 @@
     android:orientation="vertical">
 
     <include layout="@layout/title_main"></include>
-
-
-
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <WebView
+                android:id="@+id/webView"
+                android:isScrollContainer="true"
+                android:layout_width="1024dp"
+                android:layout_height="768dp" />
+        </ScrollView>
+    </HorizontalScrollView>talScrollView
 
 
 </LinearLayout>
