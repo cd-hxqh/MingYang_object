@@ -15,6 +15,7 @@ import com.example.admin.mingyang_object.model.JobPlan;
 import com.example.admin.mingyang_object.model.Location;
 import com.example.admin.mingyang_object.model.Person;
 import com.example.admin.mingyang_object.model.REGULARINSPECTIONPLANLINK;
+import com.example.admin.mingyang_object.model.StockQuery;
 import com.example.admin.mingyang_object.model.UdPerson;
 import com.example.admin.mingyang_object.model.UdTriprePort;
 import com.example.admin.mingyang_object.model.Udcardrivelog;
@@ -101,6 +102,9 @@ public class JsonUtils<E> {
             for (int i = 0; i < jsonArray.length(); i++) {
                 wfassignment = new Wfassignment();
                 jsonObject = jsonArray.getJSONObject(i);
+
+                Log.e("流程",jsonObject.toString());
+
                 Field[] field = wfassignment.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
                 for (int j = 0; j < field.length; j++) {     //遍历所有属性
                     field[j].setAccessible(true);
@@ -1131,7 +1135,60 @@ public class JsonUtils<E> {
             return null;
         }
     }
+    /**
+     * 解析库存物料
+     */
+    public static ArrayList<StockQuery> parsingStockQuery(Context ctx, String data) {
 
+        ArrayList<StockQuery> list = null;
+
+        StockQuery stockQuery = null;
+
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<StockQuery>();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                stockQuery = new StockQuery();
+                jsonObject = jsonArray.getJSONObject(i);
+
+                Log.e("出差", "JSON数据" + jsonObject);
+
+                Field[] field = stockQuery.getClass().getDeclaredFields();//获取实体类的所有属性，返回Field数组
+
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = stockQuery.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(stockQuery);
+                            if (value == null || Integer.parseInt(String.valueOf(value)) == 0) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = stockQuery.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(stockQuery, jsonObject.getString(name));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                list.add(stockQuery);
+            }
+            return list;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * 解析调试工单子表信息
      */

@@ -25,6 +25,18 @@
         <item>首年检</item>
     </string-array>
 
+    <string-array name="locations">
+        <item>不限</item>
+    </string-array>
+
+    <string-array name="bin">
+        <item>无限制</item>
+        <item>返修件</item>
+        <item>寄存件</item>
+        <item>坏件</item>
+        <item>所有</item>
+    </string-array>
+
     <string-array name="pctype_array">
         <item>风机安全排查</item>
         <item>管理质量排查</item>

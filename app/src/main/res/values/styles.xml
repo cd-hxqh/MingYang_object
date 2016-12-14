@@ -12,6 +12,7 @@
         <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
     </style>
 
+    
     <style name="mingyang.ActivityTheme" parent="mingyang.AppTheme.Base">
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/mingyang.DrawerArrowStyle</item>
@@ -35,6 +36,15 @@
     <style name="fade" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
         <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
+    </style>
+
+    <style name="SampleTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="SampleTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="spinner_style">
+        <item name="android:text">40dip</item>
+        <item name="android:gravity">center</item>
     </style>
 
 </resources>

@@ -208,6 +208,39 @@ public class HttpManager {
         }
     }
 
+    /** "orderby"   :@"ITEMNUM DESC",
+     * 设置库存查询接口
+     */
+    public static String getStockQueryUrl(String search, int curpage, int showcount) {
+
+        if (search.equals("")) {
+
+            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES"+ "'," +
+
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc','condition':{'BINNUM':'无限制'}}";
+        } else {
+
+            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES" + "'," +
+
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc','condition':{'BINNUM':'无限制'},"+"'sinorsearch':{'LOCATIONDESC':'"+search+"','ITEMNUM':'"+search+"','ITEMDESC':'"+search+"','LOTNUM':'"+search+"'}}";
+        }
+    }
+    public static String getConditonStockQueryUrl(String conditon, int curpage, int showcount) {
+
+        if (conditon==null||conditon.length()==0||conditon.equals("{}"))
+        {
+            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES"+ "'," +
+
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc'}";
+        }else {
+
+            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES" + "'," +
+
+                    "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc','condition':" + conditon + "}";
+        }
+    }
+
+
     /**
      * 设置计划任务接口*
      */

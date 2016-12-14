@@ -684,5 +684,6 @@
     <string name="driverid_name">司机名称:</string>
     <string name="createby_name_text">创建人名称:</string>
     <string name="respname_text">责任人名称:</string>
+    <string name="title_activity_condition">ConditionActivity</string>
 
 </resources>

@@ -32,17 +32,19 @@ public class tripReportListAdapter extends RecyclerView.Adapter<tripReportListAd
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_query_item, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
         final UdTriprePort triprePortr = triprePorts.get(position);
         holder.itemNumTitle.setText("编号");
         holder.itemDescTitle.setText("描述");
         holder.itemNum.setText(triprePortr.getSERIALNUMBER());
         holder.itemDesc.setText(triprePortr.getDESCRIPTION());
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,12 +63,22 @@ public class tripReportListAdapter extends RecyclerView.Adapter<tripReportListAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-
+        /*
+ BINNUM :
+ CURBAL :
+ ITEMNUM :
+ LOCATIONDESC :
+ LOTNUM : ;
+ ITEMDESC :
+ LOCATION :
+ UNIT : 单位
+ */
         public RelativeLayout relativeLayout;
         /**
          * CardView*
          */
         public CardView cardView;
+
         /**
          * 编号名称*
          */
@@ -86,7 +98,7 @@ public class tripReportListAdapter extends RecyclerView.Adapter<tripReportListAd
 
         public ViewHolder(View view) {
             super(view);
-            cardView = (CardView) view.findViewById(R.id.card_container);
+            cardView = (CardView) view.findViewById(R.id.stockcard_container);
 
             itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
             itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);

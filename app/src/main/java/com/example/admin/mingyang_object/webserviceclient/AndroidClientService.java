@@ -260,5 +260,44 @@ public class AndroidClientService {
         return webResult;
     }
 
+    /**
+     * 通用修改
+     */
+    public static String permissionWebService(Context context,String name) {
+
+        SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+        soapEnvelope.implicitTypes = true;
+        soapEnvelope.dotNet = true;
+        SoapObject soapReq = new SoapObject(NAMESPACE, "mobileservicegetLocaPermission");
+        soapReq.addProperty("user", AccountUtils.getuserName(context));//新增信息json
+        //soapReq.addProperty("user", "A01934");//新增信息json
+        soapEnvelope.setOutputSoapObject(soapReq);
+
+        HttpTransportSE httpTransport = new HttpTransportSE(AccountUtils.getIpAddress(context)+"/meaweb/services/MOBILESERVICE", timeOut);
+
+        try {
+
+            httpTransport.call("urn:action", soapEnvelope);
+
+        } catch (IOException | XmlPullParserException e) {
+
+            return null;
+        }
+
+        String obj = null;
+
+        try {
+
+            obj = soapEnvelope.getResponse().toString();
+
+            Log.i("库存查询", "obj=" + obj);
+
+        } catch (SoapFault soapFault) {
+
+            soapFault.printStackTrace();
+
+        }
+        return obj;
+    }
 
 }

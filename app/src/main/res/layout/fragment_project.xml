@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dimen_5"
-                    android:drawableTop="@mipmap/ic_udrro_log"
+                    android:drawableTop="@mipmap/ic_trip"
                     android:gravity="center"
 
                     android:text="出差总结报告"></TextView>
