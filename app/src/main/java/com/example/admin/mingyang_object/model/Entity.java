@@ -1,10 +1,5 @@
 package com.example.admin.mingyang_object.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Serializable;
-
 /**
  * Created by apple on 15/10/.
  */

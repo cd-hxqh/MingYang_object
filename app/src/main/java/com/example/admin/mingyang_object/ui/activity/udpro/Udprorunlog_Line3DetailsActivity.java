@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine3;

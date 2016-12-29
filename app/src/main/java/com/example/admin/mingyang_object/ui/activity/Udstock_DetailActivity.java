@@ -4,9 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,18 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.api.HttpManager;
-import com.example.admin.mingyang_object.api.HttpRequestHandler;
-import com.example.admin.mingyang_object.api.JsonUtils;
-import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.config.Constants;
-import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.WebResult;
-import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdstocklineAdapter;
-import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
@@ -39,7 +27,6 @@ import com.flyco.dialog.listener.OnBtnEditClickL;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**

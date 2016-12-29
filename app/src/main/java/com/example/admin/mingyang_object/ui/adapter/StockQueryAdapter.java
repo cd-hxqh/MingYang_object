@@ -1,8 +1,6 @@
 package com.example.admin.mingyang_object.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,7 +47,7 @@ public class StockQueryAdapter extends RecyclerView.Adapter<StockQueryAdapter.Vi
         holder.LOCATIONDESC.setText(stockQuery.getLOCATIONDESC());
         holder.LOCATION.setText(stockQuery.getLOCATION());
         holder.CURBAL.setText(stockQuery.getCURBAL());
-        holder.UNIT.setText(stockQuery.getUNIT());
+        holder.UNIT.setText(stockQuery.getITEMUNIT());
         holder.BINNUM.setText(stockQuery.getBINNUM());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

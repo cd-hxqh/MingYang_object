@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.flyco.animation.BaseAnimatorSet;

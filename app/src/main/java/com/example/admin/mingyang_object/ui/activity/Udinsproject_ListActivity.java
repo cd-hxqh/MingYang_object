@@ -1,20 +1,12 @@
 package com.example.admin.mingyang_object.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +22,6 @@ import com.example.admin.mingyang_object.dao.UdinsprojectDao;
 import com.example.admin.mingyang_object.model.Udinspo;
 import com.example.admin.mingyang_object.model.Udinsproject;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdinspoAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdinsprojectAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.flyco.animation.BaseAnimatorSet;

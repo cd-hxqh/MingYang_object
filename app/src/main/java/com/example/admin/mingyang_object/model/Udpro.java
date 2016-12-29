@@ -1,11 +1,5 @@
 package com.example.admin.mingyang_object.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 /**

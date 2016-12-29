@@ -6,7 +6,6 @@ import android.support.v7.widget.CardView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.UdPerson;
-import com.example.admin.mingyang_object.model.Udfandetails;
 import com.example.admin.mingyang_object.ui.widget.BaseViewHolder;
 
 import java.util.List;

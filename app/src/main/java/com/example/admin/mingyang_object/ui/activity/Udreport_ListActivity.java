@@ -26,10 +26,8 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udreport;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdproAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdreportAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 

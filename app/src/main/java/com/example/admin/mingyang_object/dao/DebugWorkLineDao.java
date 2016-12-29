@@ -7,11 +7,9 @@ import android.content.Context;
 
 import com.example.admin.mingyang_object.OrmLiteOpenHelper.DatabaseHelper;
 import com.example.admin.mingyang_object.model.UddebugWorkOrderLine;
-import com.example.admin.mingyang_object.model.DebugWorkOrder;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 

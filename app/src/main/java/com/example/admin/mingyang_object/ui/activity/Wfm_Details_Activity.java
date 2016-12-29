@@ -2,7 +2,6 @@ package com.example.admin.mingyang_object.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,14 +30,11 @@ import com.example.admin.mingyang_object.ui.activity.workorder.DebugWork_Details
 import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.GetWorkTypeUtil;
-import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.animation.BounceEnter.BounceTopEnter;
 import com.flyco.animation.SlideExit.SlideBottomExit;
-import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnBtnEditClickL;
-import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalEditTextDialog;
 
 import java.util.ArrayList;

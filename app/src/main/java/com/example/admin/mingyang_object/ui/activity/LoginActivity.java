@@ -2,13 +2,16 @@ package com.example.admin.mingyang_object.ui.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
@@ -21,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
-import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
@@ -44,8 +45,21 @@ import com.flyco.dialog.widget.NormalListDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Arrays;
+
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 
 /**
@@ -89,6 +103,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     // 所需的全部权限
     static final String[] PERMISSIONS = new String[]{
+
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE
@@ -100,32 +115,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
+
+        showUpdataDialog();
+
         if (AccountUtils.getIpAddress(LoginActivity.this).equals("")) {
+
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
         }
 
-        mPermissionsChecker = new PermissionsChecker(this);
-
+        startPermissionsActivity();
         findViewById();
         initView();
+        //checkNewVersion();
+        ActivityCompat.requestPermissions(LoginActivity.this,
+                    new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE},
+                    123);
     }
-
-    @Override protected void onResume() {
-        super.onResume();
-
-        // 缺少权限时, 进入权限配置页面
-        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)&&Build.VERSION.SDK_INT >= 23) {
-            startPermissionsActivity();
-        }
-        imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
-                .getDeviceId();
-    }
-
     private void startPermissionsActivity() {
-        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+        Log.e("权限检查","向用户请求权限");
+        PermissionsActivity.startActivityForResult(LoginActivity.this, REQUEST_CODE, PERMISSIONS);
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -178,6 +189,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        //showUpdataDialog();
         switch (v.getId()) {
             case R.id.user_login:
                 if (mUsername.getText().length() == 0) {
@@ -207,6 +219,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 登陆*
      */
     private void login() {
+        //showUpdataDialog();
+        imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
+                .getDeviceId();
+
         mProgressDialog = ProgressDialog.show(LoginActivity.this, null,
                 getString(R.string.login_loging), true, true);
 
@@ -355,10 +371,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 设置服务端地址*
      */
     private void addIpData() {
+
         String[] inspotypes = getResources().getStringArray(R.array.address_text);
+
         idadresss = getResources().getStringArray(R.array.address_text);
 
         for (int i = 0; i < inspotypes.length; i++) {
+
             if (adress != null && adress.equals(inspotypes[i].split(" ")[1])) {
                 mMenuItems.add(new DialogMenuItem("√  " + inspotypes[i], 0));
             } else {
@@ -367,17 +386,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-
-    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
-        @Override
-        public void onCheckComplete() {
-            Log.i(TAG, "onCheckComplete");
-        }
-
-    }
-
     public String getVersion() {
+
              try {
+
                      PackageManager manager = this.getPackageManager();
                      PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
                      String version = info.versionName;
@@ -388,4 +400,216 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                  }
          }
 
+    private void checkNewVersion()
+    {
+        Log.e("库存查询","检查更新");
+
+        AsyncTask<String, Integer, String> at= new AsyncTask<String, Integer, String>(){
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String s = "";
+
+                try {
+
+                    TrustManager[] tm = { new X509TrustManager()
+                    {
+                        @Override
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                        }
+
+                        @Override
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                        }
+
+                        @Override
+                        public X509Certificate[] getAcceptedIssuers() {
+                            return new X509Certificate[0];
+                        }
+                    }};
+                    SSLContext sslContext = SSLContext.getInstance("TLSv1", "AndroidOpenSSL");
+
+                    sslContext.init(null, tm, new java.security.SecureRandom());
+
+                    SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+                    String path = "https://mykk.mywind.com.cn:8443/group1/M00/00/10/androidQe9mAGkAEAAACrY0gDzk311.txt";
+
+                    URL url = new URL(path);
+
+                    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+
+                    connection.setSSLSocketFactory(ssf);
+
+                    InputStream inputStream  = connection.getInputStream();
+
+                    byte[] data = new byte[3];
+
+                    inputStream.read(data);
+
+                    s= new  String(data);
+                }
+                catch (Exception e)
+                {
+                    Log.e("库存查询","读取远程版本错误"+e);
+                }
+                return s;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+
+                Log.e("库存查询","服务器上的版本"+s);
+
+                Double lastVersion = Double.parseDouble(s);
+
+                Double currentVersion  = Double.parseDouble(getVersion());
+
+                if (lastVersion>currentVersion)
+                {
+                    Log.e("库存查询","需要更新"+currentVersion+"--->>"+lastVersion);
+                    showUpdataDialog();
+                }
+                else
+                {
+                    Log.e("库存查询","不需要更新"+currentVersion+"--->>"+lastVersion);
+
+                }
+
+            }
+        };
+        at.execute();
+    }
+    protected void showUpdataDialog() {
+
+        AlertDialog.Builder builer = new AlertDialog.Builder(this) ;
+        builer.setTitle("明阳风电EAM");
+        builer.setMessage(" \"明阳风电\" app 已经更名为 \" 明阳风电EAM\"，版本号为 1.2 请更新，更新后请卸载原有的\"明阳风电\" app");
+        //builer.setMessage("发现新版本，建议马上更新");
+        //当点确定按钮时从服务器上下载 新的apk 然后安装
+        builer.setPositiveButton("马上更新", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                Log.e("自动更细","下载apk,更新");
+                downLoadApk();
+
+            }
+        });
+        builer.setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+            }
+        });
+        AlertDialog dialog = builer.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+    public File getFileFromServer(String path, ProgressDialog pd) throws Exception{
+
+
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+
+            TrustManager[] tm = { new X509TrustManager()
+            {
+                @Override
+                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+            }};
+            SSLContext sslContext = SSLContext.getInstance("TLSv1", "AndroidOpenSSL");
+
+            sslContext.init(null, tm, new java.security.SecureRandom());
+
+            SSLSocketFactory ssf = sslContext.getSocketFactory();
+
+            URL url = new URL(path);
+
+            HttpsURLConnection conn =  (HttpsURLConnection) url.openConnection();
+
+            conn.setSSLSocketFactory(ssf);
+
+            conn.setConnectTimeout(5000);
+
+            //获取到文件的大小
+            pd.setMax(conn.getContentLength());
+
+            InputStream is = conn.getInputStream();
+
+            File file = new File(Environment.getExternalStorageDirectory(), "androidQe9mAGkAEAAACrY0gDzk311.apk");
+
+            FileOutputStream fos = new FileOutputStream(file);
+
+            BufferedInputStream bis = new BufferedInputStream(is);
+
+            byte[] buffer = new byte[1024];
+
+            int len ;
+
+            int total=0;
+
+            while((len =bis.read(buffer))!=-1){
+
+                fos.write(buffer, 0, len);
+
+                total+= len;
+
+                //获取当前下载量
+                pd.setProgress(total);
+
+            }
+
+            fos.close();
+
+            bis.close();
+
+            is.close();
+
+            return file;
+        }
+        else{
+            return null;
+        }
+    }
+    protected void downLoadApk() {
+
+        final ProgressDialog pd;    //进度条对话框
+        pd = new  ProgressDialog(this);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMessage("正在下载");
+        pd.setCanceledOnTouchOutside(false);
+        pd.show();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    File file = getFileFromServer("https://mykk.mywind.com.cn:8443/group1/M00/00/10/androidQe9mAGkAEAAACrY0gDzk311.apk", pd);
+                    sleep(1000);
+                    installApk(file);
+                    pd.dismiss(); //结束掉进度条对话框
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }}.start();
+    }
+    protected void installApk(File file) {
+        Intent intent = new Intent();
+        //执行动作
+        intent.setAction(Intent.ACTION_VIEW);
+        //执行的数据类型
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
+    }
 }

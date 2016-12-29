@@ -1,27 +1,18 @@
 package com.example.admin.mingyang_object.ui.activity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.config.Constants;
-import com.example.admin.mingyang_object.model.Udpro;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.model.Udstockline;
 import com.example.admin.mingyang_object.model.WebResult;

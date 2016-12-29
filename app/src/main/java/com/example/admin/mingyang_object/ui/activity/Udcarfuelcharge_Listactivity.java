@@ -29,10 +29,8 @@ import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.model.Udcardrivelog;
 import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdcardrivelogAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdcarfuelchargeAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 

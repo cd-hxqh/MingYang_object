@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -16,8 +15,6 @@ import android.widget.TextView;
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Wfassignment;
 import com.example.admin.mingyang_object.utils.AccountUtils;
-
-import org.apache.http.util.EncodingUtils;
 
 /**
  * Created by Administrator on 2016/11/11.

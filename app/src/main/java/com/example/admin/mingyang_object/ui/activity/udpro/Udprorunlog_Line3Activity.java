@@ -21,7 +21,6 @@ import com.example.admin.mingyang_object.model.Udprorunlog;
 import com.example.admin.mingyang_object.model.UdprorunlogLine3;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
-import com.example.admin.mingyang_object.ui.adapter.UdprorunlogLine2Adapter;
 import com.example.admin.mingyang_object.ui.adapter.UdprorunlogLine3Adapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
 import com.flyco.animation.BaseAnimatorSet;

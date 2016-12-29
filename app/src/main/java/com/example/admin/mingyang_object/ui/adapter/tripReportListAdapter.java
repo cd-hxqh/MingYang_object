@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class tripReportListAdapter extends RecyclerView.Adapter<tripReportListAd
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_query_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new ViewHolder(v);
     }
 
@@ -98,7 +97,7 @@ public class tripReportListAdapter extends RecyclerView.Adapter<tripReportListAd
 
         public ViewHolder(View view) {
             super(view);
-            cardView = (CardView) view.findViewById(R.id.stockcard_container);
+            cardView = (CardView) view.findViewById(R.id.card_container);
 
             itemNumTitle=(TextView) view.findViewById(R.id.item_num_title);
             itemDescTitle=(TextView) view.findViewById(R.id.item_desc_title);

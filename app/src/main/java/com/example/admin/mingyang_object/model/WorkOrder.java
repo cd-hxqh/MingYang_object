@@ -1,13 +1,7 @@
 package com.example.admin.mingyang_object.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 

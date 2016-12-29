@@ -215,12 +215,12 @@ public class HttpManager {
 
         if (search.equals("")) {
 
-            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES"+ "'," +
+            return "{'appid':'" + "UDINVBALANCES" + "','objectname':'" + "UDINVBALANCES"+ "'," +
 
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc','condition':{'BINNUM':'无限制'}}";
         } else {
 
-            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES" + "'," +
+            return "{'appid':'" + "UDINVBALANCES" + "','objectname':'" + "UDINVBALANCES" + "'," +
 
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc','condition':{'BINNUM':'无限制'},"+"'sinorsearch':{'LOCATIONDESC':'"+search+"','ITEMNUM':'"+search+"','ITEMDESC':'"+search+"','LOTNUM':'"+search+"'}}";
         }
@@ -229,12 +229,12 @@ public class HttpManager {
 
         if (conditon==null||conditon.length()==0||conditon.equals("{}"))
         {
-            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES"+ "'," +
+            return "{'appid':'" + "UDINVBALANCES" + "','objectname':'" + "UDINVBALANCES"+ "'," +
 
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc'}";
         }else {
 
-            return "{'appid':'" + "INVBALANCES" + "','objectname':'" + "INVBALANCES" + "'," +
+            return "{'appid':'" + "UDINVBALANCES" + "','objectname':'" + "UDINVBALANCES" + "'," +
 
                     "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'ITEMNUM desc','condition':" + conditon + "}";
         }

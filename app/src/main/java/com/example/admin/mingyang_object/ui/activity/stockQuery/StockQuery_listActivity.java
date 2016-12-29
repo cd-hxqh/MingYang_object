@@ -10,36 +10,24 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.api.HttpManager;
 import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
-import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.StockQuery;
-import com.example.admin.mingyang_object.model.UdTriprePort;
-import com.example.admin.mingyang_object.model.WebResult;
 import com.example.admin.mingyang_object.ui.activity.BaseActivity;
-import com.example.admin.mingyang_object.ui.activity.TriprePort_addNewActivity;
-import com.example.admin.mingyang_object.ui.activity.TriprePort_listActivity;
 import com.example.admin.mingyang_object.ui.adapter.StockQueryAdapter;
-import com.example.admin.mingyang_object.ui.adapter.tripReportListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
-import com.flyco.dialog.listener.OnOperItemClickL;
-import com.flyco.dialog.widget.NormalListDialog;
 
 import org.json.JSONObject;
 

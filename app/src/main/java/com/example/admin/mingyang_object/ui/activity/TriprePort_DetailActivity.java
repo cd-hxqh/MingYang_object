@@ -23,7 +23,6 @@ import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Option;
 import com.example.admin.mingyang_object.model.UdTriprePort;
 import com.example.admin.mingyang_object.model.WebResult;
-import com.example.admin.mingyang_object.ui.activity.BaseActivity;
 import com.example.admin.mingyang_object.utils.AccountUtils;
 import com.example.admin.mingyang_object.utils.DateSelect;
 import com.example.admin.mingyang_object.webserviceclient.AndroidClientService;

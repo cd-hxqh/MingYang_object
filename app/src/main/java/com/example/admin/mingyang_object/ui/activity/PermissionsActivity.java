@@ -33,9 +33,11 @@ public class PermissionsActivity extends BaseActivity {
 
     // 启动当前权限页面的公开接口
     public static void startActivityForResult(Activity activity, int requestCode, String... permissions) {
+
         Intent intent = new Intent(activity, PermissionsActivity.class);
         intent.putExtra(EXTRA_PERMISSIONS, permissions);
         ActivityCompat.startActivityForResult(activity, intent, requestCode, null);
+
     }
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {

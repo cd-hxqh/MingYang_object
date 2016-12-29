@@ -13,7 +13,7 @@ public class StockQuery {
     private String LOTNUM;
     private String ITEMDESC;
     private String LOCATION;
-    private String UNIT;
+    private String ITEMUNIT;
 
     public String getBINNUM() {
         return BINNUM;
@@ -71,11 +71,11 @@ public class StockQuery {
         this.LOCATION = LOCATION;
     }
 
-    public String getUNIT() {
-        return UNIT;
+    public String getITEMUNIT() {
+        return ITEMUNIT;
     }
 
-    public void setUNIT(String UNIT) {
-        this.UNIT = UNIT;
+    public void setITEMUNIT(String ITEMUNIT) {
+        this.ITEMUNIT = ITEMUNIT;
     }
 }

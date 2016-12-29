@@ -12,11 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.config.Constants;
 import com.example.admin.mingyang_object.model.Failurelist;
-import com.example.admin.mingyang_object.model.WorkOrder;
 import com.example.admin.mingyang_object.ui.activity.Failurelist2Activity;
-import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

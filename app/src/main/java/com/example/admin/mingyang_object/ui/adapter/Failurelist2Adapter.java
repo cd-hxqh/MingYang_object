@@ -1,8 +1,6 @@
 package com.example.admin.mingyang_object.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.admin.mingyang_object.R;
 import com.example.admin.mingyang_object.model.Failurelist;
-import com.example.admin.mingyang_object.ui.activity.workorder.Work_DetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

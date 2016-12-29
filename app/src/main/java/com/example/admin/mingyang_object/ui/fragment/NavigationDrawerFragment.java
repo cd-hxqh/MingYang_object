@@ -2,7 +2,6 @@ package com.example.admin.mingyang_object.ui.fragment;
 
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -112,7 +111,9 @@ public class NavigationDrawerFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_drawer, container, false);
 
         mProfileLayout = (LinearLayout) rootView.findViewById(R.id.profile_layout);
+        mProfileLayout.setGravity(Gravity.CENTER_VERTICAL);
         mUserImgView = (ImageView) rootView.findViewById(R.id.img_member);
+        mUserImgView.setVisibility(View.GONE);
         mUserTextView = (TextView) rootView.findViewById(R.id.txt_member);
         mAdressTextView = (TextView) rootView.findViewById(R.id.txt_adress);
         mDrawerListView = (ListView) rootView.findViewById(R.id.listView);

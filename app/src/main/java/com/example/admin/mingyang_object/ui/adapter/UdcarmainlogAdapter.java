@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.model.Udcarfuelcharge;
 import com.example.admin.mingyang_object.model.Udcarmainlog;
 import com.example.admin.mingyang_object.ui.widget.BaseViewHolder;
 

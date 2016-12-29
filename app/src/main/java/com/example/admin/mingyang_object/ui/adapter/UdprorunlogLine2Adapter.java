@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 
 import com.example.admin.mingyang_object.R;
-import com.example.admin.mingyang_object.model.UdprorunlogLine1;
 import com.example.admin.mingyang_object.model.UdprorunlogLine2;
 import com.example.admin.mingyang_object.ui.widget.BaseViewHolder;
 

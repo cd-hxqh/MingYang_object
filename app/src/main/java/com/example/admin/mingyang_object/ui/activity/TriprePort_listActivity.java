@@ -22,17 +22,14 @@ import com.example.admin.mingyang_object.api.HttpRequestHandler;
 import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.UdTriprePort;
-import com.example.admin.mingyang_object.ui.adapter.DebugWorkListAdapter;
 import com.example.admin.mingyang_object.ui.adapter.tripReportListAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.example.admin.mingyang_object.utils.WorkTypeUtils;
 import com.flyco.animation.BaseAnimatorSet;
 import com.flyco.dialog.entity.DialogMenuItem;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TriprePort_listActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,SwipeRefreshLayout.OnLoadListener {
 

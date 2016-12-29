@@ -28,12 +28,9 @@ import com.example.admin.mingyang_object.api.JsonUtils;
 import com.example.admin.mingyang_object.bean.Results;
 import com.example.admin.mingyang_object.model.Udstock;
 import com.example.admin.mingyang_object.ui.activity.Udstock_DetailActivity;
-import com.example.admin.mingyang_object.ui.activity.Wfm_Details_Activity;
 import com.example.admin.mingyang_object.ui.adapter.BaseQuickAdapter;
 import com.example.admin.mingyang_object.ui.adapter.UdstockAdapter;
 import com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout;
-import com.flyco.animation.BounceEnter.BounceTopEnter;
-import com.flyco.animation.SlideExit.SlideBottomExit;
 
 import java.util.ArrayList;
 import java.util.List;
