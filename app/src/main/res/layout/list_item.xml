@@ -24,50 +24,60 @@
             android:layout_marginLeft="5dp"
             android:padding="5dp">
 
-            <TextView
-                android:id="@+id/item_num_title"
+            <LinearLayout
+                android:id="@+id/item_num_liner_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_num_title"
-                android:textColor="#de000000"
-                android:textSize="16sp" />
+                android:gravity="right"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/item_num_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/item_num_title"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/item_desc_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/item_desc_title"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/item_num_text"
+            <LinearLayout
+                android:id="@+id/item_num_liner_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="left"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/item_num_title"
-                android:hint="@string/hint_item_num_title"
-                android:textColor="#de000000"
-                android:textSize="16sp" />
+                android:layout_toRightOf="@id/item_num_liner_left"
+                >
 
-
-            <TextView
-                android:id="@+id/item_desc_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_num_title"
-                android:layout_marginTop="5dp"
-                android:text="@string/item_desc_title"
-                android:textColor="#de000000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/item_desc_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/item_num_text"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/item_desc_title"
-                android:ellipsize="end"
-                android:ems="14"
-                android:hint="@string/hint_item_desc_title"
-                android:singleLine="true"
-                android:textColor="#de000000"
-                android:textSize="16sp" />
-
+                <TextView
+                    android:id="@+id/item_num_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_item_num_title"
+                    android:textColor="#de000000"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/item_desc_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:ems="14"
+                    android:maxLines="1"
+                    android:hint="@string/hint_item_desc_title"
+                    android:textStyle="bold"
+                    android:textColor="#de000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </RelativeLayout>
 

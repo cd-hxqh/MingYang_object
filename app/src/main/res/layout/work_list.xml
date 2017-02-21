@@ -5,7 +5,7 @@
     android:background="#eee">
 
 
-    <com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout
+    <com.example.admin.eam.ui.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:background="#eee">
         </android.support.v7.widget.RecyclerView>
 
-    </com.example.admin.mingyang_object.ui.widget.SwipeRefreshLayout>
+    </com.example.admin.eam.ui.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/have_not_data_id"

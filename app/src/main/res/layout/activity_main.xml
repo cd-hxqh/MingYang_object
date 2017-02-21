@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/left_drawer"
-        android:name="com.example.admin.mingyang_object.ui.fragment.NavigationDrawerFragment"
+        android:name="com.example.admin.eam.ui.fragment.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

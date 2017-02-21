@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/button_layout">
 
-            <com.example.admin.mingyang_object.utils.ChildClickableLinearLayout
+            <com.example.admin.eam.utils.ChildClickableLinearLayout
                 android:id="@+id/custom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 <include layout="@layout/work_inspo"></include>
 
                 <include layout="@layout/work_last"></include>
-            </com.example.admin.mingyang_object.utils.ChildClickableLinearLayout>
+            </com.example.admin.eam.utils.ChildClickableLinearLayout>
         </ScrollView>
         <include layout="@layout/work_buttom"></include>
     </RelativeLayout>

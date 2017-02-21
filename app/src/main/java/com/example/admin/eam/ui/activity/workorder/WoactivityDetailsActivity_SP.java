@@ -1,0 +1,310 @@
+package com.example.admin.eam.ui.activity.workorder;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.admin.eam.R;
+import com.example.admin.eam.model.Option;
+import com.example.admin.eam.model.Woactivity;
+import com.example.admin.eam.model.WorkOrder;
+import com.example.admin.eam.ui.activity.BaseActivity;
+import com.example.admin.eam.ui.activity.OptionActivity;
+import com.example.admin.eam.ui.activity.PhotoActivity;
+import com.example.admin.eam.ui.activity.Udcardrivelog_Detailactivity;
+import com.example.admin.eam.utils.DateTimeSelect;
+
+
+/**
+ * Created by think on 2016/6/21.
+ * 排查工单任务详情页面
+ */
+public class WoactivityDetailsActivity_SP extends BaseActivity {
+    /**
+     * 返回按钮
+     */
+    private ImageView backImageView;
+    /**
+     * 标题
+     */
+    private TextView titleTextView;
+    private Woactivity woactivity = new Woactivity();
+    private WorkOrder workOrder;
+    private int position;
+
+    private TextView taskid;//任务
+    private TextView description;//描述
+    private TextView wojo1;//系统/项目
+    private TextView wojo2;//子系统/子项目
+    private TextView wojo3;//检查/检修方法
+    private TextView wojo4;//kks编码
+    private CheckBox perinspr;//排查结果
+    private EditText udinsunit;//排查部位
+//    private TextView udrprrsb;//整改责任人
+    private EditText udprobdesc;//问题描述
+//    private EditText udzgmeasure;//整改措施及建议
+//    private TextView udzglimit;//整改期限
+//    private EditText udzgstu;//整改情况回复
+//    private EditText udzgresult;//整改结果验证
+    private LinearLayout buttonlayout;
+    private Button confirm;//确定
+    /**
+     * 菜单
+     */
+    private ImageView menuImageView;
+    private PopupWindow popupWindow;
+    /**
+     * 附件上传*
+     */
+    private LinearLayout uploadLinearLayout;
+    /**
+     * 隐藏*
+     */
+    private LinearLayout hiddenLinearLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_woactivity_details_sp);
+
+        geiIntentData();
+        findViewById();
+        initView();
+    }
+
+    private void geiIntentData() {
+        woactivity = (Woactivity) getIntent().getSerializableExtra("woactivity");
+        workOrder = (WorkOrder) getIntent().getSerializableExtra("workOrder");
+        position = getIntent().getIntExtra("position",0);
+    }
+
+    @Override
+    protected void findViewById() {
+        backImageView = (ImageView) findViewById(R.id.title_back_id);
+        titleTextView = (TextView) findViewById(R.id.title_name);
+        menuImageView = (ImageView) findViewById(R.id.title_add);
+        taskid = (TextView) findViewById(R.id.work_woactivity_taskid);
+        description = (TextView) findViewById(R.id.woactivity_description);
+        wojo1 = (TextView) findViewById(R.id.woactivity_wojo1);
+        wojo2 = (TextView) findViewById(R.id.woactivity_wojo2);
+        wojo3 = (TextView) findViewById(R.id.woactivity_wojo3);
+        wojo4 = (TextView) findViewById(R.id.woactivity_wojo4);
+        perinspr = (CheckBox) findViewById(R.id.woactivity_perinspr);
+        udinsunit = (EditText) findViewById(R.id.woactivity_udinsunit);
+//        udrprrsb = (TextView) findViewById(R.id.woactivity_udrprrsb);
+        udprobdesc = (EditText) findViewById(R.id.woactivity_udprobdesc);
+//        udzgmeasure = (EditText) findViewById(R.id.woactivity_udzgmeasure);
+//        udzglimit = (TextView) findViewById(R.id.woactivity_udzglimit);
+//        udzgstu = (EditText) findViewById(R.id.woactivity_udzgstu);
+//        udzgresult = (EditText) findViewById(R.id.woactivity_udzgresult);
+
+//        buttonlayout = (LinearLayout) findViewById(R.id.button_layout);
+        confirm = (Button) findViewById(R.id.confirm);
+    }
+
+    @Override
+    protected void initView() {
+        backImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        titleTextView.setText(getResources().getString(R.string.title_activity_woactivitydetails));
+        menuImageView.setVisibility(View.VISIBLE);
+        menuImageView.setImageResource(R.mipmap.ic_more);
+
+        menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow(menuImageView);
+            }
+        });
+
+        taskid.setText(woactivity.TASKID);
+        description.setText(woactivity.DESCRIPTION);
+        wojo1.setText(woactivity.WOJO1);
+        wojo2.setText(woactivity.WOJO2);
+        wojo3.setText(woactivity.WOJO3);
+        wojo4.setText(woactivity.WOJO4);
+        perinspr.setChecked(woactivity.PERINSPR.equals("Y"));
+        udinsunit.setText(woactivity.UDINSUNIT);
+//        udrprrsb.setText(woactivity.UDRPRRSB);
+        udprobdesc.setText(woactivity.UDPROBDESC);
+//        udzgmeasure.setText(woactivity.UDZGMEASURE);
+//        udzglimit.setText(woactivity.UDZGLIMIT);
+//        udzgstu.setText(woactivity.UDZGSTU);
+//        udzgresult.setText(woactivity.UDZGRESULT);
+//
+//        udzglimit.setOnClickListener(new DateTimeChecked(udzglimit));
+//        udrprrsb.setOnClickListener(new LayoutOnClickListener(1, Constants.PERSONCODE));
+        if (workOrder.UDSTATUS.equals("已汇报")){
+            perinspr.setEnabled(false);
+            udinsunit.setEnabled(false);
+            udprobdesc.setEnabled(false);
+        }
+
+        confirm.setOnClickListener(confirmOnClickListener);
+    }
+    private void showPopupWindow(View view) {
+
+        View contentView = LayoutInflater.from(WoactivityDetailsActivity_SP.this).inflate(
+                R.layout.popup_item_window, null);
+
+
+        popupWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setTouchable(true);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.mipmap.popup_background_mtrl_mult));
+
+        popupWindow.showAsDropDown(view);
+
+        uploadLinearLayout = (LinearLayout) contentView.findViewById(R.id.add_linearlayout_id);
+        hiddenLinearLayout = (LinearLayout) contentView.findViewById(R.id.delete_linearlayout_id);
+        hiddenLinearLayout.setVisibility(View.GONE);
+
+        TextView udloadText = (TextView) contentView.findViewById(R.id.textView_id);
+        ImageView udloadImage = (ImageView) contentView.findViewById(R.id.imageView_id);
+
+        udloadText.setText(getResources().getString(R.string.work_commit));
+
+        udloadImage.setImageResource(R.mipmap.ic_upload);
+
+        uploadLinearLayout.setOnClickListener(uploadLinearLayoutOnClickListener);
+
+
+    }
+    private View.OnClickListener uploadLinearLayoutOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            popupWindow.dismiss();
+            Intent intent = new Intent(WoactivityDetailsActivity_SP.this, PhotoActivity.class);
+            intent.putExtra("ownertable", "WOACTIVITY");
+            intent.putExtra("ownerid", woactivity.getTASKID());
+            startActivityForResult(intent, 0);
+        }
+
+    };
+
+    private Woactivity getWoactivity() {
+        Woactivity woactivity = this.woactivity;
+        woactivity.PERINSPR = perinspr.isChecked() ? "Y" : "N";
+        woactivity.UDINSUNIT = udinsunit.getText().toString();
+//        woactivity.UDRPRRSB = udrprrsb.getText().toString();
+        woactivity.UDPROBDESC = udprobdesc.getText().toString();
+//        woactivity.UDZGMEASURE = udzgmeasure.getText().toString();
+//        woactivity.UDZGSTU = udzgstu.getText().toString();
+//        woactivity.UDZGRESULT = udzgresult.getText().toString();
+//        woactivity.UDZGLIMIT = udzglimit.getText().toString();
+        return woactivity;
+    }
+
+    private View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = getIntent();
+            if(((woactivity.PERINSPR.equals(perinspr.isChecked() ? "Y" : "N"))
+                    &&(woactivity.UDINSUNIT==null||woactivity.UDINSUNIT.equals(udinsunit.getText().toString()))
+//                    &&(woactivity.UDRPRRSB==null||woactivity.UDRPRRSB.equals(udrprrsb.getText().toString()))
+                    &&(woactivity.UDPROBDESC==null||woactivity.UDPROBDESC.equals(udprobdesc.getText().toString()))
+//                    &&(woactivity.UDZGMEASURE==null||woactivity.UDZGMEASURE.equals(udzgmeasure.getText().toString()))
+//                    &&(woactivity.UDZGSTU==null||woactivity.UDZGSTU.equals(udzgstu.getText().toString()))
+//                    &&(woactivity.UDZGRESULT==null||woactivity.UDZGRESULT.equals(udzgresult.getText().toString()))
+//                    &&(woactivity.UDZGLIMIT==null||woactivity.UDZGLIMIT.equals(udzglimit.getText().toString()))
+            )||workOrder.UDSTATUS.equals("已关闭")||workOrder.UDSTATUS.equals("已取消")) {//如果内容没有修改
+                intent.putExtra("woactivity",woactivity);
+            }else {
+                Woactivity woactivity = getWoactivity();
+                if(woactivity.TYPE==null||!woactivity.TYPE.equals("add")) {
+                    woactivity.TYPE = "update";
+                }
+                intent.putExtra("woactivity", woactivity);
+                Toast.makeText(WoactivityDetailsActivity_SP.this, "任务本地修改成功", Toast.LENGTH_SHORT).show();
+            }
+            intent.putExtra("position", position);
+            WoactivityDetailsActivity_SP.this.setResult(2, intent);
+            finish();
+        }
+    };
+
+    private View.OnClickListener deleteOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//            Intent intent = getIntent();
+//            intent.putExtra("position", position);
+//            if (woactivity.workorderid == null||woactivity.workorderid.equals("")){
+//                WoactivityDetailsActivity.this.setResult(3, intent);
+//            }else {
+//                Woactivity woactivity = getWoactivity();
+//                woactivity.optiontype = "delete";
+//                intent.putExtra("woactivity", woactivity);
+//                WoactivityDetailsActivity.this.setResult(4, intent);
+//            }
+//            finish();
+        }
+    };
+
+    class DateTimeChecked implements View.OnClickListener {
+        TextView textView;
+
+        public DateTimeChecked(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public void onClick(View v) {
+            new DateTimeSelect(WoactivityDetailsActivity_SP.this, textView).showDialog();
+        }
+    }
+
+    private class LayoutOnClickListener implements View.OnClickListener {
+        int requestCode;
+        int optiontype;
+
+        private LayoutOnClickListener(int requestCode, int optiontype) {
+            this.requestCode = requestCode;
+            this.optiontype = optiontype;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(WoactivityDetailsActivity_SP.this, OptionActivity.class);
+            intent.putExtra("optiontype", optiontype);
+            startActivityForResult(intent, requestCode);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Option option;
+        if (data!=null) {
+            switch (requestCode) {
+                case 1:
+                    option = (Option) data.getSerializableExtra("option");
+//                    udrprrsb.setText(option.getName());
+                    break;
+            }
+        }
+    }
+}

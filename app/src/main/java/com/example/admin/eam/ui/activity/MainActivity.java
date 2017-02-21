@@ -1,0 +1,232 @@
+package com.example.admin.eam.ui.activity;
+
+import android.app.FragmentTransaction;
+import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.admin.eam.R;
+import com.example.admin.eam.manager.AppManager;
+import com.example.admin.eam.ui.fragment.NavigationDrawerFragment;
+import com.example.admin.eam.ui.fragment.ProjectFragment;
+import com.example.admin.eam.ui.fragment.SettingFragment;
+import com.example.admin.eam.ui.fragment.UdstockFragment;
+import com.example.admin.eam.ui.fragment.WfmentFragment;
+import com.example.admin.eam.ui.fragment.WorkFragment;
+import com.example.admin.eam.ui.fragment.YunweiFragment;
+import com.example.admin.eam.ui.fragment.ZiyuanFragment;
+
+
+public class MainActivity extends BaseActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private static final String TAG = "MainActivity";
+    //    private SpinnerAdapter mSpinnerAdapter;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private ViewGroup mDrawerLayout;
+    private View mActionbarCustom;
+    /**
+     * 标题*
+     */
+    private TextView title;
+
+    /**
+     * 待办事项*
+     */
+    private WfmentFragment mNewWfassigFragment;
+
+    /**
+     * 工单管理*
+     */
+    private WorkFragment mNewWorkFragment;
+
+    /**
+     * 库存管理*
+     */
+    private UdstockFragment mNewUdstockFragment;
+
+
+    /**
+     * 项目管理*
+     */
+    private ProjectFragment projectFragment;
+
+    /**
+     * 运维管理*
+     */
+    private YunweiFragment mNewYunweiFragment;
+    /**
+     * 资源管理*
+     */
+    private ZiyuanFragment mNewZiyuanFragment;
+    /**
+     * 设置
+     */
+    private SettingFragment mSettingFragment;
+
+    /**
+     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     */
+    private CharSequence mTitle;
+
+    private String[] mFavoriteTabTitles;
+    private String[] mFavoriteTabPaths;
+    private String[] mMainTitles;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        findViewById();
+
+
+    }
+
+    @Override
+    protected void findViewById() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        title = (TextView) findViewById(R.id.title_id);
+        mDrawerLayout = (ViewGroup) findViewById(R.id.drawer_layout);
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.left_drawer);
+        mTitle = getTitle();
+
+        mMainTitles = getResources().getStringArray(R.array.drawer_tab_titles);
+
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.left_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    int mSelectPos = 0;
+
+    @Override
+    public void onNavigationDrawerItemSelected(final int position) {
+        mSelectPos = position;
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        switch (position) {
+            case 0: //待办任务
+                if (mNewWfassigFragment == null) {
+                    mNewWfassigFragment = new WfmentFragment();
+                    Bundle bundle = new Bundle();
+                    mNewWfassigFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewWfassigFragment).commit();
+                break;
+            case 1: //工单管理
+                if (mNewWorkFragment == null) {
+                    mNewWorkFragment = new WorkFragment();
+                    Bundle bundle = new Bundle();
+                    mNewWorkFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewWorkFragment).commit();
+                break;
+            case 2://库存盘点
+                if (mNewUdstockFragment == null) {
+                    mNewUdstockFragment = new UdstockFragment();
+                    Bundle bundle = new Bundle();
+                    mNewUdstockFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewUdstockFragment).commit();
+                break;
+            case 3://项目管理
+                if (projectFragment == null) {
+                    projectFragment = new ProjectFragment();
+                    Bundle bundle = new Bundle();
+                    projectFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, projectFragment).commit();
+
+                break;
+            case 4://运维管理
+                if (mNewYunweiFragment == null) {
+                    mNewYunweiFragment = new YunweiFragment();
+                    Bundle bundle = new Bundle();
+                    mNewYunweiFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewYunweiFragment).commit();
+                break;
+            case 5://资源管理
+                if (mNewZiyuanFragment == null) {
+                    mNewZiyuanFragment = new ZiyuanFragment();
+                    Bundle bundle = new Bundle();
+                    mNewZiyuanFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mNewZiyuanFragment).commit();
+                break;
+            case 6:
+                if (mSettingFragment == null) {
+                    mSettingFragment = new SettingFragment();
+                    Bundle bundle = new Bundle();
+                    mSettingFragment.setArguments(bundle);
+                }
+                fragmentTransaction.replace(R.id.container, mSettingFragment).commit();
+                break;
+        }
+
+    }
+
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        mTitle = mMainTitles[mSelectPos];
+        actionBar.setDisplayShowCustomEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle("");
+        title.setText(mTitle);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private long exitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if (mNavigationDrawerFragment.isDrawerOpen()) {
+            mNavigationDrawerFragment.closeDrawer();
+            return;
+        }
+
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(this, getResources().getString(R.string.exit_text), Toast.LENGTH_LONG).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            AppManager.AppExit(MainActivity.this);
+        }
+    }
+
+}
