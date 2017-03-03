@@ -7,7 +7,7 @@ import android.os.Bundle;
 /**
  * Created by yw on 2015/10/21
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends android.support.v4.app.Fragment {
 
     protected boolean mIsLogin;
 

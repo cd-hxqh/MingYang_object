@@ -232,7 +232,7 @@ public class AndroidClientService {
      */
     public static String connectWebService(Context context, String filename, String image, String ownertable, String ownerid, String url) {
 
-        Log.e("图片上传","filename = " + filename +"  image = "+image+ ", ownertable = " + ownertable + ", ownerid = " + ownerid);
+        Log.e("图片上传","filename = " + filename + ", ownertable = " + ownertable + ", ownerid = " + ownerid);
         Log.e("图片上传", "url=" + AccountUtils.getIpAddress(context)+url);
 
         SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);

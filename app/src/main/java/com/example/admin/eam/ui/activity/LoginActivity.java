@@ -49,12 +49,12 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Set;
-
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -153,6 +153,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mUsername = (EditText) findViewById(R.id.user_login_id);
         mPassword = (EditText) findViewById(R.id.user_login_password);
         checkBox = (CheckBox) findViewById(R.id.isremenber_password);
+        checkBox.setVisibility(View.INVISIBLE);
         mLogin = (Button) findViewById(R.id.user_login);
         ipText = (TextView) findViewById(R.id.ip_address_id);
         versionName = (TextView) findViewById(R.id.versionName);
@@ -163,10 +164,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     protected void initView() {
 
         boolean isChecked = AccountUtils.getIsChecked(LoginActivity.this);
-
+        mUsername.setText(AccountUtils.getuserName(LoginActivity.this));
         if (isChecked) {
-            mUsername.setText(AccountUtils.getUserName(LoginActivity.this));
             mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
+
         }
 
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
@@ -186,7 +187,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             Log.e("登陆","自动登陆 账号"+mUsername.getText().toString());
             Log.e("登陆","自动登陆 密码"+mPassword.getText().toString());
 
-            mLogin.performClick();
+
         }
 
     }
@@ -215,7 +216,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 } else if (NetWorkHelper.isNetwork(LoginActivity.this)) {
 
-                    LoginOffline();
+                   // LoginOffline();
 
                 } else {
                     JPushInterface.setAlias(LoginActivity.this,mUsername.getText().toString(), new TagAliasCallback(){
@@ -244,7 +245,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      * 登陆*
      */
     private void login() {
-        //showUpdataDialog();
+
         imei = ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
                 .getDeviceId();
         
@@ -268,14 +269,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                             AccountUtils.setChecked(LoginActivity.this, true);
                             //记住密码
-                            AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
+
                         }
+                        AccountUtils.setUserNameAndPassWord(LoginActivity.this, mUsername.getText().toString(), mPassword.getText().toString());
                         try {//保存登录返回信息
                             JSONObject object = new JSONObject(data);
                             JSONObject LoginDetails = object.getJSONObject("userLoginDetails");
 
                             AccountUtils.setLoginDetails(LoginActivity.this, LoginDetails.getString("insertOrg"), LoginDetails.getString("insertSite"),
-                                    LoginDetails.getString("personId"), object.getString("userName"), LoginDetails.getString("displayName"));
+                                    LoginDetails.getString("personId"), mUsername.getText().toString(), LoginDetails.getString("displayName"));
 
 //                            findByDepartment(LoginDetails.getString("personId"));
                         } catch (JSONException e) {
@@ -348,35 +350,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-//    /**
-//     * 根据PersionId查询所属部门*
-//     */
-//    private void findByDepartment(String persionId) {
-//        HttpManager.getData(LoginActivity.this, HttpManager.getPersonUrl1(persionId), new HttpRequestHandler<Results>() {
-//            @Override
-//            public void onSuccess(Results results) {
-//
-//                ArrayList<Person> item = JsonUtils.parsingPerson(results.getResultlist());
-//
-//                if (item != null || item.size() != 0) {
-//                    AccountUtils.setDepartment(LoginActivity.this, item.get(0).department);
-//                }
-//            }
-//
-//            @Override
-//            public void onSuccess(Results results, int totalPages, int currentPage) {
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//
-//            }
-//        });
-//    }
-
-
     private void NormalListDialog() {
         final NormalListDialog dialog = new NormalListDialog(LoginActivity.this, mMenuItems);
         dialog.title("请选择")//
@@ -421,7 +394,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public String getVersion() {
 
              try {
-
                      PackageManager manager = this.getPackageManager();
                      PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
                      String version = info.versionName;
@@ -519,8 +491,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         AlertDialog.Builder builer = new AlertDialog.Builder(this) ;
         builer.setTitle("明阳风电EAM");
-        builer.setMessage(" \"明阳风电\" app 已经更名为 \" 明阳风电EAM\"，版本号为 1.2 请更新，更新后请卸载原有的\"明阳风电\" app");
-        //builer.setMessage("发现新版本，建议马上更新");
+        builer.setMessage("发现新版本，建议马上更新");
         //当点确定按钮时从服务器上下载 新的apk 然后安装
         builer.setPositiveButton("马上更新", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -544,35 +515,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
 
-            TrustManager[] tm = { new X509TrustManager()
-            {
-                @Override
-                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-                }
-
-                @Override
-                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-                }
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[0];
-                }
-            }};
-
-            SSLContext sslContext = SSLContext.getInstance("TLSv1", "AndroidOpenSSL");
-
-            sslContext.init(null, tm, new java.security.SecureRandom());
-
-            SSLSocketFactory ssf = sslContext.getSocketFactory();
 
             URL url = new URL(path);
 
-            HttpsURLConnection conn =  (HttpsURLConnection) url.openConnection();
-
-            conn.setSSLSocketFactory(ssf);
+            HttpURLConnection conn =  (HttpURLConnection) url.openConnection();
 
             conn.setConnectTimeout(5000);
 
@@ -628,7 +574,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void run() {
                 try {
-                    File file = getFileFromServer("https://mykk.mywind.com.cn:8443/group1/M00/00/10/androidQe9mAGkAEAAACrY0gDzk311.apk", pd);
+                    File file = getFileFromServer("http://mykk.mywind.com.cn:8000/group1/M00/00/07/androidQe9mAGkAEAAACrY0gDzk311.apk", pd);
                     sleep(1000);
                     installApk(file);
                     pd.dismiss(); //结束掉进度条对话框

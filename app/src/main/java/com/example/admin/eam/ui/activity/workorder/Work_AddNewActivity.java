@@ -844,6 +844,7 @@ public class Work_AddNewActivity extends BaseActivity {
     private View.OnClickListener failureOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             if (failurecode.getText().equals("")) {
                 Toast.makeText(Work_AddNewActivity.this, "请选择故障类", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
@@ -852,7 +853,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 popupWindow.dismiss();
             } else {
                 Intent intent = new Intent(Work_AddNewActivity.this, Failurelist1Activity.class);
-                intent.putExtra("failurecode", workOrder.PROBLEMCODE);
+                intent.putExtra("failurecode", workOrder.UDFAILURECODE);
                 startActivityForResult(intent, 0);
             }
         }
@@ -1081,6 +1082,7 @@ public class Work_AddNewActivity extends BaseActivity {
                 updataInfo = JsonUtils.WorkToJson(getWorkOrder(), woactivityList, wpmaterialList);
 
                 Log.e("工单","新建工单上传数据 "+updataInfo);
+
                 final String finalUpdataInfo = updataInfo;
 
                 new AsyncTask<String, String, WebResult>() {
@@ -1465,9 +1467,10 @@ public class Work_AddNewActivity extends BaseActivity {
                     break;
                 case 12:
                     option = (Option) data.getSerializableExtra("option");
+                    option.description();
                     failurecode.setText(option.getDesc());
                     workOrder.GZLDESC = option.getDesc();
-                    workOrder.UDFAILURECODE = option.getName();
+                    workOrder.FAILURECODE = option.getName();
                     failurelist = option.getValue1();
                     problemcode.setText("");
                     gzwtdesc.setText("");
@@ -1477,7 +1480,7 @@ public class Work_AddNewActivity extends BaseActivity {
                     problemcode.setText(option.getName());
                     gzwtdesc.setText(option.getDesc());
                     workOrder.GZWTDESC = option.getDesc();
-                    workOrder.PROBLEMCODE = option.getName();
+                    workOrder.UDFAILURECODE = option.getName();
                     break;
                 case 14:
                     option = (Option) data.getSerializableExtra("option");

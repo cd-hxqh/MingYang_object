@@ -109,6 +109,7 @@ public class ImageLoadAdapter extends RecyclerView.Adapter<ImageLoadAdapter.Sele
 
 
     private ImagePicker initImagePicker() {
+
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
         imagePicker.setShowCamera(true);                      //显示拍照按钮

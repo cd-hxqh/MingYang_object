@@ -814,8 +814,8 @@ public class Udreport_DetailActivity extends BaseActivity {
         workOrder.UDLOCNUM = location_codeText.getText().toString();
         workOrder.UDLOCATION = udreport.getLOCATION();
         workOrder.UDREPORTNUM = udreport.getREPORTNUM();
-        workOrder.UDFAILURECODE = udreport.getFAULT_CODE();
-        workOrder.PROBLEMCODE = udreport.getFAULT_CODE1();
+        workOrder.FAILURECODE = udreport.getFAULT_CODE();
+        workOrder.UDFAILURECODE = udreport.getFAULT_CODE1();
 //        workOrder.CULEVEL = udgzdjText.getText().toString();
         workOrder.UDSTATUS = "新建";
         workOrder.UDRPRRSB = AccountUtils.getpersonId(Udreport_DetailActivity.this);

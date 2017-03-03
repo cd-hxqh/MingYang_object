@@ -401,6 +401,7 @@ public class OptionActivity extends BaseActivity implements SwipeRefreshLayout.O
         intent.putExtra("option", option);
         Log.i(TAG,"optiontype="+optiontype);
         OptionActivity.this.setResult(optiontype, intent);
+        option.description();
         finish();
     }
 

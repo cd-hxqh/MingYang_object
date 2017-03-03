@@ -1,5 +1,7 @@
 package com.example.admin.eam.model;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
@@ -122,5 +124,22 @@ public class Option implements Serializable {
 
     public void setValue11(String value11) {
         Value11 = value11;
+    }
+
+    public void description()
+    {
+        Log.e("JSON选项","Name:"+getName());
+        Log.e("JSON选项","Desc:"+getDesc());
+        Log.e("JSON选项","Value1:"+getValue1());
+        Log.e("JSON选项","Value2:"+getValue2());
+        Log.e("JSON选项","Value3:"+getValue3());
+        Log.e("JSON选项","Value4:"+getValue4());
+        Log.e("JSON选项","Value5:"+getValue5());
+        Log.e("JSON选项","Value6:"+getValue6());
+        Log.e("JSON选项","Value7:"+getValue7());
+        Log.e("JSON选项","Value8:"+getValue8());
+        Log.e("JSON选项","Value9:"+getValue9());
+        Log.e("JSON选项","Value10:"+getValue10());
+        Log.e("JSON选项","Value11:"+getValue11());
     }
 }

@@ -5,11 +5,12 @@ package com.example.admin.eam.model;
  * 附件表
  */
 public class Doclinks {
+
     public String DOCINFOID;//
     public String DOCTYPE;//文件类型
     public String OWNERID;//编号Id
     public String OWNERTABLE;//表名
-    public String URL;//地址
+    public String URLNAME;//地址
 
 
     public String getOWNERTABLE() {
@@ -44,11 +45,11 @@ public class Doclinks {
         this.OWNERID = OWNERID;
     }
 
-    public String getURL() {
-        return URL;
+    public String getURLNAME() {
+        return URLNAME;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setURLNAME(String URL) {
+        this.URLNAME = URL;
     }
 }

@@ -73,8 +73,8 @@ public class TriprePort_DetailActivity extends BaseActivity {
         mBasIn = new BounceTopEnter();
         mBasOut = new SlideBottomExit();
 
-        ImageButtonDialog_GZGD dialog=new ImageButtonDialog_GZGD(TriprePort_DetailActivity.this,R.style.DialogTheme);
-        dialog.show();
+//        ImageButtonDialog_GZGD dialog=new ImageButtonDialog_GZGD(TriprePort_DetailActivity.this,R.style.DialogTheme);
+//        dialog.show();
 
     }
     private void getIntentData(){

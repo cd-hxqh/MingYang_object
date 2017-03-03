@@ -7,6 +7,7 @@ import com.example.admin.eam.bean.LoginResults;
 import com.example.admin.eam.bean.Results;
 import com.example.admin.eam.config.Constants;
 import com.example.admin.eam.model.DebugWorkOrder;
+import com.example.admin.eam.model.DocInfo;
 import com.example.admin.eam.model.Doclinks;
 import com.example.admin.eam.model.Failurelist;
 import com.example.admin.eam.model.GreaseCard;
@@ -1827,6 +1828,7 @@ public class JsonUtils<E> {
                         getOrSet = workOrder.getClass().getMethod("get" + name);
                         Object value = null;
                         value = getOrSet.invoke(workOrder);
+                        Log.e("工单","属性名："+name+"     属性值："+value);
                         if (value != null) {
                             jsonObject.put(name, value + "");
                         }
@@ -2326,6 +2328,10 @@ public class JsonUtils<E> {
             for (int j = 0; j < field.length; j++) {
                 field[j].setAccessible(true);
                 String name = field[j].getName();//获取属性的名字
+                if(name.equals("UDREPORTID"))
+                {
+                    continue;
+                }
                 Method getOrSet = null;
                 try {
                     getOrSet = udreport.getClass().getMethod("get" + name);
@@ -3213,6 +3219,59 @@ public class JsonUtils<E> {
         }
 
     }
+    /**
+     * 附件信息*
+     */
+    public static String parsingDocinfo(Context ctx, String data) {
 
+        String url = null;
+        ArrayList<DocInfo> list = null;
+        DocInfo docInfo = null;
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject jsonObject;
+            list = new ArrayList<DocInfo>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                docInfo = new DocInfo();
+                jsonObject = jsonArray.getJSONObject(i);
+                Log.e("JSON","-------------------------------------------------------------------");
+                Log.e("JSON",""+jsonObject);
+                Log.e("JSON","-------------------------------------------------------------------");
+                Log.e("图片上传","JSON 一个附件:"+jsonObject);
+
+                Field[] field = docInfo.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+                for (int j = 0; j < field.length; j++) {     //遍历所有属性
+                    field[j].setAccessible(true);
+                    String name = field[j].getName();    //获取属性的名字
+                    Log.i(TAG, "name=" + name);
+                    if (jsonObject.has(name) && jsonObject.getString(name) != null && !jsonObject.getString(name).equals("")) {
+                        try {
+                            // 调用getter方法获取属性值
+                            Method getOrSet = docInfo.getClass().getMethod("get" + name);
+                            Object value = getOrSet.invoke(docInfo);
+                            if (value == null) {
+                                //调用setter方法设属性值
+                                Class[] parameterTypes = new Class[1];
+                                parameterTypes[0] = field[j].getType();
+                                getOrSet = docInfo.getClass().getDeclaredMethod("set" + name, parameterTypes);
+                                getOrSet.invoke(docInfo, jsonObject.getString(name));
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                list.add(docInfo);
+            }
+            Log.e("图片上传","一张图片的url："+list.get(0).getURLNAME());
+            return list.get(0).getURLNAME();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
 }

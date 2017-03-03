@@ -1,225 +1,77 @@
 package com.example.admin.eam.ui.activity;
 
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.eam.R;
 import com.example.admin.eam.manager.AppManager;
-import com.example.admin.eam.ui.fragment.NavigationDrawerFragment;
-import com.example.admin.eam.ui.fragment.ProjectFragment;
-import com.example.admin.eam.ui.fragment.SettingFragment;
-import com.example.admin.eam.ui.fragment.UdstockFragment;
+import com.example.admin.eam.ui.fragment.FuntionFragment;
+import com.example.admin.eam.ui.fragment.MyselfFragment;
+import com.example.admin.eam.ui.fragment.TabbarFragment;
 import com.example.admin.eam.ui.fragment.WfmentFragment;
-import com.example.admin.eam.ui.fragment.WorkFragment;
-import com.example.admin.eam.ui.fragment.YunweiFragment;
-import com.example.admin.eam.ui.fragment.ZiyuanFragment;
+import com.example.admin.eam.utils.AccountUtils;
 
 
-public class MainActivity extends BaseActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-    private static final String TAG = "MainActivity";
-    //    private SpinnerAdapter mSpinnerAdapter;
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private ViewGroup mDrawerLayout;
-    private View mActionbarCustom;
-    /**
-     * 标题*
-     */
-    private TextView title;
+public class MainActivity extends BaseActivity {
 
     /**
-     * 待办事项*
+     * 功能中心\流程审批\个人设置*
      */
-    private WfmentFragment mNewWfassigFragment;
-
-    /**
-     * 工单管理*
-     */
-    private WorkFragment mNewWorkFragment;
-
-    /**
-     * 库存管理*
-     */
-    private UdstockFragment mNewUdstockFragment;
-
-
-    /**
-     * 项目管理*
-     */
-    private ProjectFragment projectFragment;
-
-    /**
-     * 运维管理*
-     */
-    private YunweiFragment mNewYunweiFragment;
-    /**
-     * 资源管理*
-     */
-    private ZiyuanFragment mNewZiyuanFragment;
-    /**
-     * 设置
-     */
-    private SettingFragment mSettingFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
-
-    private String[] mFavoriteTabTitles;
-    private String[] mFavoriteTabPaths;
-    private String[] mMainTitles;
-
+    FuntionFragment funtionFragment;
+    WfmentFragment wfmentFragment;
+    MyselfFragment myselfFragment;
+    TabbarFragment tabbarFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById();
-
-
     }
 
     @Override
     protected void findViewById() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        title = (TextView) findViewById(R.id.title_id);
-        mDrawerLayout = (ViewGroup) findViewById(R.id.drawer_layout);
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.left_drawer);
-        mTitle = getTitle();
 
-        mMainTitles = getResources().getStringArray(R.array.drawer_tab_titles);
+        tabbarFragment = (TabbarFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_content);
+        funtionFragment = (FuntionFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_frist);
+        wfmentFragment = (WfmentFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_second);
+        myselfFragment = (MyselfFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_third);
 
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.left_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        showFragment(1);
     }
-
     @Override
     protected void initView() {
 
     }
-
-    int mSelectPos = 0;
-
-    @Override
-    public void onNavigationDrawerItemSelected(final int position) {
-        mSelectPos = position;
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        switch (position) {
-            case 0: //待办任务
-                if (mNewWfassigFragment == null) {
-                    mNewWfassigFragment = new WfmentFragment();
-                    Bundle bundle = new Bundle();
-                    mNewWfassigFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, mNewWfassigFragment).commit();
-                break;
-            case 1: //工单管理
-                if (mNewWorkFragment == null) {
-                    mNewWorkFragment = new WorkFragment();
-                    Bundle bundle = new Bundle();
-                    mNewWorkFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, mNewWorkFragment).commit();
-                break;
-            case 2://库存盘点
-                if (mNewUdstockFragment == null) {
-                    mNewUdstockFragment = new UdstockFragment();
-                    Bundle bundle = new Bundle();
-                    mNewUdstockFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, mNewUdstockFragment).commit();
-                break;
-            case 3://项目管理
-                if (projectFragment == null) {
-                    projectFragment = new ProjectFragment();
-                    Bundle bundle = new Bundle();
-                    projectFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, projectFragment).commit();
-
-                break;
-            case 4://运维管理
-                if (mNewYunweiFragment == null) {
-                    mNewYunweiFragment = new YunweiFragment();
-                    Bundle bundle = new Bundle();
-                    mNewYunweiFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, mNewYunweiFragment).commit();
-                break;
-            case 5://资源管理
-                if (mNewZiyuanFragment == null) {
-                    mNewZiyuanFragment = new ZiyuanFragment();
-                    Bundle bundle = new Bundle();
-                    mNewZiyuanFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, mNewZiyuanFragment).commit();
-                break;
-            case 6:
-                if (mSettingFragment == null) {
-                    mSettingFragment = new SettingFragment();
-                    Bundle bundle = new Bundle();
-                    mSettingFragment.setArguments(bundle);
-                }
-                fragmentTransaction.replace(R.id.container, mSettingFragment).commit();
-                break;
-        }
-
-    }
-
-
-    public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        mTitle = mMainTitles[mSelectPos];
-        actionBar.setDisplayShowCustomEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("");
-        title.setText(mTitle);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("登陆","用户名"+ AccountUtils.getuserName(MainActivity.this));
+        Log.e("登陆","密码"+AccountUtils.getUserPassword(MainActivity.this));
+        Log.e("登陆","服务器"+AccountUtils.getIpAddress(MainActivity.this));
+        String password = AccountUtils.getUserPassword(MainActivity.this);
+        if (null==password||password.length()==0)
+        {
+            AppManager.killAllActivity();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
+
+    }
 
     private long exitTime = 0;
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawerFragment.isDrawerOpen()) {
-            mNavigationDrawerFragment.closeDrawer();
-            return;
-        }
 
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(this, getResources().getString(R.string.exit_text), Toast.LENGTH_LONG).show();
@@ -227,6 +79,38 @@ public class MainActivity extends BaseActivity
         } else {
             AppManager.AppExit(MainActivity.this);
         }
+    }
+    public void showFragment(int index)
+    {
+        if (funtionFragment==null||wfmentFragment==null||myselfFragment==null)
+        {
+            return;
+        }
+
+        Log.e("Fragment",""+index);
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.hide(funtionFragment);
+        transaction.hide(wfmentFragment);
+        transaction.hide(myselfFragment);
+        switch (index)
+        {
+            case 1:{
+                transaction.show(funtionFragment);
+            }break;
+
+            case 2:{
+                transaction.show(wfmentFragment);
+            }break;
+
+            case 3:{
+                transaction.show(myselfFragment);
+            }break;
+
+        }
+        transaction.commit();
     }
 
 }

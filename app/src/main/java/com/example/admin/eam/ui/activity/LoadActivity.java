@@ -49,6 +49,7 @@ public class LoadActivity extends BaseActivity {
      * 跳转至登录界面
      */
     private void jumpLoginActivity() {
+
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
         startActivity(intent);

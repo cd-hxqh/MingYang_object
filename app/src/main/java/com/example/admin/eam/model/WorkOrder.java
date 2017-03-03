@@ -42,11 +42,11 @@ public class WorkOrder implements Serializable {
     @DatabaseField(columnName = "UDPRORESNAME")
     public String UDPRORESNAME;//项目负责人名称
     @DatabaseField(columnName = "FAILURECODE")
-    public String UDFAILURECODE;//故障类
+    public String FAILURECODE;//故障类
     @DatabaseField(columnName = "GZLDESC")
     public String GZLDESC;//故障类描述
-    @DatabaseField(columnName = "PROBLEMCODE")
-    public String PROBLEMCODE;//问题原因
+    @DatabaseField(columnName = "UDFAILURECODE")
+    public String UDFAILURECODE;//问题原因
     @DatabaseField(columnName = "GZWTDESC")
     public String GZWTDESC;//问题原因描述
     @DatabaseField(columnName = "CULEVEL")
@@ -198,9 +198,9 @@ public class WorkOrder implements Serializable {
         map.put("LEADNAME","运行组/维护组工程师名称");
         map.put("UDPRORES","项目负责人");
         map.put("UDPRORESNAME","项目负责人名称");
-        map.put("UDFAILURECODE","故障类");
+        map.put("FAILURECODE","故障类");
         map.put("GZLDESC","故障类描述");
-        map.put("PROBLEMCODE","问题原因");
+        map.put("UDFAILURECODE","问题原因");
         map.put("GZWTDESC","问题原因描述");
         map.put("CULEVEL","故障等级");
         map.put("UDGZDJ","故障等级");
@@ -282,12 +282,12 @@ public class WorkOrder implements Serializable {
         this.WORKORDERID = WORKORDERID;
     }
 
-    public String getPROBLEMCODE() {
-        return PROBLEMCODE;
+    public String getUDFAILURECODE() {
+        return UDFAILURECODE;
     }
 
-    public void setPROBLEMCODE(String PROBLEMCODE) {
-        this.PROBLEMCODE = PROBLEMCODE;
+    public void setUDFAILURECODE(String UDFAILURECODE) {
+        this.UDFAILURECODE = UDFAILURECODE;
     }
 
     public String getWONUM() {
@@ -346,12 +346,12 @@ public class WorkOrder implements Serializable {
         this.LEAD = LEAD;
     }
 
-    public String getUDFAILURECODE() {
-        return UDFAILURECODE;
+    public String getFAILURECODE() {
+        return FAILURECODE;
     }
 
-    public void setUDFAILURECODE(String FAILURECODE) {
-        this.UDFAILURECODE = FAILURECODE;
+    public void setFAILURECODE(String FAILURECODE) {
+        this.FAILURECODE = FAILURECODE;
     }
 
     public String getGZLDESC() {

@@ -258,6 +258,11 @@ public class Constants {
     public static final String DOCLINKS_NAME = "DOCLINKS";
 
 
+    /**附件信息appid**/
+    public static final String DOCINFO_APPID = "DOCINFO";
+    /**附件信息表名**/
+    public static final String DOCINFO_NAME = "DOCINFO";
+
     //设备appid
     public static final String ASSET_APPID = "UDASSET";
     //设备表名

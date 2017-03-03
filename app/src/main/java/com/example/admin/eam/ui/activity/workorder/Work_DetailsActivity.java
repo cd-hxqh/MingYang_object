@@ -397,7 +397,7 @@ public class Work_DetailsActivity extends BaseActivity {
         createby.setText(workOrder.CREATENAME);
         createdate.setText(workOrder.CREATEDATE);
         failurecode.setText(workOrder.GZLDESC);
-        problemcode.setText(workOrder.PROBLEMCODE);
+        problemcode.setText(workOrder.UDFAILURECODE);
         gzwtdesc.setText(workOrder.GZWTDESC);
         udgzdj.setText(workOrder.UDGZDJ);
         udgztype.setText(workOrder.UDGZTYPE);
@@ -1121,7 +1121,7 @@ public class Work_DetailsActivity extends BaseActivity {
                 Toast.makeText(Work_DetailsActivity.this, "请选择问题原因", Toast.LENGTH_SHORT).show();
             } else {
                 Intent intent = new Intent(Work_DetailsActivity.this, Failurelist1Activity.class);
-                intent.putExtra("failurecode", workOrder.PROBLEMCODE);
+                intent.putExtra("failurecode", workOrder.UDFAILURECODE);
                 startActivityForResult(intent, 0);
             }
             popupWindow.dismiss();
@@ -1796,7 +1796,7 @@ public class Work_DetailsActivity extends BaseActivity {
     }
 
     private void getFailureList() {//得到故障问题failurelist
-        HttpManager.getDataPagingInfo(this, HttpManager.getFailurelist3Url(1, 20, workOrder.UDFAILURECODE), new HttpRequestHandler<Results>() {
+        HttpManager.getDataPagingInfo(this, HttpManager.getFailurelist3Url(1, 20, workOrder.FAILURECODE), new HttpRequestHandler<Results>() {
             @Override
             public void onSuccess(Results results) {
                 Log.i(TAG, "data=" + results);
@@ -1885,7 +1885,7 @@ public class Work_DetailsActivity extends BaseActivity {
                     option = (Option) data.getSerializableExtra("option");
                     failurecode.setText(option.getDesc());
                     workOrder.GZLDESC = option.getDesc();
-                    workOrder.UDFAILURECODE = option.getName();
+                    workOrder.FAILURECODE = option.getName();
                     failurelist = option.getValue1();
                     problemcode.setText("");
                     gzwtdesc.setText("");
@@ -1895,7 +1895,7 @@ public class Work_DetailsActivity extends BaseActivity {
                     problemcode.setText(option.getName());
                     gzwtdesc.setText(option.getDesc());
                     workOrder.GZWTDESC = option.getDesc();
-                    workOrder.PROBLEMCODE = option.getName();
+                    workOrder.UDFAILURECODE = option.getName();
                     break;
                 case 14:
                     option = (Option) data.getSerializableExtra("option");

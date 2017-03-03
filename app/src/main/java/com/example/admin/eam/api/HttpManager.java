@@ -81,11 +81,11 @@ public class HttpManager {
                 if (status.equals("全部")) {
 
                     tmpString= "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WORKORDERID desc','condition':{'WORKTYPE':'" + type + "'}}";
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "'}}";
                 }else {
 
                     tmpString= "{'appid':'" + appid + "','objectname':'" + objectname + "'," +
-                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WORKORDERID desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
+                            "'curpage':" + curpage + ",'showcount':" + showcount + ",'option':'read','orderby':'WONUM desc','condition':{'WORKTYPE':'" + type + "','UDSTATUS':'" + status + "'}}";
                 }
             } else {
                 if (status.equals("全部")) {
@@ -958,11 +958,20 @@ public class HttpManager {
      */
     public static String getDoclinks(String ownertable, String ownerid){
         String tmpString;
-        tmpString= "{'appid':'" + Constants.DOCLINKS_APPID + "','objectname':'" + Constants.DOCLINKS_NAME  + "','option':'read','condition':{'OWNERTABLE':'=" + ownertable  + "','OWNERID':'=" + ownerid+"'}}";
-        Log.e("JSON 条件",""+tmpString);
+        tmpString= "{'appid':'" + Constants.DOCLINKS_APPID + "','objectname':'" + Constants.DOCLINKS_NAME  + "','option':'read','condition':{'OWNERTABLE':'" + ownertable  + "','OWNERID':'" + ownerid+"'}}";
+        Log.e("图片上传JSON 条件",""+tmpString);
         return tmpString;
     }
 
+    /**
+     * 查询附件的接口
+     */
+    public static String getDocinfo(String docinfoId){
+        String tmpString;
+        tmpString= "{'appid':'" + Constants.DOCINFO_APPID + "','objectname':'" + Constants.DOCINFO_NAME + "','option':'read','condition':{'DOCINFOID':'" + docinfoId+"'}}";
+        Log.e("图片上传JSON 条件",""+tmpString);
+        return tmpString;
+    }
     /**
      * 使用用户名密码登录
      *

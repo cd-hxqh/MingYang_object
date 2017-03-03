@@ -39,9 +39,9 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
 
     private static final String URL_STRING = "/share/doclinks/";
     /**
-     * 测试环境的url地址
+     * 开发环境的url地址
      **/
-    private static final String CESHI_URL = "http://qaseam.mywind.com.cn/";
+    private static final String CESHI_URL = "http://deveam.mywind.com.cn/";
     /**
      * 正式环境的图片URL地址
      **/
@@ -217,9 +217,9 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
 
     private void getData() {
 
-        Log.i("图片上传", "下载已上传的图片 ownertable=" + ownertable + ",ownerid=" + ownerid);
+        Log.e("图片上传", "下载已上传的图片 ownertable=" + ownertable + ",ownerid=" + ownerid);
 
-        Log.i("图片上传", "查询参数："+HttpManager.getDoclinks(ownertable, ownerid));
+        Log.e("图片上传", "查询参数："+HttpManager.getDoclinks(ownertable, ownerid));
 
         HttpManager.getData(this, HttpManager.getDoclinks(ownertable, ownerid), new HttpRequestHandler<Results>() {
 
@@ -239,19 +239,10 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
                     if (item != null || item.size() != 0) {
                         textView.setVisibility(View.GONE);
                         for (int i = 0; i < item.size(); i++) {
-                            String url = item.get(i).URL;
-                            if (url != null) {
-                                //拼接图片的URL
-                                ImageItem imageItem = new ImageItem();
-                                imageItem.path = getUrls(url);
-                                imageItem.name = item.get(i).getDOCINFOID();
-                                selImageList.add(imageItem);
+                            String docinfoid = item.get(i).DOCINFOID;
+                            if (docinfoid != null) {
+                                getDocInfo(docinfoid);
                             }
-                        }
-                        if (selImageList != null || selImageList.size() != 0) {
-                            showResult(selImageList);
-                        } else {
-                            textView.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -268,21 +259,64 @@ public class PhotoActivity extends BaseActivity implements ImageLoadAdapter.OnRe
             }
         });
     }
+    private void getDocInfo(String docinfoId)
+    {
+        HttpManager.getData(this, HttpManager.getDocinfo(docinfoId), new HttpRequestHandler<Results>() {
 
+            @Override
+            public void onSuccess(Results results) {
+
+                closeProgressDialog();
+
+                String url = JsonUtils.parsingDocinfo(PhotoActivity.this, results.getResultlist());
+
+                Log.i("图片上传", "results.getResultlist()="+results.getResultlist());
+
+                //拼接图片的URL
+                ImageItem imageItem = new ImageItem();
+                imageItem.path = getUrls(url);
+                imageItem.name = "";
+                selImageList.add(imageItem);
+
+                if (selImageList != null || selImageList.size() != 0) {
+                    showResult(selImageList);
+                } else {
+                    textView.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+            @Override
+            public void onSuccess(Results results, int totalPages, int currentPage) {
+                closeProgressDialog();
+            }
+
+            @Override
+            public void onFailure(String error) {
+                closeProgressDialog();
+            }
+        });
+    }
 
     /**
      * 拼接图片的URl
      **/
     private String getUrls(String url) {
-        //测试环境的附件
+
         String ip_url = AccountUtils.getIpAddress(PhotoActivity.this);
         String imagesUrl = null;
-        if (ip_url.equals("http://eam.mywind.com.cn:9080")) { //正式
+
+        if (ip_url.startsWith("http://eam.mywind"))
+        { //正式
             imagesUrl = ZHENGSHI_URL;
-        } else if (ip_url.equals("http://qaseamapp.mywind.com.cn:9080")) { //测试
+        }
+        else
+        { //开发
             imagesUrl = CESHI_URL;
         }
         url = url.replace(URL_STRING, "");
+        Log.e("图片上传","URL："+imagesUrl+url);
         return imagesUrl + url;
     }
 }

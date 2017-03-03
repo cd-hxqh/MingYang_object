@@ -271,6 +271,9 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
                             }
 
                             String uploadBuffer = new String(Base64.encode(baos.toByteArray()));  //进行Base64编码
+
+                            Log.e("图片编码",""+uploadBuffer);
+
                             fis.close();
                             String name = getFileName(file.getPath());
 
@@ -285,7 +288,7 @@ public class WxDemoActivity extends BaseActivity implements ImagePickerAdapter.O
                                     String reviseresult = AndroidClientService.connectWebService(WxDemoActivity.this,
                                             finalname, finalUpdataInfo, ownertable, ownerid, Constants.WORK_URL);
 
-                                    Log.e("图片上传","开始上传 finalname:"+finalname+"finalUpdataInfo："+finalUpdataInfo+" ownertable:"+ownertable+" ownerid:"+ownerid+" URL:"+Constants.WORK_URL);
+                                    Log.e("图片上传","开始上传 finalname:"+finalname+" ownertable:"+ownertable+" ownerid:"+ownerid+" URL:"+Constants.WORK_URL);
 
                                     return reviseresult;
                                 }
