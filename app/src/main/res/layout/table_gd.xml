@@ -25,7 +25,7 @@ android:layout_marginBottom="20dp">
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_gd_gz"
             android:gravity="center"
-            android:text="故障工单"></TextView>
+            android:text="故障工单"/>
 
     </LinearLayout>
 
@@ -55,7 +55,7 @@ android:layout_marginBottom="20dp">
     </LinearLayout>
 
     <LinearLayout
-
+        android:id="@+id/id_gd_xj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -76,7 +76,7 @@ android:layout_marginBottom="20dp">
     </LinearLayout>
 
     <LinearLayout
-
+        android:id="@+id/id_gd_dj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -102,7 +102,7 @@ android:layout_marginBottom="20dp">
     android:paddingTop="30dp"
     >
     <LinearLayout
-
+        android:id="@+id/id_gd_pc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -122,7 +122,7 @@ android:layout_marginBottom="20dp">
 
     </LinearLayout>
     <LinearLayout
-
+        android:id="@+id/id_gd_jg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -142,7 +142,7 @@ android:layout_marginBottom="20dp">
 
     </LinearLayout>
     <LinearLayout
-
+        android:id="@+id/id_gd_zys"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

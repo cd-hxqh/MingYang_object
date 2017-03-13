@@ -43,7 +43,15 @@ public class HttpManager {
         Log.e("JSON 条件",""+tmpString);
         return tmpString;
     }
-
+    /**
+     * 设置待办事项接口*
+     */
+    public static String getwfassignmentUrl2(String persionid) {
+        String tmpString;
+        tmpString= "{'appid':'" + Constants.WFASSIGNMENT_APPID + "','objectname':'" + Constants.WFASSIGNMENT_NAME + "','option':'read','orderby':'WFASSIGNMENTID DESC','condition':{'ASSIGNCODE':'" + persionid + "','ASSIGNSTATUS':'=活动'}}";
+        Log.e("JSON 条件",""+tmpString);
+        return tmpString;
+    }
 
     /**
      * 设置工单接口*

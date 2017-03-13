@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         // old applicationId "com.example.admin.mingyang_object"
@@ -68,6 +68,11 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'cn.jiguang.sdk:jpush:3.0.1' // 此处以JPush 3.0.0 版本为 。
-    compile 'cn.jiguang.sdk:jcore:1.1.0' // 此处以JCore 1.0.0 版本为 。
+    compile 'cn.jiguang.sdk:janalytics:1.1.0'
+    // 此处以JAnalytics 1.0.0 版本为例。
+    compile 'cn.jiguang.sdk:jpush:3.0.1'
+    // 此处以JPush 3.0.0 版本为 。
+    compile 'cn.jiguang.sdk:jcore:1.1.0'
+    // 此处以JCore 1.0.0 版本为 。
+    compile files('libs/badgeview.jar')
 }

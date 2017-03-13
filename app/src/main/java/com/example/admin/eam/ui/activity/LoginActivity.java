@@ -101,20 +101,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String adress;
 
 
-    private static final int REQUEST_CODE = 0; // 请求码
-
-    // 所需的全部权限
-    static final String[] PERMISSIONS = new String[]{
-
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE
-    };
-
-//    @Bind(R.id.main_t_toolbar) Toolbar mTToolbar;
-
-    private PermissionsChecker mPermissionsChecker; // 权限检测器
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -126,28 +112,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             AccountUtils.setIpAddress(LoginActivity.this, Constants.HTTP_API_IP);
         }
-
-        startPermissionsActivity();//
         findViewById();
         checkNewVersion();
-        ActivityCompat.requestPermissions(LoginActivity.this,
-                    new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE},
-                    123);
         initView();
-    }
-    private void startPermissionsActivity() {
-        Log.e("权限检查","向用户请求权限");
-        PermissionsActivity.startActivityForResult(LoginActivity.this, REQUEST_CODE, PERMISSIONS);
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
-        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
-            finish();
-        }
     }
-
     @Override
     protected void findViewById() {
         mUsername = (EditText) findViewById(R.id.user_login_id);
@@ -169,7 +141,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             mPassword.setText(AccountUtils.getUserPassword(LoginActivity.this));
 
         }
-
         checkBox.setOnCheckedChangeListener(cheBoxOnCheckedChangListener);
         mLogin.setOnClickListener(this);
         ipText.setOnClickListener(this);
@@ -177,19 +148,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mBasOut = new SlideBottomExit();
         adress = AccountUtils.getIpAddress(LoginActivity.this);
         addIpData();
-
         versionName.setText(getVersion());
-
-        if (!mUsername.getText().toString().equals("")&&!mPassword.getText().toString().equals("")){
-
-
-
-            Log.e("登陆","自动登陆 账号"+mUsername.getText().toString());
-            Log.e("登陆","自动登陆 密码"+mPassword.getText().toString());
-
-
-        }
-
     }
 
     private CompoundButton.OnCheckedChangeListener cheBoxOnCheckedChangListener = new CompoundButton.OnCheckedChangeListener() {

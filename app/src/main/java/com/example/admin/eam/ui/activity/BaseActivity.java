@@ -31,9 +31,14 @@ import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.jiguang.analytics.android.api.CountEvent;
+import cn.jiguang.analytics.android.api.Event;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 
 public abstract class BaseActivity extends ActionBarActivity {
@@ -247,5 +252,22 @@ public abstract class BaseActivity extends ActionBarActivity {
 
         }.execute();
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(getApplicationContext(),this.getClass().getCanonicalName());
+        Log.e("页面统计进入",this.getClass().getCanonicalName());
+        CountEvent cEvent = new CountEvent("005");
+        cEvent.addKeyValue("中山","登陆");
+        JAnalyticsInterface.onEvent(getApplicationContext(), cEvent);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(getApplicationContext(),this.getClass().getCanonicalName());
+        Log.e("页面统计退出",this.getClass().getCanonicalName());
     }
 }

@@ -74,7 +74,6 @@
                     android:ems="14"
                     android:maxLines="1"
                     android:hint="@string/hint_item_desc_title"
-                    android:textStyle="bold"
                     android:textColor="#de000000"
                     android:textSize="16sp" />
             </LinearLayout>

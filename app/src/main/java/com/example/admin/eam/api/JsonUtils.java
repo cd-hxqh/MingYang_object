@@ -154,9 +154,9 @@ public class JsonUtils<E> {
         WebResult webResult = new WebResult();
         try {
             JSONObject object = new JSONObject(data);
-            Log.e("JSON","-------------------------------------------------------------------");
-            Log.e("JSON",""+object);
-            Log.e("JSON","-------------------------------------------------------------------");
+            Log.e("JSON新增工单返回信息","-------------------------------------------------------------------");
+            Log.e("JSON新增工单返回信息",""+object);
+            Log.e("JSON新增工单返回信息","-------------------------------------------------------------------");
             if (object.has("errorMsg") && !object.getString("errorMsg").equals("")) {
                 webResult.errorMsg = object.getString("errorMsg");
             } else if (object.has("success") && !object.getString("success").equals("")) {

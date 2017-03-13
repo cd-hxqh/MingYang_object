@@ -74,13 +74,17 @@ public class MyselfFragment extends android.support.v4.app.Fragment {
         username.setText(AccountUtils.getuserName(getActivity().getApplicationContext()));
 
         String ip = AccountUtils.getIpAddress(getActivity());
-        if (ip.startsWith("http://eamapp."))
+        if (ip.startsWith("http://eamapp"))
         {
             environment.setText("正式环境");
         }
-        else
+        else if (ip.startsWith("http://deveam"))
         {
             environment.setText("开发环境");
+        }
+        else
+        {
+            environment.setText("测试环境");
         }
         address.setText(ip);
         version.setText(getVersion()+"(点击检查新版本)");

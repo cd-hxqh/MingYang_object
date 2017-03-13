@@ -32,6 +32,7 @@ import com.example.admin.eam.config.Constants;
 import com.example.admin.eam.dao.WorkOrderDao;
 import com.example.admin.eam.model.WorkOrder;
 import com.example.admin.eam.ui.activity.BaseActivity;
+import com.example.admin.eam.ui.activity.MainActivity;
 import com.example.admin.eam.ui.adapter.WorkListAdapter;
 import com.example.admin.eam.ui.widget.SwipeRefreshLayout;
 import com.example.admin.eam.utils.AccountUtils;
@@ -44,6 +45,8 @@ import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.NormalListDialog;
 
 import java.util.ArrayList;
+
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
 
 /**
@@ -87,6 +90,21 @@ public class Work_ListActivity extends BaseActivity implements SwipeRefreshLayou
         getIntentData();
 
         initView();
+        JAnalyticsInterface.onPageStart(Work_ListActivity.this,"工单页面"+worktype);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JAnalyticsInterface.onPageStart(getApplicationContext(),this.getClass().getCanonicalName());
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JAnalyticsInterface.onPageEnd(getApplicationContext(),this.getClass().getCanonicalName());
 
     }
 

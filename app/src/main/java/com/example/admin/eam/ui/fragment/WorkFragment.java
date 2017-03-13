@@ -66,6 +66,7 @@ public class WorkFragment extends Fragment {
 
     private class intentOnclicklistener implements View.OnClickListener{
         private String type;
+
         private intentOnclicklistener(String type){
             this.type = type;
         }

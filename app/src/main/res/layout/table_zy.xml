@@ -119,6 +119,7 @@
                 android:drawablePadding="10dp"
                 android:drawableTop="@mipmap/ic_chart"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:text="图表" />
 
         </LinearLayout>
