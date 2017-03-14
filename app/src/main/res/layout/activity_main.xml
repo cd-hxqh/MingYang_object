@@ -17,14 +17,21 @@
     android:layout_alignParentTop="true"
     android:background="@color/blue_color">
 
+
+    <Button
+        android:id="@+id/bt_qr_code"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:background="@mipmap/qrcode"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFF"
         android:textSize="8pt"
+        android:paddingLeft="@dimen/dimens_10"
         android:text="智能风场管理系统"
         />
-
 </android.support.v7.widget.Toolbar>
 
     <fragment

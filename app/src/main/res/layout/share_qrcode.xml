@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/dimens_10"
+    android:paddingRight="@dimen/dimens_10">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="扫面此二维码下载本APP"
+        android:paddingTop="64dip"
+        android:textSize="10pt"
+        android:gravity="center"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android/IOS通用"
+        android:paddingTop="@dimen/dimens_10"
+        android:gravity="center"/>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="100dp"
+        android:src="@mipmap/eamapp"
+         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:text="如果使用 '微信'、'QQ'等非扫码类APP，请扫码后选择 '在浏览器中打开' "
+        android:textSize="9pt"
+        android:gravity="center"
+        />
+</LinearLayout>

@@ -13,12 +13,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.admin.eam.R;
 import com.example.admin.eam.manager.AppManager;
+import com.example.admin.eam.ui.activity.stockQuery.StockQuery_listActivity;
 import com.example.admin.eam.ui.fragment.FuntionFragment;
 import com.example.admin.eam.ui.fragment.MyselfFragment;
 import com.example.admin.eam.ui.fragment.TabbarFragment;
@@ -37,6 +42,9 @@ public class MainActivity extends BaseActivity {
     WfmentFragment wfmentFragment;
     MyselfFragment myselfFragment;
     TabbarFragment tabbarFragment;
+    Toolbar toolbar;
+    Button btQrCode;
+
     private boolean hasPermissionWeNeed = false;
     private static final int REQUEST_CODE = 0; // 请求码
 
@@ -69,6 +77,7 @@ public class MainActivity extends BaseActivity {
         }
 
         findViewById();
+        initView();
     }
           // 提示用户该请求权限的弹出框
     private void showDialogTipUserRequestPermission() {
@@ -189,13 +198,27 @@ public class MainActivity extends BaseActivity {
         funtionFragment = (FuntionFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_frist);
         wfmentFragment = (WfmentFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_second);
         myselfFragment = (MyselfFragment)getSupportFragmentManager().findFragmentById(R.id.id_fragment_third);
-
+        toolbar = (Toolbar) findViewById(R.id.id_toolbar);
+        btQrCode = (Button) findViewById(R.id.bt_qr_code);
         showFragment(1);
     }
     @Override
     protected void initView() {
-
+        btQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShareActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.qrcode,menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
